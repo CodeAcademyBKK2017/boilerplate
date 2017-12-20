@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Title renders correctly 1`] = `
+<View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontWeight": "bold",
+      }
+    }
+  >
+    Note Title
+  </Text>
+  <TextInput
+    allowFontScaling={true}
+    style={
+      Object {
+        "borderColor": "gray",
+        "borderWidth": 1,
+        "minWidth": "100%",
+      }
+    }
+  />
+</View>
+`;

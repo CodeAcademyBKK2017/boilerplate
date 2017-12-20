@@ -1,18 +1,18 @@
 import React, {Component} from 'react';
-import styles from './TextArea.style.js';
+import styles from './Content.style.js';
 import {
   Text
   , TextInput
   , View
 } from 'react-native';
 
-class TextArea extends Component {
+class Content extends Component {
   render () {
     return (
       <View>
-        <Text>Content</Text>
+        <Text style={styles.text}>Please type your note below</Text>
         <TextInput
-          style={styles.textArea}
+          style={styles.textinput}
           multiline = {true}
         />
       </View>
@@ -20,4 +20,4 @@ class TextArea extends Component {
   }
 }
 
-export default TextArea;
+export default Content;
