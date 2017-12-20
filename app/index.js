@@ -14,13 +14,20 @@ import {
 } from 'react-native';
 
 export default class App extends Component {
+  state = {
+    countContent: 0
+  }
+
+  onType = (textInput) => {
+    this.setState({countContent: textInput.length});
+  }
 
   render () {
     return (
       <View style={styles.container}>
         <Title/>
-        <Content/>
-        <Footer/>
+        <Content onType={this.onType}/>
+        <Footer countContent={this.state.countContent}/>
       </View>
     );
   }
