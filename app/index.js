@@ -5,8 +5,8 @@
  */
 
 import React, {Component} from 'react';
-import TextAlign from './components/TextArea/TextArea.components';
 import styles from './index.style';
+import TextAlign from './components/TextArea/TextArea.components';
 import {
   View
 } from 'react-native';
