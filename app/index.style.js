@@ -5,9 +5,9 @@ import {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
-    justifyContent: 'center',
-    alignItems: 'center'
+    paddingTop: 50,
+    paddingHorizontal: 10,
+    backgroundColor: 'lightgray'
   }
 });
 
