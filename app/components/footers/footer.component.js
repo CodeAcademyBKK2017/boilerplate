@@ -31,9 +31,9 @@ export default class Footer extends Component {
   }
 }
 Footer.propTypes = {
-  textState: ProptTypes.string.isRequired
+  textState: ProptTypes.number.isRequired
 };
   
 Footer.defaultProps = {
-  textState: ''
+  textState: 0
 };
