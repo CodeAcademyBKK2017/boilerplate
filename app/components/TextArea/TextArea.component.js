@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
+import styles from './TextArea.style';
 import {
-  StyleSheet,
   Text,
   TextInput,
   View
@@ -21,19 +21,3 @@ export default class TextArea extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5
-  },
-  textInput: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    height: 100, 
-    width: 180,
-    borderColor: 'gray', 
-    borderWidth: 1
-  }
-});
