@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
+import TextAreaStyle from './TextArea.style';
 import {
-  StyleSheet,
   Text,
   TextInput,
   View
@@ -9,22 +9,10 @@ import {
 export default class TextArea extends Component {
   render () {
     return (
-      <View style={styles.container}>
+      <View style={TextAreaStyle.container}>
         <Text>Content</Text>
-        <TextInput style={styles.textInput} placeholder='Type here'/>
+        <TextInput style={TextAreaStyle.textInput} placeholder='Type here'/>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%'
-  },
-  textInput: {
-    width: '100%',
-    height: 100,
-    borderColor: 'gray',
-    borderWidth: 1
-  }
-});
