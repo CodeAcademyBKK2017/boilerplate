@@ -5,11 +5,12 @@
  */
 
 import React, {Component} from 'react';
+import TextAlign from './components/TextArea/TextArea.components';
 import {
   StyleSheet,
   View
 } from 'react-native';
-import TextAlign from './components/TextArea/TextArea.components';
+
 export default class App extends Component {
   render () {
     return (
