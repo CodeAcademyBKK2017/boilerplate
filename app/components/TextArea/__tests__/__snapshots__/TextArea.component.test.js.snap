@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextArea snapshot test 1`] = `
+<View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "green",
+        "fontSize": 20,
+        "textAlign": "left",
+      }
+    }
+  >
+    Content
+  </Text>
+  <TextInput
+    allowFontScaling={true}
+    onChangeText={undefined}
+    style={
+      Object {
+        "borderWidth": 5,
+        "height": 200,
+        "width": 300,
+      }
+    }
+  />
+</View>
+`;
