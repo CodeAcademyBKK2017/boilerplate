@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Footer.style';
 import {Text, View} from 'react-native';
