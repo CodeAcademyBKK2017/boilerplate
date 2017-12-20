@@ -1,4 +1,4 @@
-package com.yoapp;
+package com.notetaker;
 
 import android.app.Application;
 
