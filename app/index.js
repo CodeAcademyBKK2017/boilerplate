@@ -18,7 +18,7 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <Title/>
-        <Content/>
+        <Content style={styles.fill}/>
         <Footer/>
       </View>
     );
