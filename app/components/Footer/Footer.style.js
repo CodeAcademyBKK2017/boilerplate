@@ -14,7 +14,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  saveButton: {
+  saveButtonTouch: {
+    backgroundColor: '#eee',
+    paddingVertical: 10,
+    paddingHorizontal: 10
+  },
+  saveButtonContent: {
     // width: '100%'
   },
   charLength: {
