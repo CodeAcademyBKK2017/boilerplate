@@ -4,14 +4,16 @@ export default StyleSheet.create({
   welcome: {
     fontSize: 16,
     textAlign: 'center',
-    margin: 10
+    margin: 10,
+    fontStyle: 'italic'
   },
   textArea: {
     width: '100%',
     borderColor: 'gray',
     borderWidth: 1,
     backgroundColor: '#fff',
-    padding: 5
+    padding: 5,
+    color: '#ababab'
   },
   content: {
     flexDirection: 'row',
