@@ -4,7 +4,6 @@ export default StyleSheet.create({
   container: {
     width: '100%',
     flex: 1,
-    display: 'flex',
     paddingBottom: 10
   },
   title: {
@@ -13,17 +12,17 @@ export default StyleSheet.create({
     fontStyle: 'italic'
   },
   textInput: {
-    marginTop: 10,
-    marginBottom: 10,
+    flex: 1,
+
+    marginVertical: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 12,
+
     borderWidth: 1,
-    borderStyle: 'solid',
     borderColor: '#c4c4c5',
     borderRadius: 3,
-    flex: 1,
-    paddingTop: 15,
-    paddingBottom: 15,
-    paddingLeft: 12,
-    paddingRight: 12,
-    backgroundColor: '#ffffff'
+    
+    backgroundColor: '#ffffff',
+    textAlignVertical: 'top'
   }
 });

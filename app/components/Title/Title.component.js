@@ -9,7 +9,11 @@ import {
 const Title = () => (
   <View style={styles.container}>
     <Text style={styles.title}>Note Title</Text>
-    <TextInput placeholder='Title here!' style={styles.textInput} />
+    <TextInput placeholder='Title here!' 
+      style={styles.textInput} 
+      autoCorrect={false} 
+      underlineColorAndroid='transparent' 
+    />
   </View>
 );
 

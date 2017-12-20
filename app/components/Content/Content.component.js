@@ -13,6 +13,8 @@ const Content = () => (
       multiline={true}
       placeholder='Type here!'
       style={styles.textInput}
+      autoCorrect={false}
+      underlineColorAndroid='transparent'
     />
   </View>
 );
