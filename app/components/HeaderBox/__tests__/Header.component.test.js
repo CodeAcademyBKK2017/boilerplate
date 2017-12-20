@@ -3,7 +3,7 @@ import HeaderBox from '../HeaderBox.component';
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-describe('TextArea', () => {
+describe('HeaderBox', () => {
   it('renders correctly', () => {
     const tree = renderer.create(
       <HeaderBox />
@@ -11,7 +11,7 @@ describe('TextArea', () => {
     expect(tree).toBeDefined();
   });
 
-  it('TextArea: Should return TextArea', () => { // example to test class methods
+  it('HeaderBox: Should return TextArea', () => { // example to test class methods
     const tree = renderer.create(<HeaderBox />);
     expect(tree).toMatchSnapshot();
   });

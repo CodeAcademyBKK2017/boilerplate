@@ -12,12 +12,21 @@ import TitleBox from './components/TitleBox/TitleBox.component';
 import {View} from 'react-native';
 
 export default class App extends Component {
+
+  state =  {
+    text: ''
+  }
+
+  onChange = (v) => {
+    this.setState({text: v});
+  }
+
   render () {
     return (
       <View style={style.container}>
         <HeaderBox />
         <TitleBox />
-        <ContentBox />
+        <ContentBox count={this.state.text.length} onChange={this.onChange}/>
         <Footer />
       </View>
     );

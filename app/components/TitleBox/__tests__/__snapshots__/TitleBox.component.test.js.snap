@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TextArea TextArea: Should return TextArea 1`] = `
+exports[`TitleBox TitleBox: Should return TextArea 1`] = `
 <View
   style={
     Object {

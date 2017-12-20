@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TextArea TextArea: Should return TextArea 1`] = `
+exports[`ContentBox ContentBox: MatchSnapshot 1`] = `
 <View
   style={
     Object {
@@ -41,6 +41,7 @@ exports[`TextArea TextArea: Should return TextArea 1`] = `
   <TextInput
     allowFontScaling={true}
     multiline={true}
+    onChangeText={[Function]}
     placeholder="- Understand how react-native works.
 - Build a native android and iOS app.
 - Setup CI for automated builds.
@@ -87,7 +88,8 @@ exports[`TextArea TextArea: Should return TextArea 1`] = `
       allowFontScaling={true}
       ellipsizeMode="tail"
     >
-      150 chacters
+      0
+       chacters
     </Text>
   </View>
 </View>

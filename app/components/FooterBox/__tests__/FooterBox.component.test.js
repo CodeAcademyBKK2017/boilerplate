@@ -3,7 +3,7 @@ import FooterBox from '../FooterBox.component';
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-describe('TextArea', () => {
+describe('FooterBox', () => {
   it('renders correctly', () => {
     const tree = renderer.create(
       <FooterBox />
@@ -11,7 +11,7 @@ describe('TextArea', () => {
     expect(tree).toBeDefined();
   });
 
-  it('TextArea: Should return TextArea', () => { // example to test class methods
+  it('FooterBox: Should return TextArea', () => { // example to test class methods
     const tree = renderer.create(<FooterBox />);
     expect(tree).toMatchSnapshot();
   });

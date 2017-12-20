@@ -165,6 +165,7 @@ exports[`App getName: Should return Yo 1`] = `
     <TextInput
       allowFontScaling={true}
       multiline={true}
+      onChangeText={[Function]}
       placeholder="- Understand how react-native works.
 - Build a native android and iOS app.
 - Setup CI for automated builds.
@@ -211,7 +212,8 @@ exports[`App getName: Should return Yo 1`] = `
         allowFontScaling={true}
         ellipsizeMode="tail"
       >
-        150 chacters
+        0
+         chacters
       </Text>
     </View>
   </View>

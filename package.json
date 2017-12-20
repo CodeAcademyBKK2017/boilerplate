@@ -16,6 +16,7 @@
     "coverage": "jest --verbose --coverage && open ./coverage/lcov-report/index.html"
   },
   "dependencies": {
+    "lodash.noop": "^3.0.1",
     "react": "16.0.0",
     "react-native": "0.51.0"
   },
