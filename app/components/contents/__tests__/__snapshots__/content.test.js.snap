@@ -1,12 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Textarea Textarea: renders correctly 1`] = `
+exports[`Content Content: renders correctly 1`] = `
 <View
   style={
     Object {
-      "alignItems": "center",
       "backgroundColor": "#F5FCFF",
-      "flex": 1,
+      "flex": 9,
       "justifyContent": "center",
     }
   }
@@ -23,7 +22,7 @@ exports[`Textarea Textarea: renders correctly 1`] = `
       }
     }
   >
-    Content
+    Contents
   </Text>
   <TextInput
     allowFontScaling={true}
@@ -33,11 +32,10 @@ exports[`Textarea Textarea: renders correctly 1`] = `
         "borderColor": "gray",
         "borderRadius": 5,
         "borderWidth": 1,
-        "height": 150,
-        "width": 300,
+        "flexGrow": 1,
+        "width": 350,
       }
     }
-    value=""
   />
 </View>
 `;

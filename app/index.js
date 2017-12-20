@@ -4,14 +4,22 @@
  * @flow
  */
 
+import Content from './components/contents/content.component';
+import Footer from './components/footers/footer.component';
+import globalStyle from './index.style';
 import React, {Component} from 'react';
-import Textarea from './components/textareas/textarea.component';
+import Title from './components/titles/title.component';
+import {View} from 'react-native';
 
-export default class App extends Component<{}> {
+export default class App extends Component {
 
   render () {
     return (
-      <Textarea />
+      <View style={globalStyle.container}>
+        <Title/>  
+        <Content />
+        <Footer />
+      </View>
     );
   }
 }
