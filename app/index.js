@@ -12,8 +12,6 @@ import {
 } from 'react-native';
 
 export default class App extends Component {
-  getName = () => 'Yo'
-
   render () {
     return (
       <View style={styles.container}>
