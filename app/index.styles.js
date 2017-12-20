@@ -1,13 +1,13 @@
 import React, {StyleSheet} from 'react-native';
 
-// export default StyleSheet.create({}); //<===== what is this?
-module.exports = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    padding: 20
+    backgroundColor: '#e9e9ee',
+    padding: 10,
+    paddingTop: 30
   },
   title: {
     fontSize: 20,
