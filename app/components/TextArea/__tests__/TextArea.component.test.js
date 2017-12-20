@@ -1,19 +1,19 @@
 import 'react-native';
-import App from '../index';
 import React from 'react';
-
-// Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+import TextArea from '../TextArea.component';
 
-describe('App', () => {
+describe('TextArea', () => {
+    
   it('renders correctly', () => {
     const tree = renderer.create(
-      <App />
+      <TextArea />
     );
     expect(tree).toBeDefined();
   });
-  it('getName: Should return Yo', () => { // example to test class methods
-    const tree = renderer.create(<App />);
+
+  it('TextArea: Should return TextArea', () => { // example to test class methods
+    const tree = renderer.create(<TextArea />);
     expect(tree).toMatchSnapshot();
   });
 });

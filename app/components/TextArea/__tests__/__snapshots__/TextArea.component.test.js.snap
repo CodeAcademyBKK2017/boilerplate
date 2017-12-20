@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextArea TextArea: Should return TextArea 1`] = `
+<View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "color": "#333333",
+        "marginBottom": 5,
+        "textAlign": "center",
+      }
+    }
+  >
+    Content
+  </Text>
+  <TextInput
+    allowFontScaling={true}
+    multiline={true}
+    numberOfLines={4}
+    style={
+      Object {
+        "alignItems": "flex-start",
+        "borderColor": "gray",
+        "borderWidth": 1,
+        "height": 100,
+        "justifyContent": "flex-start",
+        "width": 180,
+      }
+    }
+    underlineColorAndroid="transparent"
+  />
+</View>
+`;
