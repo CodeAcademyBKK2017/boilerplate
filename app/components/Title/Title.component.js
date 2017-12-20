@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import styles from './Title.style';
 import {
-  Button,
   Text,
   TextInput,
   View
@@ -13,7 +12,7 @@ export default class Content extends Component {
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>Note Title</Text>
-          <Button style={styles.languageButton} title='en'/>
+          {/* <Button style={styles.languageButton} title='en' onPress={null}/> */}
         </View>
         
         <TextInput style={styles.textInput}/>

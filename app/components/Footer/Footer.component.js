@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import styles from './Footer.style';
 import {
-  Button,
   Text,
+  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -11,7 +11,9 @@ export default class Footer extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.status}>
-          <Button style={styles.saveButton} title='Save'/>
+          <TouchableOpacity>
+            <Text style={styles.saveButton}>Save</Text>
+          </TouchableOpacity>
           <Text style={styles.charLength}>150 characters</Text>
         </View>
       </View>
