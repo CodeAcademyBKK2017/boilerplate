@@ -40,6 +40,7 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     fontSize: 18,
-    fontWeight: '600'
+    fontWeight: '600',
+    borderRadius: 3
   }
 });

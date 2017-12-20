@@ -5,6 +5,7 @@ export default StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     margin: 10,
+
     fontStyle: 'italic'
   },
   textArea: {
@@ -13,7 +14,8 @@ export default StyleSheet.create({
     borderWidth: 1,
     backgroundColor: '#fff',
     padding: 5,
-    color: '#ababab'
+    color: '#ababab',
+    borderRadius: 3
   },
   content: {
     flexDirection: 'row',

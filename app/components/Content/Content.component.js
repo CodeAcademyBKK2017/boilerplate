@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Content.style';
 import {
@@ -18,6 +19,7 @@ class Content extends Component {
         <View style={styles.conArea}>
           <TextInput
             style={styles.textArea}
+            onChangeText = {this.props.Fn}
             multiline = {true}
             numberOfLines = {4}
             underlineColorAndroid = 'transparent'
@@ -28,11 +30,15 @@ class Content extends Component {
             <Text style={styles.note}>Save</Text>
           </View>
           <View style={styles.noteRight}>
-            <Text>150 chacters</Text>
+            <Text>{this.props.texts.length} chacters</Text>
           </View>
         </View>
       </View>
     );
   }
 }
+Content.propTypes = {
+  texts: PropTypes.string.isRequired,
+  Fn: PropTypes.func.isRequired
+};
 export default Content;

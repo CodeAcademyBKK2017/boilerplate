@@ -16,11 +16,14 @@ export default class App extends Component {
   state = {
     text: ''
   }
+  chacters = (t) => {
+    this.setState({text: t});
+  }
   render () {
     return (
       <View style={styles.container}>
         <Title />
-        <Content /> 
+        <Content texts={this.state.text} Fn={this.chacters}/> 
       </View>
     );
   }
