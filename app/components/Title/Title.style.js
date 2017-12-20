@@ -3,11 +3,6 @@ import {
 } from 'react-native';
   
 const titleStyles = StyleSheet.create({
-  container: {
-    marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
   inputBox: {
     minWidth: '100%',
     height: 30,
