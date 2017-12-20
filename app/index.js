@@ -1,12 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, {Component} from 'react';
+import styles from './index.styles';
 import {
-  StyleSheet,
   Text,
   TextInput,
   View
@@ -26,28 +20,3 @@ export default class App extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    padding: 20
-  },
-  title: {
-    fontSize: 20,
-    width: '100%'
-  },
-  textInput: {
-    width: '100%',
-    marginTop: 10,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: '#ccc',
-    borderRadius: 5,
-    height: 100,
-    padding: 12
-  }
-});
