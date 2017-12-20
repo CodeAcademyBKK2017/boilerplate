@@ -31,6 +31,7 @@ exports[`Title snapshot test 1`] = `
         "padding": 10,
       }
     }
+    underlineColorAndroid="transparent"
   />
 </View>
 `;

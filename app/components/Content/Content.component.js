@@ -8,7 +8,7 @@ export default class TextArea extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Please type your note below</Text>
-        <TextInput style={styles.textArea} multiline={true}/>
+        <TextInput style={styles.textArea} multiline={true} underlineColorAndroid='transparent'/>
       </View>
     );
   }

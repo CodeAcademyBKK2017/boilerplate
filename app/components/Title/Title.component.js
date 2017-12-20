@@ -8,7 +8,7 @@ export default class Title extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Note Title</Text>
-        <TextInput style={styles.textArea} />
+        <TextInput style={styles.textArea} underlineColorAndroid='transparent'/>
       </View>
     );
   }

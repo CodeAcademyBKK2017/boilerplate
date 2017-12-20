@@ -14,5 +14,10 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%'
+  },
+  touchable: {
+    backgroundColor: '#eee',
+    paddingVertical: 30,
+    paddingHorizontal: 80
   }
 });
