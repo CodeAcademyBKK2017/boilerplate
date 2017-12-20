@@ -12,14 +12,21 @@ import Title from './components/titles/title.component';
 import {View} from 'react-native';
 
 export default class App extends Component {
+  state = {
+    text: ''
+  }
+
+  Logger = (text) => {
+    this.setState({text});
+  }
 
   render () {
     return (
       <View style={globalStyle.container}>
         <Title/>  
-        <Content />
-        <Footer />
-      </View>
+        <Content FText={this.Logger} textState={this.state.text}/>
+        <Footer textState={this.state.text.length}/>
+      </View> 
     );
   }
 }

@@ -3,6 +3,7 @@
  * https://github.com/facebook/react-native
  * @flow
  */
+import ProptTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './footer.style';
 import {
@@ -11,12 +12,10 @@ import {
   View
 } from 'react-native';
 
-export default class Content extends Component {
-  state = {
-    text: ''
-  }
+export default class Footer extends Component {
 
   render () {
+    const {textState} = this.props;
     return (
       <View style={styles.container}>
         <TouchableOpacity>
@@ -25,9 +24,16 @@ export default class Content extends Component {
           </Text>
         </TouchableOpacity>
         <Text style={styles.Count}>
-            150 charector
+          {textState} chacters
         </Text> 
       </View>
     );
   }
 }
+Footer.propTypes = {
+  textState: ProptTypes.string.isRequired
+};
+  
+Footer.defaultProps = {
+  textState: ''
+};

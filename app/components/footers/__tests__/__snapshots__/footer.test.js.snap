@@ -63,7 +63,8 @@ exports[`Footer Footer: renders correctly 1`] = `
       }
     }
   >
-    150 charector
+    0
+     chacters
   </Text>
 </View>
 `;

@@ -3,6 +3,8 @@
  * https://github.com/facebook/react-native
  * @flow
  */
+import noop from 'lodash/noop';
+import ProptTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './content.style';
 import {
@@ -14,6 +16,7 @@ import {
 export default class Content extends Component {
 
   render () {
+    // const {FText, textState} = this.props;
     return (
       <View style={styles.container}>
         <Text style={styles.instructions}>
@@ -22,8 +25,20 @@ export default class Content extends Component {
         <TextInput
           style = {styles.textArea}
           multiline = {true}
+          onChangeText={this.props.FText}
+          value = {this.props.textState}
         />
       </View>
     );
   }
 }
+
+Content.propTypes = {
+  textState: ProptTypes.string.isRequired,
+  FText: ProptTypes.func.isRequired
+};
+
+Content.defaultProps = {
+  FText: noop,
+  textState: ''
+};

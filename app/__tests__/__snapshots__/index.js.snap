@@ -122,6 +122,7 @@ exports[`App App: renders correctly 1`] = `
     <TextInput
       allowFontScaling={true}
       multiline={true}
+      onChangeText={[Function]}
       style={
         Object {
           "backgroundColor": "#F5FCFF",
@@ -132,6 +133,7 @@ exports[`App App: renders correctly 1`] = `
           "width": 350,
         }
       }
+      value=""
     />
   </View>
   <View
@@ -196,7 +198,8 @@ exports[`App App: renders correctly 1`] = `
         }
       }
     >
-      150 charector
+      0
+       chacters
     </Text>
   </View>
 </View>

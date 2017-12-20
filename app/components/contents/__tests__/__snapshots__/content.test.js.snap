@@ -27,6 +27,7 @@ exports[`Content Content: renders correctly 1`] = `
   <TextInput
     allowFontScaling={true}
     multiline={true}
+    onChangeText={[Function]}
     style={
       Object {
         "backgroundColor": "#F5FCFF",
@@ -37,6 +38,7 @@ exports[`Content Content: renders correctly 1`] = `
         "width": 350,
       }
     }
+    value=""
   />
 </View>
 `;
