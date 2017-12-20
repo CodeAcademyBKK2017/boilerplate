@@ -12,7 +12,9 @@ const contentStyles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 20,
     backgroundColor: 'white',
-    flex: 1
+    flex: 1,
+    textAlignVertical: 'top',
+    padding: 10
   },
   fontTitle: {
     fontStyle: 'italic'

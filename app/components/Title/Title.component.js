@@ -13,7 +13,7 @@ class Title extends Component {
         <Text style={titleStyles.fontTitle}>
           Note Title
         </Text>
-        <TextInput style={titleStyles.inputBox} multiline = {true} underlineColorAndroid= 'transparent'/>
+        <TextInput style={titleStyles.inputBox} underlineColorAndroid= 'transparent'/>
       </View>
     );
   }
