@@ -1,5 +1,6 @@
 import footerStyle from './Footer.style';
 import noop from 'lodash/noop';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {
   Text,
@@ -19,9 +20,16 @@ export default class Footer extends Component {
           </Text>
         </TouchableOpacity>
         <Text style={footerStyle.textRight}>
-            150 chacters
+          {this.props.showNumber} chacters
         </Text>
       </View>
     );
   }
 }
+
+Footer.propTypes = {
+  showNumber: PropTypes.number.isRequired
+};
+Footer.defaultProps = {
+  showNumber: 0
+};

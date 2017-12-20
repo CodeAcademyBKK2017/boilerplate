@@ -14,21 +14,25 @@ import {
 } from 'react-native';
 
 export default class App extends Component {
-  render () {
-    return (
-      <View style={styles.boxMain}>
-        <Title/>
-        <Content/>
-        <Footer/>
-      </View>
-    );
-  }
+    state = {
+      count: 0
+    }
+    onType = (text) => {
+      this.setState({count: text.length});
+    }
+    render () {
+      return (
+        <View style={styles.boxMain}>
+          <Title/>
+          <Content onType={this.onType}/>
+          <Footer showNumber={this.state.count}/>
+        </View>
+      );
+    }
 }
 
 const styles = StyleSheet.create({
   boxMain: {
-    // justifyContent: 'center', 
-    // alignItems: 'center', 
     flex: 1
   }
 });
