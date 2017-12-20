@@ -12,14 +12,14 @@ import {
 } from 'react-native';
 
 export default class App extends Component<{}> {
-
-  render () {
-    return (
-      <View style={styles.boxMain}>
-        <TextArea/>
-      </View>
-    );
-  }
+    getName = () => 'Yo'
+    render () {
+      return (
+        <View style={styles.boxMain}>
+          <TextArea/>
+        </View>
+      );
+    }
 }
 
 const styles = StyleSheet.create({
