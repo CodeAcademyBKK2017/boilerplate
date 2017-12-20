@@ -1,20 +1,20 @@
 import 'react-native';
-import App from '../index';
 import React from 'react';
+import renderer from 'react-test-renderer';
 
 // Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
+import Textarea from '../textarea.component';
 // import {shallow} from 'enzyme';
 
-describe('App', () => {
+describe('Textarea', () => {
   it('renders correctly', () => {
     const tree = renderer.create(
-      <App />
+      <Textarea />
     );
     expect(tree).toBeDefined();
   });
-  it('App: renders correctly', () => {
-    const tree = renderer.create(<App />).toJSON();
+  it('Textarea: renders correctly', () => {
+    const tree = renderer.create(<Textarea />).toJSON();
     expect(tree).toMatchSnapshot();
   });
   
