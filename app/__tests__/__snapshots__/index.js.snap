@@ -5,7 +5,7 @@ exports[`App App: renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F5FCFF",
+      "backgroundColor": "rgb(233,233,238)",
       "flex": 1,
       "justifyContent": "center",
     }
@@ -14,7 +14,6 @@ exports[`App App: renders correctly 1`] = `
   <View
     style={
       Object {
-        "backgroundColor": "#F5FCFF",
         "flex": 1,
         "flexDirection": "column",
         "padding": 10,
@@ -27,7 +26,7 @@ exports[`App App: renders correctly 1`] = `
         Object {
           "flexDirection": "row",
           "justifyContent": "space-between",
-          "padding": 10,
+          "paddingTop": 15,
           "width": "100%",
         }
       }
@@ -36,6 +35,11 @@ exports[`App App: renders correctly 1`] = `
         accessible={true}
         allowFontScaling={true}
         ellipsizeMode="tail"
+        style={
+          Object {
+            "fontWeight": "bold",
+          }
+        }
       >
         Note Title
       </Text>
@@ -44,6 +48,7 @@ exports[`App App: renders correctly 1`] = `
         accessibilityLabel={undefined}
         accessibilityTraits={undefined}
         accessible={true}
+        collapsable={undefined}
         hasTVPreferredFocus={undefined}
         hitSlop={undefined}
         isTVSelectable={true}
@@ -56,12 +61,9 @@ exports[`App App: renders correctly 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
-              "backgroundColor": "transparent",
-            },
-            undefined,
-          ]
+          Object {
+            "opacity": 1,
+          }
         }
         testID={undefined}
         tvParallaxProperties={undefined}
@@ -85,6 +87,7 @@ exports[`App App: renders correctly 1`] = `
       multiline={true}
       style={
         Object {
+          "backgroundColor": "#F5FCFF",
           "borderColor": "gray",
           "borderWidth": 1,
           "height": 30,
@@ -96,7 +99,6 @@ exports[`App App: renders correctly 1`] = `
   <View
     style={
       Object {
-        "backgroundColor": "#F5FCFF",
         "flex": 9,
         "justifyContent": "center",
       }
@@ -109,18 +111,20 @@ exports[`App App: renders correctly 1`] = `
       style={
         Object {
           "color": "#333333",
+          "fontStyle": "italic",
           "marginBottom": 5,
           "textAlign": "left",
         }
       }
     >
-      Contents
+      Please type your note below.
     </Text>
     <TextInput
       allowFontScaling={true}
       multiline={true}
       style={
         Object {
+          "backgroundColor": "#F5FCFF",
           "borderColor": "gray",
           "borderRadius": 5,
           "borderWidth": 1,
@@ -141,20 +145,46 @@ exports[`App App: renders correctly 1`] = `
       }
     }
   >
-    <Text
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
       accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+      collapsable={undefined}
+      hasTVPreferredFocus={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "color": "black",
-          "fontWeight": "bold",
-          "textAlign": "left",
+          "opacity": 1,
         }
       }
+      testID={undefined}
+      tvParallaxProperties={undefined}
     >
-      Save
-    </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "black",
+            "fontWeight": "bold",
+            "textAlign": "left",
+          }
+        }
+      >
+        Save
+      </Text>
+    </View>
     <Text
       accessible={true}
       allowFontScaling={true}

@@ -4,7 +4,6 @@ exports[`Content Content: renders correctly 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": "#F5FCFF",
       "flex": 9,
       "justifyContent": "center",
     }
@@ -17,18 +16,20 @@ exports[`Content Content: renders correctly 1`] = `
     style={
       Object {
         "color": "#333333",
+        "fontStyle": "italic",
         "marginBottom": 5,
         "textAlign": "left",
       }
     }
   >
-    Contents
+    Please type your note below.
   </Text>
   <TextInput
     allowFontScaling={true}
     multiline={true}
     style={
       Object {
+        "backgroundColor": "#F5FCFF",
         "borderColor": "gray",
         "borderRadius": 5,
         "borderWidth": 1,
