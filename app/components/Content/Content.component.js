@@ -12,7 +12,7 @@ export default class Content extends Component {
     return (
       <View style={[styles.container, this.props.style]}>
         <Text style={styles.title}>Please type your note below</Text>
-        <TextInput style={styles.textInput} multiline={true}/>
+        <TextInput style={styles.textInput} multiline={true} underlineColorAndroid='transparent'/>
       </View>
     );
   }

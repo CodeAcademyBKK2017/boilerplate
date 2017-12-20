@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
     flex: 1,
     borderColor: 'gray',
     borderWidth: 1,
-    padding: 5
+    padding: 5,
+    textAlignVertical: 'top'
   }
 });
 

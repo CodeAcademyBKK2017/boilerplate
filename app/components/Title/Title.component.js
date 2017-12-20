@@ -15,7 +15,7 @@ export default class Content extends Component {
           {/* <Button style={styles.languageButton} title='en' onPress={null}/> */}
         </View>
         
-        <TextInput style={styles.textInput}/>
+        <TextInput style={styles.textInput} underlineColorAndroid='transparent'/>
       </View>
     );
   }
