@@ -19,5 +19,5 @@ export default class Content extends Component {
 }
 
 Content.propTypes = {
-  style: PropTypes.number
+  style: PropTypes.oneOfType([PropTypes.number, PropTypes.object])
 };
