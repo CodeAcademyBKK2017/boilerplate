@@ -4,9 +4,10 @@
  * @flow
  */
 
+import Content from './components/Content/Content.component.js';
 import React, {Component} from 'react';
-import styles from './Index.style';
-import TextArea from './components/TextArea/TextArea.component.js';
+import styles from './index.style';
+import Title from './components/Title/Title.component';
 import {
   View
 } from 'react-native';
@@ -18,7 +19,8 @@ export default class App extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <TextArea /> 
+        <Title />
+        <Content /> 
       </View>
     );
   }
