@@ -6,8 +6,8 @@
 
 import React, {Component} from 'react';
 import TextAlign from './components/TextArea/TextArea.components';
+import styles from './index.style';
 import {
-  StyleSheet,
   View
 } from 'react-native';
 
@@ -20,11 +20,3 @@ export default class App extends Component {
     );
   }
 }
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  }
-});
