@@ -5,6 +5,7 @@
  */
 
 import Content from './components/Content/Content.component';
+import Footer from './components/Footer/Footer.component';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
@@ -18,6 +19,7 @@ export default class App extends Component {
       <View style={styles.container}>
         <Title/>
         <Content/>
+        <Footer/>
       </View>
     );
   }
