@@ -6,8 +6,9 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#e9e9ee',
-    padding: 10,
-    paddingTop: Platform.OS === 'ios' ? 30 : 10
+    padding: 10
+    // paddingTop: Platform.OS === 'ios' ? 30 : 10
+
   },
   title: {
     fontSize: 20,

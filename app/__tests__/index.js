@@ -4,7 +4,7 @@ import React from 'react';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
-// import {shallow} from 'enzyme';
+import {shallow} from 'enzyme';
 
 describe('App', () => {
   it('renders correctly', () => {
@@ -14,10 +14,11 @@ describe('App', () => {
     expect(tree).toBeDefined();
   });
 
-  // it('getName: Should return Yo', () => { // example to test class methods
-  //   const props = {};
-  //   const wrapper = shallow(<App {...props}/>);
-  //   const instance = wrapper.instance();
-  //   expect(instance.getName()).toEqual('Yo');
-  // });
+  it('onChangeText: Should be count the current of string', () => { // example to test class methods
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+    instance.onChangeText('abcd');
+    expect(instance.state.characterCount).toBe(4);
+  });
 });

@@ -9,12 +9,22 @@ import {
 } from 'react-native';
 
 export default class App extends Component {
+  state = {
+    characterCount: 0
+  }
+
+  onChangeText = (e) => {
+    this.setState({
+      characterCount: e.length
+    });
+  }
+
   render () {
     return (
       <View style={styles.container}>
         <Title />
-        <Content />
-        <Footer />
+        <Content onChangeText={this.onChangeText} />
+        <Footer characterCount={this.state.characterCount}/>
       </View>
     );
   }
