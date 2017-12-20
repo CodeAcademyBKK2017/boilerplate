@@ -1,7 +1,9 @@
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import styles from './Foot.style';
 import {
-  StyleSheet,
   Text,
+  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -10,31 +12,17 @@ class Footer extends Component {
     return (
       <View style={styles.Foot}>
         <View style={styles.footerRow}>
-          
-          <Text style={styles.fonts}>Save</Text>
-          
-          <Text style={styles.footSave}>150 chacters</Text>
-          
+          <TouchableOpacity>
+            <Text style={styles.fonts}>Save</Text>
+          </TouchableOpacity>
+          <Text style={styles.footSave}>{this.props.texts.length} chacters</Text>
         </View>
       </View>
     );
   }
 }
-const styles = StyleSheet.create({
-  footerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  footSave: {
-    textAlign: 'right'
-  },
-  fonts: {
-    fontWeight: '600'
-  },
-  Foot: {
-    marginTop: 20,
-    marginBottom: 20
-  }
 
-});
+Footer.propTypes = {
+  texts: PropTypes.string.isRequired
+};
 export default Footer;
