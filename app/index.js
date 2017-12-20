@@ -13,19 +13,17 @@ import {View} from 'react-native';
 
 export default class App extends Component {
   state = {
-    data: '',
-    modalVisible: false
+    content: ''
   }
-  // showText  = (text) => {
-  //   this.setState({data: text});
-  // onChangeText={this.showText}
-  // }
+  changeText  = (text) => {
+    this.setState({content: text});
+  }
   render () {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} >
         <Title/>
-        <Content />
-        <Footer/>
+        <Content  onTextChange={this.changeText} />
+        <Footer characterCount={this.state.content.length}/>
       </View>
     );
   }

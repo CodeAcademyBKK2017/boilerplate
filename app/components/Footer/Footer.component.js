@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Footer.style';
 import Touchable from 'react-native-platform-touchable';
@@ -11,9 +11,11 @@ export default class Footer extends Component {
         <Touchable style={styles.touchable} background={Touchable.Ripple('blue')} activeOpacity={1}>
           <Text style={styles.textBold}>Save</Text>
         </Touchable>
-        <Text style={styles.text}>150 characters</Text>
+        <Text style={styles.text}>{this.props.characterCount} characters</Text>
       </View>
     );
   }
-
 }
+Footer.propTypes = {
+  characterCount: PropTypes.number
+};
