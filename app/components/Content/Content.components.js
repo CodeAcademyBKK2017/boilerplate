@@ -1,42 +1,50 @@
 import React, {Component} from 'react';
 import {
+
   StyleSheet,
   Text,
   TextInput,
   View
 } from 'react-native';
 
-class TextArea extends Component {
+class Content extends Component {
   render () {
     return (
-      <View>
+      <View style={styles.conView}>
         <Text style={styles.welcome}>
-                Please enter note here
+         Please type your note below
         </Text>
         <TextInput
           style={styles.textin}
           // onChangeText={this.state.nans}
           multiline = {true}
           underlineColorAndroid = 'transparent'
-          numberOfLines = {4}
-          value = ''
+          numberOfLines = {4}   
+          placeholder='-Understand how react-native works.'
         />
-
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
   welcome: {
-    fontSize: 20,
-    textAlign: 'center',
+    fontSize: 12,
+    // textAlign: 'center',
     margin: 10
+   
+  },
+  conView: {
+    flex: 1,
+    marginTop: 10
   },
   textin: {
-    width: 250,
-    height: 100,
+    // width: 300,
+    // height: 300,
     borderColor: 'gray',
-    borderWidth: 1
+    borderWidth: 1,
+    flex: 1,
+    backgroundColor: '#fff'
+
   }
 });
-export default TextArea;
+export default Content;

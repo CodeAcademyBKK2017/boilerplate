@@ -4,9 +4,11 @@
  * @flow
  */
 
+import Content from './components/Content/Content.components';
+import Footer from './components/Footer/Footer.components';
 import React, {Component} from 'react';
 import styles from './index.style';
-import TextAlign from './components/TextArea/TextArea.components';
+import Title from './components/Title/Title.components';
 import {
   View
 } from 'react-native';
@@ -15,7 +17,9 @@ export default class App extends Component {
   render () {
     return (
       <View style={styles.container}>  
-        <TextAlign/>
+        <Title/>
+        <Content/>
+        <Footer/>
       </View>
     );
   }
