@@ -13,7 +13,7 @@ describe('App', () => {
     );
     expect(tree).toBeDefined();
   });
-  it('getName: Should return Yo', () => { // example to test class methods
+  xit('getName: Should return Yo', () => { // example to test class methods
     const props = {};
     const wrapper = shallow(<App {...props}/>);
     const instance = wrapper.instance();

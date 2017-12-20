@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import styles from './TextArea.style.js';
-import {Text, TextInput, View} from 'react-native';
+import {
+  Text
+  , TextInput
+  , View
+} from 'react-native';
 
 class TextArea extends Component {
   render () {
