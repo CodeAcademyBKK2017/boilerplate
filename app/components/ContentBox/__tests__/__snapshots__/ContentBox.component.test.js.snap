@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextArea TextArea: Should return TextArea 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+      "paddingLeft": 10,
+      "paddingRight": 10,
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "flexDirection": "row",
+        "paddingBottom": 15,
+        "paddingTop": 15,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#333333",
+          "flex": 1,
+          "fontStyle": "italic",
+          "justifyContent": "flex-start",
+        }
+      }
+    >
+      Please type your note below
+    </Text>
+  </View>
+  <TextInput
+    allowFontScaling={true}
+    multiline={true}
+    placeholder="- Understand how react-native works.
+- Build a native android and iOS app.
+- Setup CI for automated builds.
+- Conventions to manage the codebase."
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "white",
+        "borderColor": "gray",
+        "borderRadius": 3,
+        "borderWidth": 1,
+        "flex": 1,
+        "justifyContent": "flex-start",
+        "padding": 10,
+        "width": "100%",
+      }
+    }
+    underlineColorAndroid="transparent"
+  />
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "paddingBottom": 15,
+        "paddingTop": 15,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "flex": 1,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Save
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+    >
+      150 chacters
+    </Text>
+  </View>
+</View>
+`;

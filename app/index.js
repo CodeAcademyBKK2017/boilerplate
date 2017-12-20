@@ -3,17 +3,22 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
+import ContentBox from './components/ContentBox/ContentBox.component';
+import Footer from './components/FooterBox/FooterBox.component';
+import HeaderBox from './components/HeaderBox/HeaderBox.component';
 import React, {Component} from 'react';
-import Styles from './index.style';
-import TextArea from './components/TextArea/TextArea.component';
+import style from './index.style';
+import TitleBox from './components/TitleBox/TitleBox.component';
 import {View} from 'react-native';
 
 export default class App extends Component {
   render () {
     return (
-      <View style={Styles.container}>
-        <TextArea />
+      <View style={style.container}>
+        <HeaderBox />
+        <TitleBox />
+        <ContentBox />
+        <Footer />
       </View>
     );
   }
