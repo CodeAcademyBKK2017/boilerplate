@@ -19,7 +19,6 @@ class TextArea extends Component {
           multiline = {true}
           numberOfLines = {4}
           underlineColorAndroid = 'transparent'
-          value = ''
         />
       </View>
     );

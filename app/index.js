@@ -5,9 +5,9 @@
  */
 
 import React, {Component} from 'react';
+import styles from './Index.style';
 import TextArea from './components/TextArea/TextArea.component.js';
 import {
-  StyleSheet,
   View
 } from 'react-native';
 
@@ -15,8 +15,6 @@ export default class App extends Component {
   state = {
     text: ''
   }
-  getName = () => 'Yo'
-
   render () {
     return (
       <View style={styles.container}>
@@ -26,11 +24,3 @@ export default class App extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  }
-});
