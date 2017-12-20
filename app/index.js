@@ -4,28 +4,31 @@
  * @flow
  */
 
+import Content from './components/Content/Content.component';
+import Footer from './components/Footer/Footer.component';
 import React, {Component} from 'react';
-import TextArea from './components/TextArea/TextArea.component';
+import Title from './components/Title/Title.component';
 import {
   StyleSheet,
   View
 } from 'react-native';
 
-export default class App extends Component<{}> {
-    getName = () => 'Yo'
-    render () {
-      return (
-        <View style={styles.boxMain}>
-          <TextArea/>
-        </View>
-      );
-    }
+export default class App extends Component {
+  render () {
+    return (
+      <View style={styles.boxMain}>
+        <Title/>
+        <Content/>
+        <Footer/>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   boxMain: {
-    justifyContent: 'center', 
-    alignItems: 'center', 
+    // justifyContent: 'center', 
+    // alignItems: 'center', 
     flex: 1
   }
 });
