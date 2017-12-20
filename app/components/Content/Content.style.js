@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     padding: 5,
-    textAlignVertical: 'top'
+    textAlignVertical: 'top',
+    backgroundColor: 'white'
   }
 });
 
