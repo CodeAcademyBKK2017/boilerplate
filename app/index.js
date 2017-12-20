@@ -10,20 +10,15 @@ import {
   View
 } from 'react-native';
 import TextAlign from './components/TextArea/TextArea.components';
-
-
 export default class App extends Component {
   render () {
     return (
-      <View style={styles.container}>
-        
+      <View style={styles.container}>  
         <TextAlign/>
-      
       </View>
     );
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
