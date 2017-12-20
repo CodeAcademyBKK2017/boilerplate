@@ -1,13 +1,16 @@
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
+  container: {
+    flex: 1
+  },
   text: {
     fontStyle: 'italic'
   },
   textinput: {
-    height: 100,
-    minWidth: '100%',
+    textAlignVertical: 'top',
     borderColor: 'gray',
-    borderWidth: 1
+    borderWidth: 1,
+    flex: 1
   }
 });

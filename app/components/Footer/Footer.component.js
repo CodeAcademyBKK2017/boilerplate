@@ -3,6 +3,7 @@ import styles from './Footer.style.js';
 import {
   Button
   , Text
+  , TouchableOpacity
   , View
 } from 'react-native';
 
@@ -13,7 +14,9 @@ class Footer extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <Button style={styles.saveButton} title='Save' onPress={this.saveAction} />
+        <TouchableOpacity onPress={this.saveAction}>
+          <Text style={styles.saveButton}>Save</Text>
+        </TouchableOpacity>
         <Text style={styles.countLabel}>chracters</Text>
       </View>
     );

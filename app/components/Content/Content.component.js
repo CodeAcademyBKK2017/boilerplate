@@ -9,10 +9,11 @@ import {
 class Content extends Component {
   render () {
     return (
-      <View>
+      <View style={styles.container}>
         <Text style={styles.text}>Please type your note below</Text>
         <TextInput
           style={styles.textinput}
+          underlineColorAndroid='transparent'
           multiline = {true}
         />
       </View>

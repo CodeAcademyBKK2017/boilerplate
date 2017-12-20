@@ -13,6 +13,7 @@ class Title extends Component {
         <Text style={styles.text}>Note Title</Text>
         <TextInput
           style={styles.textinput}
+          underlineColorAndroid='transparent'
         />
       </View>
     );

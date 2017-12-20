@@ -23,6 +23,7 @@ exports[`Title renders correctly 1`] = `
         "minWidth": "100%",
       }
     }
+    underlineColorAndroid="transparent"
   />
 </View>
 `;

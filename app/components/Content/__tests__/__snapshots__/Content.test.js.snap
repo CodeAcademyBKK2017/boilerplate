@@ -1,7 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Content renders correctly 1`] = `
-<View>
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
   <Text
     accessible={true}
     allowFontScaling={true}
@@ -21,10 +27,11 @@ exports[`Content renders correctly 1`] = `
       Object {
         "borderColor": "gray",
         "borderWidth": 1,
-        "height": 100,
-        "minWidth": "100%",
+        "flex": 1,
+        "textAlignVertical": "top",
       }
     }
+    underlineColorAndroid="transparent"
   />
 </View>
 `;
