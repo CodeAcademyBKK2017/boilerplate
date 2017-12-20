@@ -10,8 +10,8 @@ export default class Content extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <Text>Content</Text>
-        <TextInput style={styles.textInput} placeholder='Type here'/>
+        <Text style={styles.title}>Please type your note below</Text>
+        <TextInput style={styles.textInput} multiline={true}/>
       </View>
     );
   }
