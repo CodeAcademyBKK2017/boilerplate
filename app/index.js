@@ -4,10 +4,10 @@
  * @flow
  */
 
+import Content from './components/Content/Content.component';
 import React, {Component} from 'react';
-import TextArea from './components/TextArea/TextArea.component';
+import styles from './index.style';
 import {
-  StyleSheet,
   View
 } from 'react-native';
 
@@ -15,18 +15,8 @@ export default class App extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <TextArea/>
+        <Content/>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    padding: 10
-  }
-});

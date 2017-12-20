@@ -1,14 +1,14 @@
 import 'react-native';
+import Content from '../Content.component';
 import React from 'react';
-import renderer from 'react-test-renderer';
 
 // Note: test renderer must be required after react-native.
-import TextArea from '../TextArea.component';
+import renderer from 'react-test-renderer';
 
-describe('TextArea', () => {
+describe('Content', () => {
   it('renders correctly', () => {
     const tree = renderer.create(
-      <TextArea />
+      <Content />
     );
     expect(tree).toBeDefined();
   });
