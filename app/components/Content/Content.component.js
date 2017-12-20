@@ -1,3 +1,5 @@
+import noop from 'lodash/noop';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Content.style.js';
 import {
@@ -14,11 +16,19 @@ class Content extends Component {
         <TextInput
           style={styles.textinput}
           underlineColorAndroid='transparent'
-          multiline = {true}
+          multiline={true}
+          onChangeText={this.props.onKeyPress}
         />
       </View>
     );
   }
 }
+
+Content.propTypes = {
+  onKeyPress: PropTypes.func
+};
+Content.defaultProps = {
+  onKeyPress: noop
+};
 
 export default Content;

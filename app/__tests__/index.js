@@ -13,10 +13,18 @@ describe('App', () => {
     );
     expect(tree).toBeDefined();
   });
-  xit('getName: Should return Yo', () => { // example to test class methods
+  it('onKeyPress: Success', () => {
     const props = {};
     const wrapper = shallow(<App {...props}/>);
     const instance = wrapper.instance();
-    expect(instance.getName()).toEqual('Yo');
+    instance.onKeyPress('123 45');
+    expect(instance.state.countContentCharacters).toEqual(6);
+  });
+  it('onKeyPress: Failure', () => {
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+    instance.onKeyPress('123 45');
+    expect(instance.state.countContentCharacters).not.toEqual(3);
   });
 });

@@ -7,6 +7,7 @@ export default StyleSheet.create({
   textinput: {
     minWidth: '100%',
     borderColor: 'gray',
-    borderWidth: 1
+    borderWidth: 1,
+    padding: 5
   }
 });

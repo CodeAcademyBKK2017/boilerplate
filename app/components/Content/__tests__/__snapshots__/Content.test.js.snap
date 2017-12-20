@@ -23,11 +23,13 @@ exports[`Content renders correctly 1`] = `
   <TextInput
     allowFontScaling={true}
     multiline={true}
+    onChangeText={[Function]}
     style={
       Object {
         "borderColor": "gray",
         "borderWidth": 1,
         "flex": 1,
+        "padding": 5,
         "textAlignVertical": "top",
       }
     }

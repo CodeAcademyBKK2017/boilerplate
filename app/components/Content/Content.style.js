@@ -11,6 +11,7 @@ export default StyleSheet.create({
     textAlignVertical: 'top',
     borderColor: 'gray',
     borderWidth: 1,
+    padding: 5,
     flex: 1
   }
 });
