@@ -4,7 +4,8 @@ import {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%'
+    width: '100%',
+    flex: 1
   },
   title: {
     paddingVertical: 10,
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     width: '100%',
-    minHeight: 100,
+    flex: 1,
     borderColor: 'gray',
     borderWidth: 1,
     padding: 5

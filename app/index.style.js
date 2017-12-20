@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     backgroundColor: '#F5FCFF',
     padding: 10
+  },
+  fill: {
+    flex: 1
   }
 });
 
