@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Title snapshot test 1`] = `
+<View
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 20,
+        "fontWeight": "bold",
+        "paddingVertical": 10,
+        "textAlign": "left",
+      }
+    }
+  >
+    Note Title
+  </Text>
+  <TextInput
+    allowFontScaling={true}
+    style={
+      Object {
+        "borderWidth": 1,
+        "padding": 10,
+      }
+    }
+  />
+</View>
+`;

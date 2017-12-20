@@ -4,36 +4,30 @@
  * @flow
  */
 
+import Content from './components/Content/Content.component';
+import Footer from './components/Footer/Footer.component';
 import React, {Component} from 'react';
-import TextArea from './components/TextArea/TextArea.component';
-import {
-  StyleSheet,
-  View
-} from 'react-native';
+import styles from './index.style';
+import Title from './components/Title/Title.component';
+import {View} from 'react-native';
 
 export default class App extends Component {
   state = {
     data: '',
     modalVisible: false
   }
-  getName = () => 'Yo'
-  showText  = (text) => {
-    this.setState({data: text});
-  }
+  // showText  = (text) => {
+  //   this.setState({data: text});
+  // onChangeText={this.showText}
+  // }
   render () {
     return (
       <View style={styles.container}>
-        <TextArea onChangeText={this.showText}/>
+        <Title/>
+        <Content />
+        <Footer/>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  }
-});

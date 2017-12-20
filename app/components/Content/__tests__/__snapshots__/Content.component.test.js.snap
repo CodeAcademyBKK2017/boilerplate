@@ -1,29 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TextArea snapshot test 1`] = `
-<View>
+exports[`Content snapshot test 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+      "width": "100%",
+    }
+  }
+>
   <Text
     accessible={true}
     allowFontScaling={true}
     ellipsizeMode="tail"
     style={
       Object {
-        "color": "green",
-        "fontSize": 20,
+        "fontSize": 15,
+        "paddingVertical": 10,
         "textAlign": "left",
       }
     }
   >
-    Content
+    Please type your note below
   </Text>
   <TextInput
     allowFontScaling={true}
-    onChangeText={undefined}
+    multiline={true}
     style={
       Object {
-        "borderWidth": 5,
-        "height": 200,
-        "width": 300,
+        "borderWidth": 1,
+        "flex": 1,
+        "padding": 10,
       }
     }
   />

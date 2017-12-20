@@ -2,13 +2,16 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   textArea: {
-    width: 300,
-    height: 200,
-    borderWidth: 5
+    padding: 10,
+    borderWidth: 1
   },
   text: {
-    color: 'red',
+    paddingVertical: 10,
+    fontWeight: 'bold',
     fontSize: 20,
     textAlign: 'left'
+  },
+  container: {
+    width: '100%'
   }
 });
