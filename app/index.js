@@ -13,17 +13,18 @@ import {
 } from 'react-native';
 
 export default class App extends Component {
+
   state = {
     text: ''
   }
-  chacters = (t) => {
-    this.setState({text: t});
-  }
+
+  onCount = (v) => this.setState({text: v});
+
   render () {
     return (
       <View style={styles.container}>
         <Title />
-        <Content texts={this.state.text} Fn={this.chacters}/> 
+        <Content texts={this.state.text} Fn={this.onCount}/> 
       </View>
     );
   }
