@@ -14,12 +14,22 @@ import {
 } from 'react-native';
 
 export default class App extends Component {
+  state = {
+    textContent: ''
+  }
+
+  onChangeTextContent = (text) => {
+    this.setState({
+      textContent: text
+    });
+  }
+
   render () {
     return (
       <View style={styles.container}>
         <Title/>
-        <Content style={styles.fill}/>
-        <Footer/>
+        <Content style={styles.fill} onChangeTextContent={this.onChangeTextContent}/>
+        <Footer textContent={this.state.textContent}/>
       </View>
     );
   }

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Footer.style';
 import Touchable from 'react-native-platform-touchable';
@@ -14,9 +15,17 @@ export default class Footer extends Component {
           <Touchable style={styles.saveButtonTouch} background={Touchable.Ripple('blue')}>
             <Text style={styles.saveButtonContent}>Save</Text>
           </Touchable>
-          <Text style={styles.charLength}>150 characters</Text>
+          <Text style={styles.charLength}>{this.props.textContent.length} characters</Text>
         </View>
       </View>
     );
   }
 }
+
+Footer.propTypes = {
+  textContent: PropTypes.string.isRequired
+};
+
+Footer.defaultProps = {
+  textContent: ''
+};
