@@ -11,12 +11,7 @@ import React, {Component} from 'react';
 import style from './index.style';
 import TitleBox from './components/TitleBox/TitleBox.component';
 import {
-  View,
-  FlatList,
-  Text,
-  TouchableOpacity,
-  Modal,
-  TouchableWithoutFeedback
+  View
 } from 'react-native';
 
 export default class App extends Component {

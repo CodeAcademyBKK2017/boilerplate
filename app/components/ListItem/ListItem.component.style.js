@@ -27,6 +27,6 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(37, 8, 10, 0.78)',
+    backgroundColor: 'rgba(37, 8, 10, 0.78)'
   }
 });
