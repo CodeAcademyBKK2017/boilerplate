@@ -13,8 +13,6 @@ import {
   View
 } from 'react-native';
 
-const replaceIndex = (array, index, replaceWith) => [...array.slice(0, index), replaceWith, ...array.slice(index + 1, array.length)];
-
 export default class App extends Component {
     state = {
       count: 0,
@@ -39,7 +37,7 @@ export default class App extends Component {
           inputTitle: '',
           inputContent: ''
         }, () => {
-          console.log('note: ', this.state.note);
+        //   console.log('note: ', this.state.note);
         });
     }
     render () {

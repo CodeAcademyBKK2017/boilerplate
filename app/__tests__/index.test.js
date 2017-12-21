@@ -20,17 +20,34 @@ describe('App', () => {
   //     expect(instance.getName()).toEqual('Yo');
   //   });
 
-  it('renders onType true', () => {
+  it('renders onTypeContent true', () => {
     const wrapper = shallow(<App/>);
     const instance = wrapper.instance();
-    instance.onType('test');
+    instance.onTypeContent('test');
     expect(4).toEqual(instance.state.count);
+    expect('test').toEqual(instance.state.inputContent);
   });
 
-  it('renders onType false', () => {
+  it('renders onTypeContent false', () => {
     const wrapper = shallow(<App/>);
     const instance = wrapper.instance();
-    instance.onType('test');
+    instance.onTypeContent('test');
     expect(2).not.toEqual(instance.state.count);
+    expect('test11').not.toEqual(instance.state.inputContent);
+  });
+
+  it('renders onTypeTitle true', () => {
+    const wrapper = shallow(<App/>);
+    const instance = wrapper.instance();
+    instance.onTypeTitle('test');
+    expect('test').toEqual(instance.state.inputTitle);
+  });
+
+  it('renders onSaveNote true', () => {
+    const wrapper = shallow(<App/>);
+    const instance = wrapper.instance();
+    instance.setState({'inputTitle': 't1', 'inputContent': 't2'});
+    instance.onSaveNote();
+    expect([{'title': 't1', 'content': 't2'}]).toMatchObject(instance.state.note);
   });
 });
