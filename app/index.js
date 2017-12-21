@@ -22,7 +22,7 @@ export default class App extends Component {
   _renderItem = (args) => 
     <View>
       <Text style={styles.text}>{args.item.title}</Text>
-      <Text>-{args.item.text}</Text>
+      <Text>{args.item.text}</Text>
     </View>
   state ={
     text: '',
