@@ -24,5 +24,9 @@ export default StyleSheet.create({
     borderRadius: 5,
     height: 100,
     padding: 12
+  },
+  list: {
+    flex: 1,
+    width: '100%'
   }
 });

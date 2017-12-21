@@ -25,6 +25,14 @@ describe('App', () => {
     expect(instance.state.currentContent).toBe('Content');
 
     instance.onSaveButtonPress();
-    expect(instance.state.notes).toEqual([{title: 'Title', content: 'Content'}]);
+    expect(instance.state).toEqual({
+      currentTitle: '',
+      currentContent: '',
+      notes: [{
+        title: 'Title', 
+        content: 'Content'
+      }]
+    });
+    
   });
 });
