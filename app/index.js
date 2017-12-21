@@ -35,7 +35,11 @@ export default class App extends Component {
     );
   }
   _keyExtractor = (item) => item.unique;
-  _renderItem = (args) => <Text style={styles.flatText}>{args.item.title}</Text>
+  _renderItem = (args) => 
+    <View>
+      <Text style={styles.flatText}>{args.item.title}</Text>
+      <Text>{args.item.content}</Text>
+    </View>
   render () {
     return (
       <View style={styles.container}>
@@ -43,13 +47,15 @@ export default class App extends Component {
         <Content texts={this.state.text} Fn={this.onCount}
           FnSave={this.saveNote}/>
         <Text style={styles.flatTitle}>Notes:</Text>
-        <FlatList
-          style={styles.flat}
-          data={this.state.NOTES}
-          extraData={this.state}
-          renderItem={this._renderItem}
-          keyExtractor={this._keyExtractor}
-        />
+        <View style={styles.conFlat}>
+          <FlatList
+            style={styles.flat}
+            data={this.state.NOTES}
+            extraData={this.state}
+            renderItem={this._renderItem}
+            keyExtractor={this._keyExtractor}
+          />
+        </View>
       </View>
     );
   }

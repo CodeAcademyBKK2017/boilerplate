@@ -15,7 +15,7 @@ export default StyleSheet.create({
     padding: 5,
     color: '#ababab',
     borderRadius: 3,
-    height: 300
+    height: 200
   },
   content: {
     flexDirection: 'row',

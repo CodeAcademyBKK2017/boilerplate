@@ -49,7 +49,7 @@ it('Check Function _keyExtractor', () => {
 it('rendersItem correctly', () => {
   const wrapper = shallow(<App/>);
   const instance = wrapper.instance();
-  const item = {title: 'title', uuid: '1'};
+  const item = {title: 'title', content: 'content', uuid: '1'};
   const snapshot = instance._renderItem({item});
   expect(snapshot).toMatchSnapshot();
 });

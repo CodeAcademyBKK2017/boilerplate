@@ -14,18 +14,19 @@ export default StyleSheet.create({
   },
   conFlat: {
     flex: 1,
-    flexDirection: 'column',
+    flexDirection: 'row',
     marginLeft: 30,
     marginRight: 30
   },
   flatText: {
-    padding: 3
+    padding: 3,
+    fontWeight: '700'
   },
   flatTitle: {
     fontWeight: '700'
   },
   flat: {
-    flex: 1,
-    flexDirection: 'row'
+    flex: 0,
+    backgroundColor: '#eee'
   }
 });
