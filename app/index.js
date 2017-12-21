@@ -46,7 +46,7 @@ export default class App extends Component {
       <this.WrapperView style={styles.container} behavior={'padding'} >
         <Title onTitleChange={this.changeTitle}/>
         <Content  onContentChange={this.changeContent} />
-        <Footer characterCount={this.state.content.count} onPressSave={this.onSave} />
+        <Footer characterCount={this.state.content.length} onPressSave={this.onSave} />
         <Note noteList={this.state.note} />
       </this.WrapperView>
     );
