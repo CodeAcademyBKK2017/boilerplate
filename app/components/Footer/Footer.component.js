@@ -1,3 +1,4 @@
+import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
 import React from 'react';
 import styles from './Footer.styles';
@@ -8,10 +9,10 @@ import {
   View
 } from 'react-native';
 
-const Footer = ({characterCount}) => (
+const Footer = ({characterCount, onSaveButtonPress}) => (
   <View style={styles.container}>
   
-    <Touchable>
+    <Touchable onPress={onSaveButtonPress}>
       <Text style={styles.saveButton}>Save</Text>
     </Touchable>
         
@@ -20,10 +21,12 @@ const Footer = ({characterCount}) => (
 );
 
 Footer.propTypes = {
+  onSaveButtonPress: PropTypes.func,
   characterCount: PropTypes.number.isRequired
 };
 
 Footer.defaultTypes = {
+  onSaveButtonPress: noop,
   characterCount: 0
 };
 

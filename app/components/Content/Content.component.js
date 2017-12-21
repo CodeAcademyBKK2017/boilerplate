@@ -8,10 +8,11 @@ import {
   View
 } from 'react-native';
 
-const Content = ({onChangeText}) => (
+const Content = ({onChangeText, value}) => (
   <View style={styles.container}>
     <Text style={styles.title}>Plase type your note below</Text>
     <TextInput
+      value={value}
       multiline={true}
       placeholder='Type here!'
       style={styles.textInput}
@@ -23,11 +24,13 @@ const Content = ({onChangeText}) => (
 );
 
 Content.propTypes = {
-  onChangeText: PropTypes.func
+  onChangeText: PropTypes.func,
+  value: PropTypes.string
 };
 
 Content.defaultTypes = {
-  onChangeText: noop
+  onChangeText: noop,
+  value: ''
 };
 
 export default Content;
