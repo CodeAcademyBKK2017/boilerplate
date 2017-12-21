@@ -15,16 +15,28 @@ import {
 export default class App extends Component {
 
   state = {
-    text: ''
+    title: '',
+    text: '',
+    NOTES: []
   }
 
   onCount = (v) => this.setState({text: v});
+  onTitle = (v) => this.setState({title: v});
+  saveNote = () => {
+    const data = {'title': this.state.title, 'content': this.state.text};
+    const newNotes = [...this.state.NOTES, data];
+    this.setState(
+      {title: '', text: '', 'NOTES': newNotes}, () => {
+        console.log(this.state);
+      }
+    );
+  }
 
   render () {
     return (
       <View style={styles.container}>
-        <Title />
-        <Content texts={this.state.text} Fn={this.onCount}/> 
+        <Title titles={this.onTitle} textTitle={this.state.title}/>
+        <Content texts={this.state.text} Fn={this.onCount} FnSave={this.saveNote}/> 
       </View>
     );
   }

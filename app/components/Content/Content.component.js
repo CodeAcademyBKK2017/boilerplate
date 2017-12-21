@@ -4,6 +4,7 @@ import styles from './Content.style';
 import {
   Text,
   TextInput,
+  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -23,11 +24,15 @@ class Content extends Component {
             multiline = {true}
             numberOfLines = {4}
             underlineColorAndroid = 'transparent'
+            value = {this.props.texts}
           />
         </View>
         <View style={styles.title}>
           <View style={styles.noteLeft}>
-            <Text style={styles.note}>Save</Text>
+            <TouchableOpacity
+              onPress={this.props.FnSave}>
+              <Text style={styles.note}>Save</Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.noteRight}>
             <Text>{this.props.texts.length} chacters</Text>
@@ -39,6 +44,7 @@ class Content extends Component {
 }
 Content.propTypes = {
   texts: PropTypes.string.isRequired,
-  Fn: PropTypes.func.isRequired
+  Fn: PropTypes.func.isRequired,
+  FnSave: PropTypes.func.isRequired
 };
 export default Content;

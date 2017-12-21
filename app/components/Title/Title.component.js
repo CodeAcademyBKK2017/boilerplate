@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Title.style';
 import {
@@ -24,11 +25,17 @@ class Title extends Component {
         <View style={styles.boxArea}>
           <TextInput
             style={styles.textArea}
+            onChangeText = {this.props.titles}
             underlineColorAndroid = 'transparent'
+            value = {this.props.textTitle}
           />
         </View>
       </View>
     );
   }
 }
+Title.propTypes = {
+  titles: PropTypes.func.isRequired,
+  textTitle: PropTypes.string.isRequired
+};
 export default Title;
