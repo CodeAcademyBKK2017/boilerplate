@@ -7,7 +7,7 @@ import Title from '../Title.component';
 describe('Title', () => {
   it('renders correctly', () => {
     const tree = renderer.create(
-      <Title />
+      <Title value={''} />
     );
     expect(tree).toBeDefined();
   });

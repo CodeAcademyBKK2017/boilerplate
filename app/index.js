@@ -1,7 +1,6 @@
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import React, {Component} from 'react';
-import ReplaceArrayIndex from 'replace-array-index';
 import styles from './index.styles';
 import Title from './components/Title/Title.component';
 
@@ -11,41 +10,34 @@ import {
 
 export default class App extends Component {
   state = {
-    characterCount: 0,
     currentTitle: '',
     currentContent: '',
     notes: []
   }
 
-  onTitleChangeText = (value) => {
-    this.setState({
-      currentTitle: value
-    });
+  onTitleChangeText = (currentTitle) => {
+    this.setState({currentTitle});
   }
 
-  onContentChangeText = (value) => {
-    this.setState({
-      currentContent: value,
-      characterCount: value.length
-    });
+  onContentChangeText = (currentContent) => {
+    this.setState({currentContent});
   }
 
   onSaveButtonPress = () => {
     const {notes, currentTitle, currentContent} = this.state;
-    const note = {
+    const newNotes = [...notes];
+
+    newNotes.push({
       title: currentTitle,
       content: currentContent
-    };
-
-    const newNotes = ReplaceArrayIndex(notes, notes.length, note);
+    });
 
     console.log(newNotes);
 
     this.setState({
       notes: newNotes,
       currentTitle: '',
-      currentContent: '',
-      characterCount: 0
+      currentContent: ''
     });
   }
 
@@ -54,7 +46,7 @@ export default class App extends Component {
       <View style={styles.container}>
         <Title onChangeText={this.onTitleChangeText} value={this.state.currentTitle} />
         <Content onChangeText={this.onContentChangeText} value={this.state.currentContent} />
-        <Footer characterCount={this.state.characterCount} onSaveButtonPress={this.onSaveButtonPress} />
+        <Footer characterCount={this.state.currentContent.length} onSaveButtonPress={this.onSaveButtonPress} />
       </View>
     );
   }

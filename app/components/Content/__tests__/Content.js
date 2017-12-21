@@ -7,7 +7,7 @@ import renderer from 'react-test-renderer';
 describe('Content', () => {
   it('renders correctly', () => {
     const tree = renderer.create(
-      <Content />
+      <Content value={''}/>
     );
     expect(tree).toBeDefined();
   });

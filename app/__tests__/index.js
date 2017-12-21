@@ -14,11 +14,17 @@ describe('App', () => {
     expect(tree).toBeDefined();
   });
 
-  it('onChangeText: Should be count the current of string', () => { // example to test class methods
+  it('onTitleChangeText: Should be count the current of string', () => { // example to test class methods
     const props = {};
     const wrapper = shallow(<App {...props}/>);
     const instance = wrapper.instance();
-    instance.onChangeText('abcd');
-    expect(instance.state.characterCount).toBe(4);
+    instance.onTitleChangeText('Title');
+    expect(instance.state.currentTitle).toBe('Title');
+
+    instance.onContentChangeText('Content');
+    expect(instance.state.currentContent).toBe('Content');
+
+    instance.onSaveButtonPress();
+    expect(instance.state.notes).toEqual([{title: 'Title', content: 'Content'}]);
   });
 });
