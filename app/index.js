@@ -26,9 +26,7 @@ export default class App extends Component {
     const data = {'title': this.state.title, 'content': this.state.text};
     const newNotes = [...this.state.NOTES, data];
     this.setState(
-      {title: '', text: '', 'NOTES': newNotes}, () => {
-        console.log(this.state);
-      }
+      {title: '', text: '', 'NOTES': newNotes}
     );
   }
 

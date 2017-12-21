@@ -22,3 +22,19 @@ it('Check Function', () => { // example to test class methods
   instance.onCount('some');
   expect(instance.state.text).toEqual('some');
 });
+it('Check Function onTitle', () => { // example to test class methods
+  const props = {};
+  const wrapper = shallow(<App {...props}/>);
+  const instance = wrapper.instance();
+  expect(instance.state.title).toEqual('');
+  instance.onTitle('some');
+  expect(instance.state.title).toEqual('some');
+});
+it('Check Function saveNote', () => {
+  const props = {};
+  const wrapper = shallow(<App {...props}/>);
+  const instance = wrapper.instance();
+  expect(instance.state.title).toEqual('');
+  instance.saveNote('');
+  expect(instance.state.title).toEqual('');
+});
