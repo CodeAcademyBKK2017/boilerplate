@@ -10,7 +10,10 @@ export default class Note extends Component {
     </View>
     render () {
       return (
-        <FlatList data={this.props.noteList} renderItem={this.generateList} />
+        <View style={styles.container}>
+          <Text style={styles.header} >Notes:</Text>
+          <FlatList data={this.props.noteList} renderItem={this.generateList} />
+        </View>
       );
     }
 }

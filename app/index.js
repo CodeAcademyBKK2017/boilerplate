@@ -11,7 +11,7 @@ import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
-import {KeyboardAvoidingView, Platform, Text, View} from 'react-native';
+import {KeyboardAvoidingView, Platform, View} from 'react-native';
 
 export default class App extends Component {
   initialstate = {
@@ -47,7 +47,6 @@ export default class App extends Component {
         <Title onTitleChange={this.changeTitle}/>
         <Content  onContentChange={this.changeContent} />
         <Footer characterCount={this.state.content.count} onPressSave={this.onSave} />
-        <Text>Notes:</Text>
         <Note noteList={this.state.note} />
       </this.WrapperView>
     );

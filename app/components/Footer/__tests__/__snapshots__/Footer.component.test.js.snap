@@ -31,10 +31,7 @@ exports[`Footer snapshot test 1`] = `
     onStartShouldSetResponder={[Function]}
     style={
       Object {
-        "backgroundColor": "#eee",
         "opacity": 1,
-        "paddingHorizontal": 80,
-        "paddingVertical": 30,
       }
     }
     testID={undefined}
