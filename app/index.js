@@ -6,8 +6,6 @@ import styles from './index.style.js';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
-  FlatList,
-  Text,
   View
 } from 'react-native';
 
@@ -34,7 +32,7 @@ export default class App extends Component {
       };
       const newStateNote = [...this.state.notes, newNote];
       this.setState({notes: newStateNote, titleTextInput: '', contentTextInput: ''}, () => {
-        console.log(this.state);
+        // console.log(this.state);
       });
     }
   }
