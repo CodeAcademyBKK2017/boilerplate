@@ -6,12 +6,13 @@
 
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import NoteList from './components/NoteList/NoteList.component';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
-  FlatList, KeyboardAvoidingView, Platform, Text, View
+  KeyboardAvoidingView, Platform, View
 } from 'react-native';
 
 export default class App extends Component {
@@ -51,10 +52,6 @@ export default class App extends Component {
     this.setState(newState);
   }
 
-  _renderItem = ({item}) => (
-    <Text>{item.title}</Text>
-  );
-
   render () {
     return (
       <this.WrapperView
@@ -67,9 +64,8 @@ export default class App extends Component {
           style={styles.fill}
           text={this.state.textContent}
           onChangeTextContent={this.onChangeTextContent}/>
-        <FlatList
-          data={this.state.notes}
-          renderItem={this._renderItem}/>
+        <NoteList
+          data={this.state.notes}/>
         <Footer
           textContentLength={this.state.textContent.length}
           onSaveButtonPress={this.onSaveButtonPress}/>
