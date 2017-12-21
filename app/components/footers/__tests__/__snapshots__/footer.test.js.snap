@@ -4,7 +4,6 @@ exports[`Footer Footer: renders correctly 1`] = `
 <View
   style={
     Object {
-      "flex": 1,
       "flexDirection": "row",
       "justifyContent": "space-between",
       "padding": 10,

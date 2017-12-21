@@ -36,6 +36,7 @@ export default class Title extends Component {
           multiline = {true}
           onChangeText={FTitle}
           value={text}
+          underlineColorAndroid='rgba(0,0,0,0)'
         />
       </View>
     );

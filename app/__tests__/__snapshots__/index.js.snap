@@ -14,7 +14,6 @@ exports[`App App: renders correctly 1`] = `
   <View
     style={
       Object {
-        "flex": 1,
         "flexDirection": "column",
         "padding": 10,
         "width": "100%",
@@ -91,17 +90,18 @@ exports[`App App: renders correctly 1`] = `
           "backgroundColor": "#F5FCFF",
           "borderColor": "gray",
           "borderWidth": 1,
-          "height": 30,
+          "height": 50,
           "width": "100%",
         }
       }
+      underlineColorAndroid="rgba(0,0,0,0)"
       value=""
     />
   </View>
   <View
     style={
       Object {
-        "flex": 9,
+        "flex": 2,
         "justifyContent": "center",
       }
     }
@@ -135,13 +135,13 @@ exports[`App App: renders correctly 1`] = `
           "width": 350,
         }
       }
+      underlineColorAndroid="rgba(0,0,0,0)"
       value=""
     />
   </View>
   <View
     style={
       Object {
-        "flex": 1,
         "flexDirection": "row",
         "justifyContent": "space-between",
         "padding": 10,
@@ -204,5 +204,38 @@ exports[`App App: renders correctly 1`] = `
        chacters
     </Text>
   </View>
+  <RCTScrollView
+    data={Array []}
+    disableVirtualization={false}
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={false}
+    initialNumToRender={10}
+    keyExtractor={[Function]}
+    maxToRenderPerBatch={10}
+    numColumns={1}
+    onContentSizeChange={[Function]}
+    onEndReachedThreshold={2}
+    onLayout={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    renderItem={[Function]}
+    scrollEventThrottle={50}
+    stickyHeaderIndices={Array []}
+    style={
+      Object {
+        "height": "10%",
+        "padding": 10,
+        "width": "100%",
+      }
+    }
+    updateCellsBatchingPeriod={50}
+    viewabilityConfigCallbackPairs={Array []}
+    windowSize={21}
+  >
+    <View />
+  </RCTScrollView>
 </View>
 `;

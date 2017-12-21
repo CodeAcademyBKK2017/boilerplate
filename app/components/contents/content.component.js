@@ -27,6 +27,7 @@ export default class Content extends Component {
           multiline = {true}
           onChangeText={FText}
           value = {textState}
+          underlineColorAndroid='rgba(0,0,0,0)'
         />
       </View>
     );

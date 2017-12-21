@@ -6,6 +6,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 
+jest.mock('uuid', () => () => '123');
 describe('App', () => {
   it('renders correctly', () => {
     const tree = renderer.create(
@@ -17,7 +18,7 @@ describe('App', () => {
     const tree = renderer.create(<App />).toJSON();
     expect(tree).toMatchSnapshot();
   });
-  it('App: onContentChange Function is will work', () => {
+  it('App: onContentChange Function is change the currentContent state ', () => {
     const wrapper = shallow(<App/>);
     const instance = wrapper.instance();
     expect(instance.state.currentContent).toEqual('');
@@ -25,7 +26,7 @@ describe('App', () => {
     expect(instance.state.currentContent).toEqual('some');
   });
 
-  it('App: onTitleChange Function is will work', () => {
+  it('App: onTitleChange Function is change the currentTitle state ', () => {
     const wrapper = shallow(<App/>);
     const instance = wrapper.instance();
     expect(instance.state.currentTitle).toEqual('');
@@ -41,7 +42,8 @@ describe('App', () => {
       currentTitle: '',
       arrayContent: [{
         title: 'some',
-        content: 'some'
+        content: 'some',
+        key: '123'
       }]
     };
     instance.onTitleChange('some');

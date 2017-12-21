@@ -4,7 +4,6 @@ exports[`Title Title: renders correctly 1`] = `
 <View
   style={
     Object {
-      "flex": 1,
       "flexDirection": "column",
       "padding": 10,
       "width": "100%",
@@ -81,10 +80,11 @@ exports[`Title Title: renders correctly 1`] = `
         "backgroundColor": "#F5FCFF",
         "borderColor": "gray",
         "borderWidth": 1,
-        "height": 30,
+        "height": 50,
         "width": "100%",
       }
     }
+    underlineColorAndroid="rgba(0,0,0,0)"
     value=""
   />
 </View>

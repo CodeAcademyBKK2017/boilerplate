@@ -4,7 +4,7 @@ import {
   
 export default StyleSheet.create({
   textArea: {
-    height: 30,
+    height: 50,
     width: '100%',
     borderColor: 'gray',
     borderWidth: 1,
@@ -19,7 +19,6 @@ export default StyleSheet.create({
   container: {
     width: '100%',
     flexDirection: 'column',
-    flex: 1,
     padding: 10
   },
   btnText: {

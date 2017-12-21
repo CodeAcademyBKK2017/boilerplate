@@ -7,8 +7,10 @@
 import Content from './components/contents/content.component';
 import Footer from './components/footers/footer.component';
 import globalStyle from './index.style';
+import List from './components/lists/list.component';
 import React, {Component} from 'react';
 import Title from './components/titles/title.component';
+import uuid from 'uuid';
 import {View} from 'react-native';
 
 export default class App extends Component {
@@ -25,7 +27,7 @@ export default class App extends Component {
     this.setState({currentTitle});
   }
   addContent = () => {
-    const newValue = {title: this.state.currentTitle, content: this.state.currentContent};
+    const newValue = {title: this.state.currentTitle, content: this.state.currentContent, key: uuid()};
     const newContent = [...this.state.arrayContent, newValue];
     this.setState({currentContent: '',
       currentTitle: '',
@@ -38,6 +40,7 @@ export default class App extends Component {
         <Title text={this.state.currentTitle} FTitle={this.onTitleChange} />  
         <Content FText={this.onContentChange} textState={this.state.currentContent}/>
         <Footer textState={this.state.currentContent.length} addContent={this.addContent}/>
+        <List arrayContent={this.state.arrayContent}/>
       </View> 
     );
   }
