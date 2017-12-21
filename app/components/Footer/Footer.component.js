@@ -19,7 +19,7 @@ class Footer extends Component {
           </Text>
         </TouchableOpacity>
         <Text style={footerStyles.chacters}>
-          {this.props.countContent}
+          {this.props.countContent} chacters
         </Text>
       </View>
     );
