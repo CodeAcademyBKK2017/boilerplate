@@ -7,19 +7,38 @@ import {
   View
 } from 'react-native';
 
+// const replaceIndex = (array, index, replaceWith) => [...array.slice(0, index), replaceWith, ...array.slice(index + 1, array.length)];
+
 export default class App extends Component {
   state = {
-    countContentCharacters: 0
+    titleTextInput: '',
+    contentTextInput: '',
+    notes: []
   }
-  onKeyPress = (textInput) => {
-    this.setState({countContentCharacters: textInput.length});
+  onKeyPressTitle = (textInput) => {
+    this.setState({titleTextInput: textInput});
+  }
+  onKeyPressContent = (textInput) => {
+    this.setState({contentTextInput: textInput});
+  }
+  onSave = () => {
+    if (this.state.titleTextInput && this.state.contentTextInput) {
+      const newNote = {
+        title: this.state.titleTextInput,
+        content: this.state.contentTextInput
+      };
+      const newStateNote = [...this.state.notes, newNote];
+      this.setState({notes: newStateNote, titleTextInput: '', contentTextInput: ''}, () => {
+        console.log(this.state);
+      });
+    }
   }
   render () {
     return (
       <View style={styles.container}>
-        <Title />
-        <Content onKeyPress={this.onKeyPress} />
-        <Footer countContentCharacters={this.state.countContentCharacters} />
+        <Title onKeyPressTitle={this.onKeyPressTitle} text={this.state.titleTextInput} />
+        <Content onKeyPressContent={this.onKeyPressContent} text={this.state.contentTextInput} />
+        <Footer countContentCharacters={this.state.contentTextInput.length} onSave={this.onSave} />
       </View>
     );
   }

@@ -17,7 +17,8 @@ class Content extends Component {
           style={styles.textinput}
           underlineColorAndroid='transparent'
           multiline={true}
-          onChangeText={this.props.onKeyPress}
+          onChangeText={this.props.onKeyPressContent}
+          value={this.props.text}
         />
       </View>
     );
@@ -25,10 +26,12 @@ class Content extends Component {
 }
 
 Content.propTypes = {
-  onKeyPress: PropTypes.func
+  onKeyPressContent: PropTypes.func,
+  text: PropTypes.string
 };
 Content.defaultProps = {
-  onKeyPress: noop
+  onKeyPressContent: noop,
+  text: ''
 };
 
 export default Content;

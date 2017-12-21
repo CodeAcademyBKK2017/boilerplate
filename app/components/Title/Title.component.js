@@ -1,3 +1,5 @@
+import noop from 'lodash/noop';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Title.style.js';
 import {
@@ -14,10 +16,21 @@ class Title extends Component {
         <TextInput
           style={styles.textinput}
           underlineColorAndroid='transparent'
+          onChangeText={this.props.onKeyPressTitle}
+          value={this.props.text}
         />
       </View>
     );
   }
 }
+
+Title.propTypes = {
+  onKeyPressTitle: PropTypes.func,
+  text: PropTypes.string
+};
+Title.defaultProps = {
+  onKeyPressTitle: noop,
+  text: ''
+};
 
 export default Title;

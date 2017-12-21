@@ -16,6 +16,7 @@ exports[`Title renders correctly 1`] = `
   </Text>
   <TextInput
     allowFontScaling={true}
+    onChangeText={[Function]}
     style={
       Object {
         "borderColor": "gray",
@@ -25,6 +26,7 @@ exports[`Title renders correctly 1`] = `
       }
     }
     underlineColorAndroid="transparent"
+    value=""
   />
 </View>
 `;
