@@ -7,7 +7,7 @@ import renderer from 'react-test-renderer';
 describe('Footer', () => {
   it('renders correctly', () => {
     const tree = renderer.create(
-      <Footer />
+      <Footer characterCount={0} />
     );
     expect(tree).toBeDefined();
   });

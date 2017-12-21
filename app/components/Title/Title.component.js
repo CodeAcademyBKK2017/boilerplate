@@ -12,7 +12,7 @@ const Title = () => (
     <TextInput placeholder='Title here!' 
       style={styles.textInput} 
       autoCorrect={false} 
-      underlineColorAndroid='transparent' 
+      underlineColorAndroid='transparent'
     />
   </View>
 );
