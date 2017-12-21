@@ -6,9 +6,11 @@
 
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import NoteList from './components/NoteList/NoteList.component';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
+import uuid from 'uuid';
 import {
   View
 } from 'react-native';
@@ -23,7 +25,8 @@ export default class App extends Component {
   onSavePress = () => {
     const newData = {
       title: this.state.title,
-      content: this.state.content
+      content: this.state.content,
+      uuid: uuid()
     };
     this.setState({
       notes: [...this.state.notes, newData],
@@ -47,6 +50,7 @@ export default class App extends Component {
         <Title onTypeTitle={this.onTypeTitle} text={this.state.title}/>
         <Content onTypeContent={this.onTypeContent} text={this.state.content}/>
         <Footer countContent={this.state.content.length} onSavePress={this.onSavePress} />
+        <NoteList notes={this.state.notes}/>
       </View>
     );
   }
