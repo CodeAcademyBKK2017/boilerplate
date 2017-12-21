@@ -25,7 +25,7 @@ class Title extends Component {
           style={styles.titleInput}
           onChangeText={this.props.titles}
           placeholder='Tasks for today'
-          value={this.props.delTitle}
+          value={this.props.text}
         />
        
       </View>
@@ -34,6 +34,6 @@ class Title extends Component {
 }
 Title.propTypes = {
   titles: PropTypes.func.isRequired,
-  delTitle: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired
 };
 export default Title;

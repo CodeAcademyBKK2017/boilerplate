@@ -72,7 +72,7 @@
     "jsx-quotes": [2, "prefer-single"],
     "object-curly-spacing": 2,
     "quotes": [2, "single"],
-    "no-console": 2,
+    "no-console": 0,
     "comma-dangle": 2,
     "prefer-const": 2,
     "no-duplicate-imports": 2,

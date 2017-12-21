@@ -21,7 +21,7 @@ class Content extends Component {
           multiline = {true}
           underlineColorAndroid = 'transparent'
           numberOfLines = {4}
-          value={this.props.delContene}   
+          value={this.props.text}   
           // placeholder='-Understand how react-native works.'
         />
       </View>
@@ -31,6 +31,6 @@ class Content extends Component {
 
 Content.propTypes = {
   fn: PropTypes.func.isRequired,
-  delContene: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired
 };
 export default Content;

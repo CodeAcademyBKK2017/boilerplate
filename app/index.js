@@ -30,15 +30,15 @@ export default class App extends Component {
     
     const data = {'text': this.state.text, 'title': this.state.textTitle};
     const newNotes = [data, ...this.state.notes];
-    // console.log(newNotes);
+    console.log(newNotes);
 
     this.setState({textTitle: '', text: '', 'notes': newNotes});
   }
   render () {
     return (
       <View style={styles.container}>  
-        <Title titles={this.onTitle} delTitle={this.state.textTitle}/>
-        <Content  fn={this.texts} delContene={this.state.text}/>
+        <Title titles={this.onTitle} text={this.state.textTitle}/>
+        <Content  fn={this.texts} text={this.state.text}/>
         <Footer texts={this.state.text} noteTitles={this.noteTitle}/>
       </View>
     );
