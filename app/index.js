@@ -6,10 +6,18 @@
 import ContentBox from './components/ContentBox/ContentBox.component';
 import Footer from './components/FooterBox/FooterBox.component';
 import HeaderBox from './components/HeaderBox/HeaderBox.component';
+import ListItem from './components/ListItem/ListItem.component';
 import React, {Component} from 'react';
 import style from './index.style';
 import TitleBox from './components/TitleBox/TitleBox.component';
-import {View} from 'react-native';
+import {
+  View,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  Modal,
+  TouchableWithoutFeedback
+} from 'react-native';
 
 export default class App extends Component {
 
@@ -34,7 +42,8 @@ export default class App extends Component {
   onSave = () => {
     const newData = {
       title: this.state.titleText,
-      content: this.state.contentText
+      content: this.state.contentText,
+      key: this.state.NOTES.length
     };
     const newDataNOTES = [...this.state.NOTES, newData];
 
@@ -45,12 +54,15 @@ export default class App extends Component {
     });
   }
 
+  showFlatList = () => (this.state.NOTES.length > 0) ? <ListItem dataNotes={this.state.NOTES} onShowModal={this.onShowModal}/> : null
+
   render () {
     return (
       <View style={style.container}>
         <HeaderBox />
         <TitleBox titleValueText={this.state.titleText} onTitleChange={this.onTitleChange}/>
         <ContentBox count={this.state.contentText.length} contentValueText={this.state.contentText} onContentChange={this.onContentChange} onSave={this.onSave}/>
+        {this.showFlatList()}
         <Footer />
       </View>
     );

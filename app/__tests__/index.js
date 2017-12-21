@@ -52,12 +52,23 @@ describe('App', () => {
       contentText: '',
       NOTES: [{
         title: 'React Native',
-        content: '- UI'
+        content: '- UI',
+        key: 0
       }]
     };
     instance.onTitleChange('React Native');
     instance.onContentChange('- UI');
     instance.onSave();
     expect(instance.state).toEqual(expectRes);
+  });
+
+  it('Check Function showFlatList', () => {
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+    instance.onTitleChange('React Native');
+    instance.onContentChange('- UI');
+    instance.onSave();
+    expect(instance.showFlatList).toMatchSnapshot();
   });
 });
