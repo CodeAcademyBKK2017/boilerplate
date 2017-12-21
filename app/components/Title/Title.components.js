@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Title.style';
 import {
@@ -22,6 +23,7 @@ class Title extends Component {
         
         <TextInput 
           style={styles.titleInput}
+          onChangeText={this.props.titles}
           placeholder='Tasks for today'
         />
        
@@ -29,5 +31,7 @@ class Title extends Component {
     );
   }
 }
-
+Title.propTypes = {
+  titles: PropTypes.func.isRequired
+};
 export default Title;

@@ -16,17 +16,33 @@ import {
 
 export default class App extends Component {
   state ={
-    text: ''
+    text: '',
+    textTitle: '',
+    NOTES: []
   }
   texts =(v) => {
     this.setState({text: v});
   }
+  onTitle =(v) => {
+    this.setState({textTitle: v});
+  }
+  noteTitle =() => { 
+    
+    const data = {'text': this.state.text, 'title': this.state.textTitle};
+    const newNotes = [data, ...this.state.NOTES];
+    
+    this.setState(
+      {'NOTES': newNotes}, () => {
+        console.log(this.state.NOTES);
+      }
+    );
+  }
   render () {
     return (
       <View style={styles.container}>  
-        <Title/>
+        <Title titles={this.onTitle}/>
         <Content  fn={this.texts}/>
-        <Footer texts={this.state.text}/>
+        <Footer texts={this.state.text} noteTitles={this.noteTitle}/>
       </View>
     );
   }

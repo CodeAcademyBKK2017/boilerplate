@@ -12,7 +12,7 @@ class Footer extends Component {
     return (
       <View style={styles.Foot}>
         <View style={styles.footerRow}>
-          <TouchableOpacity>
+          <TouchableOpacity  onPress={this.props.noteTitles}>
             <Text style={styles.fonts}>Save</Text>
           </TouchableOpacity>
           <Text style={styles.footSave}>{this.props.texts.length} chacters</Text>
@@ -23,6 +23,7 @@ class Footer extends Component {
 }
 
 Footer.propTypes = {
-  texts: PropTypes.string.isRequired
+  texts: PropTypes.string.isRequired,
+  noteTitles: PropTypes.func.isRequired
 };
 export default Footer;
