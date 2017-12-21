@@ -1,9 +1,12 @@
 import 'react-native';
 import App from '../index';
+import NoteList from '../components/NoteList/NoteList.component';
 import React from 'react';
-import renderer from 'react-test-renderer';
 // Note: test renderer must be required after react-native.
+import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
+
+jest.mock('uuid', () => () => 'someId');
 
 describe('App', () => {
   let tree, instance;
@@ -16,6 +19,13 @@ describe('App', () => {
       <App />
     );
     expect(tree).toBeDefined();
+  });
+  it('rendersItem correctly', () => {
+    const wrapper = shallow(<NoteList/>);
+    instance = wrapper.instance();
+    const item = {title: 'title', content: 'content', uuid: '1'};
+    const snapshot = instance.renderItem({item});
+    expect(snapshot).toMatchSnapshot();
   });
   it('onTypeContent: should change the value of content', () => {
     instance.onTypeContent('hello');
@@ -41,9 +51,10 @@ describe('App', () => {
       content: '',
       notes: [{
         title: 'title',
-        content: 'content'
+        content: 'content',
+        key: 'someId'
       }]
     };
-    expect(instance.state).toMatchObject(expectState);
+    expect(instance.state).toEqual(expectState);
   });
 });

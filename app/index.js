@@ -23,10 +23,12 @@ export default class App extends Component {
   }
 
   onSavePress = () => {
+
+    // console.log('uuid()', uuid());
     const newData = {
       title: this.state.title,
       content: this.state.content,
-      uuid: uuid()
+      key: uuid()
     };
     this.setState({
       notes: [...this.state.notes, newData],

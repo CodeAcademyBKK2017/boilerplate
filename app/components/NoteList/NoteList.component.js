@@ -9,8 +9,7 @@ import {
 } from 'react-native';
 
 class NoteList extends Component {
-  keyExtractor = (item) => item.uuid
-  _renderItem = ({item}) => 
+  renderItem = ({item}) => 
     <View>
       <Text style={noteListStyles.noteList}>Notes: </Text>
       <Text style={noteListStyles.noteListTitle}>{item.title}</Text>
@@ -19,7 +18,7 @@ class NoteList extends Component {
 
   render () {
     return (
-      <FlatList data={this.props.notes} renderItem={this._renderItem} keyExtractor={this.keyExtractor}/>
+      <FlatList data={this.props.notes} renderItem={this.renderItem}/>
     );
   }
 }
