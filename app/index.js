@@ -39,7 +39,6 @@ export default class App extends Component {
   }
 
   render () {
-    console.log(this.state);
     return (
       <View style={styles.container}>
         <Title onTypeTitle={this.onTypeTitle}/>

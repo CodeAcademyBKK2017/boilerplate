@@ -27,10 +27,12 @@ class Footer extends Component {
 }
 
 Footer.propTypes = {
-  countContent: PropTypes.number.isRequired
+  countContent: PropTypes.number.isRequired,
+  onSavePress: PropTypes.func
 };
 Footer.defaultProps = {
-  countContent: noop
+  countContent: 0,
+  onSavePress: noop
 };
 
 export default Footer;
