@@ -30,7 +30,7 @@ export default class App extends Component {
     
     const data = {'text': this.state.text, 'title': this.state.textTitle};
     const newNotes = [data, ...this.state.notes];
-    console.log(newNotes);
+    // console.log(newNotes);
 
     this.setState({textTitle: '', text: '', 'notes': newNotes});
   }
