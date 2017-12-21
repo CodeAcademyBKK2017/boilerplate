@@ -33,7 +33,7 @@ export default class App extends Component {
     
     this.setState(
       {'NOTES': newNotes}, () => {
-        console.log(this.state.NOTES);
+        // console.log(this.state.NOTES);
       }
     );
   }
