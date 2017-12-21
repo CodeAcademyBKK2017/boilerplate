@@ -1,11 +1,11 @@
 import React from 'react';
 import 'react-native';
+import NoteList from '../NoteList.component';
 import renderer from 'react-test-renderer';
-import Title from '../Title.component';
 
-describe('Title', () => {
+describe('NoteList', () => {
   it('renders correctly', () => {
-    const snapshot = renderer.create(<Title />);
+    const snapshot = renderer.create(<NoteList />);
     expect(snapshot).toMatchSnapshot();
   });
 });
