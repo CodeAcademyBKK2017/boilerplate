@@ -4,7 +4,9 @@ export default StyleSheet.create({
   welcome: {
     fontSize: 12,
     // textAlign: 'center',
-    margin: 10
+    margin: 10,
+    marginLeft: 0,
+    fontStyle: 'italic'
      
   },
   conView: {

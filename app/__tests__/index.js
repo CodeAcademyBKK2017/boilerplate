@@ -48,7 +48,7 @@ describe('App', () => {
   it('rendersItem correctly', () => {
     const wrapper = shallow(<App/>);
     const instance = wrapper.instance();
-    const item = {title: 'title', uuid: '1'};
+    const item = {text: 'text', title: 'title', uuid: '1'};
     const snapshot = instance._renderItem({item});
     expect(snapshot).toMatchSnapshot();
   });

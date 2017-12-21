@@ -16,6 +16,7 @@ export default StyleSheet.create({
     fontWeight: '700'
   },
   text: {
-    paddingTop: 5
+    paddingTop: 5,
+    fontWeight: '600'
   }
 });

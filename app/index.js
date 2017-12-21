@@ -19,7 +19,11 @@ import {
 
 export default class App extends Component {
   _keyExtractor  = (item) => item.unique;
-  _renderItem = (args) => <Text style={styles.text}>{args.item.title}</Text>
+  _renderItem = (args) => 
+    <View>
+      <Text style={styles.text}>{args.item.title}</Text>
+      <Text>-{args.item.text}</Text>
+    </View>
   state ={
     text: '',
     textTitle: '',
