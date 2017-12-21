@@ -13,20 +13,45 @@ import {View} from 'react-native';
 
 export default class App extends Component {
 
-  state =  {
-    text: ''
+  state = {
+    titleText: '',
+    contentText: '',
+    NOTES: []
   }
 
-  onChange = (v) => {
-    this.setState({text: v});
+  onTitleChange = (v) => {
+    const newState = {...this.state};
+    newState.titleText = v;
+    this.setState(newState);
+  }
+
+  onContentChange = (v) => {
+    const newState = {...this.state};
+    newState.contentText = v;
+    this.setState(newState);
+  }
+
+  onSave = () => {
+    const newData = {
+      title: this.state.titleText,
+      content: this.state.contentText
+    };
+    const newDataNOTES = [...this.state.NOTES , newData];
+    console.log(newDataNOTES);
+
+    this.setState({
+      titleText: '',
+      contentText: '',
+      NOTES: newDataNOTES
+    }, () => console.log(this.state));
   }
 
   render () {
     return (
       <View style={style.container}>
         <HeaderBox />
-        <TitleBox />
-        <ContentBox count={this.state.text.length} onChange={this.onChange}/>
+        <TitleBox titleValueText={this.state.titleText} onTitleChange={this.onTitleChange}/>
+        <ContentBox count={this.state.contentText.length} contentValueText={this.state.contentText} onContentChange={this.onContentChange} onSave={this.onSave}/>
         <Footer />
       </View>
     );

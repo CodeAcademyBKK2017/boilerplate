@@ -107,6 +107,7 @@ exports[`App getName: Should return Yo 1`] = `
     </View>
     <TextInput
       allowFontScaling={true}
+      onChangeText={[Function]}
       placeholder="Tasks for today"
       placeholderTextColor="#000"
       style={
@@ -123,6 +124,7 @@ exports[`App getName: Should return Yo 1`] = `
         }
       }
       underlineColorAndroid="transparent"
+      value=""
     />
   </View>
   <View
@@ -184,6 +186,7 @@ exports[`App getName: Should return Yo 1`] = `
         }
       }
       underlineColorAndroid="transparent"
+      value=""
     />
     <View
       style={
@@ -194,19 +197,45 @@ exports[`App getName: Should return Yo 1`] = `
         }
       }
     >
-      <Text
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
         accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
+        collapsable={undefined}
+        hasTVPreferredFocus={undefined}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
           Object {
             "flex": 1,
-            "fontWeight": "bold",
+            "opacity": 1,
           }
         }
+        testID={undefined}
+        tvParallaxProperties={undefined}
       >
-        Save
-      </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Save
+        </Text>
+      </View>
       <Text
         accessible={true}
         allowFontScaling={true}

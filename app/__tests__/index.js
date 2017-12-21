@@ -9,23 +9,55 @@ import {shallow} from 'enzyme';
 describe('App', () => {
 
   it('renders correctly', () => {
-    const tree = renderer.create(
-      <App />
-    );
+    const tree = renderer.create(<App />);
     expect(tree).toBeDefined();
   });
 
-  it('getName: Should return Yo', () => { // example to test class methods
+  it('getName: Should return Yo', () => {
     const tree = renderer.create(<App />);
     expect(tree).toMatchSnapshot();
   });
 
-  it('Check Function', () => { // example to test class methods
+  it('Check state', () => {
     const props = {};
     const wrapper = shallow(<App {...props}/>);
     const instance = wrapper.instance();
-    expect(instance.state.text).toEqual('');
-    instance.onChange('some');
-    expect(instance.state.text).toEqual('some');
+    expect(instance.state.titleText).toEqual('');
+    expect(instance.state.contentText).toEqual('');
+  });
+
+  it('Check Function onContentChange', () => {
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+    instance.onContentChange('some');
+    expect(instance.state.contentText).toEqual('some');
+    expect(instance.state.contentText.length).toEqual(4);
+  });
+  
+  it('Check Function onTitleChenge', () => {
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+    instance.onTitleChange('title');
+    expect(instance.state.titleText).toEqual('title');
+  });
+
+  it('Check Function onSave', () => {
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+    const expectRes = {
+      titleText: '',
+      contentText: '',
+      NOTES: [{
+        title: 'React Native',
+        content: '- UI'
+      }]
+    };
+    instance.onTitleChange('React Native');
+    instance.onContentChange('- UI');
+    instance.onSave();
+    expect(instance.state).toEqual(expectRes);
   });
 });

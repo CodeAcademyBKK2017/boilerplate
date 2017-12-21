@@ -37,7 +37,9 @@ export default StyleSheet.create({
     paddingBottom: 15
   },
   saveTextStyle: {
-    flex: 1,
     fontWeight: 'bold'
+  },
+  flexOne: {
+    flex: 1
   }
 });

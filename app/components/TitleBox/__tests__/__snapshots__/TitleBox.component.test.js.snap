@@ -62,6 +62,7 @@ exports[`TitleBox TitleBox: Should return TextArea 1`] = `
   </View>
   <TextInput
     allowFontScaling={true}
+    onChangeText={[Function]}
     placeholder="Tasks for today"
     placeholderTextColor="#000"
     style={
@@ -78,6 +79,7 @@ exports[`TitleBox TitleBox: Should return TextArea 1`] = `
       }
     }
     underlineColorAndroid="transparent"
+    value=""
   />
 </View>
 `;
