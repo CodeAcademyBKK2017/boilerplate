@@ -4,7 +4,7 @@ import styles from './Note.style';
 import {FlatList, Text, View} from 'react-native';
 
 export default class Note extends Component {
-    generateList = ({item}) => <View>
+    generateList = ({item}) => <View style={styles.box}>
       <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.content}>{item.content}</Text>
     </View>

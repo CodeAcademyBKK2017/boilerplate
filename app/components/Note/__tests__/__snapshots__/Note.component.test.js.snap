@@ -1,7 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Note generateList should have been render some JSX 1`] = `
-<View>
+<View
+  style={
+    Object {
+      "paddingVertical": 10,
+    }
+  }
+>
   <Text
     accessible={true}
     allowFontScaling={true}
@@ -10,7 +16,6 @@ exports[`Note generateList should have been render some JSX 1`] = `
       Object {
         "fontSize": 15,
         "fontWeight": "bold",
-        "padding": 10,
       }
     }
   >
@@ -36,8 +41,7 @@ exports[`Note snapshot test 1`] = `
 <View
   style={
     Object {
-      "alignItems": "flex-start",
-      "justifyContent": "flex-start",
+      "flex": 0.3,
       "width": "100%",
     }
   }
@@ -48,7 +52,6 @@ exports[`Note snapshot test 1`] = `
     ellipsizeMode="tail"
     style={
       Object {
-        "flex": 1,
         "fontWeight": "bold",
       }
     }
