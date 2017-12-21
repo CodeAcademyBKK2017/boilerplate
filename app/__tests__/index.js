@@ -6,6 +6,8 @@ import renderer from 'react-test-renderer';
 // Note: test renderer must be required after react-native.
 import {shallow} from 'enzyme';
 
+jest.mock('uuid', () => () => 'some uuid');
+
 describe('App', () => {
   it('renders correctly', () => {
     const tree = renderer.create(
@@ -49,6 +51,7 @@ describe('App', () => {
       textContent: '',
       notes: [
         {
+          key: 'some uuid',
           title,
           content
         }
