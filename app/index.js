@@ -36,14 +36,13 @@ export default class App extends Component {
       title: this.state.titleText,
       content: this.state.contentText
     };
-    const newDataNOTES = [...this.state.NOTES , newData];
-    console.log(newDataNOTES);
+    const newDataNOTES = [...this.state.NOTES, newData];
 
     this.setState({
       titleText: '',
       contentText: '',
       NOTES: newDataNOTES
-    }, () => console.log(this.state));
+    });
   }
 
   render () {
