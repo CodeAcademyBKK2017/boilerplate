@@ -40,7 +40,8 @@ export default class App extends Component {
     const note = {
       key: uuid(),
       title: this.state.textTitle,
-      content: this.state.textContent
+      content: this.state.textContent,
+      isEven: (notes.length % 2 === 0)
     };
     notes.push(note);
 

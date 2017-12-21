@@ -13,6 +13,12 @@ const styles = StyleSheet.create({
   itemContainer: {
     paddingVertical: 10
   },
+  evenContainer: {
+    backgroundColor: 'gray'
+  },
+  oddContainer: {
+    backgroundColor: 'white'
+  },
   itemTitle: {
     fontWeight: 'bold',
     fontSize: 14,

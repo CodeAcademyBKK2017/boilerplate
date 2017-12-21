@@ -7,7 +7,7 @@ import {
 
 export default class NoteList extends Component {
   renderItem = ({item}) => (
-    <View style={styles.itemContainer}>
+    <View style={[styles.itemContainer, item.isEven ? styles.evenContainer : styles.oddContainer]}>
       <Text style={styles.itemTitle}>{item.title}</Text>
       <Text style={styles.itemContent}>{item.content}</Text>
     </View>
