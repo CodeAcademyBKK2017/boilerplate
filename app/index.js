@@ -64,11 +64,12 @@ export default class App extends Component {
           style={styles.fill}
           text={this.state.textContent}
           onChangeTextContent={this.onChangeTextContent}/>
-        <NoteList
-          data={this.state.notes}/>
         <Footer
           textContentLength={this.state.textContent.length}
           onSaveButtonPress={this.onSaveButtonPress}/>
+        {
+          this.state.notes.length > 0 ? <NoteList data={this.state.notes}/> : null
+        }
       </this.WrapperView>
     );
   }
