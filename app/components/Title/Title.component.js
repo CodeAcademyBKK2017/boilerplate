@@ -1,4 +1,4 @@
-
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Title.style';
 import {Text, TextInput, View} from 'react-native';
@@ -8,8 +8,11 @@ export default class Title extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.text}>Note Title</Text>
-        <TextInput style={styles.textArea} underlineColorAndroid='transparent'/>
+        <TextInput style={styles.textArea} underlineColorAndroid='transparent' onChangeText={this.props.onTitleChange}  />
       </View>
     );
   }
 }
+Title.propTypes = {
+  onTitleChange: PropTypes.func
+};

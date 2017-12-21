@@ -7,16 +7,32 @@ import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 
 describe('App', () => {
+  let wrapper, instance;
+  beforeEach(() => {
+    wrapper = shallow(<App />);
+    instance = wrapper.instance();
+  });
   it('renders correctly', () => {
-    const tree = renderer.create(
-      <App />
-    );
+    const tree = renderer.create(<App />);
     expect(tree).toBeDefined();
   });
-  it('changeText: Should have state Change', () => {
-    const wrapper = shallow(<App />);
-    const instance = wrapper.instance();
-    instance.changeText('123');
+  it('changeTitle: Should have state Change', () => {
+    instance.changeTitle('123');
+    expect(instance.state.title).toEqual('123');
+  });
+  it('changeContent: Should have state Change', () => {
+    instance.changeContent('123');
     expect(instance.state.content).toEqual('123');
+  });
+  it('onSave: Should have state Change', () => {
+    instance.setState({title: 'someTitle', content: 'someContent'});
+    instance.onSave();
+    expect(instance.state.note).toEqual([{title: 'someTitle', content: 'someContent'}]);
+    instance.setState({title: 'abc', content: 'def'});
+    instance.onSave();
+    expect(instance.state.note).toEqual([
+      {title: 'someTitle', content: 'someContent'},
+      {title: 'abc', content: 'def'}
+    ]);
   });
 });

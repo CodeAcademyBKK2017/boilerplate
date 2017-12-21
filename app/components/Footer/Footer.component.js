@@ -6,16 +6,18 @@ import {Text, View} from 'react-native';
 
 export default class Footer extends Component {
   render () {
+    const {characterCount, onPressSave} = this.props;
     return (
       <View style={styles.container}>
-        <Touchable style={styles.touchable} background={Touchable.Ripple('blue')} activeOpacity={1}>
+        <Touchable style={styles.touchable} background={Touchable.Ripple('blue')} activeOpacity={1} onPress={onPressSave} >
           <Text style={styles.textBold}>Save</Text>
         </Touchable>
-        <Text style={styles.text}>{this.props.characterCount} characters</Text>
+        <Text style={styles.text}>{characterCount} characters</Text>
       </View>
     );
   }
 }
 Footer.propTypes = {
-  characterCount: PropTypes.number
+  characterCount: PropTypes.number,
+  onPressSave: PropTypes.func
 };

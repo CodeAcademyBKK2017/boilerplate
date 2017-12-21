@@ -25,6 +25,7 @@ exports[`Title snapshot test 1`] = `
   </Text>
   <TextInput
     allowFontScaling={true}
+    onChangeText={undefined}
     style={
       Object {
         "borderWidth": 1,

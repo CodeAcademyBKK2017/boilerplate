@@ -12,23 +12,34 @@ import Title from './components/Title/Title.component';
 import {KeyboardAvoidingView, Platform, View} from 'react-native';
 
 export default class App extends Component {
-  state = {
-    content: ''
+  initialstate = {
+    content: '',
+    title: '',
+    note: []
   }
+  state = this.initialstate;
   WrapperView = Platform.select(
     {ios: KeyboardAvoidingView,
       android: View
     }
   )
-  changeText  = (text) => {
+  changeTitle  = (text) => {
+    this.setState({title: text});
+  }
+  changeContent  = (text) => {
     this.setState({content: text});
+  }
+  onSave = () => {
+    const newNote =  [...this.state.note, {title: this.state.title, content: this.state.content}];
+    // newNote.push({title: this.state.title, content: this.state.content});
+    this.setState({note: newNote});
   }
   render () {
     return (
       <this.WrapperView style={styles.container} behavior={'padding'} >
-        <Title/>
-        <Content  onTextChange={this.changeText} />
-        <Footer characterCount={this.state.content.length}/>
+        <Title onTitleChange={this.changeTitle}/>
+        <Content  onContentChange={this.changeContent} />
+        <Footer characterCount={this.state.content.count} onPressSave={this.onSave}/>
       </this.WrapperView>
     );
   }
