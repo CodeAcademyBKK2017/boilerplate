@@ -37,4 +37,20 @@ describe('App', () => {
     instance.noteTitle('');
     expect(instance.state.textTitle).toEqual('');
   });
+  it('Check Function _keyExtractor', () => { // example to test class methods
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+    expect(instance.state.textTitle).toEqual('');
+    instance._keyExtractor('item');
+    expect(instance.state.textTitle).toEqual('');
+  });
+  it('rendersItem correctly', () => {
+    const wrapper = shallow(<App/>);
+    const instance = wrapper.instance();
+    const item = {title: 'title', uuid: '1'};
+    const snapshot = instance._renderItem({item});
+    expect(snapshot).toMatchSnapshot();
+  });
+ 
 });
