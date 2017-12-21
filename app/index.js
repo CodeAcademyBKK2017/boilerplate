@@ -29,7 +29,7 @@ export default class App extends Component {
       };
       const newStateNote = [...this.state.notes, newNote];
       this.setState({notes: newStateNote, titleTextInput: '', contentTextInput: ''}, () => {
-        console.log(this.state);
+        // console.log(this.state);
       });
     }
   }
