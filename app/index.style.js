@@ -7,6 +7,15 @@ export default StyleSheet.create({
     backgroundColor: '#e9e9ef',
     paddingHorizontal: 10,
     flex: 1
-
+  },
+  flatLits: {
+    flex: 1,
+    backgroundColor: '#ece9e9'
+  },
+  textNote: {
+    fontWeight: '700'
+  },
+  text: {
+    paddingTop: 5
   }
 });

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 class Footer extends Component {
+  
   render () {
     return (
       <View style={styles.Foot}>
@@ -17,6 +18,7 @@ class Footer extends Component {
           </TouchableOpacity>
           <Text style={styles.footSave}>{this.props.texts.length} chacters</Text>
         </View>
+        
       </View>
     );
   }

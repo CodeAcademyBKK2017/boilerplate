@@ -9,7 +9,7 @@ export default StyleSheet.create({
     textAlign: 'right'
   },
   fonts: {
-    fontWeight: '600'
+    fontWeight: '700'
   },
   Foot: {
     marginTop: 20,
