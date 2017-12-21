@@ -13,11 +13,10 @@ describe('App', () => {
     );
     expect(tree).toBeDefined();
   });
-  it('changeText: Should return someText Change', () => {
+  it('changeText: Should have state Change', () => {
     const wrapper = shallow(<App />);
     const instance = wrapper.instance();
     instance.changeText('123');
     expect(instance.state.content).toEqual('123');
   });
-
 });
