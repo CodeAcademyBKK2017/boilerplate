@@ -10,7 +10,7 @@ import {
 class NoteList extends Component {
   keyExtractor = (item) => item.uuid;
   renderItem = ({item}) => <View><Text style={styles.title}>{item.title}</Text><Text style={styles.content}>{item.content}</Text></View>;
-    
+
   render () {
     return (
       <FlatList data={this.props.notes}

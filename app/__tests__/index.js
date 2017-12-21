@@ -11,7 +11,7 @@ jest.mock('uuid', () => () => '123');
 describe('App', () => {
   let wrapper, instance;
   beforeEach(() => {
-    wrapper = shallow(<App/>);
+    wrapper = shallow(<App />);
     instance = wrapper.instance();
   });
   it('renders correctly', () => {

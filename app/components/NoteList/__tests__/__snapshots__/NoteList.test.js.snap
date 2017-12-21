@@ -1,8 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`NoteList renderItem 1`] = `
+<View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontWeight": "bold",
+      }
+    }
+  >
+    Title
+  </Text>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "paddingLeft": 10,
+      }
+    }
+  >
+    Content
+  </Text>
+</View>
+`;
+
 exports[`NoteList renders correctly 1`] = `
 <RCTScrollView
-  data={Array []}
+  data={
+    Array [
+      Object {
+        "content": "Content",
+        "title": "Title",
+        "uuid": "1",
+      },
+      Object {
+        "content": "Content 2",
+        "title": "Title 2",
+        "uuid": "2",
+      },
+      Object {
+        "content": "Content 3",
+        "title": "Title 3",
+        "uuid": "3",
+      },
+    ]
+  }
   disableVirtualization={false}
   extraData={Object {}}
   getItem={[Function]}
@@ -26,6 +73,100 @@ exports[`NoteList renders correctly 1`] = `
   viewabilityConfigCallbackPairs={Array []}
   windowSize={21}
 >
-  <View />
+  <View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <View>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Title
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "paddingLeft": 10,
+            }
+          }
+        >
+          Content
+        </Text>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <View>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Title 2
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "paddingLeft": 10,
+            }
+          }
+        >
+          Content 2
+        </Text>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <View>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Title 3
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "paddingLeft": 10,
+            }
+          }
+        >
+          Content 3
+        </Text>
+      </View>
+    </View>
+  </View>
 </RCTScrollView>
 `;
