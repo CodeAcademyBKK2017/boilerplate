@@ -26,13 +26,11 @@ export default class App extends Component {
   });
 
   onChangeTextTitle = (textTitle) => {
-    const newState = {...this.state, textTitle};
-    this.setState(newState);
+    this.setState({textTitle});
   }
 
   onChangeTextContent = (textContent) => {
-    const newState = {...this.state, textContent};
-    this.setState(newState);
+    this.setState({textContent});
   }
 
   onSaveButtonPress = () => {
@@ -44,7 +42,6 @@ export default class App extends Component {
     notes.push(note);
 
     const newState = {
-      ...this.state,
       textTitle: '',
       textContent: '',
       notes
