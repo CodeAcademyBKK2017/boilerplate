@@ -15,19 +15,36 @@ import {
 
 export default class App extends Component {
   state = {
-    countContent: 0
+    title: '',
+    content: '',
+    notes: []
   }
 
-  onType = (textInput) => {
-    this.setState({countContent: textInput.length});
+  onSavePress = () => {
+    const newData = {
+      title: this.state.title,
+      content: this.state.content
+    };
+    this.setState({
+      notes: [...this.state.notes, newData]
+    });
+  }
+
+  onTypeContent = (textInput) => {
+    this.setState({content: textInput});
+  }
+
+  onTypeTitle = (titleInput) => {
+    this.setState({title: titleInput});
   }
 
   render () {
+    console.log(this.state);
     return (
       <View style={styles.container}>
-        <Title/>
-        <Content onType={this.onType}/>
-        <Footer countContent={this.state.countContent}/>
+        <Title onTypeTitle={this.onTypeTitle}/>
+        <Content onTypeContent={this.onTypeContent}/>
+        <Footer countContent={this.state.content.length} onSavePress={this.onSavePress} />
       </View>
     );
   }

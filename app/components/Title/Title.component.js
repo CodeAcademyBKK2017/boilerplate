@@ -1,3 +1,5 @@
+import noop from 'lodash/noop';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import titleStyles from './Title.style';
 import {
@@ -13,11 +15,18 @@ class Title extends Component {
         <Text style={titleStyles.fontTitle}>
           Note Title
         </Text>
-        <TextInput style={titleStyles.inputBox} underlineColorAndroid= 'transparent'/>
+        <TextInput style={titleStyles.inputBox} underlineColorAndroid= 'transparent' onChangeText={this.props.onTypeTitle}/>
       </View>
     );
   }
 }
+
+Title.propTypes = {
+  onTypeTitle: PropTypes.func
+};
+Title.defaultProps = {
+  onTypeTitle: noop
+};
 
 export default Title;
 

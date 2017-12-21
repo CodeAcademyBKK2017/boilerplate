@@ -15,16 +15,16 @@ class Content extends Component {
         <Text style={contentStyles.fontTitle}>
           Please type your note below
         </Text>
-        <TextInput style={contentStyles.inputBox} multiline = {true} underlineColorAndroid= 'transparent' onChangeText={this.props.onType}/>
+        <TextInput style={contentStyles.inputBox} multiline = {true} underlineColorAndroid= 'transparent' onChangeText={this.props.onTypeContent}/>
       </View>
     );
   }
 }
 Content.propTypes = {
-  onType: PropTypes.func
+  onTypeContent: PropTypes.func
 };
 Content.defaultProps = {
-  onType: noop
+  onTypeContent: noop
 };
 
 export default Content;

@@ -12,12 +12,12 @@ describe('App', () => {
     );
     expect(tree).toBeDefined();
   });
-  it('onType: should change the length', () => {
+  it('onTypeContent: should change the length', () => {
     const tree = shallow(<App/>);
     const instance = tree.instance();
-    instance.onType('hello');
-    expect(instance.state.countContent).toBe(5);
-    instance.onType('');
-    expect(instance.state.countContent).toBe(0);
+    instance.onTypeContent('hello');
+    expect(instance.state.content.length).toBe(5);
+    instance.onTypeContent('');
+    expect(instance.state.content.length).toBe(0);
   });
 });

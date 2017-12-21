@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 
 class Footer extends Component {
-  
+
   render () {
     return (
       <View style={footerStyles.container}>
-        <TouchableOpacity onPress={this.openModal}>
+        <TouchableOpacity onPress={this.props.onSavePress}>
           <Text style={footerStyles.fontTitle}>
           Save
           </Text>
