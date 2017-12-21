@@ -6,6 +6,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 
+jest.mock('uuid', () => () => '123');
 describe('App', () => {
   it('renders correctly', () => {
     const tree = renderer.create(
@@ -46,8 +47,8 @@ describe('App', () => {
   it('renders onSaveNote true', () => {
     const wrapper = shallow(<App/>);
     const instance = wrapper.instance();
-    instance.setState({'inputTitle': 't1', 'inputContent': 't2'});
+    instance.setState({'inputTitle': 't1', 'inputContent': 't2', 'uuid': '123'});
     instance.onSaveNote();
-    expect([{'title': 't1', 'content': 't2'}]).toMatchObject(instance.state.note);
+    expect([{'title': 't1', 'content': 't2', 'uuid': '123'}]).toMatchObject(instance.state.note);
   });
 });
