@@ -14,7 +14,7 @@ export default class Footer extends Component {
   render () {
     return (
       <View style={footerStyle.boxFooter}>
-        <TouchableOpacity title='Save' style={footerStyle.button} onPress={noop}>
+        <TouchableOpacity title='Save' style={footerStyle.button} onPress={this.props.onSaveNote}>
           <Text>
             Save
           </Text>
@@ -28,8 +28,10 @@ export default class Footer extends Component {
 }
 
 Footer.propTypes = {
-  showNumber: PropTypes.number.isRequired
+  showNumber: PropTypes.number.isRequired,
+  onSaveNote: PropTypes.func.isRequired
 };
 Footer.defaultProps = {
-  showNumber: 0
+  showNumber: 0,
+  onSaveNote: noop
 };

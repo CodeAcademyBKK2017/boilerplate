@@ -13,19 +13,41 @@ import {
   View
 } from 'react-native';
 
+const replaceIndex = (array, index, replaceWith) => [...array.slice(0, index), replaceWith, ...array.slice(index + 1, array.length)];
+
 export default class App extends Component {
     state = {
-      count: 0
+      count: 0,
+      inputTitle: '',
+      inputContent: '',
+      note: []
     }
-    onType = (text) => {
+    
+    onTypeTitle = (text) => {
+      this.setState({inputTitle: text});
+    }
+    onTypeContent = (text) => {
+      this.setState({inputContent: text});
       this.setState({count: text.length});
+    }
+    onSaveNote = () => {
+      const data = {'title': this.state.inputTitle, 'content': this.state.inputContent};
+      const newStateNote = [...this.state.note, data];
+      this.setState(
+        {
+          note: newStateNote,
+          inputTitle: '',
+          inputContent: ''
+        }, () => {
+          console.log('note: ', this.state.note);
+        });
     }
     render () {
       return (
         <View style={styles.boxMain}>
-          <Title/>
-          <Content onType={this.onType}/>
-          <Footer showNumber={this.state.count}/>
+          <Title onTypeTitle={this.onTypeTitle} inputTitle={this.state.inputTitle}/>
+          <Content onType={this.onTypeContent} inputContent={this.state.inputContent}/>
+          <Footer showNumber={this.state.count} onSaveNote={this.onSaveNote}/>
         </View>
       );
     }

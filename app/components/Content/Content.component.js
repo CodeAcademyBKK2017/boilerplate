@@ -20,6 +20,7 @@ export default class Content extends Component {
           multiline = {true} 
           numberOfLines = {4}
           onChangeText={this.props.onType}
+          value={this.props.inputContent}
         />
       </View>
     );
@@ -27,8 +28,10 @@ export default class Content extends Component {
 }
 
 Content.propTypes = {
-  onType: PropTypes.func.isRequired
+  onType: PropTypes.func.isRequired,
+  inputContent: PropTypes.string.isRequired
 };
 Content.defaultProps = {
-  onType: noop
+  onType: noop,
+  inputContent: ''
 };
