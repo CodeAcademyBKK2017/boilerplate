@@ -18,7 +18,7 @@ export default class App extends Component {
   state ={
     text: '',
     textTitle: '',
-    NOTES: []
+    notes: []
   }
   texts =(v) => {
     this.setState({text: v});
@@ -29,19 +29,16 @@ export default class App extends Component {
   noteTitle =() => { 
     
     const data = {'text': this.state.text, 'title': this.state.textTitle};
-    const newNotes = [data, ...this.state.NOTES];
-    
-    this.setState(
-      {'NOTES': newNotes}, () => {
-        // console.log(this.state.NOTES);
-      }
-    );
+    const newNotes = [data, ...this.state.notes];
+    console.log(newNotes);
+
+    this.setState({textTitle: '', text: '', 'notes': newNotes});
   }
   render () {
     return (
       <View style={styles.container}>  
-        <Title titles={this.onTitle}/>
-        <Content  fn={this.texts}/>
+        <Title titles={this.onTitle} delTitle={this.state.textTitle}/>
+        <Content  fn={this.texts} delContene={this.state.text}/>
         <Footer texts={this.state.text} noteTitles={this.noteTitle}/>
       </View>
     );
