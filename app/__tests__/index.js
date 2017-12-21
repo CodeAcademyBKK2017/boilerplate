@@ -17,12 +17,36 @@ describe('App', () => {
     const tree = renderer.create(<App />).toJSON();
     expect(tree).toMatchSnapshot();
   });
-  it('App: Logger Function is will work', () => {
+  it('App: onContentChange Function is will work', () => {
     const wrapper = shallow(<App/>);
     const instance = wrapper.instance();
-    expect(instance.state.text).toEqual('');
-    instance.Logger('some');
-    expect(instance.state.text).toEqual('some');
+    expect(instance.state.currentContent).toEqual('');
+    instance.onContentChange('some');
+    expect(instance.state.currentContent).toEqual('some');
   });
-  
+
+  it('App: onTitleChange Function is will work', () => {
+    const wrapper = shallow(<App/>);
+    const instance = wrapper.instance();
+    expect(instance.state.currentTitle).toEqual('');
+    instance.onTitleChange('some');
+    expect(instance.state.currentTitle).toEqual('some');
+  });
+
+  it('App: addContent Function is will work', () => {
+    const wrapper = shallow(<App/>);
+    const instance = wrapper.instance();
+    const expectRes =  {
+      currentContent: '',
+      currentTitle: '',
+      arrayContent: [{
+        title: 'some',
+        content: 'some'
+      }]
+    };
+    instance.onTitleChange('some');
+    instance.onContentChange('some');
+    instance.addContent();
+    expect(instance.state).toEqual(expectRes);
+  }); 
 });

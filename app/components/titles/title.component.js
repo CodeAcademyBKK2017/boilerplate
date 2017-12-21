@@ -4,6 +4,8 @@
  * @flow
  */
 
+import noop from 'lodash/noop';
+import ProptTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './title.style';
 import {
@@ -16,6 +18,7 @@ import {
 export default class Title extends Component {
 
   render () {
+    const {text, FTitle} = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.titleHead}>
@@ -31,8 +34,20 @@ export default class Title extends Component {
         <TextInput
           style = {styles.textArea}
           multiline = {true}
+          onChangeText={FTitle}
+          value={text}
         />
       </View>
     );
   }
 }
+
+Title.propTypes = {
+  FTitle: ProptTypes.func.isRequired,
+  text: ProptTypes.string.isRequired
+};
+
+Title.defaultProps = {
+  FTitle: noop,
+  text: ''
+};

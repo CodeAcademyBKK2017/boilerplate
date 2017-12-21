@@ -13,19 +13,31 @@ import {View} from 'react-native';
 
 export default class App extends Component {
   state = {
-    text: ''
+    currentContent: '',
+    currentTitle: '',
+    arrayContent: []
   }
 
-  Logger = (text) => {
-    this.setState({text});
+  onContentChange =  (currentContent) => {
+    this.setState({currentContent});
+  }
+  onTitleChange =  (currentTitle) => {
+    this.setState({currentTitle});
+  }
+  addContent = () => {
+    const newValue = {title: this.state.currentTitle, content: this.state.currentContent};
+    const newContent = [...this.state.arrayContent, newValue];
+    this.setState({currentContent: '',
+      currentTitle: '',
+      arrayContent: newContent});
   }
 
   render () {
     return (
       <View style={globalStyle.container}>
-        <Title/>  
-        <Content FText={this.Logger} textState={this.state.text}/>
-        <Footer textState={this.state.text.length}/>
+        <Title text={this.state.currentTitle} FTitle={this.onTitleChange} />  
+        <Content FText={this.onContentChange} textState={this.state.currentContent}/>
+        <Footer textState={this.state.currentContent.length} addContent={this.addContent}/>
       </View> 
     );
   }

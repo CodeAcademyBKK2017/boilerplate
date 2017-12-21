@@ -75,6 +75,7 @@ exports[`Title Title: renders correctly 1`] = `
   <TextInput
     allowFontScaling={true}
     multiline={true}
+    onChangeText={[Function]}
     style={
       Object {
         "backgroundColor": "#F5FCFF",
@@ -84,6 +85,7 @@ exports[`Title Title: renders correctly 1`] = `
         "width": "100%",
       }
     }
+    value=""
   />
 </View>
 `;

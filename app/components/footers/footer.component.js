@@ -3,6 +3,7 @@
  * https://github.com/facebook/react-native
  * @flow
  */
+import noop from 'lodash/noop';
 import ProptTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './footer.style';
@@ -15,10 +16,10 @@ import {
 export default class Footer extends Component {
 
   render () {
-    const {textState} = this.props;
+    const {textState, addContent} = this.props;
     return (
       <View style={styles.container}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={addContent}>
           <Text style={styles.Save}>
             Save
           </Text>
@@ -31,9 +32,11 @@ export default class Footer extends Component {
   }
 }
 Footer.propTypes = {
-  textState: ProptTypes.number.isRequired
+  textState: ProptTypes.number.isRequired,
+  addContent: ProptTypes.func.isRequired
 };
   
 Footer.defaultProps = {
-  textState: 0
+  textState: 0,
+  addContent: noop
 };

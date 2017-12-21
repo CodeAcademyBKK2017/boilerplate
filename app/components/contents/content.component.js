@@ -16,7 +16,7 @@ import {
 export default class Content extends Component {
 
   render () {
-    // const {FText, textState} = this.props;
+    const {FText, textState} = this.props;
     return (
       <View style={styles.container}>
         <Text style={styles.instructions}>
@@ -25,8 +25,8 @@ export default class Content extends Component {
         <TextInput
           style = {styles.textArea}
           multiline = {true}
-          onChangeText={this.props.FText}
-          value = {this.props.textState}
+          onChangeText={FText}
+          value = {textState}
         />
       </View>
     );
