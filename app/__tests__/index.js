@@ -14,14 +14,46 @@ describe('App', () => {
     expect(tree).toBeDefined();
   });
 
-  it('onChangeTextContent', () => {
+  it('onChangeTextTitle', () => {
+    const text = 'my test title';
+
     const wrapper = shallow(<App />);
     const instance = wrapper.instance();
-    instance.onChangeTextContent('asdf');
+    instance.onChangeTextTitle(text);
 
-    const expectedState = {
-      textContent: 'asdf'
+    expect(instance.state.textTitle).toBe(text);
+  });
+
+  it('onChangeTextContent', () => {
+    const text = 'my test content';
+
+    const wrapper = shallow(<App />);
+    const instance = wrapper.instance();
+    instance.onChangeTextContent(text);
+
+    expect(instance.state.textContent).toBe(text);
+  });
+
+  it('onSaveButtonPress', () => {
+    const title = 'my test title';
+    const content = 'my test message';
+
+    const wrapper = shallow(<App />);
+    const instance = wrapper.instance();
+    instance.onChangeTextTitle(title);
+    instance.onChangeTextContent(content);
+    instance.onSaveButtonPress();
+
+    const expected = {
+      textTitle: '',
+      textContent: '',
+      notes: [
+        {
+          title,
+          content
+        }
+      ]
     };
-    expect(instance.state.textContent).toBe(expectedState.textContent);
+    expect(instance.state).toEqual(expected);
   });
 });
