@@ -6,6 +6,8 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 
+jest.mock('uuid', () => () => 'someUUID');
+
 describe('App', () => {
   let wrapper, instance;
   beforeEach(() => {
@@ -27,12 +29,12 @@ describe('App', () => {
   it('onSave: Should have state Change', () => {
     instance.setState({title: 'someTitle', content: 'someContent'});
     instance.onSave();
-    expect(instance.state.note).toEqual([{title: 'someTitle', content: 'someContent'}]);
+    expect(instance.state.note).toEqual([{title: 'someTitle', content: 'someContent', key: 'someUUID'}]);
     instance.setState({title: 'abc', content: 'def'});
     instance.onSave();
     expect(instance.state.note).toEqual([
-      {title: 'someTitle', content: 'someContent'},
-      {title: 'abc', content: 'def'}
+      {title: 'someTitle', content: 'someContent', key: 'someUUID'},
+      {title: 'abc', content: 'def', key: 'someUUID'}
     ]);
   });
 });

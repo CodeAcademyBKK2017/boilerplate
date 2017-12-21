@@ -6,10 +6,12 @@
 
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import Note from './components/Note/Note.component';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
-import {KeyboardAvoidingView, Platform, View} from 'react-native';
+import uuid from 'uuid';
+import {KeyboardAvoidingView, Platform, Text, View} from 'react-native';
 
 export default class App extends Component {
   initialstate = {
@@ -17,7 +19,7 @@ export default class App extends Component {
     title: '',
     note: []
   }
-  state = this.initialstate;
+  state = this.initialstate;  q
   WrapperView = Platform.select(
     {ios: KeyboardAvoidingView,
       android: View
@@ -30,16 +32,23 @@ export default class App extends Component {
     this.setState({content: text});
   }
   onSave = () => {
-    const newNote =  [...this.state.note, {title: this.state.title, content: this.state.content}];
+    const newNote =  [...this.state.note, {
+      title: this.state.title,
+      content: this.state.content,
+      key: uuid()
+    }];
     // newNote.push({title: this.state.title, content: this.state.content});
     this.setState({note: newNote});
   }
+
   render () {
     return (
       <this.WrapperView style={styles.container} behavior={'padding'} >
         <Title onTitleChange={this.changeTitle}/>
         <Content  onContentChange={this.changeContent} />
-        <Footer characterCount={this.state.content.count} onPressSave={this.onSave}/>
+        <Footer characterCount={this.state.content.count} onPressSave={this.onSave} />
+        <Text>Notes:</Text>
+        <Note noteList={this.state.note} />
       </this.WrapperView>
     );
   }
