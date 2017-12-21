@@ -17,6 +17,7 @@ export default class Content extends Component {
           style={styles.textInput}
           multiline={true}
           underlineColorAndroid='transparent'
+          value={this.props.text}
           onChangeText={this.props.onChangeTextContent}/>
       </View>
     );
@@ -25,9 +26,11 @@ export default class Content extends Component {
 
 Content.propTypes = {
   style: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
+  text: PropTypes.string.isRequired,
   onChangeTextContent: PropTypes.func.isRequired
 };
 
 Content.defaultProps = {
+  text: '',
   onChangeTextContent: noop
 };

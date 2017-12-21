@@ -44,7 +44,12 @@ export default class App extends Component {
     notes.push(note);
     console.log(notes);
 
-    const state = {...this.state, notes};
+    const state = {
+      ...this.state,
+      textTitle: '',
+      textContent: '',
+      notes
+    };
     this.setState(state);
   }
 
@@ -53,9 +58,12 @@ export default class App extends Component {
       <this.WrapperView
         style={[styles.container]}
         behavior='padding'>
-        <Title onChangeTextTitle={this.onChangeTextTitle}/>
+        <Title
+          text={this.state.textTitle}
+          onChangeTextTitle={this.onChangeTextTitle}/>
         <Content
           style={styles.fill}
+          text={this.state.textContent}
           onChangeTextContent={this.onChangeTextContent}/>
         <Footer
           textContentLength={this.state.textContent.length}

@@ -20,6 +20,7 @@ export default class Title extends Component {
         <TextInput
           style={styles.textInput}
           underlineColorAndroid='transparent'
+          value={this.props.text}
           onChangeText={this.props.onChangeTextTitle}/>
       </View>
     );
@@ -27,9 +28,11 @@ export default class Title extends Component {
 }
 
 Title.propTypes = {
+  text: PropTypes.string.isRequired,
   onChangeTextTitle: PropTypes.func.isRequired
 };
 
 Title.defaultProps = {
+  text: '',
   onChangeTextTitle: noop
 };
