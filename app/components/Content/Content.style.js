@@ -5,7 +5,6 @@ export default StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     margin: 10,
-
     fontStyle: 'italic'
   },
   textArea: {
@@ -15,20 +14,21 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     padding: 5,
     color: '#ababab',
-    borderRadius: 3
+    borderRadius: 3,
+    height: 300
   },
   content: {
     flexDirection: 'row',
     margin: 20
   },
   conArea: {
-    flex: 1,
+    flex: 0,
     flexDirection: 'row',
     marginLeft: 30,
     marginRight: 30
   },
   title: {
-    flex: 1,
+    flex: 0,
     flexDirection: 'row',
     margin: 30
   },

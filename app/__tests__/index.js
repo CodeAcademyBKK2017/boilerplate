@@ -38,3 +38,18 @@ it('Check Function saveNote', () => {
   instance.saveNote('');
   expect(instance.state.title).toEqual('');
 });
+it('Check Function _keyExtractor', () => {
+  const props = {};
+  const wrapper = shallow(<App {...props}/>);
+  const instance = wrapper.instance();
+  expect(instance.state.title).toEqual('');
+  instance._keyExtractor('12345');
+  expect(instance.state.title).toEqual('');
+});
+it('rendersItem correctly', () => {
+  const wrapper = shallow(<App/>);
+  const instance = wrapper.instance();
+  const item = {title: 'title', uuid: '1'};
+  const snapshot = instance._renderItem({item});
+  expect(snapshot).toMatchSnapshot();
+});
