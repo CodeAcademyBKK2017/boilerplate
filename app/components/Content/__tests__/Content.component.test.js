@@ -7,9 +7,7 @@ import renderer from 'react-test-renderer';
 
 describe('Content', () => {
   it('renders correctly', () => {
-    const tree = renderer.create(
-      <Content />
-    );
-    expect(tree).toBeDefined();
+    const snapshot = renderer.create(<Content />).toJSON();
+    expect(snapshot).toMatchSnapshot();
   });
 });

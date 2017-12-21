@@ -7,9 +7,7 @@ import renderer from 'react-test-renderer';
 
 describe('Footer', () => {
   it('renders correctly', () => {
-    const tree = renderer.create(
-      <Footer />
-    );
-    expect(tree).toBeDefined();
+    const snapshot = renderer.create(<Footer />).toJSON();
+    expect(snapshot).toMatchSnapshot();
   });
 });

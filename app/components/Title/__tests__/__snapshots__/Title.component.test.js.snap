@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Title renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "flex-start",
+        "paddingVertical": 10,
+        "width": "100%",
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "flex": 1,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      Note Title
+    </Text>
+  </View>
+  <TextInput
+    allowFontScaling={true}
+    onChangeText={[Function]}
+    style={
+      Object {
+        "backgroundColor": "white",
+        "borderColor": "gray",
+        "borderWidth": 1,
+        "padding": 5,
+        "width": "100%",
+      }
+    }
+    underlineColorAndroid="transparent"
+    value=""
+  />
+</View>
+`;

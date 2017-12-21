@@ -7,9 +7,7 @@ import Title from '../Title.component';
 
 describe('Title', () => {
   it('renders correctly', () => {
-    const tree = renderer.create(
-      <Title />
-    );
-    expect(tree).toBeDefined();
+    const snapshot = renderer.create(<Title />).toJSON();
+    expect(snapshot).toMatchSnapshot();
   });
 });
