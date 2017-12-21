@@ -12,10 +12,24 @@ describe('NoteList', () => {
     expect(snapshot).toMatchSnapshot();
   });
 
-  it('renderItem', () => {
+  it('renderItem with even', () => {
     const item = {
       title: 'test title',
-      content: 'test content'
+      content: 'test content',
+      isEven: true
+    };
+
+    const wrapper = shallow(<NoteList />);
+    const instance = wrapper.instance();
+    const snapshot = instance.renderItem({item});
+    expect(snapshot).toMatchSnapshot();
+  });
+
+  it('renderItem with odd', () => {
+    const item = {
+      title: 'test title',
+      content: 'test content',
+      isEven: false
     };
 
     const wrapper = shallow(<NoteList />);

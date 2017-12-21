@@ -1,11 +1,58 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`NoteList renderItem 1`] = `
+exports[`NoteList renderItem with even 1`] = `
 <View
   style={
-    Object {
-      "paddingVertical": 10,
+    Array [
+      Object {
+        "paddingVertical": 10,
+      },
+      Object {
+        "backgroundColor": "gray",
+      },
+    ]
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "paddingBottom": 10,
+      }
     }
+  >
+    test title
+  </Text>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 12,
+      }
+    }
+  >
+    test content
+  </Text>
+</View>
+`;
+
+exports[`NoteList renderItem with odd 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "paddingVertical": 10,
+      },
+      Object {
+        "backgroundColor": "white",
+      },
+    ]
   }
 >
   <Text

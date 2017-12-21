@@ -53,7 +53,8 @@ describe('App', () => {
         {
           key: 'some uuid',
           title,
-          content
+          content,
+          isEven: true
         }
       ]
     };
