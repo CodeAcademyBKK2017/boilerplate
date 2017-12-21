@@ -26,7 +26,9 @@ export default class App extends Component {
       content: this.state.content
     };
     this.setState({
-      notes: [...this.state.notes, newData]
+      notes: [...this.state.notes, newData],
+      title: '',
+      content: ''
     });
   }
 
@@ -39,10 +41,11 @@ export default class App extends Component {
   }
 
   render () {
+    console.log(this.state);
     return (
       <View style={styles.container}>
-        <Title onTypeTitle={this.onTypeTitle}/>
-        <Content onTypeContent={this.onTypeContent}/>
+        <Title onTypeTitle={this.onTypeTitle} text={this.state.title}/>
+        <Content onTypeContent={this.onTypeContent} text={this.state.content}/>
         <Footer countContent={this.state.content.length} onSavePress={this.onSavePress} />
       </View>
     );

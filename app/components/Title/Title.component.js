@@ -15,7 +15,7 @@ class Title extends Component {
         <Text style={titleStyles.fontTitle}>
           Note Title
         </Text>
-        <TextInput style={titleStyles.inputBox} underlineColorAndroid= 'transparent' onChangeText={this.props.onTypeTitle}/>
+        <TextInput style={titleStyles.inputBox} underlineColorAndroid= 'transparent' onChangeText={this.props.onTypeTitle} value={this.props.text}/>
       </View>
     );
   }
@@ -26,6 +26,13 @@ Title.propTypes = {
 };
 Title.defaultProps = {
   onTypeTitle: noop
+};
+
+Title.propTypes = {
+  text: PropTypes.string
+};
+Title.defaultProps = {
+  text: noop
 };
 
 export default Title;
