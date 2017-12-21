@@ -1,3 +1,5 @@
+import noop from 'lodash/noop';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Title.style';
 import {
@@ -6,7 +8,7 @@ import {
   View
 } from 'react-native';
 
-export default class Content extends Component {
+export default class Title extends Component {
   render () {
     return (
       <View style={styles.container}>
@@ -15,8 +17,19 @@ export default class Content extends Component {
           {/* <Button style={styles.languageButton} title='en' onPress={null}/> */}
         </View>
         
-        <TextInput style={styles.textInput} underlineColorAndroid='transparent'/>
+        <TextInput
+          style={styles.textInput}
+          underlineColorAndroid='transparent'
+          onChangeText={this.props.onChangeTextTitle}/>
       </View>
     );
   }
 }
+
+Title.propTypes = {
+  onChangeTextTitle: PropTypes.func.isRequired
+};
+
+Title.defaultProps = {
+  onChangeTextTitle: noop
+};

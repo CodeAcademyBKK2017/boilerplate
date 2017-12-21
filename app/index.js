@@ -15,7 +15,9 @@ import {
 
 export default class App extends Component {
   state = {
-    textContent: ''
+    textTitle: '',
+    textContent: '',
+    notes: []
   }
 
   WrapperView = Platform.select({
@@ -23,19 +25,41 @@ export default class App extends Component {
     android: View
   });
 
-  onChangeTextContent = (text) => {
-    this.setState({
-      textContent: text
-    });
+  onChangeTextTitle = (textTitle) => {
+    const state = {...this.state, textTitle};
+    this.setState(state);
+  }
+
+  onChangeTextContent = (textContent) => {
+    const state = {...this.state, textContent};
+    this.setState(state);
+  }
+
+  onSaveButtonPress = () => {
+    const notes = [...this.state.notes];
+    const note = {
+      title: this.state.textTitle,
+      content: this.state.textContent
+    };
+    notes.push(note);
+    console.log(notes);
+
+    const state = {...this.state, notes};
+    this.setState(state);
   }
 
   render () {
     return (
-      <this.WrapperView style={[styles.container]}
+      <this.WrapperView
+        style={[styles.container]}
         behavior='padding'>
-        <Title/>
-        <Content style={styles.fill} onChangeTextContent={this.onChangeTextContent}/>
-        <Footer textContent={this.state.textContent}/>
+        <Title onChangeTextTitle={this.onChangeTextTitle}/>
+        <Content
+          style={styles.fill}
+          onChangeTextContent={this.onChangeTextContent}/>
+        <Footer
+          textContentLength={this.state.textContent.length}
+          onSaveButtonPress={this.onSaveButtonPress}/>
       </this.WrapperView>
     );
   }

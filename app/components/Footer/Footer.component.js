@@ -1,3 +1,4 @@
+import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Footer.style';
@@ -12,10 +13,13 @@ export default class Footer extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.status}>
-          <Touchable style={styles.saveButtonTouch} background={Touchable.Ripple('blue')}>
+          <Touchable
+            style={styles.saveButtonTouch}
+            background={Touchable.Ripple('blue')}
+            onPress={this.props.onSaveButtonPress}>
             <Text style={styles.saveButtonContent}>Save</Text>
           </Touchable>
-          <Text style={styles.charLength}>{this.props.textContent.length} characters</Text>
+          <Text style={styles.charLength}>{this.props.textContentLength} characters</Text>
         </View>
       </View>
     );
@@ -23,9 +27,11 @@ export default class Footer extends Component {
 }
 
 Footer.propTypes = {
-  textContent: PropTypes.string.isRequired
+  textContentLength: PropTypes.number.isRequired,
+  onSaveButtonPress: PropTypes.func.isRequired
 };
 
 Footer.defaultProps = {
-  textContent: ''
+  textContentLength: 0,
+  onSaveButtonPress: noop
 };
