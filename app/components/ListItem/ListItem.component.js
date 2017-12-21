@@ -10,14 +10,14 @@ import {
 
 export default class ListItem extends Component {
 
-  renderItemList = ({item}) => console.log(item)
-    // <TouchableOpacity>
-    //   <View style={style.marginStyle}>
-    //     <Text style={style.textTitleStyle}>{item.title}</Text>
-    //     <Text style={style.textContentStyle}>{item.content}</Text>
-    //   </View>
-    //   <View style={style.divide}/>
-    // </TouchableOpacity>
+  renderItemList = ({item}) =>
+    <TouchableOpacity>
+      <View style={style.marginStyle}>
+        <Text style={style.textTitleStyle}>{item.title}</Text>
+        <Text style={style.textContentStyle}>{item.content}</Text>
+      </View>
+      <View style={style.divide}/>
+    </TouchableOpacity>
 
   render () {
     return (
