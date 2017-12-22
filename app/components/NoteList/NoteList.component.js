@@ -29,23 +29,25 @@ export default class NoteList extends Component {
   }
 
   renderItem = ({item}) => (
-    <Touchable
-      style={[styles.itemTouch, item.isEven ? styles.evenContainer : styles.oddContainer]}
-      background={Touchable.Ripple('blue')}
-      onPress={this.onOpenOverlay(item)}>
-      <View style={styles.itemContainer}>
-        <View style={styles.noteContainer}>
-          <Text style={styles.itemTitle}>{item.title}</Text>
-          <Text style={styles.itemContent}>{item.content}</Text>
+    <View style={styles.dummyContainer}>
+      <Touchable
+        style={styles.itemTouch}
+        background={Touchable.Ripple('blue')}
+        onPress={this.onOpenOverlay(item)}>
+        <View style={styles.itemContainer}>
+          <View style={styles.noteContainer}>
+            <Text style={styles.itemTitle}>{item.title}</Text>
+            <Text style={styles.itemContent}>{item.content}</Text>
+          </View>
+          <Touchable
+            style={styles.deleteTouch}
+            background={Touchable.Ripple('#d33')}
+            onPress={this.props.onDeleteButtonPress(item)}>
+            <Text style={styles.deleteTitle}>Delete</Text>
+          </Touchable>
         </View>
-        <Touchable
-          style={styles.deleteTouch}
-          background={Touchable.Ripple('red')}
-          onPress={this.props.onDeleteButtonPress(item)}>
-          <Text style={styles.deleteTitle}>Delete</Text>
-        </Touchable>
-      </View>
-    </Touchable>
+      </Touchable>
+    </View>
   );
 
   render () {

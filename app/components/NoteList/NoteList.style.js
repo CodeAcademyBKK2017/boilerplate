@@ -10,27 +10,27 @@ const styles = StyleSheet.create({
   noteTitle: {
     fontWeight: 'bold'
   },
+  dummyContainer: {
+    paddingVertical: 10
+  },
   itemTouch: {
-    // backgroundColor: '#eee',
-    // paddingVertical: 10,
-    // paddingHorizontal: 10
+    borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 1,
+
+    backgroundColor: 'white'
   },
   itemContainer: {
     padding: 10,
+
     flexDirection: 'row',
     alignItems: 'center'
-  },
-  evenContainer: {
-    backgroundColor: '#e4e4e4'
-  },
-  oddContainer: {
-    backgroundColor: 'white'
   },
   noteContainer: {
     flex: 1
   },
   deleteTouch: {
-    backgroundColor: '#f00',
+    backgroundColor: 'red',
     padding: 10,
     borderRadius: 5
   },
