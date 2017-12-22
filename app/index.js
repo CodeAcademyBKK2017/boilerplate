@@ -1,21 +1,22 @@
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import NoteItem from './components/NoteItem/NoteItem.component';
+import Overlay from 'react-native-modal-overlay';
 import React, {Component} from 'react';
 import shortid from 'shortid';
 import styles from './index.styles';
 import Title from './components/Title/Title.component';
 
 import {
-  Alert, FlatList, View
+  FlatList, Text, View
 } from 'react-native';
 
 export default class App extends Component {
   state = {
     currentTitle: '',
     currentContent: '',
-    notes: [{key: 'holder', title: 'Title', content: 'Content'}],
-    isShowDetail: false,
+    notes: [],
+    modalVisible: false,
     selectedNote: {key: '', title: '', content: ''}
   }
 
@@ -46,17 +47,13 @@ export default class App extends Component {
 
   _onPressItem = (item) => () => {
     this.setState({
-      isShowDetail: true,
+      modalVisible: true,
       selectedNote: item
     });
+  }
 
-    Alert.alert(
-      item.title,
-      item.content,
-      [{text: 'Done', style: 'cancel'}],
-      {cancelable: false}
-    );
-    
+  _hideOverlay = () => {
+    this.setState({modalVisible: false});
   }
 
   _renderItem = ({item}) => (<NoteItem data={item} onPressItem={this._onPressItem} />)
@@ -71,12 +68,13 @@ export default class App extends Component {
           <FlatList data={this.state.notes} renderItem={this._renderItem} onPressItem={this._onPressItem} />
         </View>
 
-        {/* <Modal visible={this.state.isShowDetail}>
-          <View style={{padding: 20}}>
-            <Text>{this.state.selectedNote.title}</Text>
-            <Text>{this.state.selectedNote.content}</Text>
-          </View>
-        </Modal>         */}
+        <Overlay visible={this.state.modalVisible}
+          onClose={this._hideOverlay}
+          closeOnTouchOutside animationType='zoomInUp'
+          animationDuration={500}>
+          <Text>{this.state.selectedNote.title}</Text>
+          <Text>{this.state.selectedNote.content}</Text>
+        </Overlay>
       </View>
     );
   }

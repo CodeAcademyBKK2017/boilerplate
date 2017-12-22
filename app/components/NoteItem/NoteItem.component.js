@@ -9,22 +9,18 @@ import {
 } from 'react-native';
 
 class NoteItem extends Component {
-    _onPress = () => {
-      this.props.onPressItem(this.props.data);
-    };
+  render () {
+    const {data, onPressItem} = this.props;
 
-    render () {
-      const {data, onPressItem} = this.props;
-
-      return (
-        <Touchable onPress={onPressItem(data)} >
-          <View style={styles.container}>
-            <Text style={styles.title}>{data.title}</Text>
-            <Text style={styles.content}>{data.content}</Text>
-          </View>
-        </Touchable>
-      );
-    }
+    return (
+      <Touchable onPress={onPressItem(data)} >
+        <View style={styles.container}>
+          <Text style={styles.title}>{data.title}</Text>
+          <Text style={styles.content}>{data.content}</Text>
+        </View>
+      </Touchable>
+    );
+  }
 }
 
 NoteItem.propTypes = {

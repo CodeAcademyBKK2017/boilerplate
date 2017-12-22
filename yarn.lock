@@ -4342,9 +4342,9 @@ react-dom@^16.2.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-native-awesome-alerts@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-awesome-alerts/-/react-native-awesome-alerts-1.0.3.tgz#a054065a7c134b8d96c72a172d5ac519e09e5245"
+react-native-animatable@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.2.4.tgz#b5fb7657e8f6edadbc26697057a327fb920b3039"
   dependencies:
     prop-types "^15.5.10"
 
@@ -4356,6 +4356,12 @@ react-native-debugger-open@^0.3.15:
     es6-template "^1.0.4"
     minimist "^1.2.0"
     semver "^5.4.1"
+
+react-native-modal-overlay@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-modal-overlay/-/react-native-modal-overlay-1.2.1.tgz#0f6d55fd89cbd05f982e0081bc18810a1831d453"
+  dependencies:
+    react-native-animatable "^1.2.4"
 
 react-native-platform-touchable@^1.1.1:
   version "1.1.1"

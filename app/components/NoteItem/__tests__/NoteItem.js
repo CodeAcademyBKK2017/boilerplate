@@ -14,24 +14,8 @@ describe('Content', () => {
     };
 
     const tree = renderer.create(
-      <NoteItem data={note}/>
+      <NoteItem data={note} onPressItem={() => {}}/>
     );
     expect(tree).toBeDefined();
-  });
-
-  it('onPress choose have been called', () => {
-    const props = {
-      data: {
-        key: 'key',
-        title: 'title',
-        content: 'content'
-      },
-      onPressItem: jest.fn()
-    };
-
-    const wrapper = shallow(<NoteItem {...props}/>);
-    const instance = wrapper.instance();
-    instance._onPress();
-    expect(instance.props.onPressItem).toBeCalled();
   });
 });

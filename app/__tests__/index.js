@@ -1,6 +1,5 @@
 import 'react-native';
 import App from '../index';
-import AwesomeAlert from 'react-native-awesome-alerts';
 import NoteItem from '../components/NoteItem/NoteItem.component';
 import React from 'react';
 
@@ -30,6 +29,8 @@ describe('App', () => {
     expect(instance.state).toEqual({
       currentTitle: '',
       currentContent: '',
+      modalVisible: false,
+      selectedNote: {key: '', title: '', content: ''},
       notes: [{
         key: 'key',
         title: 'Title', 
@@ -39,15 +40,25 @@ describe('App', () => {
     
   });
 
-  it('', () => {
+  it('onPressItem', () => {
     const props = {};
     const wrapper = shallow(<App {...props}/>);
     const instance = wrapper.instance();
 
-    instance._onPressItem();   
+    instance._onPressItem({title: 'title', content: 'content'})();
+    expect(instance.state.modalVisible).toBeTruthy();
   });
 
-  it('', () => {
+  it('_hideOverlay', () => {
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+
+    instance._hideOverlay();
+    expect(instance.state.modalVisible).toBeFalsy();
+  });
+
+  it('Render Items: should get the correct the note item', () => {
     const props = {};
     const wrapper = shallow(<App {...props}/>);
     const instance = wrapper.instance();
@@ -59,9 +70,7 @@ describe('App', () => {
     };
     
     const expectedItem = <NoteItem data={item} onPressItem={instance._onPressItem} />;
-
     const noteItem = instance._renderItem({item});
-
     expect(noteItem).toEqual(expectedItem);
   });
 });
