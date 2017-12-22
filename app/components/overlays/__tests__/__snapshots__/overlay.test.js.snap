@@ -1,24 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Overlay Overlay: renders correctly 1`] = `
-<View
-  style={undefined}
+<Modal
+  animationOutType="fadeOut"
+  animationType="none"
+  hardwareAccelerated={false}
+  onClose={[Function]}
+  onRequestClose={[Function]}
+  transparent={true}
+  visible={true}
 >
-  <Modal
-    animationOutType="fadeOut"
-    animationType="none"
-    hardwareAccelerated={false}
-    onClose={[Function]}
-    onRequestClose={[Function]}
-    transparent={true}
-    visible={true}
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    collapsable={undefined}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "rgba(37, 8, 10, 0.78)",
+        "flex": 1,
+        "justifyContent": "center",
+        "opacity": 0,
+        "padding": 20,
+      }
+    }
+    testID={undefined}
   >
     <View
       accessibilityComponentType={undefined}
       accessibilityLabel={undefined}
       accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
       hitSlop={undefined}
       nativeID={undefined}
       onLayout={undefined}
@@ -29,56 +51,28 @@ exports[`Overlay Overlay: renders correctly 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       style={
-        Object {
-          "backgroundColor": "rgba(37, 8, 10, 0.78)",
-          "flex": 1,
-          "justifyContent": "center",
-          "opacity": 0,
-          "padding": 20,
-        }
+        Array [
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "white",
+            "padding": 20,
+          },
+          undefined,
+        ]
       }
       testID={undefined}
     >
-      <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
+      <Text
         accessible={true}
-        hitSlop={undefined}
-        nativeID={undefined}
-        onLayout={undefined}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "white",
-              "padding": 20,
-            },
-            Object {
-              "backgroundColor": "#eee",
-            },
-          ]
-        }
-        testID={undefined}
-      >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        />
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        />
-      </View>
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      />
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      />
     </View>
-  </Modal>
-</View>
+  </View>
+</Modal>
 `;

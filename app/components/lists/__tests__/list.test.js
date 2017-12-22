@@ -41,6 +41,7 @@ describe('List', () => {
     expect(instance.state.currentItem).toEqual(param);
   
   });
+  
   it('List: _closeModal Function change state visible to false', () => {
     const wrapper = shallow(<List/>);
     const instance = wrapper.instance();
@@ -49,6 +50,5 @@ describe('List', () => {
     instance._closeModal();
     expect(instance.state.modalVisible).toEqual(ExpectedmodalVisible);
     expect(instance.state.currentItem).toEqual(Expectedparam);
-  
   });
 });

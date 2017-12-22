@@ -6,8 +6,6 @@ import  'react-native';
 // Note: test renderer must be required after react-native.
 // import uuid from 'uuid';
 
-import {shallow} from 'enzyme';
-
 describe('Overlay', () => {
   
   it('renders correctly', () => {
