@@ -8,8 +8,7 @@ import Overlay from 'react-native-modal-overlay';
 import ProptTypes from 'prop-types';
 import React, {Component} from 'react';
 import {
-  Text,
-  View
+  Text
 } from 'react-native';
 
 export default class overlay extends Component {
