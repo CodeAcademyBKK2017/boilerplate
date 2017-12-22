@@ -52,5 +52,17 @@ describe('App', () => {
     const snapshot = instance._renderItem({item});
     expect(snapshot).toMatchSnapshot();
   });
- 
+  it('Check Function modalOpen', () => {
+    const wrapper = shallow(<App/>);
+    const instance = wrapper.instance();
+    const item = {text: 'text', title: 'title'};
+    const snapshot = instance.modalOpen({item})();
+    expect(snapshot).toMatchSnapshot();
+  });
+  it('Check Function modalonClose', () => {
+    const wrapper = shallow(<App/>);
+    const instance = wrapper.instance();
+    const snapshot = instance.modalonClose();
+    expect(snapshot).toMatchSnapshot();
+  });
 });

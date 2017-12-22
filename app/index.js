@@ -6,13 +6,13 @@
 
 import Content from './components/Content/Content.components';
 import Footer from './components/Footer/Footer.components';
+import Overlay from 'react-native-modal-overlay';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.components';
 import uuid from 'uuid';
 
 import {
-  Alert,
   FlatList,
   Text,
   TouchableOpacity,
@@ -24,7 +24,7 @@ export default class App extends Component {
   _renderItem = (args) => 
     <View>
       <TouchableOpacity
-        onPress={this.popUpText(args)}>
+        onPress={this.modalOpen(args)}>
         <Text style={styles.text}>{args.item.title}</Text>
         <Text>{args.item.text}</Text>
       </TouchableOpacity>
@@ -32,18 +32,20 @@ export default class App extends Component {
   state ={
     text: '',
     textTitle: '',
-    notes: []
+    notes: [],
+    modalVisible: false,
+    modalText: []
   }
-  popUpText =(arg) => () => {
-    Alert.alert(
-      arg.item.title,
-      arg.item.text,
-      [
-        {text: 'OK', onPress: () => console.log('OK Pressed')}
-      ],
-      {cancelable: false}
-    );
-  }
+  // popUpText =(arg) => () => {
+  //   Alert.alert(
+  //     arg.item.title,
+  //     arg.item.text,
+  //     [
+  //       {text: 'OK', onPress: () => console.log('OK Pressed')}
+  //     ],
+  //     {cancelable: false}
+  //   );
+  // }
   texts =(v) => {
     this.setState({text: v});
   }
@@ -58,6 +60,18 @@ export default class App extends Component {
 
     this.setState({textTitle: '', text: '', 'notes': newNotes});
   }
+  modalOpen =(arg) => () => {
+    const data = {'title': arg.item.title, 'text': arg.item.text};
+    this.setState({
+      modalVisible: true,
+      modalText: data
+    });
+  }
+  modalonClose =() => {
+    this.setState({
+      modalVisible: false
+    });
+  }
   render () {
     return (
       <View style={styles.container}>  
@@ -71,6 +85,13 @@ export default class App extends Component {
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
         />
+        <Overlay visible={this.state.modalVisible}
+          onClose={this.modalonClose}
+          closeOnTouchOutside animationType='zoomIn'
+          animationDuration={500}>
+          <Text>{this.state.modalText.title}</Text>
+          <Text>{this.state.modalText.text}</Text>
+        </Overlay>
       </View>
     );
   }
