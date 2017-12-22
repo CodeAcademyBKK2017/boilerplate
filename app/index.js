@@ -10,8 +10,10 @@ import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
+  Alert,
   FlatList,
   Text,
+  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -34,11 +36,24 @@ export default class App extends Component {
       }
     );
   }
+  modalBox = (args) =>  () => {
+    Alert.alert(
+      args.item.title,
+      args.item.content,
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
+      ],
+      {cancelable: false}
+    );
+  }
   _keyExtractor = (item) => item.unique;
   _renderItem = (args) => 
     <View>
-      <Text style={styles.flatText}>{args.item.title}</Text>
-      <Text>{args.item.content}</Text>
+      <TouchableOpacity
+        onPress={this.modalBox(args)}>
+        <Text style={styles.flatText}>{args.item.title}</Text>
+        <Text>{args.item.content}</Text>
+      </TouchableOpacity>
     </View>
   render () {
     return (
@@ -46,7 +61,7 @@ export default class App extends Component {
         <Title titles={this.onTitle} textTitle={this.state.title}/>
         <Content texts={this.state.text} Fn={this.onCount}
           FnSave={this.saveNote}/>
-        <Text style={styles.flatTitle}>Notes:</Text>
+        {/* <Text style={styles.flatTitle}>Notes:</Text> */}
         <View style={styles.conFlat}>
           <FlatList
             style={styles.flat}
