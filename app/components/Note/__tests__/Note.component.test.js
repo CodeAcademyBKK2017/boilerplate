@@ -19,5 +19,24 @@ describe('Note', () => {
     const snapshot = instance.generateList({item});
     expect(snapshot).toMatchSnapshot();
   });
-
+  it('onOpen should have state change', () => {
+    const title = 'xx';
+    const content = 'yy';
+    const expectedState = {
+      modalVisible: true,
+      title: 'xx',
+      content: 'yy'
+    };
+    instance.onOpen(title, content)();
+    expect(instance.state).toEqual(expectedState);
+  });
+  it('onClose should have state change', () => {
+    const expectedInitialstate = {
+      modalVisible: false,
+      title: '',
+      content: ''
+    };
+    instance.onClose();
+    expect(instance.state).toEqual(expectedInitialstate);
+  });
 });

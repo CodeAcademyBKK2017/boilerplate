@@ -6,12 +6,12 @@ import Touchable from 'react-native-platform-touchable';
 import {FlatList, Text, View} from 'react-native';
 
 export default class Note extends Component {
-    state ={
-      modalVisible: false,
-      title: '',
-      content: ''
-    }
- 
+  initialstate ={
+    modalVisible: false,
+    title: '',
+    content: ''
+  }
+    state = this.initialstate; 
 onOpen=(title, content) => () => {
   this.setState({
     modalVisible: !this.state.modalVisible
@@ -19,7 +19,7 @@ onOpen=(title, content) => () => {
     , content});
 }
 onClose=() => {
-  this.setState({modalVisible: false});
+  this.setState(this.initialstate);
 }
 generateList = ({item}) => (
   <Touchable style={styles.box} onPress={this.onOpen(item.title, item.content)}>

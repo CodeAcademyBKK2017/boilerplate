@@ -19,7 +19,7 @@ export default class App extends Component {
     title: '',
     note: []
   }
-  state = this.initialstate;  q
+  state = this.initialstate; 
   WrapperView = Platform.select(
     {ios: KeyboardAvoidingView,
       android: View
