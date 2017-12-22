@@ -11,8 +11,8 @@ import {
 
 class NoteList extends Component {
   keyExtractor = (item) => item.uuid;
-  renderItem = ({item}) => <TouchableOpacity onPress={this.showAlert(item.title, item.content)}><View><Text style={styles.title}>{item.title}</Text><Text style={styles.content}>{item.content}</Text></View></TouchableOpacity>;
-  showAlert = (title, content) => () => Alert.alert(title, content)
+  renderItem = ({item}) => <TouchableOpacity onPress={this.showAlert(item)}><View><Text style={styles.title}>{item.title}</Text><Text style={styles.content}>{item.content}</Text></View></TouchableOpacity>;
+  showAlert = (item) => () => Alert.alert(item.title, item.content)
 
   render () {
     return (
