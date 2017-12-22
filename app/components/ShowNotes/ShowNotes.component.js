@@ -36,8 +36,6 @@ export default class ShowNotes extends Component {
           
           <Overlay visible={this.state.setVisible}
             closeOnTouchOutside animationType='zoomIn'
-            containerStyle={ShowNotesStyle.containerStyle}
-            childrenWrapperStyle={ShowNotesStyle.childrenWrapperStyle}
             animationDuration={500}
             onClose={this.onCloseModal}>
 
