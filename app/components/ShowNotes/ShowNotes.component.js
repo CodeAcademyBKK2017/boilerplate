@@ -1,4 +1,4 @@
-// import noop from 'lodash/noop';
+import noop from 'lodash/noop';
 import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -17,12 +17,22 @@ export default class ShowNotes extends Component {
       content: '',
       setVisible: false
     }
+
     _keyExtractor = (item) => item.uuid;
     _renderItem = ({item}) => 
       <TouchableOpacity onPress={this.onShowAlert(item)}>
         <View style={ShowNotesStyle.boxShowNotes}>
-          <Text>{item.title}</Text>
-          <Text>{item.content}</Text>
+          <View>
+            <Text>{item.title}</Text>
+            <Text>{item.content}</Text>
+          </View>
+          <View>
+            <TouchableOpacity title='Delete' style={ShowNotesStyle.button} onPress={this.props.onDeleteItem(item.uuid)}>
+              <Text>
+                Delete
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </TouchableOpacity>;
 
@@ -48,8 +58,10 @@ export default class ShowNotes extends Component {
 }
 
 ShowNotes.propTypes = {
-  note: PropTypes.array.isRequired
+  note: PropTypes.array.isRequired,
+  onDeleteItem: PropTypes.func.isRequired
 };
 ShowNotes.defaultProps = {
-  note: []
+  note: [],
+  onDeleteItem: noop
 };

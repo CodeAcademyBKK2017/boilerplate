@@ -24,7 +24,12 @@ import {
 // });
 export default class App extends Component {
 
-    state = {};
+    state = {
+      note: [],
+      inputTitle: '',
+      inputContent: '',
+      count: 0
+    };
     componentDidMount () {
       AsyncStorage.getItem('state').then((value) => {
         if (value) {
@@ -62,12 +67,25 @@ export default class App extends Component {
         });
     }
 
+    onDeleteItem = (uuid) => () => {
+      var filtered = this.state.note.filter((ele) => ele.uuid !== uuid);
+      this.setState(
+        {
+          note: filtered,
+          inputTitle: '',
+          inputContent: '',
+          count: 0
+        }, () => {
+          AsyncStorage.setItem('state', JSON.stringify(this.state));
+        });
+    }
+
     render () {
       return (
         <View style={styles.boxMain}>
           <Title onTypeTitle={this.onTypeTitle} inputTitle={this.state.inputTitle}/>
           <Content onType={this.onTypeContent} inputContent={this.state.inputContent}/>
-          <ShowNotes note={this.state.note}/>
+          <ShowNotes note={this.state.note} onDeleteItem={this.onDeleteItem}/>
           <Footer showNumber={this.state.count} onSaveNote={this.onSaveNote}/>
 
         </View>

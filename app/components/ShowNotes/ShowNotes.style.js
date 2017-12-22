@@ -4,7 +4,10 @@ import {
       
 export default StyleSheet.create({
   boxShowNotes: {
-    padding: 10
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   boxMain: {
     flex: 1
