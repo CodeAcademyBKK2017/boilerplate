@@ -33,8 +33,16 @@ export default class NoteList extends Component {
       background={Touchable.Ripple('blue')}
       onPress={this.onOpenOverlay(item)}>
       <View style={styles.itemContainer}>
-        <Text style={styles.itemTitle}>{item.title}</Text>
-        <Text style={styles.itemContent}>{item.content}</Text>
+        <View style={styles.noteContainer}>
+          <Text style={styles.itemTitle}>{item.title}</Text>
+          <Text style={styles.itemContent}>{item.content}</Text>
+        </View>
+        <Touchable
+          style={styles.deleteTouch}
+          background={Touchable.Ripple('red')}
+          onPress={this.onOpenOverlay(item)}>
+          <Text style={styles.deleteTitle}>Delete</Text>
+        </Touchable>
       </View>
     </Touchable>
   );

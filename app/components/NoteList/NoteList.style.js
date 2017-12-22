@@ -16,13 +16,23 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 10
   },
   itemContainer: {
-    paddingVertical: 10
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   evenContainer: {
-    backgroundColor: 'gray'
+    backgroundColor: '#e4e4e4'
   },
   oddContainer: {
     backgroundColor: 'white'
+  },
+  noteContainer: {
+    flex: 1
+  },
+  deleteTouch: {
+    backgroundColor: '#f00',
+    padding: 10,
+    borderRadius: 5
   },
   itemTitle: {
     fontWeight: 'bold',
@@ -31,6 +41,11 @@ const styles = StyleSheet.create({
   },
   itemContent: {
     fontSize: 12
+  },
+  deleteTitle: {
+    fontWeight: 'bold',
+    fontSize: 14,
+    color: 'white'
   }
 });
 
