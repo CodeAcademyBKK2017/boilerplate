@@ -1,40 +1,43 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Note generateList should have been render some JSX 1`] = `
-<View
+<PlatformTouchable
+  onPress={[Function]}
   style={
     Object {
       "paddingVertical": 10,
     }
   }
 >
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-    style={
-      Object {
-        "fontSize": 15,
-        "fontWeight": "bold",
+  <View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 15,
+          "fontWeight": "bold",
+        }
       }
-    }
-  >
-    someTitle
-  </Text>
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-    style={
-      Object {
-        "fontSize": 15,
-        "padding": 10,
+    >
+      someTitle
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 15,
+          "padding": 10,
+        }
       }
-    }
-  >
-    someContent
-  </Text>
-</View>
+    >
+      someContent
+    </Text>
+  </View>
+</PlatformTouchable>
 `;
 
 exports[`Note snapshot test 1`] = `
