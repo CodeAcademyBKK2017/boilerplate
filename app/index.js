@@ -53,6 +53,10 @@ export default class App extends Component {
     this.setState(newState);
   }
 
+  onNoteItemPress = () => {
+    console.log('123');
+  };
+
   render () {
     return (
       <this.WrapperView
@@ -69,7 +73,7 @@ export default class App extends Component {
           textContentLength={this.state.textContent.length}
           onSaveButtonPress={this.onSaveButtonPress}/>
         {
-          this.state.notes.length > 0 ? <NoteList data={this.state.notes}/> : null
+          this.state.notes.length > 0 ? <NoteList data={this.state.notes} onItemPress={this.onNoteItemPress}/> : null
         }
       </this.WrapperView>
     );

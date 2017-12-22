@@ -10,6 +10,11 @@ const styles = StyleSheet.create({
   noteTitle: {
     fontWeight: 'bold'
   },
+  itemTouch: {
+    // backgroundColor: '#eee',
+    // paddingVertical: 10,
+    // paddingHorizontal: 10
+  },
   itemContainer: {
     paddingVertical: 10
   },
