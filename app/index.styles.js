@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   container: {
@@ -7,8 +7,6 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#e9e9ee',
     padding: 10
-    // paddingTop: Platform.OS === 'ios' ? 30 : 10
-
   },
   title: {
     fontSize: 20,

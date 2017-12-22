@@ -14,10 +14,10 @@ class NoteItem extends Component {
     };
 
     render () {
-      const {data} = this.props;
+      const {data, onPressItem} = this.props;
 
       return (
-        <Touchable onPress={this._onPress} >
+        <Touchable onPress={onPressItem(data)} >
           <View style={styles.container}>
             <Text style={styles.title}>{data.title}</Text>
             <Text style={styles.content}>{data.content}</Text>

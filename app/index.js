@@ -7,14 +7,16 @@ import styles from './index.styles';
 import Title from './components/Title/Title.component';
 
 import {
-  FlatList, Text, View
+  Alert, FlatList, View
 } from 'react-native';
 
 export default class App extends Component {
   state = {
     currentTitle: '',
     currentContent: '',
-    notes: []
+    notes: [{key: 'holder', title: 'Title', content: 'Content'}],
+    isShowDetail: false,
+    selectedNote: {key: '', title: '', content: ''}
   }
 
   onTitleChangeText = (currentTitle) => {
@@ -42,8 +44,19 @@ export default class App extends Component {
     });
   }
 
-  _onPressItem = (item) => {
-    console.log(item);
+  _onPressItem = (item) => () => {
+    this.setState({
+      isShowDetail: true,
+      selectedNote: item
+    });
+
+    Alert.alert(
+      item.title,
+      item.content,
+      [{text: 'Done', style: 'cancel'}],
+      {cancelable: false}
+    );
+    
   }
 
   _renderItem = ({item}) => (<NoteItem data={item} onPressItem={this._onPressItem} />)
@@ -57,6 +70,13 @@ export default class App extends Component {
         <View style={styles.list}>
           <FlatList data={this.state.notes} renderItem={this._renderItem} onPressItem={this._onPressItem} />
         </View>
+
+        {/* <Modal visible={this.state.isShowDetail}>
+          <View style={{padding: 20}}>
+            <Text>{this.state.selectedNote.title}</Text>
+            <Text>{this.state.selectedNote.content}</Text>
+          </View>
+        </Modal>         */}
       </View>
     );
   }

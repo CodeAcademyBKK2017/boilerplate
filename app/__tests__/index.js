@@ -1,5 +1,7 @@
 import 'react-native';
 import App from '../index';
+import AwesomeAlert from 'react-native-awesome-alerts';
+import NoteItem from '../components/NoteItem/NoteItem.component';
 import React from 'react';
 
 // Note: test renderer must be required after react-native.
@@ -29,10 +31,38 @@ describe('App', () => {
       currentTitle: '',
       currentContent: '',
       notes: [{
+        key: 'key',
         title: 'Title', 
         content: 'Content'
       }]
     });
     
   });
+
+  it('', () => {
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+
+    instance._onPressItem();   
+  });
+
+  it('', () => {
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+
+    const item = {
+      key: 'key',
+      title: 'title',
+      content: 'content'
+    };
+    
+    const expectedItem = <NoteItem data={item} onPressItem={instance._onPressItem} />;
+
+    const noteItem = instance._renderItem({item});
+
+    expect(noteItem).toEqual(expectedItem);
+  });
 });
+
