@@ -54,16 +54,17 @@ export default class App extends Component {
   }
 
   onNoteItemPress = (item) => () => {
-    Alert.alert(
-      item.title,
-      item.content,
-      [
-        {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'OK', onPress: () => console.log('OK Pressed')}
-      ],
-      {cancelable: false}
-    );
+    Alert.alert(item.title, item.content);
+    // Alert.alert(
+    //   item.title,
+    //   item.content,
+    //   [
+    //     {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+    //     {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+    //     {text: 'OK', onPress: () => console.log('OK Pressed')}
+    //   ],
+    //   {cancelable: false}
+    // );
   };
 
   render () {
