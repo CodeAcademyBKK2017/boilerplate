@@ -12,6 +12,7 @@ import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
   StyleSheet,
+  //   Text,
   View
 } from 'react-native';
 
@@ -50,6 +51,7 @@ export default class App extends Component {
           <Content onType={this.onTypeContent} inputContent={this.state.inputContent}/>
           <ShowNotes note={this.state.note}/>
           <Footer showNumber={this.state.count} onSaveNote={this.onSaveNote}/>
+
         </View>
       );
     }
@@ -57,6 +59,7 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   boxMain: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#ccc'
   }
 });

@@ -1,28 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ShowNotes ShowNotes _renderItem 1`] = `
-<View
-  style={
-    Object {
-      "padding": 10,
-    }
-  }
+<TouchableOpacity
+  activeOpacity={0.2}
+  onPress={[Function]}
 >
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
+  <View
+    style={
+      Object {
+        "padding": 10,
+      }
+    }
   >
-    t1
-  </Text>
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-  >
-    c1
-  </Text>
-</View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+    >
+      t1
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+    >
+      c1
+    </Text>
+  </View>
+</TouchableOpacity>
 `;
 
 exports[`ShowNotes renders correctly ShowNotes 1`] = `

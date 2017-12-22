@@ -14,6 +14,7 @@ export default StyleSheet.create({
   },
   inputText: {
     borderColor: 'gray',
-    borderWidth: 1
+    borderWidth: 1,
+    backgroundColor: '#fff'
   }
 });

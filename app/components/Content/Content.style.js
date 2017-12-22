@@ -13,7 +13,8 @@ export default StyleSheet.create({
     borderWidth: 1,
     flex: 1,
     padding: 10,
-    textAlignVertical: 'top'
+    textAlignVertical: 'top',
+    backgroundColor: '#fff'
   },
   welcome: {
     fontSize: 20,
