@@ -24,22 +24,10 @@ describe('NoteList', () => {
     expect(snapshot).toMatchSnapshot();
   });
 
-  it('renderItem with even', () => {
+  it('renderItem', () => {
     const item = {
       title: 'test title',
-      content: 'test content',
-      isEven: true
-    };
-
-    const snapshot = noteListInstance.renderItem({item});
-    expect(snapshot).toMatchSnapshot();
-  });
-
-  it('renderItem with odd', () => {
-    const item = {
-      title: 'test title',
-      content: 'test content',
-      isEven: false
+      content: 'test content'
     };
 
     const snapshot = noteListInstance.renderItem({item});
@@ -49,8 +37,7 @@ describe('NoteList', () => {
   it('onOpenOverlay', () => {
     const item = {
       title: 'test title',
-      content: 'test content',
-      isEven: true
+      content: 'test content'
     };
 
     const curryFunc = noteListInstance.onOpenOverlay(item);

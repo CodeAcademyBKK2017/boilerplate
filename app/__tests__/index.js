@@ -69,8 +69,7 @@ describe('App', () => {
         {
           key: 'some uuid',
           title,
-          content,
-          isEven: true
+          content
         }
       ]
     };
@@ -82,8 +81,7 @@ describe('App', () => {
     const note00 = {
       key: 'some uuid',
       title: 'title 00',
-      content: 'content 00',
-      isEven: true
+      content: 'content 00'
     };
     const initialState = {
       textTitle: '',
@@ -109,8 +107,7 @@ describe('App', () => {
       {
         key: 'some uuid',
         title: 'my test title',
-        content: 'my test message',
-        isEven: true
+        content: 'my test message'
       }
     ];
     // set custom mock result
