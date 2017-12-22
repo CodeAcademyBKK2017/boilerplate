@@ -37,4 +37,35 @@ describe('NoteList', () => {
     const snapshot = instance.renderItem({item});
     expect(snapshot).toMatchSnapshot();
   });
+
+  it('onOpenOverlay', () => {
+    const item = {
+      title: 'test title',
+      content: 'test content',
+      isEven: true
+    };
+
+    const wrapper = shallow(<NoteList />);
+    const instance = wrapper.instance();
+    const curryFunc = instance.onOpenOverlay(item);
+    curryFunc();
+    
+    const expected = {
+      modalVisible: true,
+      selectedNoteItem: item
+    };
+    expect(instance.state).toEqual(expected);
+  });
+
+  it('onCloseOverlay', () => {
+    const wrapper = shallow(<NoteList />);
+    const instance = wrapper.instance();
+    instance.onCloseOverlay();
+
+    const expected = {
+      modalVisible: false,
+      selectedNoteItem: {}
+    };
+    expect(instance.state).toEqual(expected);
+  });
 });
