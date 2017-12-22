@@ -4,6 +4,7 @@ import React from 'react';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+import {inspect} from 'util';
 import {shallow} from 'enzyme';
 
 describe('App', () => {
@@ -53,16 +54,16 @@ it('rendersItem correctly', () => {
   const snapshot = instance._renderItem({item});
   expect(snapshot).toMatchSnapshot();
 });
-it('rendersItem openModal', () => {
+it('Check Function openModal', () => {
   const wrapper = shallow(<App/>);
+  const item = {title: 'title', content: 'content', uuid: '1'};
   const instance = wrapper.instance();
-  const item = {title: 'title', content: 'content'};
-  const snapshot = instance.openModal({item})();
-  expect(snapshot).toMatchSnapshot();
+  instance.openModal({item})();
+  expect(instance.state.modalVisible).toEqual(true);
 });
-it('rendersItem closeModal', () => {
+it('closeModal: should set modalVisibility to false', () => {
   const wrapper = shallow(<App/>);
   const instance = wrapper.instance();
-  const snapshot = instance.closeModal();
-  expect(snapshot).toMatchSnapshot();
+  instance.closeModal();
+  expect(instance.state.modalVisible).toEqual(false);
 });

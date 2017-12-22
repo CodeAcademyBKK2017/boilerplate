@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`rendersItem closeModal 1`] = `undefined`;
-
 exports[`rendersItem correctly 1`] = `
 <View>
   <TouchableOpacity
@@ -31,5 +29,3 @@ exports[`rendersItem correctly 1`] = `
   </TouchableOpacity>
 </View>
 `;
-
-exports[`rendersItem openModal 1`] = `undefined`;
