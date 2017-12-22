@@ -31,9 +31,7 @@ describe('NoteList', () => {
       isEven: true
     };
 
-    const wrapper = shallow(noteListComp);
-    const instance = wrapper.instance();
-    const snapshot = instance.renderItem({item});
+    const snapshot = noteListInstance.renderItem({item});
     expect(snapshot).toMatchSnapshot();
   });
 
@@ -44,9 +42,7 @@ describe('NoteList', () => {
       isEven: false
     };
 
-    const wrapper = shallow(noteListComp);
-    const instance = wrapper.instance();
-    const snapshot = instance.renderItem({item});
+    const snapshot = noteListInstance.renderItem({item});
     expect(snapshot).toMatchSnapshot();
   });
 
@@ -57,27 +53,23 @@ describe('NoteList', () => {
       isEven: true
     };
 
-    const wrapper = shallow(noteListComp);
-    const instance = wrapper.instance();
-    const curryFunc = instance.onOpenOverlay(item);
+    const curryFunc = noteListInstance.onOpenOverlay(item);
     curryFunc();
 
     const expected = {
       modalVisible: true,
       selectedNoteItem: item
     };
-    expect(instance.state).toEqual(expected);
+    expect(noteListInstance.state).toEqual(expected);
   });
 
   it('onCloseOverlay', () => {
-    const wrapper = shallow(noteListComp);
-    const instance = wrapper.instance();
-    instance.onCloseOverlay();
+    noteListInstance.onCloseOverlay();
 
     const expected = {
       modalVisible: false,
       selectedNoteItem: {}
     };
-    expect(instance.state).toEqual(expected);
+    expect(noteListInstance.state).toEqual(expected);
   });
 });
