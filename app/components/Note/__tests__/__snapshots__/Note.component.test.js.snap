@@ -143,10 +143,7 @@ exports[`Note snapshot test 1`] = `
               "backgroundColor": "white",
               "padding": 20,
             },
-            Object {
-              "alignItems": "flex-start",
-              "backgroundColor": "#eee",
-            },
+            undefined,
           ]
         }
         testID={undefined}

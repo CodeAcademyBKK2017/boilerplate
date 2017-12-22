@@ -38,8 +38,6 @@ render () {
         closeOnTouchOutside={true}  
         onClose={this.onClose}
         animationType='slideInLeft'
-        containerStyle={styles.modalContainer}
-        childrenWrapperStyle={styles.modalChildrenWrap}
         animationDuration={1000}>
         <Text style={styles.title}> {this.state.title}</Text>
         <Text style={styles.content}> {this.state.content}</Text>

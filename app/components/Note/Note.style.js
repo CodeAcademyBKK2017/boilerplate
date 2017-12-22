@@ -1,4 +1,6 @@
-export default {
+import {StyleSheet} from 'react-native';
+
+export default StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 15
@@ -25,4 +27,4 @@ export default {
     alignItems: 'flex-start'
   }
 
-};
+});
