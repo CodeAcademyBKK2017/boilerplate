@@ -1,33 +1,63 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App rendersItem correctly 1`] = `
-<TouchableOpacity
-  activeOpacity={0.2}
-  onPress={[Function]}
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "justifyContent": "space-between",
+    }
+  }
 >
-  <View>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
-      style={
-        Object {
-          "fontWeight": "900",
-          "paddingBottom": 10,
-          "paddingTop": 10,
+  <TouchableOpacity
+    activeOpacity={0.2}
+    onPress={[Function]}
+  >
+    <View>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontWeight": "900",
+            "paddingBottom": 10,
+            "paddingTop": 10,
+          }
         }
-      }
-    >
-      title
-    </Text>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
-      style={undefined}
-    >
-      content
-    </Text>
-  </View>
-</TouchableOpacity>
+      >
+        title
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={undefined}
+      >
+        content
+      </Text>
+    </View>
+  </TouchableOpacity>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    onPress={undefined}
+  >
+    <View>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontWeight": "900",
+            "paddingTop": 20,
+            "textAlign": "right",
+          }
+        }
+      >
+        Delete
+      </Text>
+    </View>
+  </TouchableOpacity>
+</View>
 `;

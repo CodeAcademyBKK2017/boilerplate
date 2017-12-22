@@ -5,7 +5,8 @@ import {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: 40,
+    paddingBottom: 10,
     paddingHorizontal: 10,
     backgroundColor: 'lightgray'
   }

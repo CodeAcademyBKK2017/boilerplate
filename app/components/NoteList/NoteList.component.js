@@ -1,4 +1,5 @@
 
+import noop from 'lodash/noop';
 import noteListStyles from './NoteList.style';
 import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
@@ -27,18 +28,22 @@ class NoteList extends Component {
   }
 
   renderItem = ({item}) => 
-
-    // const containerStyles = (index % 2 !== 0) ? noteListStyles.whiteBackground : noteListStyles.greyBackground; // ternary operator
-    <TouchableOpacity onPress={this.onShowModal(item)}>
-      <View>
-        <Text style={noteListStyles.noteListTitle}>{item.title}</Text>
-        <Text style={noteListStyles.noteListContent}>{item.content}</Text>
-      </View>
-    </TouchableOpacity>
-
+    <View style={noteListStyles.container}>
+      <TouchableOpacity onPress={this.onShowModal(item)}>
+        <View>
+          <Text style={noteListStyles.noteListTitle}>{item.title}</Text>
+          <Text style={noteListStyles.noteListContent}>{item.content}</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={this.props.onDeletePress(item)}>
+        <View>
+          <Text style={noteListStyles.delete}>Delete</Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   render () {
     return (
-      <View>
+      <View style={{maxHeight: 200}}>
 
         <FlatList data={this.props.notes} renderItem={this.renderItem}/>
         <Overlay visible={this.state.showModal}
@@ -46,6 +51,7 @@ class NoteList extends Component {
           animationDuration={500} onClose={this.onCloseModal}>
           <Text style={noteListStyles.noteListTitle}>{this.state.title}</Text>
           <Text style={noteListStyles.noteListContent}>{this.state.content}</Text>
+          
         </Overlay>
       </View>
     );
@@ -57,6 +63,13 @@ NoteList.propTypes = {
 };
 NoteList.defaultProps = {
   notes: []
+};
+
+NoteList.propTypes = {
+  onDeletePress: PropTypes.func
+};
+NoteList.defaultProps = {
+  onDeletePress: noop
 };
 
 export default NoteList;

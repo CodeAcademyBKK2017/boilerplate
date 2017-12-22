@@ -4,6 +4,11 @@ import {
         
 const noteListStyles = StyleSheet.create({
   
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+
   noteListTitle: {
     fontWeight: '900',
     paddingBottom: 10,
@@ -14,8 +19,12 @@ const noteListStyles = StyleSheet.create({
   },
   greyBackground: {
     backgroundColor: 'lightgray'
+  },
+  delete: {
+    paddingTop: 20,
+    textAlign: 'right',
+    fontWeight: '900'
   }
-  
 });
         
 export default noteListStyles;
