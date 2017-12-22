@@ -11,18 +11,34 @@ import ShowNotes from './components/ShowNotes/ShowNotes.component';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
+  AsyncStorage,
   StyleSheet,
   //   Text,
   View
 } from 'react-native';
 
+// AsyncStorage.getItem('state').then((value) => {
+//   if (value) {
+//     this.setState(JSON.parse(value));
+//   }
+// });
 export default class App extends Component {
-    state = {
-      count: 0,
-      inputTitle: '',
-      inputContent: '',
-      note: []
+
+    state = {};
+    componentDidMount () {
+      AsyncStorage.getItem('state').then((value) => {
+        if (value) {
+          return this.setState(JSON.parse(value));
+        }
+      });
     }
+    // console.log(result);
+    // state = {
+    //   count: 0,
+    //   inputTitle: '',
+    //   inputContent: '',
+    //   note: []
+    // }
     
     onTypeTitle = (text) => {
       this.setState({inputTitle: text});
@@ -38,9 +54,11 @@ export default class App extends Component {
         {
           note: newStateNote,
           inputTitle: '',
-          inputContent: ''
+          inputContent: '',
+          count: 0
         }, () => {
         //   console.log('note: ', this.state.note);
+          AsyncStorage.setItem('state', JSON.stringify(this.state));
         });
     }
 
