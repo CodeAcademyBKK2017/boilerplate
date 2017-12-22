@@ -9,42 +9,46 @@ import {shallow} from 'enzyme';
 jest.mock('uuid', () => () => 'some uuid');
 
 describe('App', () => {
+  let appComp;
+  let appInstance;
+	
+  beforeEach(() => {
+    appComp = <App/>;
+		
+    const wrapper = shallow(appComp);
+    appInstance = wrapper.instance();
+  });
+  
+  // ----------
+
   it('renders correctly', () => {
-    const tree = renderer.create(
-      <App />
-    );
-    expect(tree).toBeDefined();
+    const snapshot = renderer.create(appComp).toJSON();
+    expect(snapshot).toMatchSnapshot();
   });
 
   it('onChangeTextTitle', () => {
     const text = 'my test title';
 
-    const wrapper = shallow(<App />);
-    const instance = wrapper.instance();
-    instance.onChangeTextTitle(text);
+    appInstance.onChangeTextTitle(text);
 
-    expect(instance.state.textTitle).toBe(text);
+    expect(appInstance.state.textTitle).toBe(text);
   });
 
   it('onChangeTextContent', () => {
     const text = 'my test content';
 
-    const wrapper = shallow(<App />);
-    const instance = wrapper.instance();
-    instance.onChangeTextContent(text);
+    appInstance.onChangeTextContent(text);
 
-    expect(instance.state.textContent).toBe(text);
+    expect(appInstance.state.textContent).toBe(text);
   });
 
   it('onSaveButtonPress', () => {
     const title = 'my test title';
     const content = 'my test message';
 
-    const wrapper = shallow(<App />);
-    const instance = wrapper.instance();
-    instance.onChangeTextTitle(title);
-    instance.onChangeTextContent(content);
-    instance.onSaveButtonPress();
+    appInstance.onChangeTextTitle(title);
+    appInstance.onChangeTextContent(content);
+    appInstance.onSaveButtonPress();
 
     const expected = {
       textTitle: '',
@@ -58,6 +62,6 @@ describe('App', () => {
         }
       ]
     };
-    expect(instance.state).toEqual(expected);
+    expect(appInstance.state).toEqual(expected);
   });
 });
