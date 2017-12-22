@@ -9,11 +9,19 @@ exports[`List List: _renderItems Function is will work 1`] = `
       "backgroundColor": "#F5FCFF",
       "borderColor": "rgba(0, 0, 0, .10)",
       "borderTopWidth": 1,
+      "flexDirection": "row",
+      "justifyContent": "space-between",
       "padding": 5,
     }
   }
 >
-  <View>
+  <View
+    style={
+      Object {
+        "flexDirection": "column",
+      }
+    }
+  >
     <Text
       accessible={true}
       allowFontScaling={true}
@@ -33,6 +41,12 @@ exports[`List List: _renderItems Function is will work 1`] = `
     >
       test1
     </Text>
+  </View>
+  <View>
+    <Button
+      onPress={undefined}
+      title="!"
+    />
   </View>
 </TouchableOpacity>
 `;

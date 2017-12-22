@@ -20,27 +20,33 @@ export default class App extends Component {
     arrayContent: []
   }
 
-  onContentChange =  (currentContent) => {
+  _onContentChange =  (currentContent) => {
     this.setState({currentContent});
   }
-  onTitleChange =  (currentTitle) => {
+  _onTitleChange =  (currentTitle) => {
     this.setState({currentTitle});
   }
-  addContent = () => {
+  _addContent = () => {
     const newValue = {title: this.state.currentTitle, content: this.state.currentContent, key: uuid()};
     const newContent = [...this.state.arrayContent, newValue];
-    this.setState({currentContent: '',
+    const newState = {currentContent: '',
       currentTitle: '',
-      arrayContent: newContent});
+      arrayContent: newContent};
+    this.setState(newState);
+  }
+
+  _removeContent = (key) => () => { 
+    const newArray = this.state.arrayContent.filter((item) => item.key !== key);
+    this.setState({arrayContent: newArray});
   }
 
   render () {
     return (
       <View style={globalStyle.container}>
-        <Title text={this.state.currentTitle} FTitle={this.onTitleChange} />  
-        <Content FText={this.onContentChange} textState={this.state.currentContent}/>
-        <Footer textState={this.state.currentContent.length} addContent={this.addContent}/>
-        <List arrayContent={this.state.arrayContent}/>
+        <Title text={this.state.currentTitle} FTitle={this._onTitleChange} />  
+        <Content FText={this._onContentChange} textState={this.state.currentContent}/>
+        <Footer textState={this.state.currentContent.length} addContent={this._addContent}/>
+        <List arrayContent={this.state.arrayContent} removeNote={this._removeContent}/>
       </View> 
     );
   }

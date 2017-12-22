@@ -9,6 +9,12 @@ import  'react-native';
 import {shallow} from 'enzyme';
 
 describe('List', () => {
+  let wrapper, instance;
+
+  beforeEach(() => {
+    wrapper = shallow(<List/>);
+    instance = wrapper.instance();
+  });
   
   it('renders correctly', () => {
     const tree = renderer.create(
@@ -23,8 +29,7 @@ describe('List', () => {
   });
 
   it('List: _renderItems Function is will work', () => {
-    const wrapper = shallow(<List/>);
-    const instance = wrapper.instance();
+    
     const param = {item: {title: 'test', content: 'test1', key: ''}};
     const tree = instance._renderItems(param);
     expect(tree).toMatchSnapshot();
@@ -32,8 +37,6 @@ describe('List', () => {
 
   it('List: _showPopup Function change state visible to true', () => {
 
-    const wrapper = shallow(<List/>);
-    const instance = wrapper.instance();
     const param = {item: {title: 'test', content: 'test1', key: ''}};
     instance._showPopup(param)();
     const ExpectedmodalVisible = true;
@@ -41,10 +44,8 @@ describe('List', () => {
     expect(instance.state.currentItem).toEqual(param);
   
   });
-  
+
   it('List: _closeModal Function change state visible to false', () => {
-    const wrapper = shallow(<List/>);
-    const instance = wrapper.instance();
     const Expectedparam = {};
     const ExpectedmodalVisible = false;
     instance._closeModal();

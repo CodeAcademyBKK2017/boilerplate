@@ -13,9 +13,14 @@ export default StyleSheet.create({
     borderTopWidth: 1,
     borderColor: 'rgba(0, 0, 0, .10)',
     padding: 5,
-    backgroundColor: '#F5FCFF'
+    backgroundColor: '#F5FCFF',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   title: {
     fontWeight: 'bold'
+  },
+  textView: {
+    flexDirection: 'column'
   }
 });

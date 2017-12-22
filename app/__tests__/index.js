@@ -8,6 +8,13 @@ import {shallow} from 'enzyme';
 
 jest.mock('uuid', () => () => '123');
 describe('App', () => {
+  let wrapper, instance;
+
+  beforeEach(() => {
+    wrapper = shallow(<App/>);
+    instance = wrapper.instance();
+  });
+
   it('renders correctly', () => {
     const tree = renderer.create(
       <App />
@@ -19,24 +26,18 @@ describe('App', () => {
     expect(tree).toMatchSnapshot();
   });
   it('App: onContentChange Function is change the currentContent state ', () => {
-    const wrapper = shallow(<App/>);
-    const instance = wrapper.instance();
     expect(instance.state.currentContent).toEqual('');
-    instance.onContentChange('some');
+    instance._onContentChange('some');
     expect(instance.state.currentContent).toEqual('some');
   });
 
   it('App: onTitleChange Function is change the currentTitle state ', () => {
-    const wrapper = shallow(<App/>);
-    const instance = wrapper.instance();
     expect(instance.state.currentTitle).toEqual('');
-    instance.onTitleChange('some');
+    instance._onTitleChange('some');
     expect(instance.state.currentTitle).toEqual('some');
   });
 
   it('App: addContent Function is will work', () => {
-    const wrapper = shallow(<App/>);
-    const instance = wrapper.instance();
     const expectRes =  {
       currentContent: '',
       currentTitle: '',
@@ -46,9 +47,18 @@ describe('App', () => {
         key: '123'
       }]
     };
-    instance.onTitleChange('some');
-    instance.onContentChange('some');
-    instance.addContent();
+    instance._onTitleChange('some');
+    instance._onContentChange('some');
+    instance._addContent();
     expect(instance.state).toEqual(expectRes);
   }); 
+
+  it('App: _removeContent Function is remove ArrayContent by key ', () => {
+    const expectedState = [];
+    instance._onTitleChange('some');
+    instance._onContentChange('some');
+    instance._addContent();
+    instance._removeContent('123')();
+    expect(instance.state.arrayContent).toEqual(expectedState);
+  });
 });
