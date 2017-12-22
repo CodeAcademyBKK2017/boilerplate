@@ -120,9 +120,7 @@ exports[`ShowNotes renders correctly ShowNotes 1`] = `
               "backgroundColor": "white",
               "padding": 20,
             },
-            Object {
-              "backgroundColor": "#eee",
-            },
+            undefined,
           ]
         }
         testID={undefined}

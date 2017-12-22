@@ -28,4 +28,23 @@ describe('ShowNotes', () => {
     const result = instance._renderItem({item});
     expect(result).toMatchSnapshot();
   });
+
+  it('ShowNotes onShowAlert', () => {
+    const wrapper = shallow(<ShowNotes/>);
+    const instance = wrapper.instance();
+    instance.onShowAlert({title: 't1', content: 'c1'})();
+    expect(instance.state.title).toEqual('t1');
+    expect(instance.state.content).toEqual('c1');
+    expect(instance.state.setVisible).toEqual(true);
+  });
+
+  it('ShowNotes onCloseModal', () => {
+    const wrapper = shallow(<ShowNotes/>);
+    const instance = wrapper.instance();
+    instance.setState({setVisible: true});
+    instance.onCloseModal();
+    expect(instance.state.title).toEqual('');
+    expect(instance.state.content).toEqual('');
+    expect(instance.state.setVisible).toEqual(false);
+  });
 });
