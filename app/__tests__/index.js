@@ -3,7 +3,7 @@ import App from '../index';
 import React from 'react';
 import renderer from 'react-test-renderer';
 // Note: test renderer must be required after react-native.
-import {AsyncStorage} from 'react-native';
+// import {AsyncStorage} from 'react-native';
 import {shallow} from 'enzyme';
 
 jest.mock('uuid', () => () => 'someUUID');
