@@ -9,7 +9,7 @@ export default class Footer extends Component {
     const {characterCount, onPressSave} = this.props;
     return (
       <View style={styles.container}>
-        <Touchable background={Touchable.Ripple('blue')} activeOpacity={1} onPress={onPressSave} >
+        <Touchable background={Touchable.Ripple('blue')} activeOpacity={0.5} onPress={onPressSave} >
           <Text style={styles.textBold}>Save</Text>
         </Touchable>
         <Text style={styles.text}>{characterCount} characters</Text>
