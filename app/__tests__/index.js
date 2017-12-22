@@ -1,12 +1,21 @@
-import 'react-native';
 import App from '../index';
 import React from 'react';
 import renderer from 'react-test-renderer';
 
 // Note: test renderer must be required after react-native.
+import {AsyncStorage} from 'react-native';
 import {shallow} from 'enzyme';
 
+jest.mock('AsyncStorage', () => ({
+  getItem: jest.fn(() => Promise.resolve('abc')),
+  setItem: jest.fn(() => Promise.resolve()),
+  mergeItem: jest.fn(() => Promise.resolve()),
+  multiGet: jest.fn(() => Promise.resolve('{}'))
+}));
+
 jest.mock('uuid', () => () => 'some uuid');
+
+const notesKey = 'notes';
 
 describe('App', () => {
   let appComp;
@@ -17,6 +26,7 @@ describe('App', () => {
 		
     const wrapper = shallow(appComp);
     appInstance = wrapper.instance();
+    AsyncStorage.setItem.mockReset();
   });
   
   // ----------
@@ -63,5 +73,41 @@ describe('App', () => {
       ]
     };
     expect(appInstance.state).toEqual(expected);
+  });
+
+  it('componentDidMount', () => {
+    appInstance.componentDidMount();
+    AsyncStorage.getItem.mockImplementation(() => Promise.resolve('dfdsjkgfsdhkjgsd'));
+    AsyncStorage.getItem(notesKey).then((d) => {
+      console.log('d', d);
+    });
+    expect(AsyncStorage.getItem).toHaveBeenLastCalledWith(notesKey);
+    
+  });
+
+  it('onDeleteButtonPress', () => {
+    const note00 = {
+      key: 'some uuid',
+      title: 'title 00',
+      content: 'content 00',
+      isEven: true
+    };
+    const initialState = {
+      textTitle: '',
+      textContent: '',
+      notes: [note00]
+    };
+    appInstance.setState(initialState);
+    
+    const curryFunc = appInstance.onDeleteButtonPress(note00);
+    curryFunc();
+
+    const expected = {
+      textTitle: '',
+      textContent: '',
+      notes: []
+    };
+    expect(appInstance.state).toEqual(expected);
+    expect(AsyncStorage.setItem).toHaveBeenLastCalledWith(notesKey, '[]');
   });
 });

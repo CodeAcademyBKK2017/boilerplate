@@ -8,7 +8,7 @@ exports[`NoteList renderItem with even 1`] = `
     Array [
       Object {},
       Object {
-        "backgroundColor": "gray",
+        "backgroundColor": "#e4e4e4",
       },
     ]
   }
@@ -16,36 +16,72 @@ exports[`NoteList renderItem with even 1`] = `
   <View
     style={
       Object {
-        "paddingVertical": 10,
+        "alignItems": "center",
+        "flexDirection": "row",
+        "padding": 10,
       }
     }
   >
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+    <View
       style={
         Object {
-          "fontSize": 14,
-          "fontWeight": "bold",
-          "paddingBottom": 10,
+          "flex": 1,
         }
       }
     >
-      test title
-    </Text>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "paddingBottom": 10,
+          }
+        }
+      >
+        test title
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 12,
+          }
+        }
+      >
+        test content
+      </Text>
+    </View>
+    <PlatformTouchable
+      background={Object {}}
+      onPress={undefined}
       style={
         Object {
-          "fontSize": 12,
+          "backgroundColor": "#f00",
+          "borderRadius": 5,
+          "padding": 10,
         }
       }
     >
-      test content
-    </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 14,
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Delete
+      </Text>
+    </PlatformTouchable>
   </View>
 </PlatformTouchable>
 `;
@@ -66,36 +102,72 @@ exports[`NoteList renderItem with odd 1`] = `
   <View
     style={
       Object {
-        "paddingVertical": 10,
+        "alignItems": "center",
+        "flexDirection": "row",
+        "padding": 10,
       }
     }
   >
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+    <View
       style={
         Object {
-          "fontSize": 14,
-          "fontWeight": "bold",
-          "paddingBottom": 10,
+          "flex": 1,
         }
       }
     >
-      test title
-    </Text>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 14,
+            "fontWeight": "bold",
+            "paddingBottom": 10,
+          }
+        }
+      >
+        test title
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 12,
+          }
+        }
+      >
+        test content
+      </Text>
+    </View>
+    <PlatformTouchable
+      background={Object {}}
+      onPress={undefined}
       style={
         Object {
-          "fontSize": 12,
+          "backgroundColor": "#f00",
+          "borderRadius": 5,
+          "padding": 10,
         }
       }
     >
-      test content
-    </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "white",
+            "fontSize": 14,
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Delete
+      </Text>
+    </PlatformTouchable>
   </View>
 </PlatformTouchable>
 `;
