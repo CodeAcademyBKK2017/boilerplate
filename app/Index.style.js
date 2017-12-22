@@ -28,5 +28,8 @@ export default StyleSheet.create({
   flat: {
     flex: 0,
     backgroundColor: '#eee'
+  },
+  row: {
+    flexDirection: 'row'
   }
 });

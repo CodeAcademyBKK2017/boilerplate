@@ -11,6 +11,8 @@ import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
+  AsyncStorage,
+  Button,
   FlatList,
   Text,
   TouchableOpacity,
@@ -26,15 +28,28 @@ export default class App extends Component {
     modalVisible: false,
     modalText: []
   }
-
+  componentDidMount () {
+    AsyncStorage.getItem('NOTES').then((res) => {
+      this.setState(JSON.parse(res));
+    });
+  }
   onCount = (v) => this.setState({text: v});
   onTitle = (v) => this.setState({title: v});
   saveNote = () => {
     const data = {'title': this.state.title, 'content': this.state.text, 'unique': uuid()};
     const newNotes = [...this.state.NOTES, data];
     this.setState(
-      {title: '', text: '', 'NOTES': newNotes}
+      {title: '', text: '', 'NOTES': newNotes}, () => {
+        AsyncStorage.setItem('NOTES', JSON.stringify(this.state));
+      }
     );
+  }
+  delNote = (arg) => () => {
+    const newNotes = [...this.state.NOTES];
+    const tt = newNotes.indexOf(arg.item);
+    newNotes.splice(tt, 1);
+    this.setState({NOTES: newNotes});
+    
   }
   openModal = (arg) => () => {
     const data = {'title': arg.item.title, 'content': arg.item.content, 'unique': uuid()};
@@ -50,13 +65,17 @@ export default class App extends Component {
     });
   }
   _keyExtractor = (item) => item.unique;
-  _renderItem = (args) => 
-    <View>
+  _renderItem = (args) =>
+    <View style={styles.row}>
       <TouchableOpacity
         onPress={this.openModal(args)}>
         <Text style={styles.flatText}>{args.item.title}</Text>
         <Text>{args.item.content}</Text>
       </TouchableOpacity>
+      <Button
+        onPress={this.delNote(args)}
+        title='Del'
+      />
     </View>
   render () {
     return (
