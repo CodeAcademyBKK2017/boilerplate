@@ -6,5 +6,10 @@ export default StyleSheet.create({
   },
   content: {
     paddingLeft: 10
+  },
+  modalTitle: {
+    fontWeight: 'bold'
+  },
+  modalContent: {
   }
 });

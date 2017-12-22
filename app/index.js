@@ -6,6 +6,7 @@ import styles from './index.style.js';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
+  Text,
   View
 } from 'react-native';
 
