@@ -7,8 +7,20 @@ import {shallow} from 'enzyme';
 import 'react-native';
 
 describe('NoteList', () => {
+  let noteListComp;
+  let noteListInstance;
+	
+  beforeEach(() => {
+    noteListComp = <NoteList/>;
+		
+    const wrapper = shallow(noteListComp);
+    noteListInstance = wrapper.instance();
+  });
+  
+  // ----------
+
   it('renders correctly', () => {
-    const snapshot = renderer.create(<NoteList />).toJSON();
+    const snapshot = renderer.create(noteListComp).toJSON();
     expect(snapshot).toMatchSnapshot();
   });
 
@@ -19,7 +31,7 @@ describe('NoteList', () => {
       isEven: true
     };
 
-    const wrapper = shallow(<NoteList />);
+    const wrapper = shallow(noteListComp);
     const instance = wrapper.instance();
     const snapshot = instance.renderItem({item});
     expect(snapshot).toMatchSnapshot();
@@ -32,7 +44,7 @@ describe('NoteList', () => {
       isEven: false
     };
 
-    const wrapper = shallow(<NoteList />);
+    const wrapper = shallow(noteListComp);
     const instance = wrapper.instance();
     const snapshot = instance.renderItem({item});
     expect(snapshot).toMatchSnapshot();
@@ -45,11 +57,11 @@ describe('NoteList', () => {
       isEven: true
     };
 
-    const wrapper = shallow(<NoteList />);
+    const wrapper = shallow(noteListComp);
     const instance = wrapper.instance();
     const curryFunc = instance.onOpenOverlay(item);
     curryFunc();
-    
+
     const expected = {
       modalVisible: true,
       selectedNoteItem: item
@@ -58,7 +70,7 @@ describe('NoteList', () => {
   });
 
   it('onCloseOverlay', () => {
-    const wrapper = shallow(<NoteList />);
+    const wrapper = shallow(noteListComp);
     const instance = wrapper.instance();
     instance.onCloseOverlay();
 
