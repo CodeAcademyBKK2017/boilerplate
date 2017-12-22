@@ -28,4 +28,14 @@ describe('NoteList', () => {
     const snapshot = instance.renderItem({item});
     expect(snapshot).toMatchSnapshot();
   });
+  it('showModal', () => {
+    const item = {title: 'Title', content: 'Content'};
+    const expectedState = {modalVisible: true, modalTitle: 'Title', modalContent: 'Content'};
+    instance.showModal(item)();
+    expect(instance.state).toMatchObject(expectedState);
+  });
+  it('onModalClose', () => {
+    instance.onModalClose();
+    expect(instance.state.modalVisible).toBe(false);
+  });
 });

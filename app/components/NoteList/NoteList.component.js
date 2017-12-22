@@ -9,8 +9,6 @@ import {
   View
 } from 'react-native';
 
-console.log('styles', styles);
-
 class NoteList extends Component {
   state = {
     modalVisible: false,
@@ -37,8 +35,8 @@ class NoteList extends Component {
         />
         <Overlay visible={this.state.modalVisible}
           closeOnTouchOutside animationType='zoomIn'
-          containerStyle={styles.modalContainer}
-          childrenWrapperStyle={styles.modalChildrenWrapper}
+          // containerStyle={styles.modalContainer}
+          // childrenWrapperStyle={styles.modalChildrenWrapper}
           animationDuration={500}
           onClose={this.onModalClose}
         >
