@@ -10,10 +10,10 @@ import {
 export default class NoteList extends Component {
   renderItem = ({item}) => (
     <Touchable
-      style={styles.itemTouch}
+      style={[styles.itemTouch, item.isEven ? styles.evenContainer : styles.oddContainer]}
       background={Touchable.Ripple('blue')}
       onPress={this.props.onItemPress(item)}>
-      <View style={[styles.itemContainer, item.isEven ? styles.evenContainer : styles.oddContainer]}>
+      <View style={styles.itemContainer}>
         <Text style={styles.itemTitle}>{item.title}</Text>
         <Text style={styles.itemContent}>{item.content}</Text>
       </View>
