@@ -57,6 +57,13 @@ export default class App extends Component {
     AsyncStorage.setItem(notesKey, JSON.stringify(notes));
   }
 
+  onDeleteButtonPress = (item) => () => {
+    const filteredNotes = this.state.notes.filter((note) => note !== item);
+    this.setState({notes: filteredNotes});
+
+    AsyncStorage.setItem(notesKey, JSON.stringify(filteredNotes));
+  }
+
   componentDidMount () {
     AsyncStorage.getItem(notesKey).then((value) => {
       this.setState({
@@ -81,7 +88,7 @@ export default class App extends Component {
           textContentLength={this.state.textContent.length}
           onSaveButtonPress={this.onSaveButtonPress}/>
         {
-          this.state.notes.length > 0 ? <NoteList data={this.state.notes} onItemPress={this.onNoteItemPress}/> : null
+          this.state.notes.length > 0 ? <NoteList data={this.state.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
         }
       </this.WrapperView>
     );

@@ -1,3 +1,4 @@
+import noop from 'lodash/noop';
 import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -40,7 +41,7 @@ export default class NoteList extends Component {
         <Touchable
           style={styles.deleteTouch}
           background={Touchable.Ripple('red')}
-          onPress={this.onOpenOverlay(item)}>
+          onPress={this.props.onDeleteButtonPress(item)}>
           <Text style={styles.deleteTitle}>Delete</Text>
         </Touchable>
       </View>
@@ -68,9 +69,11 @@ export default class NoteList extends Component {
 }
 
 NoteList.propTypes = {
-  data: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired,
+  onDeleteButtonPress: PropTypes.func.isRequired
 };
 
 NoteList.defaultProps = {
-  data: []
+  data: [],
+  onDeleteButtonPress: noop
 };
