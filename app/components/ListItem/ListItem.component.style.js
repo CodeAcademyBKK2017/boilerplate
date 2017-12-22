@@ -2,6 +2,12 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
+  textNotesStyle: {
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontWeight: 'bold',
+    fontSize: 16
+  },
   flatListStyle: {
     height: '30%',
     paddingLeft: 10,

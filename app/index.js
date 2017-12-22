@@ -7,32 +7,28 @@ import ContentBox from './components/ContentBox/ContentBox.component';
 import Footer from './components/FooterBox/FooterBox.component';
 import HeaderBox from './components/HeaderBox/HeaderBox.component';
 import ListItem from './components/ListItem/ListItem.component';
+import Overlay from 'react-native-modal-overlay';
 import React, {Component} from 'react';
 import style from './index.style';
 import TitleBox from './components/TitleBox/TitleBox.component';
 import {
+  AsyncStorage,
+  Text,
   View
 } from 'react-native';
 
 export default class App extends Component {
 
   state = {
+    modalData: {},
     titleText: '',
     contentText: '',
     NOTES: []
   }
 
-  onTitleChange = (v) => {
-    const newState = {...this.state};
-    newState.titleText = v;
-    this.setState(newState);
-  }
+  onTitleChange = (title) => this.setState({titleText: title});
 
-  onContentChange = (v) => {
-    const newState = {...this.state};
-    newState.contentText = v;
-    this.setState(newState);
-  }
+  onContentChange = (content) => this.setState({contentText: content});
 
   onSave = () => {
     const newData = {
@@ -41,15 +37,36 @@ export default class App extends Component {
       key: this.state.NOTES.length
     };
     const newDataNOTES = [...this.state.NOTES, newData];
-
-    this.setState({
+    const newStateData = {
       titleText: '',
       contentText: '',
       NOTES: newDataNOTES
-    });
+    };
+    
+    this.setState(newStateData);
+
+    AsyncStorage.setItem('state', JSON.stringify(newStateData));
+    // AsyncStorage.getItem('state').then((value) => {
+    //   console.log('value::: ', JSON.parse(value));
+    // });
   }
 
-  showFlatList = () => (this.state.NOTES.length > 0) ? <ListItem dataNotes={this.state.NOTES} onShowModal={this.onShowModal}/> : null
+  onShowModal = (note) => () => this.setState({modalData: note});
+
+  onCloseModal = () => this.setState({modalData: {}});
+
+  showFlatList = () => (this.state.NOTES.length > 0) ? 
+    <ListItem 
+      dataNotes={this.state.NOTES}
+      onShowModal={this.onShowModal}
+    /> : null
+
+  viewOverlay = () => <Overlay 
+    visible={!!(this.state.modalData.title)}
+    onClose={this.onCloseModal} closeOnTouchOutside={true}>
+    <Text style={style.textTitleStyle}>{this.state.modalData.title}</Text>
+    <Text style={style.textContentStyle}>{this.state.modalData.content}</Text>
+  </Overlay>
 
   render () {
     return (
@@ -58,6 +75,7 @@ export default class App extends Component {
         <TitleBox titleValueText={this.state.titleText} onTitleChange={this.onTitleChange}/>
         <ContentBox count={this.state.contentText.length} contentValueText={this.state.contentText} onContentChange={this.onContentChange} onSave={this.onSave}/>
         {this.showFlatList()}
+        {this.viewOverlay()}
         <Footer />
       </View>
     );

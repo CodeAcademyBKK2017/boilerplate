@@ -48,6 +48,7 @@ describe('App', () => {
     const wrapper = shallow(<App {...props}/>);
     const instance = wrapper.instance();
     const expectRes = {
+      modalData: {},
       titleText: '',
       contentText: '',
       NOTES: [{
@@ -70,5 +71,39 @@ describe('App', () => {
     instance.onContentChange('- UI');
     instance.onSave();
     expect(instance.showFlatList).toMatchSnapshot();
+  }); 
+
+  it('Check Function viewOverlay', () => {
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+    const note = {
+      title: 'React Native',
+      content: '- UI',
+      key: 0
+    };
+    instance.onShowModal(note);
+    expect(instance.viewOverlay).toMatchSnapshot();
   });
+
+  it('Check Function onShowModal', () => {
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+    const note = {
+      title: 'React Native',
+      content: '- UI',
+      key: 0
+    };
+    instance.onShowModal(note)();
+    expect(instance.state.modalData).toEqual(note);
+  });
+
+  it('Check Function onCloseModal', () => {
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+    expect(instance.state.modalData).toEqual({});
+  });
+
 });

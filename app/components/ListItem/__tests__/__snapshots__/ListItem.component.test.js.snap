@@ -2,6 +2,21 @@
 
 exports[`ListItem ListItem: MatchSnapshot 1`] = `
 <View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    style={
+      Object {
+        "fontSize": 16,
+        "fontWeight": "bold",
+        "paddingLeft": 10,
+        "paddingRight": 10,
+      }
+    }
+  >
+    Notes:
+  </Text>
   <RCTScrollView
     data={Array []}
     disableVirtualization={false}
@@ -38,55 +53,55 @@ exports[`ListItem ListItem: MatchSnapshot 1`] = `
 </View>
 `;
 
-exports[`ListItem ListItem: onShowDetail 1`] = `[Function]`;
-
 exports[`ListItem ListItem: renderItemList 1`] = `
-<TouchableOpacity
-  activeOpacity={0.2}
-  onPress={[Function]}
->
-  <View
-    style={
-      Object {
-        "marginBottom": 10,
-        "marginTop": 10,
-      }
-    }
+<View>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    onPress={undefined}
   >
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+    <View
       style={
         Object {
-          "fontSize": 16,
-          "fontWeight": "bold",
+          "marginBottom": 10,
+          "marginTop": 10,
         }
       }
     >
-      Eqweqwe
-    </Text>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 16,
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Eqweqwe
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#333333",
+          }
+        }
+      >
+        Qweqw
+      </Text>
+    </View>
+    <View
       style={
         Object {
-          "color": "#333333",
+          "backgroundColor": "#E0E0E0",
+          "height": 1,
+          "width": "100%",
         }
       }
-    >
-      Qweqw
-    </Text>
-  </View>
-  <View
-    style={
-      Object {
-        "backgroundColor": "#E0E0E0",
-        "height": 1,
-        "width": "100%",
-      }
-    }
-  />
-</TouchableOpacity>
+    />
+  </TouchableOpacity>
+</View>
 `;
