@@ -38,23 +38,23 @@ export default class App extends Component {
   }
 
   onSaveButtonPress = () => {
-    const notes = [...this.state.notes];
+    const newNotes = [...this.state.notes];
     const note = {
       key: uuid(),
       title: this.state.textTitle,
       content: this.state.textContent,
-      isEven: (notes.length % 2 === 0)
+      isEven: (newNotes.length % 2 === 0)
     };
-    notes.push(note);
+    newNotes.push(note);
 
     const newState = {
       textTitle: '',
       textContent: '',
-      notes
+      notes: newNotes
     };
     this.setState(newState);
 
-    AsyncStorage.setItem(notesKey, JSON.stringify(notes));
+    AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
   }
 
   onDeleteButtonPress = (item) => () => {
@@ -66,8 +66,15 @@ export default class App extends Component {
 
   componentDidMount () {
     AsyncStorage.getItem(notesKey).then((value) => {
+      let notes;
+      if (value) {
+        notes = JSON.parse(value);
+      } else {
+        notes = [];
+      }
+      
       this.setState({
-        notes: value ? JSON.parse(value) : []
+        notes
       });
     });
   }

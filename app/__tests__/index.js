@@ -6,9 +6,9 @@ import renderer from 'react-test-renderer';
 import {AsyncStorage} from 'react-native';
 import {shallow} from 'enzyme';
 
-// mock function
+// mock function with default result
 jest.mock('AsyncStorage', () => ({
-  getItem: jest.fn(() => Promise.resolve('abc')),
+  getItem: jest.fn(() => Promise.resolve('')),
   setItem: jest.fn(() => Promise.resolve())
 }));
 
@@ -102,5 +102,31 @@ describe('App', () => {
     };
     expect(appInstance.state).toEqual(expected);
     expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected.notes));
+  });
+
+  it('componentDidMount with existed notes', () => {
+    const notes = [
+      {
+        key: 'some uuid',
+        title: 'my test title',
+        content: 'my test message',
+        isEven: true
+      }
+    ];
+    // set custom mock result
+    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(JSON.stringify(notes)));
+
+    appInstance.componentDidMount();
+
+    expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
+  });
+
+  it('componentDidMount with null', () => {
+    // set custom mock result
+    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(null));
+    
+    appInstance.componentDidMount();
+
+    expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
   });
 });
