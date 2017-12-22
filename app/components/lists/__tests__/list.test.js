@@ -1,7 +1,7 @@
-import 'react-native';
 import List from '../list.component';
 import React from 'react';
 import renderer from 'react-test-renderer';
+import  'react-native';
 
 // Note: test renderer must be required after react-native.
 // import uuid from 'uuid';
@@ -30,11 +30,13 @@ describe('List', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('List: _showPopup Function is will work', () => {
-    const wrapper = shallow(<List/>);
-    const instance = wrapper.instance();
-    const param = {item: {title: 'test', content: 'test1', key: ''}};
-    const tree = instance._showPopup(param);
-    expect(tree).toMatchSnapshot();
-  });
+//   it('List: _showPopup Function is will work', () => {
+
+//     const wrapper = shallow(<List/>);
+//     const instance = wrapper.instance();
+//     const param = {item: {title: 'test', content: 'test1', key: ''}};
+//     const tree = instance._showPopup(param);
+//     const expected = '123';
+//     expect(tree).toEqual(expected);
+//   });
 });
