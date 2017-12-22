@@ -9,33 +9,58 @@ exports[`Note generateList should have been render some JSX 1`] = `
     }
   }
 >
-  <View>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
-      style={
-        Object {
-          "fontSize": 15,
-          "fontWeight": "bold",
-        }
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
       }
-    >
-      someTitle
-    </Text>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
-      style={
-        Object {
-          "fontSize": 15,
-          "padding": 10,
+    }
+  >
+    <View>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 15,
+            "fontWeight": "bold",
+          }
         }
-      }
+      >
+        someTitle
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontSize": 15,
+            "padding": 10,
+          }
+        }
+      >
+        someContent
+      </Text>
+    </View>
+    <PlatformTouchable
+      onPress={undefined}
     >
-      someContent
-    </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "red",
+          }
+        }
+      >
+        Delete
+      </Text>
+    </PlatformTouchable>
   </View>
 </PlatformTouchable>
 `;

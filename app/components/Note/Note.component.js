@@ -21,11 +21,17 @@ onOpen=(title, content) => () => {
 onClose=() => {
   this.setState(this.initialstate);
 }
+
 generateList = ({item}) => (
   <Touchable style={styles.box} onPress={this.onOpen(item.title, item.content)}>
-    <View > 
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.content}>{item.content}</Text>
+    <View style={styles.noteBlock}>
+      <View > 
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.content}>{item.content}</Text>
+      </View>
+      <Touchable onPress={this.props.onDelete(item)}>
+        <Text style={styles.del}>Delete</Text>
+      </Touchable>
     </View>
   </Touchable>)
 render () {
@@ -48,6 +54,7 @@ render () {
 }
 
 Note.propTypes = {
-  noteList: PropTypes.array
+  noteList: PropTypes.array,
+  onDelete: PropTypes.func
 };
   

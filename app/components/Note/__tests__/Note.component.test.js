@@ -1,4 +1,5 @@
 import 'react-native';
+import noop from 'lodash/noop';
 import Note from '../Note.component';
 import React from 'react';
 import renderer from 'react-test-renderer';
@@ -7,7 +8,7 @@ import {shallow} from 'enzyme';
 describe('Note', () => {
   let wrapper, instance;
   beforeEach(() => {
-    wrapper = shallow(<Note />);
+    wrapper = shallow(<Note onDelete={noop} />);
     instance = wrapper.instance();
   });
   it('snapshot test', () => {

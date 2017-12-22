@@ -11,7 +11,7 @@ import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
-import {KeyboardAvoidingView, Platform, View} from 'react-native';
+import {AsyncStorage, KeyboardAvoidingView, Platform, View} from 'react-native';
 
 export default class App extends Component {
   initialstate = {
@@ -19,7 +19,19 @@ export default class App extends Component {
     title: '',
     note: []
   }
-  state = this.initialstate; 
+  init =() => {
+    AsyncStorage.getItem('storageNote')
+      .then((data) => {
+        if (data) {
+          this.initialstate.note = JSON.parse(data);
+          this.setState(this.initialstate.note);
+        }
+      }); 
+  }
+  componentDidMount () {
+    this.init();
+  }
+state = this.initialstate
   WrapperView = Platform.select(
     {ios: KeyboardAvoidingView,
       android: View
@@ -39,15 +51,24 @@ export default class App extends Component {
     }];
     // newNote.push({title: this.state.title, content: this.state.content});
     this.setState({note: newNote});
+    AsyncStorage.setItem('storageNote', JSON.stringify(newNote));
   }
 
+  onDelete=(item) => () => {
+    const delNote = [...this.state.note];
+    const isDelete = (value) => value.key !== item.key;
+    const remainNote = delNote.filter(isDelete);
+    this.setState({note: remainNote});
+  }
+  
   render () {
+
     return (
       <this.WrapperView style={styles.container} behavior={'padding'} >
         <Title onTitleChange={this.changeTitle}/>
         <Content  onContentChange={this.changeContent} />
         <Footer characterCount={this.state.content.length} onPressSave={this.onSave} />
-        {this.state.note.length > 0 ? <Note noteList={this.state.note} /> : null}
+        {this.state.note.length > 0 ? <Note noteList={this.state.note} onDelete={this.onDelete}/> : null}
       </this.WrapperView>
     );
   }

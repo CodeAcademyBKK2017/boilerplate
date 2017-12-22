@@ -25,6 +25,12 @@ export default StyleSheet.create({
   modalChildrenWrap: {
     backgroundColor: '#eee',
     alignItems: 'flex-start'
+  },
+  noteBlock: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  del: {
+    color: 'red'
   }
-
 });

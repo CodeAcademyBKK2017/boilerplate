@@ -1,9 +1,9 @@
-import 'react-native';
+
 import App from '../index';
 import React from 'react';
-
-// Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+// Note: test renderer must be required after react-native.
+import {AsyncStorage} from 'react-native';
 import {shallow} from 'enzyme';
 
 jest.mock('uuid', () => () => 'someUUID');
@@ -37,4 +37,18 @@ describe('App', () => {
       {title: 'abc', content: 'def', key: 'someUUID'}
     ]);
   });
+  it('onDelete Should have Change state', () => {
+    const item = {title: 'y', content: 2, key: 2};
+    const expectedState = {
+      title: '',
+      content: '',
+      note: [{title: 'x', content: 1, key: 1}]
+    };
+    instance.setState({
+      note: [{title: 'x', content: 1, key: 1}, {title: 'y', content: 2, key: 2}]});
+
+    instance.onDelete(item)();
+    expect(instance.state.note).toEqual(expectedState.note);
+  });
+ 
 });
