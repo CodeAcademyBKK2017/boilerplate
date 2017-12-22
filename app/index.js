@@ -47,7 +47,7 @@ export default class App extends Component {
         <Title onTitleChange={this.changeTitle}/>
         <Content  onContentChange={this.changeContent} />
         <Footer characterCount={this.state.content.length} onPressSave={this.onSave} />
-        <Note noteList={this.state.note} />
+        {this.state.note.length > 0 ? <Note noteList={this.state.note} /> : null}
       </this.WrapperView>
     );
   }

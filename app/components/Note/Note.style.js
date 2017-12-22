@@ -13,7 +13,7 @@ export default StyleSheet.create({
     fontWeight: 'bold'
   },
   container: {
-    flex: 0.3,
+    flex: 1,
     width: '100%'
   },
   box: {
