@@ -11,9 +11,7 @@ import {
 
 export default class ListItem extends Component {
 
-  onShowDetail = (item) => () => {
-    Alert.alert(item.title, item.content);
-  }
+  onShowDetail = (item) => () => Alert.alert(item.title, item.content);
 
   renderItemList = ({item}) =>
     <TouchableOpacity 

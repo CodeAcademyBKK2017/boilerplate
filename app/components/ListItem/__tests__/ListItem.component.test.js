@@ -25,4 +25,13 @@ describe('ListItem', () => {
     const tree = instance.renderItemList(param);
     expect(tree).toMatchSnapshot();
   });
+
+  it('ListItem: onShowDetail', () => {
+    const props = {};
+    const wrapper = shallow(<ListItem {...props}/>);
+    const instance = wrapper.instance();
+    const param = {item: {content: 'Qweqw', title: 'Eqweqwe'}};
+    const tree = instance.onShowDetail(param);
+    expect(tree).toMatchSnapshot();
+  });
 });

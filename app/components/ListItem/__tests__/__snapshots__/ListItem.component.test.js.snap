@@ -38,9 +38,12 @@ exports[`ListItem ListItem: MatchSnapshot 1`] = `
 </View>
 `;
 
+exports[`ListItem ListItem: onShowDetail 1`] = `[Function]`;
+
 exports[`ListItem ListItem: renderItemList 1`] = `
 <TouchableOpacity
   activeOpacity={0.2}
+  onPress={[Function]}
 >
   <View
     style={
