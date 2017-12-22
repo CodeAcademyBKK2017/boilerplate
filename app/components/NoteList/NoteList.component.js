@@ -2,14 +2,17 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './NoteList.style.js';
 import {
+  Alert,
   FlatList,
   Text,
+  TouchableOpacity,
   View
 } from 'react-native';
 
 class NoteList extends Component {
   keyExtractor = (item) => item.uuid;
-  renderItem = ({item}) => <View><Text style={styles.title}>{item.title}</Text><Text style={styles.content}>{item.content}</Text></View>;
+  renderItem = ({item}) => <TouchableOpacity onPress={this.showAlert(item.title, item.content)}><View><Text style={styles.title}>{item.title}</Text><Text style={styles.content}>{item.content}</Text></View></TouchableOpacity>;
+  showAlert = (title, content) => () => Alert.alert(title, content)
 
   render () {
     return (

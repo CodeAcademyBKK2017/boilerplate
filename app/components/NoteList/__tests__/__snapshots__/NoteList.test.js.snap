@@ -1,32 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NoteList renderItem 1`] = `
-<View>
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-    style={
-      Object {
-        "fontWeight": "bold",
+<TouchableOpacity
+  activeOpacity={0.2}
+  onPress={[Function]}
+>
+  <View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontWeight": "bold",
+        }
       }
-    }
-  >
-    Title
-  </Text>
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-    style={
-      Object {
-        "paddingLeft": 10,
+    >
+      Title
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "paddingLeft": 10,
+        }
       }
-    }
-  >
-    Content
-  </Text>
-</View>
+    >
+      Content
+    </Text>
+  </View>
+</TouchableOpacity>
 `;
 
 exports[`NoteList renders correctly 1`] = `
@@ -78,93 +83,171 @@ exports[`NoteList renders correctly 1`] = `
       onLayout={[Function]}
       style={null}
     >
-      <View>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Object {
-              "fontWeight": "bold",
-            }
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
+        accessible={true}
+        collapsable={undefined}
+        hasTVPreferredFocus={undefined}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
           }
-        >
-          Title
-        </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Object {
-              "paddingLeft": 10,
+        }
+        testID={undefined}
+        tvParallaxProperties={undefined}
+      >
+        <View>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "fontWeight": "bold",
+              }
             }
-          }
-        >
-          Content
-        </Text>
+          >
+            Title
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "paddingLeft": 10,
+              }
+            }
+          >
+            Content
+          </Text>
+        </View>
       </View>
     </View>
     <View
       onLayout={[Function]}
       style={null}
     >
-      <View>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Object {
-              "fontWeight": "bold",
-            }
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
+        accessible={true}
+        collapsable={undefined}
+        hasTVPreferredFocus={undefined}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
           }
-        >
-          Title 2
-        </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Object {
-              "paddingLeft": 10,
+        }
+        testID={undefined}
+        tvParallaxProperties={undefined}
+      >
+        <View>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "fontWeight": "bold",
+              }
             }
-          }
-        >
-          Content 2
-        </Text>
+          >
+            Title 2
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "paddingLeft": 10,
+              }
+            }
+          >
+            Content 2
+          </Text>
+        </View>
       </View>
     </View>
     <View
       onLayout={[Function]}
       style={null}
     >
-      <View>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Object {
-              "fontWeight": "bold",
-            }
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
+        accessible={true}
+        collapsable={undefined}
+        hasTVPreferredFocus={undefined}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
           }
-        >
-          Title 3
-        </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Object {
-              "paddingLeft": 10,
+        }
+        testID={undefined}
+        tvParallaxProperties={undefined}
+      >
+        <View>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "fontWeight": "bold",
+              }
             }
-          }
-        >
-          Content 3
-        </Text>
+          >
+            Title 3
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "paddingLeft": 10,
+              }
+            }
+          >
+            Content 3
+          </Text>
+        </View>
       </View>
     </View>
   </View>
