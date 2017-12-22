@@ -6,6 +6,7 @@ import styles from './index.style.js';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
+  AsyncStorage,
   View
 } from 'react-native';
 
@@ -16,6 +17,16 @@ export default class App extends Component {
     titleTextInput: '',
     contentTextInput: '',
     notes: []
+  }
+  componentDidMount () {
+    console.log('componentDidMount 1');
+    AsyncStorage.getItem('state').then((value) => {
+      console.log('componentDidMount 2');
+      if (value !== null) {
+        console.log(JSON.parse(value));
+        this.setState(JSON.parse(value));
+      }
+    });
   }
   onKeyPressTitle = (textInput) => {
     this.setState({titleTextInput: textInput});
@@ -31,17 +42,30 @@ export default class App extends Component {
         uuid: uuid()
       };
       const newStateNote = [...this.state.notes, newNote];
-      this.setState({notes: newStateNote, titleTextInput: '', contentTextInput: ''}, () => {
-        // console.log(this.state);
-      });
+      this.updateState({notes: newStateNote, titleTextInput: '', contentTextInput: ''});
     }
+  }
+  onDeleteNote = ({uuid}) => () => {
+    const otherNote = this.state.notes.filter((note) => note.uuid !== uuid);
+    this.updateState({notes: otherNote, titleTextInput: '', contentTextInput: ''});
+  }
+  updateState = (obj) => {
+    this.setState(obj, () => {
+      console.log(this.state);
+      AsyncStorage.setItem('state', JSON.stringify(this.state)).then(() => {
+        AsyncStorage.getItem('state').then((value) => {
+          console.log('from storage');
+          console.log(JSON.parse(value));
+        });
+      });
+    });
   }
   render () {
     return (
       <View style={styles.container}>
         <Title onKeyPressTitle={this.onKeyPressTitle} text={this.state.titleTextInput} />
         <Content onKeyPressContent={this.onKeyPressContent} text={this.state.contentTextInput} />
-        <NoteList notes={this.state.notes} state={this.state} />
+        <NoteList notes={this.state.notes} state={this.state} onDeleteNote={this.onDeleteNote} />
         <Footer countContentCharacters={this.state.contentTextInput.length} onSave={this.onSave} />
       </View>
     );

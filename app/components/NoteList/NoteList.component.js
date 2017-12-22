@@ -1,3 +1,4 @@
+import noop from 'lodash/noop';
 import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -18,7 +19,19 @@ class NoteList extends Component {
   keyExtractor = (item) => item.uuid;
   // renderItem = ({item}) => <TouchableOpacity onPress={this.showAlert(item)}><View><Text style={styles.title}>{item.title}</Text><Text style={styles.content}>{item.content}</Text></View></TouchableOpacity>;
   // showAlert = (item) => () => Alert.alert(item.title, item.content)
-  renderItem = ({item}) => <TouchableOpacity onPress={this.showModal(item)}><View><Text style={styles.title}>{item.title}</Text><Text style={styles.content}>{item.content}</Text></View></TouchableOpacity>;
+  renderItem = ({item}) => <View style={styles.noteListContainer}>
+    <TouchableOpacity onPress={this.showModal(item)}>
+      <View>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.content}>{item.content}</Text>
+      </View>
+    </TouchableOpacity>
+    <TouchableOpacity onPress={this.props.onDeleteNote({uuid: item.uuid})}>
+      <View>
+        <Text style={styles.delete}>Delete</Text>
+      </View>
+    </TouchableOpacity>
+  </View>;
   showModal = (item) => () => {
     this.setState({modalVisible: true, modalTitle: item.title, modalContent: item.content});
   }
@@ -50,11 +63,13 @@ class NoteList extends Component {
 
 NoteList.propTypes = {
   notes: PropTypes.array,
-  state: PropTypes.object
+  state: PropTypes.object,
+  onDeleteNote: PropTypes.func
 };
 NoteList.defaultProps = {
   notes: [],
-  state: {}
+  state: {},
+  onDeleteNote: noop
 };
 
 export default NoteList;
