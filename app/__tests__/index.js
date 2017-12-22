@@ -6,6 +6,7 @@ import renderer from 'react-test-renderer';
 import {AsyncStorage} from 'react-native';
 import {shallow} from 'enzyme';
 
+// mock function
 jest.mock('AsyncStorage', () => ({
   getItem: jest.fn(() => Promise.resolve('abc')),
   setItem: jest.fn(() => Promise.resolve()),
@@ -15,8 +16,10 @@ jest.mock('AsyncStorage', () => ({
 
 jest.mock('uuid', () => () => 'some uuid');
 
+// constant
 const notesKey = 'notes';
 
+// test case
 describe('App', () => {
   let appComp;
   let appInstance;
@@ -73,16 +76,7 @@ describe('App', () => {
       ]
     };
     expect(appInstance.state).toEqual(expected);
-  });
-
-  it('componentDidMount', () => {
-    appInstance.componentDidMount();
-    AsyncStorage.getItem.mockImplementation(() => Promise.resolve('dfdsjkgfsdhkjgsd'));
-    AsyncStorage.getItem(notesKey).then((d) => {
-      // console.log('d', d);
-    });
-    expect(AsyncStorage.getItem).toHaveBeenLastCalledWith(notesKey);
-    
+    expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected.notes));
   });
 
   it('onDeleteButtonPress', () => {
@@ -108,6 +102,6 @@ describe('App', () => {
       notes: []
     };
     expect(appInstance.state).toEqual(expected);
-    expect(AsyncStorage.setItem).toHaveBeenLastCalledWith(notesKey, '[]');
+    expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected.notes));
   });
 });
