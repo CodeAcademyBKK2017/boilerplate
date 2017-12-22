@@ -10,10 +10,10 @@ import {
 
 class NoteItem extends Component {
   render () {
-    const {data, onPressItem} = this.props;
+    const {data, onPressItem, onLongPressItem} = this.props;
 
     return (
-      <Touchable onPress={onPressItem(data)} >
+      <Touchable onPress={onPressItem(data)} onLongPress={onLongPressItem(data)}>
         <View style={styles.container}>
           <Text style={styles.title}>{data.title}</Text>
           <Text style={styles.content}>{data.content}</Text>
@@ -25,7 +25,8 @@ class NoteItem extends Component {
 
 NoteItem.propTypes = {
   data: PropTypes.object,
-  onPressItem: PropTypes.func
+  onPressItem: PropTypes.func,
+  onLongPressItem: PropTypes.func
 };
 
 NoteItem.defaultTypes = {

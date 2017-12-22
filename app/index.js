@@ -8,7 +8,7 @@ import styles from './index.styles';
 import Title from './components/Title/Title.component';
 
 import {
-  FlatList, Text, View
+  Alert, AsyncStorage, FlatList, Text, View
 } from 'react-native';
 
 export default class App extends Component {
@@ -18,6 +18,12 @@ export default class App extends Component {
     notes: [],
     modalVisible: false,
     selectedNote: {key: '', title: '', content: ''}
+  }
+
+  componentDidMount () {
+    AsyncStorage.getItem('notes').then((notes) => JSON.parse(notes)).then((notes) => {
+      this.setState({notes});
+    });
   }
 
   onTitleChangeText = (currentTitle) => {
@@ -38,6 +44,8 @@ export default class App extends Component {
       content: currentContent
     });
 
+    AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+
     this.setState({
       notes: newNotes,
       currentTitle: '',
@@ -52,11 +60,33 @@ export default class App extends Component {
     });
   }
 
+  _onLongPressItem = (note) => () => {
+    Alert.alert(
+      'Confirm',
+      'Are you want to delete this note item?',
+      [
+        {text: 'Cancel'},
+        {text: 'Delete', style: 'destructive', onPress: () => this._removeNoteItem(note)}
+      ]
+    );
+    
+  }
+
+  _removeNoteItem = (deleteNote) => {
+    const newNotes = this.state.notes.filter((note) => note !== deleteNote);
+
+    AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+
+    this.setState({
+      notes: newNotes
+    });
+  }
+
   _hideOverlay = () => {
     this.setState({modalVisible: false});
   }
 
-  _renderItem = ({item}) => (<NoteItem data={item} onPressItem={this._onPressItem} />)
+  _renderItem = ({item}) => (<NoteItem data={item} onPressItem={this._onPressItem} onLongPressItem={this._onLongPressItem} />)
 
   render () {
     return (
@@ -65,9 +95,9 @@ export default class App extends Component {
         <Content onChangeText={this.onContentChangeText} value={this.state.currentContent} />
         <Footer characterCount={this.state.currentContent.length} onSaveButtonPress={this.onSaveButtonPress} />
         <View style={styles.list}>
-          <FlatList data={this.state.notes} renderItem={this._renderItem} onPressItem={this._onPressItem} />
-        </View>
-
+          <FlatList data={this.state.notes} renderItem={this._renderItem}  />
+        </View> 
+        
         <Overlay visible={this.state.modalVisible}
           onClose={this._hideOverlay}
           closeOnTouchOutside animationType='zoomInUp'
