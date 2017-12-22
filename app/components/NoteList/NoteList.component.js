@@ -49,8 +49,6 @@ export default class NoteList extends Component {
         <Overlay visible={this.state.modalVisible}
           closeOnTouchOutside
           animationType='zoomIn'
-          containerStyle={{backgroundColor: 'rgba(37, 8, 10, 0.78)'}}
-          childrenWrapperStyle={{backgroundColor: '#eee'}}
           animationDuration={500}
           onClose={this.onCloseOverlay}>
           <Text>{this.state.selectedNoteItem.title}</Text>
