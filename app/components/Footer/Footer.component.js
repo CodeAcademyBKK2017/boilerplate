@@ -12,15 +12,21 @@ class Footer extends Component {
 
   render () {
     return (
-      <View style={footerStyles.container}>
-        <TouchableOpacity onPress={this.props.onSavePress}>
-          <Text style={footerStyles.fontTitle}>
+      <View>
+        <View style={footerStyles.container}>
+          <TouchableOpacity onPress={this.props.onSavePress}>
+            <Text style={footerStyles.fontTitle}>
           Save
+            </Text>
+          </TouchableOpacity>
+          <Text style={footerStyles.chacters}>
+            {this.props.countContent} chacters
           </Text>
-        </TouchableOpacity>
-        <Text style={footerStyles.chacters}>
-          {this.props.countContent} chacters
-        </Text>
+          
+        </View>
+        <View>
+          <Text style={footerStyles.noteList}>Notes: </Text>
+        </View>
       </View>
     );
   }

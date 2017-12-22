@@ -14,6 +14,11 @@ const footerStyles = StyleSheet.create({
   },
   chacters: {
     textAlign: 'right'
+  },
+  noteList: {
+    fontWeight: '900',
+    paddingBottom: 10,
+    paddingTop: 10
   }
 });
       

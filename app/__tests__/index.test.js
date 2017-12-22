@@ -57,4 +57,20 @@ describe('App', () => {
     };
     expect(instance.state).toEqual(expectState);
   });
+  it('onShowModal', () => {
+    const wrapper = shallow(<NoteList/>);
+    instance = wrapper.instance();
+    const item = {title: 'title', content: 'content'};
+    const expectState = {
+      showModal: true, title: 'title', content: 'content'
+    };
+    instance.onShowModal(item)();
+    expect(instance.state).toMatchObject(expectState);
+  });
+  it('onCloseModal', () => {
+    const wrapper = shallow(<NoteList/>);
+    instance = wrapper.instance();
+    instance.onCloseModal();
+    expect(instance.state.showModal).toBe(false);
+  });
 });
