@@ -79,7 +79,7 @@ describe('App', () => {
     appInstance.componentDidMount();
     AsyncStorage.getItem.mockImplementation(() => Promise.resolve('dfdsjkgfsdhkjgsd'));
     AsyncStorage.getItem(notesKey).then((d) => {
-      console.log('d', d);
+      // console.log('d', d);
     });
     expect(AsyncStorage.getItem).toHaveBeenLastCalledWith(notesKey);
     
