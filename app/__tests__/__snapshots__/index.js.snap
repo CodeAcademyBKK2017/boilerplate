@@ -1,9 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App Check Function modalOpen 1`] = `undefined`;
-
-exports[`App Check Function modalonClose 1`] = `undefined`;
-
 exports[`App rendersItem correctly 1`] = `
 <View>
   <TouchableOpacity

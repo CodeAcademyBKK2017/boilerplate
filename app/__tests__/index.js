@@ -56,13 +56,14 @@ describe('App', () => {
     const wrapper = shallow(<App/>);
     const instance = wrapper.instance();
     const item = {text: 'text', title: 'title'};
-    const snapshot = instance.modalOpen({item})();
-    expect(snapshot).toMatchSnapshot();
+    instance.modalOpen({item})();
+    expect(instance.state.modalVisible).toEqual(true);
   });
   it('Check Function modalonClose', () => {
     const wrapper = shallow(<App/>);
     const instance = wrapper.instance();
-    const snapshot = instance.modalonClose();
-    expect(snapshot).toMatchSnapshot();
+    instance.modalonClose();
+    expect(instance.state.modalVisible).toEqual(false);
+    
   });
 });
