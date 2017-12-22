@@ -12,8 +12,10 @@ import Title from './components/Title/Title.components';
 import uuid from 'uuid';
 
 import {
+  Alert,
   FlatList,
   Text,
+  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -21,13 +23,26 @@ export default class App extends Component {
   _keyExtractor  = (item) => item.unique;
   _renderItem = (args) => 
     <View>
-      <Text style={styles.text}>{args.item.title}</Text>
-      <Text>{args.item.text}</Text>
+      <TouchableOpacity
+        onPress={this.popUpText(args)}>
+        <Text style={styles.text}>{args.item.title}</Text>
+        <Text>{args.item.text}</Text>
+      </TouchableOpacity>
     </View>
   state ={
     text: '',
     textTitle: '',
     notes: []
+  }
+  popUpText =(arg) => () => {
+    Alert.alert(
+      arg.item.title,
+      arg.item.text,
+      [
+        {text: 'OK', onPress: () => console.log('OK Pressed')}
+      ],
+      {cancelable: false}
+    );
   }
   texts =(v) => {
     this.setState({text: v});

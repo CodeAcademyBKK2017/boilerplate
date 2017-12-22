@@ -2,26 +2,30 @@
 
 exports[`App rendersItem correctly 1`] = `
 <View>
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-    style={
-      Object {
-        "fontWeight": "600",
-        "paddingTop": 5,
+  <TouchableOpacity
+    activeOpacity={0.2}
+    onPress={[Function]}
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontWeight": "600",
+          "paddingTop": 5,
+        }
       }
-    }
-  >
-    title
-  </Text>
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-  >
-    -
-    text
-  </Text>
+    >
+      title
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+    >
+      text
+    </Text>
+  </TouchableOpacity>
 </View>
 `;
