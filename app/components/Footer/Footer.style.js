@@ -15,15 +15,11 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   saveButtonTouch: {
-    backgroundColor: '#eee',
-    paddingVertical: 10,
-    paddingHorizontal: 10
+    backgroundColor: '#eee'
   },
   saveButtonContent: {
-    // width: '100%'
-  },
-  charLength: {
-    // width: '100%'
+    paddingVertical: 10,
+    paddingHorizontal: 10
   }
 });
 

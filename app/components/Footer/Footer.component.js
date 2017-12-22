@@ -19,7 +19,7 @@ export default class Footer extends Component {
             onPress={this.props.onSaveButtonPress}>
             <Text style={styles.saveButtonContent}>Save</Text>
           </Touchable>
-          <Text style={styles.charLength}>{this.props.textContentLength} characters</Text>
+          <Text>{this.props.textContentLength} characters</Text>
         </View>
       </View>
     );

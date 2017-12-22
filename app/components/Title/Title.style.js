@@ -18,9 +18,9 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: 'bold'
   },
-  languageButton: {
-    // flex: 1
-  },
+  // languageButton: {
+  //   flex: 1
+  // },
   textInput: {
     width: '100%',
     padding: 5,
