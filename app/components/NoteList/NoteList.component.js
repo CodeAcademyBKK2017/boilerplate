@@ -12,7 +12,7 @@ export default class NoteList extends Component {
     <Touchable
       style={styles.itemTouch}
       background={Touchable.Ripple('blue')}
-      onPress={this.props.onItemPress}>
+      onPress={this.props.onItemPress(item)}>
       <View style={[styles.itemContainer, item.isEven ? styles.evenContainer : styles.oddContainer]}>
         <Text style={styles.itemTitle}>{item.title}</Text>
         <Text style={styles.itemContent}>{item.content}</Text>

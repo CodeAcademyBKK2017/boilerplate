@@ -12,7 +12,7 @@ import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
-  KeyboardAvoidingView, Platform, View
+  Alert, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 
 export default class App extends Component {
@@ -53,8 +53,17 @@ export default class App extends Component {
     this.setState(newState);
   }
 
-  onNoteItemPress = () => {
-    console.log('123');
+  onNoteItemPress = (item) => () => {
+    Alert.alert(
+      item.title,
+      item.content,
+      [
+        {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'OK', onPress: () => console.log('OK Pressed')}
+      ],
+      {cancelable: false}
+    );
   };
 
   render () {
