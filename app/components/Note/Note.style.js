@@ -1,6 +1,4 @@
-import {StyleSheet} from 'react-native';
-
-export default StyleSheet.create({
+export default {
   title: {
     fontWeight: 'bold',
     fontSize: 15
@@ -18,5 +16,13 @@ export default StyleSheet.create({
   },
   box: {
     paddingVertical: 10
+  },
+  modalContainer: {
+    backgroundColor: 'rgba(37, 8, 10, 0.78)'
+  },
+  modalChildrenWrap: {
+    backgroundColor: '#eee',
+    alignItems: 'flex-start'
   }
-});
+
+};
