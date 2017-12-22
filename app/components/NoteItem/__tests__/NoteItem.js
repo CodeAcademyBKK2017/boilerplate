@@ -3,7 +3,6 @@ import NoteItem from '../NoteItem.component';
 import React from 'react';
 
 import renderer from 'react-test-renderer';
-import {shallow} from 'enzyme';
 
 describe('Content', () => {
   it('renders correctly', () => {
@@ -14,7 +13,7 @@ describe('Content', () => {
     };
 
     const tree = renderer.create(
-      <NoteItem data={note} onPressItem={() => {}}/>
+      <NoteItem data={note}/>
     );
     expect(tree).toBeDefined();
   });

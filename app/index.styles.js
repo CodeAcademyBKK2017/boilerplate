@@ -6,7 +6,15 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     backgroundColor: '#e9e9ee',
-    padding: 10
+    padding: 10,
+    ...Platform.select({
+      ios: {
+        paddingTop: 30
+      },
+      android: {
+        paddingTop: 10
+      }
+    })
   },
   title: {
     fontSize: 20,
@@ -26,5 +34,11 @@ export default StyleSheet.create({
   list: {
     flex: 1,
     width: '100%'
+  },
+  modalBackground: {
+
+  },
+  modalBox: {
+
   }
 });
