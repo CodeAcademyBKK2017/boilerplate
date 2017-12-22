@@ -40,8 +40,6 @@ exports[`Footer renders correctly 1`] = `
         Object {
           "backgroundColor": "#eee",
           "opacity": 1,
-          "paddingHorizontal": 10,
-          "paddingVertical": 10,
         }
       }
       testID={undefined}
@@ -51,7 +49,12 @@ exports[`Footer renders correctly 1`] = `
         accessible={true}
         allowFontScaling={true}
         ellipsizeMode="tail"
-        style={Object {}}
+        style={
+          Object {
+            "paddingHorizontal": 10,
+            "paddingVertical": 10,
+          }
+        }
       >
         Save
       </Text>
@@ -60,7 +63,6 @@ exports[`Footer renders correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
-      style={Object {}}
     >
       0
        characters
