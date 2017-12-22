@@ -12,16 +12,18 @@ import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
-  KeyboardAvoidingView, Platform, View
+  AsyncStorage, KeyboardAvoidingView, Platform, View
 } from 'react-native';
+
+const notesKey = 'notes';
 
 export default class App extends Component {
   state = {
     textTitle: '',
     textContent: '',
     notes: []
-  }
-
+  };
+  
   WrapperView = Platform.select({
     ios: KeyboardAvoidingView,
     android: View
@@ -51,6 +53,16 @@ export default class App extends Component {
       notes
     };
     this.setState(newState);
+
+    AsyncStorage.setItem(notesKey, JSON.stringify(notes));
+  }
+
+  componentDidMount () {
+    AsyncStorage.getItem(notesKey).then((value) => {
+      this.setState({
+        notes: value ? JSON.parse(value) : []
+      });
+    });
   }
 
   render () {
