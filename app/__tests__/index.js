@@ -9,9 +9,7 @@ import {shallow} from 'enzyme';
 // mock function
 jest.mock('AsyncStorage', () => ({
   getItem: jest.fn(() => Promise.resolve('abc')),
-  setItem: jest.fn(() => Promise.resolve()),
-  mergeItem: jest.fn(() => Promise.resolve()),
-  multiGet: jest.fn(() => Promise.resolve('{}'))
+  setItem: jest.fn(() => Promise.resolve())
 }));
 
 jest.mock('uuid', () => () => 'some uuid');
@@ -29,6 +27,7 @@ describe('App', () => {
 		
     const wrapper = shallow(appComp);
     appInstance = wrapper.instance();
+    
     AsyncStorage.setItem.mockReset();
   });
   
