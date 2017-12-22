@@ -12,9 +12,7 @@ describe('Content', () => {
       content: 'content'
     };
 
-    const tree = renderer.create(
-      <NoteItem data={note}/>
-    );
+    const tree = renderer.create(<NoteItem data={note} onPressItem={jest.fn}/>);
     expect(tree).toBeDefined();
   });
 });
