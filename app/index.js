@@ -5,12 +5,12 @@
  */
 
 import Content from './components/Content/Content.component.js';
+import Overlay from 'react-native-modal-overlay';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
-  Alert,
   FlatList,
   Text,
   TouchableOpacity,
@@ -22,7 +22,9 @@ export default class App extends Component {
   state = {
     title: '',
     text: '',
-    NOTES: []
+    NOTES: [],
+    modalVisible: false,
+    modalText: []
   }
 
   onCount = (v) => this.setState({text: v});
@@ -31,26 +33,27 @@ export default class App extends Component {
     const data = {'title': this.state.title, 'content': this.state.text, 'unique': uuid()};
     const newNotes = [...this.state.NOTES, data];
     this.setState(
-      {title: '', text: '', 'NOTES': newNotes}, () => {
-        console.log(this.state.NOTES);
-      }
+      {title: '', text: '', 'NOTES': newNotes}
     );
   }
-  modalBox = (args) =>  () => {
-    Alert.alert(
-      args.item.title,
-      args.item.content,
-      [
-        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
-      ],
-      {cancelable: false}
-    );
+  openModal = (arg) => () => {
+    const data = {'title': arg.item.title, 'content': arg.item.content, 'unique': uuid()};
+    this.setState({
+      modalVisible: true,
+      modalText: data
+    });
+  }
+  closeModal = () => {
+    this.setState({
+      modalVisible: false
+
+    });
   }
   _keyExtractor = (item) => item.unique;
   _renderItem = (args) => 
     <View>
       <TouchableOpacity
-        onPress={this.modalBox(args)}>
+        onPress={this.openModal(args)}>
         <Text style={styles.flatText}>{args.item.title}</Text>
         <Text>{args.item.content}</Text>
       </TouchableOpacity>
@@ -58,10 +61,16 @@ export default class App extends Component {
   render () {
     return (
       <View style={styles.container}>
+        <Overlay visible={this.state.modalVisible}
+          onClose={this.closeModal}
+          closeOnTouchOutside animationType='zoomIn'
+          animationDuration={500}>
+          <Text>{this.state.modalText.title}</Text>
+          <Text>{this.state.modalText.content}</Text>
+        </Overlay>
         <Title titles={this.onTitle} textTitle={this.state.title}/>
         <Content texts={this.state.text} Fn={this.onCount}
           FnSave={this.saveNote}/>
-        {/* <Text style={styles.flatTitle}>Notes:</Text> */}
         <View style={styles.conFlat}>
           <FlatList
             style={styles.flat}

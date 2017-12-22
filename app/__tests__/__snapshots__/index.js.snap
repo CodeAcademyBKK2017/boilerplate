@@ -1,26 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`rendersItem closeModal 1`] = `undefined`;
+
 exports[`rendersItem correctly 1`] = `
 <View>
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-    style={
-      Object {
-        "fontWeight": "700",
-        "padding": 3,
+  <TouchableOpacity
+    activeOpacity={0.2}
+    onPress={[Function]}
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontWeight": "700",
+          "padding": 3,
+        }
       }
-    }
-  >
-    title
-  </Text>
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-  >
-    content
-  </Text>
+    >
+      title
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+    >
+      content
+    </Text>
+  </TouchableOpacity>
 </View>
 `;
+
+exports[`rendersItem openModal 1`] = `undefined`;

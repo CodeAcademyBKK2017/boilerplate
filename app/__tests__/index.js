@@ -53,3 +53,16 @@ it('rendersItem correctly', () => {
   const snapshot = instance._renderItem({item});
   expect(snapshot).toMatchSnapshot();
 });
+it('rendersItem openModal', () => {
+  const wrapper = shallow(<App/>);
+  const instance = wrapper.instance();
+  const item = {title: 'title', content: 'content'};
+  const snapshot = instance.openModal({item})();
+  expect(snapshot).toMatchSnapshot();
+});
+it('rendersItem closeModal', () => {
+  const wrapper = shallow(<App/>);
+  const instance = wrapper.instance();
+  const snapshot = instance.closeModal();
+  expect(snapshot).toMatchSnapshot();
+});
