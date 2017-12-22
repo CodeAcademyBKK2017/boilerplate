@@ -11,5 +11,11 @@ export default StyleSheet.create({
     fontWeight: 'bold'
   },
   modalContent: {
+  },
+  modalContainer: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+  },
+  modalChildrenWrapper: {
+    backgroundColor: '#fff'
   }
 });

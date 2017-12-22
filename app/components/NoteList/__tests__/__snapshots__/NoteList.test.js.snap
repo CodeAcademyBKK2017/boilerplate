@@ -279,7 +279,7 @@ exports[`NoteList renders correctly 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "rgba(37, 8, 10, 0.78)",
+          "backgroundColor": "rgba(0, 0, 0, 0.5)",
           "flex": 1,
           "justifyContent": "center",
           "opacity": 0,
@@ -310,7 +310,7 @@ exports[`NoteList renders correctly 1`] = `
               "padding": 20,
             },
             Object {
-              "backgroundColor": "#eee",
+              "backgroundColor": "#fff",
             },
           ]
         }
