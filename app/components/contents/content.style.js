@@ -18,7 +18,7 @@ export default StyleSheet.create({
     backgroundColor: '#F5FCFF'
   },
   container: {
-    flex: 2,
+    flex: 4,
     justifyContent: 'center'
   }
 });

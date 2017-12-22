@@ -6,7 +6,8 @@ export default StyleSheet.create({
   container: {
     width: '100%',
     height: '10%',
-    padding: 10
+    padding: 10,
+    flex: 5
   },
   touchStyle: {
     borderTopWidth: 1,

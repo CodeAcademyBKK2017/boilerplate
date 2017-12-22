@@ -30,13 +30,25 @@ describe('List', () => {
     expect(tree).toMatchSnapshot();
   });
 
-//   it('List: _showPopup Function is will work', () => {
+  it('List: _showPopup Function change state visible to true', () => {
 
-//     const wrapper = shallow(<List/>);
-//     const instance = wrapper.instance();
-//     const param = {item: {title: 'test', content: 'test1', key: ''}};
-//     const tree = instance._showPopup(param);
-//     const expected = '123';
-//     expect(tree).toEqual(expected);
-//   });
+    const wrapper = shallow(<List/>);
+    const instance = wrapper.instance();
+    const param = {item: {title: 'test', content: 'test1', key: ''}};
+    instance._showPopup(param)();
+    const ExpectedmodalVisible = true;
+    expect(instance.state.modalVisible).toEqual(ExpectedmodalVisible);
+    expect(instance.state.currentItem).toEqual(param);
+  
+  });
+  it('List: _closeModal Function change state visible to false', () => {
+    const wrapper = shallow(<List/>);
+    const instance = wrapper.instance();
+    const Expectedparam = {};
+    const ExpectedmodalVisible = false;
+    instance._closeModal();
+    expect(instance.state.modalVisible).toEqual(ExpectedmodalVisible);
+    expect(instance.state.currentItem).toEqual(Expectedparam);
+  
+  });
 });
