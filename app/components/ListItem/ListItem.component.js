@@ -16,8 +16,15 @@ export default class ListItem extends Component {
       <TouchableOpacity 
         onPress={ this.props.onShowModal(item)}>
         <View style={style.marginStyle}>
-          <Text style={style.textTitleStyle}>{item.title}</Text>
-          <Text style={style.textContentStyle}>{item.content}</Text>
+          <View style={style.flexStyle}>
+            <Text style={style.textTitleStyle}>{item.title}</Text>
+            <Text style={style.textContentStyle}>{item.content}</Text>
+          </View>
+          <TouchableOpacity 
+            style={style.deleteButtonStyle}
+            onPress={ this.props.onDelete(item)}>
+            <Text style={style.textDeleteStyle}>X</Text>
+          </TouchableOpacity>
         </View>
         <View style={style.divide}/>
       </TouchableOpacity>
@@ -37,10 +44,12 @@ export default class ListItem extends Component {
 
 ListItem.propTypes = {
   dataNotes: PropTypes.array.isRequired,
+  onDelete: PropTypes.func.isRequired,
   onShowModal: PropTypes.func.isRequired
 };
 
 ListItem.defaultProps = {
   dataNotes: [],
+  onDelete: noop,
   onShowModal: noop
 };

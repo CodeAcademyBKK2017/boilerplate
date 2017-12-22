@@ -8,6 +8,9 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16
   },
+  flexStyle: {
+    flex: 1
+  },
   flatListStyle: {
     height: '30%',
     paddingLeft: 10,
@@ -20,7 +23,8 @@ export default StyleSheet.create({
   },
   marginStyle: {
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    flexDirection: 'row'
   },
   textTitleStyle: {
     fontWeight: 'bold',
@@ -34,5 +38,19 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(37, 8, 10, 0.78)'
+  },
+  deleteButtonStyle: {
+    width: 30,
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: 'red', 
+    borderRadius: 50,
+    borderWidth: 1,
+    padding: 5,
+    backgroundColor: 'red'
+  },
+  textDeleteStyle: {
+    color: 'white'
   }
 });

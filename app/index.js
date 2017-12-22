@@ -51,6 +51,13 @@ export default class App extends Component {
     // });
   }
 
+  onDelete = (item) => () => {
+    const dataNOTES = [...this.state.NOTES];
+    const deletePosition = dataNOTES.indexOf(item);
+    dataNOTES.splice(deletePosition, 1);
+    this.setState({NOTES: dataNOTES});
+  }
+
   onShowModal = (note) => () => this.setState({modalData: note});
 
   onCloseModal = () => this.setState({modalData: {}});
@@ -59,6 +66,7 @@ export default class App extends Component {
     <ListItem 
       dataNotes={this.state.NOTES}
       onShowModal={this.onShowModal}
+      onDelete={this.onDelete}
     /> : null
 
   viewOverlay = () => <Overlay 
@@ -73,7 +81,7 @@ export default class App extends Component {
       <View style={style.container}>
         <HeaderBox />
         <TitleBox titleValueText={this.state.titleText} onTitleChange={this.onTitleChange}/>
-        <ContentBox count={this.state.contentText.length} contentValueText={this.state.contentText} onContentChange={this.onContentChange} onSave={this.onSave}/>
+        <ContentBox count={this.state.contentText.length} contentValueText={this.state.contentText} onContentChange={this.onContentChange} onSave={this.onSave} onDelete={this.onDelete}/>
         {this.showFlatList()}
         {this.viewOverlay()}
         <Footer />

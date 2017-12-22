@@ -106,4 +106,26 @@ describe('App', () => {
     expect(instance.state.modalData).toEqual({});
   });
 
+  it('Check Function onDelete', () => {
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+    const note = {
+      title: 'React Native',
+      content: '- UI',
+      key: 0
+    };
+    const expectRes = {
+      modalData: {},
+      titleText: '',
+      contentText: '',
+      NOTES: []
+    };
+    instance.onTitleChange('React Native');
+    instance.onContentChange('- UI');
+    instance.onSave();
+    instance.onDelete(note)();
+    expect(instance.state).toEqual(expectRes);
+  });
+
 });
