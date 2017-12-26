@@ -3,9 +3,15 @@ import App from '../index';
 import React from 'react';
 import renderer from 'react-test-renderer';
 // Note: test renderer must be required after react-native.
-// import {AsyncStorage} from 'react-native';
+import {AsyncStorage} from 'react-native';
 import {shallow} from 'enzyme';
 
+jest.mock('AsyncStorage', () => ({
+  getItem: jest.fn(() => Promise.resolve('{}')),
+  setItem: jest.fn(() => Promise.resolve()),
+  mergeItem: jest.fn(() => Promise.resolve()),
+  multiGet: jest.fn(() => Promise.resolve('{}'))
+}));
 jest.mock('uuid', () => () => 'someUUID');
 
 describe('App', () => {
@@ -50,5 +56,22 @@ describe('App', () => {
     instance.onDelete(item)();
     expect(instance.state.note).toEqual(expectedState.note);
   });
- 
+  it('init should have been call with new note', () => {
+    const storageNote = [
+      {
+        key: 'some uuid',
+        title: 'some title',
+        content: 'some message'
+      }
+    ];
+      // set custom mock result
+    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(JSON.stringify(storageNote)));
+    instance.init();
+    expect(AsyncStorage.getItem).toHaveBeenCalledWith('storageNote');
+  });
+  it('init should have been call with nothing', () => {
+    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(null));
+    instance.init();
+    expect(AsyncStorage.getItem).toHaveBeenCalledWith('storageNote');
+  });
 });

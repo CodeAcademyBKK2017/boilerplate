@@ -22,10 +22,8 @@ export default class App extends Component {
   init =() => {
     AsyncStorage.getItem('storageNote')
       .then((data) => {
-        if (data) {
-          this.initialstate.note = JSON.parse(data);
-          this.setState(this.initialstate.note);
-        }
+        const storageData = data ?  JSON.parse(data) : [];
+        this.setState({note: storageData});
       }); 
   }
   componentDidMount () {
