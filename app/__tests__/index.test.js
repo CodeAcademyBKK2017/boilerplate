@@ -1,12 +1,16 @@
-import 'react-native';
 import App from '../index';
 import NoteList from '../components/NoteList/NoteList.component';
 import React from 'react';
-// Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+// Note: test renderer must be required after react-native.
+import {AsyncStorage} from 'react-native';
 import {shallow} from 'enzyme';
 
 jest.mock('uuid', () => () => 'someId');
+jest.mock('AsyncStorage', () => ({
+  getItem: jest.fn(() => Promise.resolve('')),
+  setItem: jest.fn(() => Promise.resolve())
+}));
 
 describe('App', () => {
   let tree, instance;
@@ -39,7 +43,7 @@ describe('App', () => {
     instance.onTypeTitle('');  
     expect(instance.state.title).toBe('');
   });
-  it('onSavePress: should add the value of title', () => {
+  it('onSavePress: should add note', () => {
     const newData = {
       title: 'title',
       content: 'content'
@@ -56,6 +60,7 @@ describe('App', () => {
       }]
     };
     expect(instance.state).toEqual(expectState);
+    expect(AsyncStorage.setItem).toHaveBeenCalledWith('state', JSON.stringify(expectState));
   });
   it('onShowModal', () => {
     const wrapper = shallow(<NoteList/>);
@@ -73,4 +78,39 @@ describe('App', () => {
     instance.onCloseModal();
     expect(instance.state.showModal).toBe(false);
   });
+  it('onDeletePress: should delete the selected note', () => {
+    const item = {
+      title: 'title',
+      content: 'content',
+      key: 'someId'};
+    const initialData = {
+      title: '',
+      content: '',
+      notes: [item]
+    };
+    instance.setState(initialData);
+    instance.onDeletePress(item)();
+    const expectState = {
+      title: '',
+      content: '',
+      notes: []
+    };
+    expect(instance.state).toEqual(expectState);
+    expect(AsyncStorage.setItem).toHaveBeenCalledWith('state', JSON.stringify(expectState));
+  });
+  it('componentDidMount with existed notes', () => {
+    const expectState = [
+      {
+        key: 'some uuid',
+        title: 'my test title',
+        content: 'my test message'
+      }
+    ];
+    // set custom mock result
+    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(JSON.stringify(expectState)));
+    instance.componentDidMount();
+    expect(AsyncStorage.getItem).toHaveBeenCalledWith('state');
+  });
+
 });
+
