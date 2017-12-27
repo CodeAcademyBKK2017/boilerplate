@@ -26,6 +26,10 @@ export default class App extends Component {
     NOTES: []
   }
 
+  componentDidMount () {
+    AsyncStorage.getItem('state').then((value) => this.setState(JSON.parse(value)));
+  }
+
   onTitleChange = (title) => this.setState({titleText: title});
 
   onContentChange = (content) => this.setState({contentText: content});
@@ -38,24 +42,29 @@ export default class App extends Component {
     };
     const newDataNOTES = [...this.state.NOTES, newData];
     const newStateData = {
+      modalData: {},
       titleText: '',
       contentText: '',
       NOTES: newDataNOTES
     };
     
-    this.setState(newStateData);
-
     AsyncStorage.setItem('state', JSON.stringify(newStateData));
-    // AsyncStorage.getItem('state').then((value) => {
-    //   console.log('value::: ', JSON.parse(value));
-    // });
+    this.setState(newStateData);
   }
 
   onDelete = (item) => () => {
     const dataNOTES = [...this.state.NOTES];
     const deletePosition = dataNOTES.indexOf(item);
     dataNOTES.splice(deletePosition, 1);
-    this.setState({NOTES: dataNOTES});
+
+    const newStateData = {
+      modalData: {},
+      titleText: '',
+      contentText: '',
+      NOTES: dataNOTES
+    };
+    AsyncStorage.setItem('state', JSON.stringify(newStateData));
+    this.setState(newStateData);
   }
 
   onShowModal = (note) => () => this.setState({modalData: note});
