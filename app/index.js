@@ -19,13 +19,14 @@ export default class App extends Component {
     notes: []
   }
   componentDidMount () {
-    console.log('componentDidMount 1');
+    // console.log('componentDidMount 1');
     AsyncStorage.getItem('state').then((value) => {
-      console.log('componentDidMount 2');
-      if (value !== null) {
-        console.log(JSON.parse(value));
-        this.setState(JSON.parse(value));
-      }
+      // console.log('componentDidMount 2');
+      // if (value !== null) {
+      //   console.log(JSON.parse(value));
+      //   this.setState(JSON.parse(value));
+      // }
+      this.setState(JSON.parse(value));
     });
   }
   onKeyPressTitle = (textInput) => {
@@ -51,12 +52,12 @@ export default class App extends Component {
   }
   updateState = (obj) => {
     this.setState(obj, () => {
-      console.log(this.state);
+      // console.log(this.state);
       AsyncStorage.setItem('state', JSON.stringify(this.state)).then(() => {
-        AsyncStorage.getItem('state').then((value) => {
-          console.log('from storage');
-          console.log(JSON.parse(value));
-        });
+        // AsyncStorage.getItem('state').then((value) => {
+        //   console.log('from storage');
+        //   console.log(JSON.parse(value));
+        // });
       });
     });
   }

@@ -7,6 +7,10 @@ import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 
 jest.mock('uuid', () => () => '123');
+jest.mock('AsyncStorage', () => ({
+  getItem: jest.fn(() => Promise.resolve('')),
+  setItem: jest.fn(() => Promise.resolve())
+}));
 
 describe('App', () => {
   let wrapper, instance;
@@ -61,5 +65,23 @@ describe('App', () => {
     instance.setState(newNoteState);
     instance.onSave();
     expect(instance.state).not.toMatchObject(expectedState);
+  });
+  it('onDeleteNote: Success', () => {
+    const initState = {
+      titleTextInput: '',
+      contentTextInput: '',
+      notes: [
+        {title: 'Title', content: 'Content', uuid: '123'}
+      ]
+    };
+    const expectedState = {
+      titleTextInput: '',
+      contentTextInput: '',
+      notes: []
+    };
+    const itemToDelete = {title: 'Title', content: 'Content', uuid: '123'};
+    instance.setState(initState);
+    instance.onDeleteNote(itemToDelete)();
+    expect(instance.state).toMatchObject(expectedState);
   });
 });
