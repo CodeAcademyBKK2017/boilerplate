@@ -9,7 +9,6 @@ import ProptTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './list.style';
 import {
-  Button,
   FlatList,
   Text,
   TouchableOpacity,
