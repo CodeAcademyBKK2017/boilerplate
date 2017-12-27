@@ -21,6 +21,14 @@ export default StyleSheet.create({
     fontWeight: 'bold'
   },
   textView: {
+    flex: 8,
     flexDirection: 'column'
+  },
+  deleteBTN: {
+    flex: 2,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'lightgray'
   }
 });

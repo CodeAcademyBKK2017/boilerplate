@@ -61,4 +61,5 @@ describe('App', () => {
     instance._removeContent('123')();
     expect(instance.state.arrayContent).toEqual(expectedState);
   });
+
 });

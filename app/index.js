@@ -8,16 +8,25 @@ import Content from './components/contents/content.component';
 import Footer from './components/footers/footer.component';
 import globalStyle from './index.style';
 import List from './components/lists/list.component';
-import React, {Component} from 'react';
+import React, {
+  Component
+} from 'react';
 import Title from './components/titles/title.component';
 import uuid from 'uuid';
-import {View} from 'react-native';
+import {
+  AsyncStorage, View} from 'react-native';
 
 export default class App extends Component {
   state = {
     currentContent: '',
     currentTitle: '',
     arrayContent: []
+  }
+
+  componentDidMount () {
+    AsyncStorage.getItem('theState').then((value) => {
+      this.setState(JSON.parse(value));
+    });
   }
 
   _onContentChange =  (currentContent) => {
@@ -33,11 +42,17 @@ export default class App extends Component {
       currentTitle: '',
       arrayContent: newContent};
     this.setState(newState);
+    AsyncStorage.setItem('theState', JSON.stringify(newState));
   }
 
   _removeContent = (key) => () => { 
     const newArray = this.state.arrayContent.filter((item) => item.key !== key);
     this.setState({arrayContent: newArray});
+    AsyncStorage.setItem('theState', JSON.stringify({
+      currentContent: '',
+      currentTitle: '',
+      arrayContent: newArray
+    }));
   }
 
   render () {

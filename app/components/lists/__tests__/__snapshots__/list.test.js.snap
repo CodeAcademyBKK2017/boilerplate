@@ -18,6 +18,7 @@ exports[`List List: _renderItems Function is will work 1`] = `
   <View
     style={
       Object {
+        "flex": 8,
         "flexDirection": "column",
       }
     }
@@ -42,11 +43,29 @@ exports[`List List: _renderItems Function is will work 1`] = `
       test1
     </Text>
   </View>
-  <View>
-    <Button
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "lightgray",
+        "flex": 2,
+        "flexDirection": "column",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <TouchableOpacity
+      activeOpacity={0.2}
       onPress={undefined}
-      title="!"
-    />
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        !
+      </Text>
+    </TouchableOpacity>
   </View>
 </TouchableOpacity>
 `;

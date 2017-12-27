@@ -9,7 +9,6 @@ import ProptTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './list.style';
 import {
-  // AsyncStorage,
   Button,
   FlatList,
   Text,
@@ -25,8 +24,6 @@ export default class List extends Component {
 
     _showPopup = (item) => () => {
       this.setState({modalVisible: true, currentItem: item}); 
-      // AsyncStorage.setItem('theState', JSON.stringify({modalVisible: true, currentItem: item}));
-      // AsyncStorage.getItem('theState').then((value) => JSON.parse(value)).then((alreadyParsed) => console.log(alreadyParsed));
     };
 
     _closeModal = () => {
@@ -44,8 +41,12 @@ export default class List extends Component {
               {item.content}
             </Text>
           </View>
-          <View>
-            <Button title='!' onPress={this.props.removeNote(item.key)}/>
+          <View style={styles.deleteBTN}>
+            <TouchableOpacity onPress={this.props.removeNote(item.key)}>
+              <Text>
+              !
+              </Text>
+            </TouchableOpacity>
           </View>
         </TouchableOpacity>)
     

@@ -38,7 +38,8 @@ describe('List', () => {
   it('List: _showPopup Function change state visible to true', () => {
 
     const param = {item: {title: 'test', content: 'test1', key: ''}};
-    instance._showPopup(param)();
+    const curry = instance._showPopup(param);
+    curry();
     const ExpectedmodalVisible = true;
     expect(instance.state.modalVisible).toEqual(ExpectedmodalVisible);
     expect(instance.state.currentItem).toEqual(param);
