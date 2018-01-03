@@ -1,3 +1,4 @@
+import Icon from 'react-native-vector-icons/Foundation';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Content.style';
@@ -16,6 +17,7 @@ class Content extends Component {
           <Text style={styles.welcome}>
           Please type your note below
           </Text>
+          <Icon name='clipboard-notes' size={30} color='#000' />
         </View>
         <View style={styles.conArea}>
           <TextInput

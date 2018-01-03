@@ -1,7 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`rendersItem correctly 1`] = `
-<View>
+exports[`App rendersItem correctly 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+    }
+  }
+>
   <TouchableOpacity
     activeOpacity={0.2}
     onPress={[Function]}
@@ -27,5 +33,9 @@ exports[`rendersItem correctly 1`] = `
       content
     </Text>
   </TouchableOpacity>
+  <Button
+    onPress={[Function]}
+    title="Del"
+  />
 </View>
 `;

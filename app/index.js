@@ -44,12 +44,13 @@ export default class App extends Component {
       }
     );
   }
-  delNote = (arg) => () => {
-    const newNotes = [...this.state.NOTES];
-    const tt = newNotes.indexOf(arg.item);
-    newNotes.splice(tt, 1);
-    this.setState({NOTES: newNotes});
-    
+  delNote = (uuid) => () => {
+    const res = this.state.NOTES.filter((element) => element.unique !== uuid);
+    this.setState(
+      {title: '', text: '', 'NOTES': res}, () => {
+        AsyncStorage.setItem('NOTES', JSON.stringify(this.state));
+      }
+    );
   }
   openModal = (arg) => () => {
     const data = {'title': arg.item.title, 'content': arg.item.content, 'unique': uuid()};
@@ -73,11 +74,12 @@ export default class App extends Component {
         <Text>{args.item.content}</Text>
       </TouchableOpacity>
       <Button
-        onPress={this.delNote(args)}
+        onPress={this.delNote(args.item.unique)}
         title='Del'
       />
     </View>
   render () {
+    console.log(this.state);
     return (
       <View style={styles.container}>
         <Overlay visible={this.state.modalVisible}
