@@ -10,6 +10,13 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     fontStyle: 'italic'
   },
+  titleCon: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  icon: {
+    padding: 10
+  },
   textInput: {
     width: '100%',
     flex: 1,

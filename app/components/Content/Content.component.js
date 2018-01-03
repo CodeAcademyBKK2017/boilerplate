@@ -1,3 +1,4 @@
+import Icon from 'react-native-vector-icons/Foundation';
 import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -12,7 +13,10 @@ export default class Content extends Component {
   render () {
     return (
       <View style={[styles.container, this.props.style]}>
-        <Text style={styles.title}>Please type your note below</Text>
+        <View style={styles.titleCon}>
+          <Text style={styles.title}>Please type your note below</Text>
+          <Icon style={styles.icon} name='clipboard-notes'/>
+        </View>
         <TextInput
           style={styles.textInput}
           multiline={true}
