@@ -23,6 +23,7 @@ class Title extends Component {
         
         <TextInput 
           style={styles.titleInput}
+          underlineColorAndroid='transparent'
           onChangeText={this.props.titles}
           placeholder='Tasks for today'
           value={this.props.text}

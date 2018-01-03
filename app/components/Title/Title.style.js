@@ -26,7 +26,7 @@ export default StyleSheet.create({
   },
   titleInput: {
     minWidth: '100%',
-    height: 30,
+    // height: 30,
     borderColor: 'gray',
     borderWidth: 1,
     marginTop: 10,

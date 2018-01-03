@@ -9,11 +9,12 @@ import Footer from './components/Footer/Footer.components';
 import Overlay from 'react-native-modal-overlay';
 import React, {Component} from 'react';
 import styles from './index.style';
+import Swipeout from 'react-native-swipeout';
 import Title from './components/Title/Title.components';
 import uuid from 'uuid';
-
 import {
   AsyncStorage,
+  Button,
   FlatList,
   Text,
   TouchableOpacity,
@@ -22,9 +23,28 @@ import {
 
 export default class App extends Component {
   _keyExtractor  = (item) => item.unique;
+  
   _renderItem = (args) => 
-    <View>
-      <TouchableOpacity
+    <Swipeout right={
+      [
+        {
+          text: 'SHOW', onPress: this.modalOpen(args), backgroundColor: '#49ba88'
+        },
+        {
+          text: 'DELETE', onPress: this.deleteNote(args.item.unique), backgroundColor: 'red'
+        }
+      ]
+    }>
+      <View>
+      
+        <View>
+          <TouchableOpacity>
+            <Text style={styles.text}>{args.item.title}</Text>
+            <Text>{args.item.text}</Text>
+          </TouchableOpacity>
+        </View>
+     
+        {/* <TouchableOpacity
         onPress={this.modalOpen(args)}>
         <Text style={styles.text}>{args.item.title}</Text>
         <Text>{args.item.text}</Text>
@@ -32,8 +52,9 @@ export default class App extends Component {
       <TouchableOpacity
         onPress={this.deleteNote(args.item.unique)}>
         <Text style={styles.del}>DELETE</Text>
-      </TouchableOpacity>
-    </View>
+      </TouchableOpacity> */}
+      </View>
+    </Swipeout>
   state ={
     text: '',
     textTitle: '',
@@ -106,6 +127,10 @@ export default class App extends Component {
           <Text>{this.state.modalText.title}</Text>
           <Text>{this.state.modalText.text}</Text>
         </Overlay>
+        <Button
+          onPress={() => this.props.navigation.navigate('About')}
+          title='Go to About'
+        />
       </View>
     );
   }
