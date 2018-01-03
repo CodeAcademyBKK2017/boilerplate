@@ -3,6 +3,7 @@
  * https://github.com/facebook/react-native
  * @flow
  */
+import Icon from 'react-native-vector-icons/Foundation';
 import noop from 'lodash/noop';
 import ProptTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -20,7 +21,7 @@ export default class Content extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.instructions}>
-            Please type your note below.
+            Please type your note below. <Icon name='clipboard-notes' size={20} color='#999'/>
         </Text>
         <TextInput
           style = {styles.textArea}

@@ -119,7 +119,28 @@ exports[`App App: renders correctly 1`] = `
         }
       }
     >
-      Please type your note below.
+      Please type your note below. 
+      <Text
+        accessible={true}
+        allowFontScaling={false}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "#999",
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "fontcustom",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+          ]
+        }
+      >
+        
+      </Text>
     </Text>
     <TextInput
       allowFontScaling={true}
