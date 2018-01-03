@@ -4,6 +4,7 @@ import noteListStyles from './NoteList.style';
 import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import Swipeout from 'react-native-swipeout';
 
 import {
   FlatList,
@@ -28,19 +29,24 @@ class NoteList extends Component {
   }
 
   renderItem = ({item}) => 
-    <View style={noteListStyles.container}>
-      <TouchableOpacity onPress={this.onShowModal(item)}>
-        <View>
-          <Text style={noteListStyles.noteListTitle}>{item.title}</Text>
-          <Text style={noteListStyles.noteListContent}>{item.content}</Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={this.props.onDeletePress(item)}>
-        <View>
-          <Text style={noteListStyles.delete}>Delete</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+    <Swipeout autoClose={true} right={[
+      {
+        text: 'View', onPress: this.onShowModal(item), backgroundColor: 'lightblue'
+      },
+      {
+        text: 'Delete', onPress: this.props.onDeletePress(item), backgroundColor: 'red'
+      }
+    ]}>
+      <View style={noteListStyles.container}>
+        <TouchableOpacity >
+          <View>
+            <Text style={noteListStyles.noteListTitle}>{item.title}</Text>
+            <Text style={noteListStyles.noteListContent}>{item.content}</Text>
+          </View>
+        </TouchableOpacity>
+        
+      </View>
+    </Swipeout>
   render () {
     return (
       <View style={{maxHeight: 200}}>

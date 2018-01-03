@@ -7,12 +7,14 @@
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import NoteList from './components/NoteList/NoteList.component';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
   AsyncStorage,
+  Button,
   View
 } from 'react-native';
 
@@ -66,6 +68,8 @@ export default class App extends Component {
     this.setState({title: titleInput});
   }
 
+  navigateTo = (key) => () => this.props.navigation.navigate(key)
+
   render () {
     // console.log(this.state);
     return (
@@ -77,7 +81,15 @@ export default class App extends Component {
         </View>
        
         <NoteList notes={this.state.notes} onDeletePress={this.onDeletePress}/>
+        <Button onPress={this.navigateTo('About')} title='Go to About'/>
       </View>
     );
   }
 }
+
+App.propTypes = {
+  navigation: PropTypes.object
+};
+App.defaultProps = {
+  navigation: {}
+};
