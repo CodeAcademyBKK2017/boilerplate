@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
   dummyContainer: {
     paddingVertical: 10
   },
+  itemSwipe: {
+    borderRadius: 10
+  },
   itemTouch: {
     borderRadius: 10,
     borderColor: 'black',
