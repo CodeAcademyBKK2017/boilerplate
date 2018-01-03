@@ -12,7 +12,7 @@ import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
-  AsyncStorage, KeyboardAvoidingView, Platform, View
+  AppRegistry, AsyncStorage, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 
 const notesKey = 'notes';
@@ -54,6 +54,11 @@ export default class App extends Component {
     this.setState(newState);
 
     AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
+    
+  }
+
+  onShowAboutUs = () => {
+    this.props.navigation.navigate('About');
   }
 
   onDeleteButtonPress = (item) => () => {
@@ -92,7 +97,8 @@ export default class App extends Component {
           onChangeTextContent={this.onChangeTextContent}/>
         <Footer
           textContentLength={this.state.textContent.length}
-          onSaveButtonPress={this.onSaveButtonPress}/>
+          onSaveButtonPress={this.onSaveButtonPress}
+          onShowAboutUs={this.onShowAboutUs}/>
         {
           this.state.notes.length > 0 ? <NoteList data={this.state.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
         }

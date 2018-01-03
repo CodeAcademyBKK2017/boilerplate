@@ -34,6 +34,10 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5
   },
+  swite: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10
+  },
   itemTitle: {
     fontWeight: 'bold',
     fontSize: 14,
