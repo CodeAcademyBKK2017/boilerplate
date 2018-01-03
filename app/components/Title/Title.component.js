@@ -22,7 +22,7 @@ class Title extends Component {
 }
 
 Title.propTypes = {
-  onTypeTitle: PropTypes.func
+  onTypeTitle: PropTypes
 };
 Title.defaultProps = {
   onTypeTitle: noop
