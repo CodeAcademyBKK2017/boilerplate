@@ -4,6 +4,7 @@
  * @flow
  */
 
+import AboutSection from './components/AboutSection/AboutSection.component';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import NoteList from './components/NoteList/NoteList.component';
@@ -38,24 +39,22 @@ export default class App extends Component {
   }
 
   onSaveButtonPress = () => {
-    // const newNotes = [...this.state.notes];
-    // const note = {
-    //   key: uuid(),
-    //   title: this.state.textTitle,
-    //   content: this.state.textContent
-    // };
-    // newNotes.push(note);
+    const newNotes = [...this.state.notes];
+    const note = {
+      key: uuid(),
+      title: this.state.textTitle,
+      content: this.state.textContent
+    };
+    newNotes.push(note);
 
-    // const newState = {
-    //   textTitle: '',
-    //   textContent: '',
-    //   notes: newNotes
-    // };
-    // this.setState(newState);
+    const newState = {
+      textTitle: '',
+      textContent: '',
+      notes: newNotes
+    };
+    this.setState(newState);
 
-    // AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
-    
-    this.props.navigation.navigate('About');
+    AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
   }
 
   onDeleteButtonPress = (item) => () => {
@@ -63,6 +62,10 @@ export default class App extends Component {
     this.setState({notes: filteredNotes});
 
     AsyncStorage.setItem(notesKey, JSON.stringify(filteredNotes));
+  }
+
+  onAboutButtonPress = () => {
+    this.props.navigation.navigate('About');
   }
 
   componentDidMount () {
@@ -98,6 +101,7 @@ export default class App extends Component {
         {
           this.state.notes.length > 0 ? <NoteList data={this.state.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
         }
+        <AboutSection onAboutButtonPress={this.onAboutButtonPress}/>
       </this.WrapperView>
     );
   }
