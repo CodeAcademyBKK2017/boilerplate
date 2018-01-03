@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 
 const notesKey = 'notes';
-
+//
 export default class App extends Component {
   state = {
     textTitle: '',
