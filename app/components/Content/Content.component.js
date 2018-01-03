@@ -1,4 +1,5 @@
 import contentStyles from './Content.style';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -13,7 +14,7 @@ class Content extends Component {
     return (
       <View style={contentStyles.container}>
         <Text style={contentStyles.fontTitle}>
-          Please type your note below
+          Please type your note below <Icon name='note-multiple-outline' size={30} color='green'/>
         </Text>
         <TextInput style={contentStyles.inputBox} multiline = {true} underlineColorAndroid= 'transparent' onChangeText={this.props.onTypeContent} value={this.props.text}/>
       </View>

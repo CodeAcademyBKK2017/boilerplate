@@ -1,4 +1,5 @@
 import footerStyles from './Footer.style';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -20,7 +21,7 @@ class Footer extends Component {
             </Text>
           </TouchableOpacity>
           <Text style={footerStyles.chacters}>
-            {this.props.countContent} chacters
+            {this.props.countContent} <Icon name='rocket' size={30} color='#900' />
           </Text>
           
         </View>
