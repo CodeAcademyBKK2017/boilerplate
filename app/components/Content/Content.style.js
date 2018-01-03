@@ -11,7 +11,8 @@ export default StyleSheet.create({
     fontStyle: 'italic',
     paddingVertical: 10,
     fontSize: 15,
-    textAlign: 'left'
+    textAlign: 'left',
+    paddingHorizontal: 10
   
   },
   container: {
@@ -19,6 +20,8 @@ export default StyleSheet.create({
     width: '100%'
   },
   headContent: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    padding: 10,
+    alignItems: 'center'
   }
 });
