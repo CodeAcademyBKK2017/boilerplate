@@ -8,7 +8,6 @@ import Content from './components/contents/content.component';
 import Footer from './components/footers/footer.component';
 import globalStyle from './index.style';
 import List from './components/lists/list.component';
-import noop from 'lodash/noop';
 import ProptTypes from 'prop-types';
 import React, {
   Component
