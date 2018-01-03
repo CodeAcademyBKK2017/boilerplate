@@ -147,6 +147,7 @@ exports[`App getName: Should return Yo 1`] = `
           "alignItems": "center",
           "display": "flex",
           "flexDirection": "row",
+          "justifyContent": "flex-start",
           "paddingBottom": 15,
           "paddingTop": 15,
         }
@@ -159,13 +160,34 @@ exports[`App getName: Should return Yo 1`] = `
         style={
           Object {
             "color": "#333333",
-            "flex": 1,
             "fontStyle": "italic",
             "justifyContent": "flex-start",
+            "marginRight": 5,
           }
         }
       >
-        Please type your note below
+        Please type your note below.
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={false}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "#333333",
+              "fontSize": 20,
+            },
+            undefined,
+            Object {
+              "fontFamily": "fontcustom",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+          ]
+        }
+      >
+        
       </Text>
     </View>
     <TextInput
