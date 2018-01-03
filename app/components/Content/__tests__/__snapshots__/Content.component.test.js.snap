@@ -12,7 +12,9 @@ exports[`Content snapshot test 1`] = `
   <View
     style={
       Object {
+        "alignItems": "center",
         "flexDirection": "row",
+        "padding": 10,
       }
     }
   >
@@ -24,6 +26,7 @@ exports[`Content snapshot test 1`] = `
         Object {
           "fontSize": 15,
           "fontStyle": "italic",
+          "paddingHorizontal": 10,
           "paddingVertical": 10,
           "textAlign": "left",
         }
@@ -38,19 +41,19 @@ exports[`Content snapshot test 1`] = `
       style={
         Array [
           Object {
-            "color": "#900",
-            "fontSize": 30,
+            "color": undefined,
+            "fontSize": 20,
           },
           undefined,
           Object {
-            "fontFamily": "Material Icons",
+            "fontFamily": "fontcustom",
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
         ]
       }
     >
-      
+      
     </Text>
   </View>
   <TextInput
