@@ -11,6 +11,7 @@ import {
   Alert, AsyncStorage, FlatList, Text, View
 } from 'react-native';
 
+// AsyncStorage.clear();
 export default class App extends Component {
   state = {
     currentTitle: '',
@@ -21,9 +22,13 @@ export default class App extends Component {
   }
 
   componentDidMount () {
-    AsyncStorage.getItem('notes').then((notes) => JSON.parse(notes)).then((notes) => {
-      this.setState({notes});
-    });
+    AsyncStorage.getItem('notes')
+      .then((notes) => JSON.parse(notes))
+      .then((notes) => {
+        if (Array.isArray(notes)) {
+          this.setState({notes});
+        }
+      });
   }
 
   onTitleChangeText = (currentTitle) => {
@@ -36,13 +41,14 @@ export default class App extends Component {
 
   onSaveButtonPress = () => {
     const {notes, currentTitle, currentContent} = this.state;
-    const newNotes = [...notes];
-
-    newNotes.push({
+    
+    const saveNote = {
       key: shortid(),
       title: currentTitle,
       content: currentContent
-    });
+    };
+
+    const newNotes = [...notes, saveNote];
 
     AsyncStorage.setItem('notes', JSON.stringify(newNotes));
 
@@ -97,7 +103,7 @@ export default class App extends Component {
         <View style={styles.list}>
           <FlatList data={this.state.notes} renderItem={this._renderItem}  />
         </View> 
-        
+
         <Overlay visible={this.state.modalVisible}
           onClose={this._hideOverlay}
           closeOnTouchOutside animationType='zoomInUp'

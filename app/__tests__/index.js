@@ -69,7 +69,7 @@ describe('App', () => {
       content: 'content'
     };
     
-    const expectedItem = <NoteItem data={item} onPressItem={instance._onPressItem} />;
+    const expectedItem = <NoteItem data={item} onPressItem={instance._onPressItem} onLongPressItem={instance._onLongPressItem} />;
     const noteItem = instance._renderItem({item});
     expect(noteItem).toEqual(expectedItem);
   });
