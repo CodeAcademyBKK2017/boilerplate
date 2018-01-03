@@ -15,5 +15,8 @@ export default StyleSheet.create({
   },
   content: {
     paddingHorizontal: 5
+  },
+  swipeOut: {
+    backgroundColor: '#e9e9ee'
   }
 });

@@ -22,7 +22,7 @@ class NoteItem extends Component {
     ];
 
     return (
-      <Swipeout right={swipeoutBtns} style={{backgroundColor: '#e9e9ee'}}>
+      <Swipeout right={swipeoutBtns} style={styles.swipeOut}>
         <Touchable onPress={onPressItem(data)}>
           <View style={styles.container}>
             <Text style={styles.title}>{data.title}</Text>
