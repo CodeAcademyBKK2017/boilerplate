@@ -38,22 +38,24 @@ export default class App extends Component {
   }
 
   onSaveButtonPress = () => {
-    const newNotes = [...this.state.notes];
-    const note = {
-      key: uuid(),
-      title: this.state.textTitle,
-      content: this.state.textContent
-    };
-    newNotes.push(note);
+    // const newNotes = [...this.state.notes];
+    // const note = {
+    //   key: uuid(),
+    //   title: this.state.textTitle,
+    //   content: this.state.textContent
+    // };
+    // newNotes.push(note);
 
-    const newState = {
-      textTitle: '',
-      textContent: '',
-      notes: newNotes
-    };
-    this.setState(newState);
+    // const newState = {
+    //   textTitle: '',
+    //   textContent: '',
+    //   notes: newNotes
+    // };
+    // this.setState(newState);
 
-    AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
+    // AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
+    
+    this.props.navigation.navigate('About');
   }
 
   onDeleteButtonPress = (item) => () => {
