@@ -6,6 +6,8 @@
 
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+// import noop from 'lodash/noop';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import ShowNotes from './components/ShowNotes/ShowNotes.component';
 import Title from './components/Title/Title.component';
@@ -81,6 +83,10 @@ export default class App extends Component {
         });
     }
 
+    goToPageAbout = () => {
+      this.props.navigation.navigate('About');
+    }
+
     render () {
       return (
         <View style={styles.boxMain}>
@@ -90,7 +96,7 @@ export default class App extends Component {
           <Footer showNumber={this.state.count} onSaveNote={this.onSaveNote}/>
 
           <Button
-            onPress={() => this.props.navigation.navigate('About')}
+            onPress={this.goToPageAbout}
             title='Go to About'
           />
         </View>
@@ -104,3 +110,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc'
   }
 });
+
+App.propTypes = {
+  navigation: PropTypes.object.isRequired
+};
+App.defaultProps = {
+  navigation: {}
+};
