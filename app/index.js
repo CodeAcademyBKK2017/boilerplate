@@ -3,15 +3,15 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import Note from './components/Note/Note.component';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
-import {AsyncStorage, KeyboardAvoidingView, Platform, View} from 'react-native';
+import {AsyncStorage, KeyboardAvoidingView, Platform, Text, View} from 'react-native';
 
 export default class App extends Component {
   initialstate = {
@@ -58,6 +58,10 @@ state = this.initialstate
     const remainNote = delNote.filter(isDelete);
     this.setState({note: remainNote});
   }
+
+  goToAbout = () => {
+    this.props.navigation.navigate('About');
+  }
   
   render () {
 
@@ -67,8 +71,12 @@ state = this.initialstate
         <Content  onContentChange={this.changeContent} />
         <Footer characterCount={this.state.content.length} onPressSave={this.onSave} />
         {this.state.note.length > 0 ? <Note noteList={this.state.note} onDelete={this.onDelete}/> : null}
+        <View><Text onPress={this.goToAbout}>about</Text></View>
       </this.WrapperView>
     );
   }
 }
 
+App.propTypes = {
+  navigation: PropTypes.func
+};
