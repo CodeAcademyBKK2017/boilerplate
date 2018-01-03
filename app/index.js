@@ -1,6 +1,7 @@
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import NoteList from './components/NoteList/NoteList.component';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './index.style.js';
 import Title from './components/Title/Title.component';
@@ -62,6 +63,7 @@ export default class App extends Component {
       });
     });
   }
+  navigateTo = (key) => () => this.props.navigation.navigate(key)
   render () {
     // console.log('this.props.navigation', this.props.navigation);
     return (
@@ -70,8 +72,15 @@ export default class App extends Component {
         <Content onKeyPressContent={this.onKeyPressContent} text={this.state.contentTextInput} />
         <NoteList notes={this.state.notes} state={this.state} onDeleteNote={this.onDeleteNote} />
         <Footer countContentCharacters={this.state.contentTextInput.length} onSave={this.onSave} />
-        <Button onPress={() => this.props.navigation.navigate('About')} title='Go to About' />
+        <Button onPress={this.navigateTo('About')} title='Go to About' />
       </View>
     );
   }
 }
+
+App.propTypes = {
+  navigation: PropTypes.object
+};
+App.defaultProps = {
+  navigation: {}
+};
