@@ -83,8 +83,8 @@ export default class App extends Component {
         });
     }
 
-    goToPageAbout = () => {
-      this.props.navigation.navigate('About');
+    goToPage = (key) => () => {
+      this.props.navigation.navigate(key);
     }
 
     render () {
@@ -96,7 +96,7 @@ export default class App extends Component {
           <Footer showNumber={this.state.count} onSaveNote={this.onSaveNote}/>
 
           <Button
-            onPress={this.goToPageAbout}
+            onPress={this.goToPage('About')}
             title='Go to About'
           />
         </View>
