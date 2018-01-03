@@ -8,6 +8,7 @@ import Content from './components/Content/Content.component.js';
 import Overlay from 'react-native-modal-overlay';
 import React, {Component} from 'react';
 import styles from './index.style';
+import Swipeout from 'react-native-swipeout';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
@@ -68,18 +69,31 @@ export default class App extends Component {
   _keyExtractor = (item) => item.unique;
   _renderItem = (args) =>
     <View style={styles.row}>
-      <TouchableOpacity
-        onPress={this.openModal(args)}>
-        <Text style={styles.flatText}>{args.item.title}</Text>
-        <Text>{args.item.content}</Text>
-      </TouchableOpacity>
-      <Button
-        onPress={this.delNote(args.item.unique)}
-        title='Del'
-      />
+      <Swipeout
+        style={styles.swipe}
+        right={
+          [{
+            text: 'Edit',
+            color: '#fff',
+            backgroundColor: '#49ba88'
+          },
+          {
+            text: 'Delete',
+            onPress: this.delNote(args.item.unique),
+            color: '#fff',
+            backgroundColor: 'red'
+          }]
+        }>
+        <TouchableOpacity
+          onPress={this.openModal(args)}>
+          <View>
+            <Text>{args.item.title}</Text>
+            <Text>{args.item.content}</Text>
+          </View>
+        </TouchableOpacity>
+      </Swipeout>
     </View>
   render () {
-    console.log(this.state);
     return (
       <View style={styles.container}>
         <Overlay visible={this.state.modalVisible}
@@ -101,6 +115,10 @@ export default class App extends Component {
             keyExtractor={this._keyExtractor}
           />
         </View>
+        <Button
+          onPress={() => this.props.navigation.navigate('About')}
+          title='About'
+        />
       </View>
     );
   }

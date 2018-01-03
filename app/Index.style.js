@@ -4,7 +4,6 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 20,
     backgroundColor: '#ece9e9'
   },
   title: {
@@ -31,5 +30,8 @@ export default StyleSheet.create({
   },
   row: {
     flexDirection: 'row'
+  },
+  swipe: {
+    flex: 1
   }
 });
