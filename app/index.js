@@ -12,6 +12,7 @@ import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
   AsyncStorage,
+  Button,
   StyleSheet,
   //   Text,
   View
@@ -88,6 +89,10 @@ export default class App extends Component {
           <ShowNotes note={this.state.note} onDeleteItem={this.onDeleteItem}/>
           <Footer showNumber={this.state.count} onSaveNote={this.onSaveNote}/>
 
+          <Button
+            onPress={() => this.props.navigation.navigate('About')}
+            title='Go to About'
+          />
         </View>
       );
     }

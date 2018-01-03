@@ -5,49 +5,59 @@ exports[`ShowNotes ShowNotes _renderItem 1`] = `
   activeOpacity={0.2}
   onPress={[Function]}
 >
-  <View
-    style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "space-between",
-        "padding": 10,
-      }
+  <Swipeout
+    autoClose={true}
+    disabled={false}
+    right={
+      Array [
+        Object {
+          "backgroundColor": "green",
+          "onPress": [Function],
+          "text": "Info",
+        },
+        Object {
+          "backgroundColor": "orange",
+          "text": "Close",
+        },
+        Object {
+          "backgroundColor": "red",
+          "onPress": undefined,
+          "text": "Delete",
+        },
+      ]
     }
+    rowID={-1}
+    sectionID={-1}
+    sensitivity={50}
   >
-    <View>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-      >
-        t1
-      </Text>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-      >
-        c1
-      </Text>
-    </View>
-    <View>
-      <TouchableOpacity
-        activeOpacity={0.2}
-        onPress={undefined}
-        style={undefined}
-        title="Delete"
-      >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 10,
+        }
+      }
+    >
+      <View>
         <Text
           accessible={true}
           allowFontScaling={true}
           ellipsizeMode="tail"
         >
-          Delete
+          t1
         </Text>
-      </TouchableOpacity>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          c1
+        </Text>
+      </View>
     </View>
-  </View>
+  </Swipeout>
 </TouchableOpacity>
 `;
 
