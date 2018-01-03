@@ -6,9 +6,16 @@ const styles = StyleSheet.create({
   container: {
     width: '100%'
   },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   title: {
     paddingVertical: 10,
     fontStyle: 'italic'
+  },
+  icon: {
+    padding: 10
   },
   textInput: {
     width: '100%',

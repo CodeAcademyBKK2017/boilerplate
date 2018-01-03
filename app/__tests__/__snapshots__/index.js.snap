@@ -81,19 +81,51 @@ exports[`App renders correctly 1`] = `
       ]
     }
   >
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+    <View
       style={
         Object {
-          "fontStyle": "italic",
-          "paddingVertical": 10,
+          "alignItems": "center",
+          "flexDirection": "row",
         }
       }
     >
-      Please type your note below
-    </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontStyle": "italic",
+            "paddingVertical": 10,
+          }
+        }
+      >
+        Please type your note below
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={false}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "black",
+              "fontSize": 18,
+            },
+            Object {
+              "padding": 10,
+            },
+            Object {
+              "fontFamily": "fontcustom",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
     <TextInput
       allowFontScaling={true}
       multiline={true}
