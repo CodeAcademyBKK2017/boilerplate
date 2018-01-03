@@ -11,7 +11,6 @@ import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   AsyncStorage, KeyboardAvoidingView, Platform, View
 } from 'react-native';
