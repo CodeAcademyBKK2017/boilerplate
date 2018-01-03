@@ -10,6 +10,7 @@ export default StyleSheet.create({
   contentStyleColum: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     paddingTop: 15,
     paddingBottom: 15
@@ -26,10 +27,10 @@ export default StyleSheet.create({
     padding: 10
   },
   textContent: {
-    flex: 1,
     justifyContent: 'flex-start',
     fontStyle: 'italic',
-    color: '#333333'
+    color: '#333333',
+    marginRight: 5
   },
   saveTabStyle: {
     flexDirection: 'row',

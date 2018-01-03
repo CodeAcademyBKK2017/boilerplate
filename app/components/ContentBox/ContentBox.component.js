@@ -1,3 +1,4 @@
+import Icon from 'react-native-vector-icons/Foundation';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './ContentBox.component.style';
@@ -14,7 +15,7 @@ export default class ContentBox extends Component {
     return (
       <View style={styles.contentStyle}>
         <View style={styles.contentStyleColum}>
-          <Text style={styles.textContent}>Please type your note below</Text>
+          <Text style={styles.textContent}>Please type your note below.</Text><Icon name='clipboard-notes' size={20} color='#333333' />
         </View>
         <TextInput 
           style={styles.textInput}
