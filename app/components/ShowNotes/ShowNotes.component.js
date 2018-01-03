@@ -3,6 +3,7 @@ import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import ShowNotesStyle from './ShowNotes.style';
+import Swipeout from 'react-native-swipeout';
 import {
 //   Alert,
   FlatList,
@@ -21,19 +22,36 @@ export default class ShowNotes extends Component {
     _keyExtractor = (item) => item.uuid;
     _renderItem = ({item}) => 
       <TouchableOpacity onPress={this.onShowAlert(item)}>
-        <View style={ShowNotesStyle.boxShowNotes}>
-          <View>
-            <Text>{item.title}</Text>
-            <Text>{item.content}</Text>
-          </View>
-          <View>
-            <TouchableOpacity title='Delete' style={ShowNotesStyle.button} onPress={this.props.onDeleteItem(item.uuid)}>
-              <Text>
+        <Swipeout autoClose={true} right={[
+          {
+            text: 'Info',
+            onPress: this.onShowAlert(item),
+            backgroundColor: 'green'
+          },
+          {
+            text: 'Close',
+            backgroundColor: 'orange'
+          },
+          {
+            text: 'Delete',
+            onPress: this.props.onDeleteItem(item.uuid),
+            backgroundColor: 'red'
+          }
+        ]}>
+          <View style={ShowNotesStyle.boxShowNotes}>
+            <View>
+              <Text>{item.title}</Text>
+              <Text>{item.content}</Text>
+            </View>
+            {/* <View>
+              <TouchableOpacity title='Delete' style={ShowNotesStyle.button} onPress={this.props.onDeleteItem(item.uuid)}>
+                <Text>
                 Delete
-              </Text>
-            </TouchableOpacity>
+                </Text>
+              </TouchableOpacity>
+            </View> */}
           </View>
-        </View>
+        </Swipeout>
       </TouchableOpacity>;
 
     onShowAlert = (item) => () => this.setState({title: item.title, content: item.content, setVisible: !this.state.setVisible});
