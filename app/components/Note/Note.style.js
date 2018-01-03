@@ -32,5 +32,10 @@ export default StyleSheet.create({
   },
   del: {
     color: 'red'
+  },
+  swipeout: {
+    borderRadius: 25,
+    marginBottom: 10
   }
+
 });

@@ -1,68 +1,83 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Note generateList should have been render some JSX 1`] = `
-<PlatformTouchable
-  onPress={[Function]}
+<Swipeout
+  disabled={false}
+  right={
+    Array [
+      Object {
+        "backgroundColor": "red",
+        "onPress": undefined,
+        "text": "Delete",
+      },
+    ]
+  }
+  rowID={-1}
+  sectionID={-1}
+  sensitivity={50}
   style={
     Object {
-      "paddingVertical": 10,
+      "borderRadius": 25,
+      "marginBottom": 10,
     }
   }
 >
-  <View
+  <PlatformTouchable
+    onPress={[Function]}
     style={
       Object {
-        "flexDirection": "row",
-        "justifyContent": "space-between",
+        "paddingVertical": 10,
       }
     }
   >
-    <View>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "fontSize": 15,
-            "fontWeight": "bold",
-          }
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "space-between",
         }
-      >
-        someTitle
-      </Text>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "fontSize": 15,
-            "padding": 10,
-          }
-        }
-      >
-        someContent
-      </Text>
-    </View>
-    <PlatformTouchable
-      onPress={undefined}
+      }
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "color": "red",
+      <View>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontSize": 15,
+              "fontWeight": "bold",
+            }
           }
-        }
-      >
-        Delete
-      </Text>
-    </PlatformTouchable>
-  </View>
-</PlatformTouchable>
+        >
+          someTitle
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontSize": 15,
+              "padding": 10,
+            }
+          }
+        >
+          someContent
+        </Text>
+      </View>
+      <View>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          Swipe me left
+        </Text>
+      </View>
+    </View>
+  </PlatformTouchable>
+</Swipeout>
 `;
 
 exports[`Note snapshot test 1`] = `

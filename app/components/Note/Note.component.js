@@ -2,6 +2,7 @@ import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Note.style';
+import Swipeout from 'react-native-swipeout';
 import Touchable from 'react-native-platform-touchable';
 import {FlatList, Text, View} from 'react-native';
 
@@ -22,18 +23,31 @@ onClose=() => {
   this.setState(this.initialstate);
 }
 
-generateList = ({item}) => (
-  <Touchable style={styles.box} onPress={this.onOpen(item.title, item.content)}>
-    <View style={styles.noteBlock}>
-      <View > 
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.content}>{item.content}</Text>
-      </View>
-      <Touchable onPress={this.props.onDelete(item)}>
-        <Text style={styles.del}>Delete</Text>
+generateList = ({item}) => {
+  const  swipeoutBtns = [
+    {
+      text: 'Delete',
+      onPress: this.props.onDelete(item),
+      backgroundColor: 'red'
+
+    }
+  ];
+  return (
+    <Swipeout right={swipeoutBtns} style={styles.swipeout}>
+      <Touchable style={styles.box} onPress={this.onOpen(item.title, item.content)}>
+        <View style={styles.noteBlock}>
+          <View > 
+            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.content}>{item.content}</Text>
+          </View>
+          <View>
+            <Text>Swipe me left</Text>
+          </View>
+        </View>
       </Touchable>
-    </View>
-  </Touchable>)
+    </Swipeout>
+  );
+}
 render () {
        
   return (
