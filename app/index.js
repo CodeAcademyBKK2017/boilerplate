@@ -7,6 +7,7 @@ import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
   AsyncStorage,
+  Button,
   View
 } from 'react-native';
 
@@ -62,12 +63,14 @@ export default class App extends Component {
     });
   }
   render () {
+    // console.log('this.props.navigation', this.props.navigation);
     return (
       <View style={styles.container}>
         <Title onKeyPressTitle={this.onKeyPressTitle} text={this.state.titleTextInput} />
         <Content onKeyPressContent={this.onKeyPressContent} text={this.state.contentTextInput} />
         <NoteList notes={this.state.notes} state={this.state} onDeleteNote={this.onDeleteNote} />
         <Footer countContentCharacters={this.state.contentTextInput.length} onSave={this.onSave} />
+        <Button onPress={() => this.props.navigation.navigate('About')} title='Go to About' />
       </View>
     );
   }
