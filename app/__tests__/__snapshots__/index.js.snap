@@ -213,5 +213,55 @@ exports[`App renders correctly 1`] = `
       </Text>
     </View>
   </View>
+  <View
+    style={
+      Object {
+        "alignItems": "stretch",
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      collapsable={undefined}
+      hasTVPreferredFocus={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "backgroundColor": "#ddd",
+          "opacity": 1,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "paddingHorizontal": 10,
+            "paddingVertical": 10,
+            "textAlign": "center",
+          }
+        }
+      >
+        About
+      </Text>
+    </View>
+  </View>
 </View>
 `;
