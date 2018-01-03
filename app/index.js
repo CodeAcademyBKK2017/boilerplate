@@ -8,13 +8,17 @@ import Content from './components/contents/content.component';
 import Footer from './components/footers/footer.component';
 import globalStyle from './index.style';
 import List from './components/lists/list.component';
+import noop from 'lodash/noop';
+import ProptTypes from 'prop-types';
 import React, {
   Component
 } from 'react';
 import Title from './components/titles/title.component';
 import uuid from 'uuid';
-import {
-  AsyncStorage, View} from 'react-native';
+import {AsyncStorage, 
+  Text,
+  TouchableOpacity,
+  View} from 'react-native';
 
 export default class App extends Component {
   state = {
@@ -55,6 +59,8 @@ export default class App extends Component {
     }));
   }
 
+  _gotoAbout = () => this.props.navigation.navigate('About');
+
   render () {
     return (
       <View style={globalStyle.container}>
@@ -62,7 +68,22 @@ export default class App extends Component {
         <Content FText={this._onContentChange} textState={this.state.currentContent}/>
         <Footer textState={this.state.currentContent.length} addContent={this._addContent}/>
         <List arrayContent={this.state.arrayContent} removeNote={this._removeContent}/>
+        <TouchableOpacity style={globalStyle.touchStyle} onPress={this._gotoAbout}>
+          <View>
+            <Text style={globalStyle.TextS}>
+              About Us
+            </Text>
+          </View>
+        </TouchableOpacity>
       </View> 
     );
   }
 }
+
+App.propTypes = {
+  navigation: ProptTypes.object.isRequired
+};
+  
+App.defaultProps = {
+  navigation: {}
+};

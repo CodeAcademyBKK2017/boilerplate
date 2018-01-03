@@ -1,4 +1,4 @@
-import App from './app/index';
+import Routes from './app/Routes/index';
 import {AppRegistry} from 'react-native';
 
-AppRegistry.registerComponent('NoteTaker', () => App);
+AppRegistry.registerComponent('NoteTaker', () => Routes);

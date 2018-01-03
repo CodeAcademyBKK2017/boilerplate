@@ -8,6 +8,7 @@ import Overlay from '../overlays/overlay.component';
 import ProptTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './list.style';
+import Swipeout from 'react-native-swipeout';
 import {
   FlatList,
   Text,
@@ -30,24 +31,30 @@ export default class List extends Component {
      
     }
       _renderItems = ({item}) =>
-        (<TouchableOpacity onPress={this._showPopup(item)} style={styles.touchStyle}>
-          <View style={styles.textView}>
-            <Text style={styles.title}>
-              {item.title}
-
-            </Text>
-            <Text>
-              {item.content}
-            </Text>
-          </View>
-          <View style={styles.deleteBTN}>
-            <TouchableOpacity onPress={this.props.removeNote(item.key)}>
-              <Text>
-              !
-              </Text>
+        (
+          <Swipeout  right={[
+            {
+              text: 'Delete!',
+              onPress: this.props.removeNote(item.key),
+              type: 'delete'
+            }
+          ]} style={styles.swipoutStyle}>
+            <TouchableOpacity onPress={this._showPopup(item)} style={styles.touchStyle}>
+              <View style={styles.textView}>
+                <Text style={styles.title}>
+                  {item.title}
+                </Text>
+                <Text>
+                  {item.content}
+                </Text>
+              </View>
+              <View style={styles.deleteBTN}>
+                <Text>
+                Swipe Me...
+                </Text>
+              </View>
             </TouchableOpacity>
-          </View>
-        </TouchableOpacity>)
+          </Swipeout>)
     
       render () {
         const {arrayContent} = this.props;

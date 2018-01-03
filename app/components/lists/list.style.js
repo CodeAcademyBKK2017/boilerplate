@@ -10,6 +10,7 @@ export default StyleSheet.create({
     flex: 5
   },
   touchStyle: {
+    flex: 1,
     borderTopWidth: 1,
     borderColor: 'rgba(0, 0, 0, .10)',
     padding: 5,
@@ -21,14 +22,18 @@ export default StyleSheet.create({
     fontWeight: 'bold'
   },
   textView: {
-    flex: 8,
+    flex: 7,
     flexDirection: 'column'
   },
   deleteBTN: {
-    flex: 2,
-    flexDirection: 'column',
+    flex: 3,
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'lightgray'
+  },
+  swipoutStyle: {
+    flexDirection: 'column',
+    backgroundColor: '#F5FCFF'
   }
 });

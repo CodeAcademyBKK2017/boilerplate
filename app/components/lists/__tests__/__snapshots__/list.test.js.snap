@@ -1,73 +1,91 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`List List: _renderItems Function is will work 1`] = `
-<TouchableOpacity
-  activeOpacity={0.2}
-  onPress={[Function]}
+<Swipeout
+  disabled={false}
+  right={
+    Array [
+      Object {
+        "onPress": undefined,
+        "text": "Delete!",
+        "type": "delete",
+      },
+    ]
+  }
+  rowID={-1}
+  sectionID={-1}
+  sensitivity={50}
   style={
     Object {
       "backgroundColor": "#F5FCFF",
-      "borderColor": "rgba(0, 0, 0, .10)",
-      "borderTopWidth": 1,
-      "flexDirection": "row",
-      "justifyContent": "space-between",
-      "padding": 5,
+      "flexDirection": "column",
     }
   }
 >
-  <View
+  <TouchableOpacity
+    activeOpacity={0.2}
+    onPress={[Function]}
     style={
       Object {
-        "flex": 8,
-        "flexDirection": "column",
+        "backgroundColor": "#F5FCFF",
+        "borderColor": "rgba(0, 0, 0, .10)",
+        "borderTopWidth": 1,
+        "flex": 1,
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "padding": 5,
       }
     }
   >
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
+    <View
       style={
         Object {
-          "fontWeight": "bold",
+          "flex": 7,
+          "flexDirection": "column",
         }
       }
     >
-      test
-    </Text>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
-    >
-      test1
-    </Text>
-  </View>
-  <View
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "lightgray",
-        "flex": 2,
-        "flexDirection": "column",
-        "justifyContent": "center",
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "fontWeight": "bold",
+          }
+        }
+      >
+        test
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        test1
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "lightgray",
+          "flex": 3,
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
       }
-    }
-  >
-    <TouchableOpacity
-      activeOpacity={0.2}
-      onPress={undefined}
     >
       <Text
         accessible={true}
         allowFontScaling={true}
         ellipsizeMode="tail"
       >
-        !
+        Swipe Me...
       </Text>
-    </TouchableOpacity>
-  </View>
-</TouchableOpacity>
+    </View>
+  </TouchableOpacity>
+</Swipeout>
 `;
 
 exports[`List List: renders correctly 1`] = `
