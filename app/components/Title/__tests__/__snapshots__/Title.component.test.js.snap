@@ -14,7 +14,7 @@ exports[`Title renders correctly 1`] = `
         "alignItems": "center",
         "flexDirection": "row",
         "justifyContent": "flex-start",
-        "paddingVertical": 10,
+        "paddingBottom": 10,
         "width": "100%",
       }
     }

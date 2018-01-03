@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    paddingVertical: 10,
+    paddingBottom: 10,
 
     flexDirection: 'row',
     justifyContent: 'flex-start',

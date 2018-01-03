@@ -8,7 +8,9 @@ const styles = StyleSheet.create({
     alignItems: 'stretch'
   },
   aboutButtonTouch: {
-    backgroundColor: '#ddd'
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderTopWidth: 0.5
   },
   aboutButtonContent: {
     paddingVertical: 10,

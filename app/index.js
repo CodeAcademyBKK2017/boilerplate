@@ -90,19 +90,22 @@ export default class App extends Component {
       <this.WrapperView
         style={[styles.container]}
         behavior='padding'>
-        <Title
-          text={this.state.textTitle}
-          onChangeTextTitle={this.onChangeTextTitle}/>
-        <Content
-          style={styles.fill}
-          text={this.state.textContent}
-          onChangeTextContent={this.onChangeTextContent}/>
-        <Footer
-          textContentLength={this.state.textContent.length}
-          onSaveButtonPress={this.onSaveButtonPress}/>
-        {
-          this.state.notes.length > 0 ? <NoteList data={this.state.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
-        }
+        <View style={styles.spacingContainer}>
+          <Title
+            text={this.state.textTitle}
+            onChangeTextTitle={this.onChangeTextTitle}/>
+          <Content
+            style={styles.fill}
+            text={this.state.textContent}
+            onChangeTextContent={this.onChangeTextContent}/>
+          <Footer
+            textContentLength={this.state.textContent.length}
+            onSaveButtonPress={this.onSaveButtonPress}/>
+          {
+            this.state.notes.length > 0 ? <NoteList data={this.state.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
+          }
+        </View>
+        
         <AboutSection onAboutButtonPress={this.onAboutButtonPress}/>
       </this.WrapperView>
     );
@@ -110,7 +113,7 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-  navigation: PropTypes.func
+  navigation: PropTypes.object
 };
 
 App.defaultProps = {
