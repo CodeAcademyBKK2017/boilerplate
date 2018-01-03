@@ -1,12 +1,32 @@
-import 'react-native';
 import App from '../index';
 import React from 'react';
+import renderer from 'react-test-renderer';
 
 // Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
+import {AsyncStorage} from 'react-native';
 import {shallow} from 'enzyme';
+// mock function with default result
+jest.mock('AsyncStorage', () => ({
+  getItem: jest.fn(() => Promise.resolve('')),
+  setItem: jest.fn(() => Promise.resolve())
+}));
 
+jest.mock('uuid', () => () => 'some uuid');
+
+// constant
+const notesKey = 'NOTES';
 describe('App', () => {
+  let appComp;
+  let appInstance;
+	
+  beforeEach(() => {
+    appComp = <App/>;
+		
+    const wrapper = shallow(appComp);
+    appInstance = wrapper.instance();
+    
+    AsyncStorage.setItem.mockReset();
+  });
   it('renders correctly', () => {
     const tree = renderer.create(
       <App />
@@ -59,11 +79,40 @@ describe('App', () => {
     instance.modalOpen({item})();
     expect(instance.state.modalVisible).toEqual(true);
   });
-  it('Check Function modalonClose', () => {
+  it('modalonClose: should set modalVisibility to false', () => {
     const wrapper = shallow(<App/>);
     const instance = wrapper.instance();
     instance.modalonClose();
     expect(instance.state.modalVisible).toEqual(false);
-    
+  });
+  it('Check Function deleteNote', () => {
+    const note00 = {
+      unique: 'some uuid',
+      text: 'title 00',
+      title: 'content 00'
+    };
+    const initialState = {
+      text: '',
+      textTitle: '',
+      notes: [note00],
+      modalVisible: false,
+      modalText: [],
+      content: ''
+    };
+    appInstance.setState(initialState);
+  
+    const curryFunc = appInstance.deleteNote(note00.unique);
+    curryFunc();
+
+    const expected = {
+      text: '',
+      textTitle: '',
+      notes: [],
+      modalVisible: false,
+      modalText: [],
+      content: ''
+    };
+    expect(appInstance.state).toEqual(expected);
+    expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected));
   });
 });

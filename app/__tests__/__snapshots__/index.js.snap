@@ -27,5 +27,25 @@ exports[`App rendersItem correctly 1`] = `
       text
     </Text>
   </TouchableOpacity>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    onPress={[Function]}
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "backgroundColor": "red",
+          "color": "#fff",
+          "flex": 2,
+          "fontWeight": "800",
+        }
+      }
+    >
+      DELETE
+    </Text>
+  </TouchableOpacity>
 </View>
 `;

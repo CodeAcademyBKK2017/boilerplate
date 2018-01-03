@@ -18,5 +18,12 @@ export default StyleSheet.create({
   text: {
     paddingTop: 5,
     fontWeight: '600'
+  },
+  del: {
+    backgroundColor: 'red',
+    flex: 2,
+    color: '#fff',
+    fontWeight: '800'
+    
   }
 });

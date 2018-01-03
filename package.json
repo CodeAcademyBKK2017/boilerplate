@@ -20,6 +20,7 @@
     "react-native": "0.51.0",
     "react-native-modal-overlay": "^1.2.1",
     "react-native-uuid": "^1.4.9",
+    "react-native-vector-icons": "^4.4.3",
     "uuid": "^3.1.0"
   },
   "devDependencies": {

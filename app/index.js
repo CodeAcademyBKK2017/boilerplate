@@ -13,6 +13,7 @@ import Title from './components/Title/Title.components';
 import uuid from 'uuid';
 
 import {
+  AsyncStorage,
   FlatList,
   Text,
   TouchableOpacity,
@@ -28,6 +29,10 @@ export default class App extends Component {
         <Text style={styles.text}>{args.item.title}</Text>
         <Text>{args.item.text}</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        onPress={this.deleteNote(args.item.unique)}>
+        <Text style={styles.del}>DELETE</Text>
+      </TouchableOpacity>
     </View>
   state ={
     text: '',
@@ -36,16 +41,19 @@ export default class App extends Component {
     modalVisible: false,
     modalText: []
   }
-  // popUpText =(arg) => () => {
-  //   Alert.alert(
-  //     arg.item.title,
-  //     arg.item.text,
-  //     [
-  //       {text: 'OK', onPress: () => console.log('OK Pressed')}
-  //     ],
-  //     {cancelable: false}
-  //   );
-  // }
+  deleteNote =(uuid) => () => {
+    const res = this.state.notes.filter((element) => element.unique !== uuid);
+    this.setState(
+      {textTitle: '', text: '', 'notes': res}, () => {
+        AsyncStorage.setItem('NOTES', JSON.stringify(this.state));
+      }
+    );
+  }
+  componentDidMount () {
+    AsyncStorage.getItem('NOTES').then((res) => {
+      this.setState(JSON.parse(res));
+    });
+  }
   texts =(v) => {
     this.setState({text: v});
   }
@@ -56,9 +64,14 @@ export default class App extends Component {
     
     const data = {'text': this.state.text, 'title': this.state.textTitle, 'unique': uuid()};
     const newNotes = [data, ...this.state.notes];
-    console.log(newNotes);
+    // console.log(newNotes);
 
-    this.setState({textTitle: '', text: '', 'notes': newNotes});
+    this.setState(
+      {textTitle: '', text: '', 'notes': newNotes}, () => {
+        AsyncStorage.setItem('NOTES', JSON.stringify(this.state));
+      }
+    );
+
   }
   modalOpen =(arg) => () => {
     const data = {'title': arg.item.title, 'text': arg.item.text};
@@ -72,6 +85,7 @@ export default class App extends Component {
       modalVisible: false
     });
   }
+  
   render () {
     return (
       <View style={styles.container}>  
