@@ -8,7 +8,7 @@ import styles from './index.styles';
 import Title from './components/Title/Title.component';
 
 import {
-  Alert, AsyncStorage, FlatList, Text, View
+  AsyncStorage, FlatList, Text, View
 } from 'react-native';
 
 // AsyncStorage.clear();
@@ -68,15 +68,6 @@ export default class App extends Component {
 
   _onLongPressItem = (note) => () => {
     this._removeNoteItem(note);
-    // Alert.alert(
-    //   'Confirm',
-    //   'Are you want to delete this note item?',
-    //   [
-    //     {text: 'Cancel'},
-    //     {text: 'Delete', style: 'destructive', onPress: () => }
-    //   ]
-    // );
-    
   }
 
   _removeNoteItem = (deleteNote) => {
