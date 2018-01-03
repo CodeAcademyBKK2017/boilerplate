@@ -2,17 +2,23 @@ import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import NoteItem from './components/NoteItem/NoteItem.component';
 import Overlay from 'react-native-modal-overlay';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import shortid from 'shortid';
 import styles from './index.styles';
 import Title from './components/Title/Title.component';
 
+import Touchable from 'react-native-platform-touchable';
+
 import {
   AsyncStorage, FlatList, Text, View
 } from 'react-native';
 
-// AsyncStorage.clear();
-export default class App extends Component {
+export default class Main extends Component {
+  static navigationOptions = {
+    title: 'Start taking notes'
+  };
+
   state = {
     currentTitle: '',
     currentContent: '',
@@ -84,6 +90,10 @@ export default class App extends Component {
     this.setState({modalVisible: false});
   }
 
+  _goToAbout = () => {
+    this.props.navigation.navigate('About');
+  }
+
   _renderItem = ({item}) => (<NoteItem data={item} onPressItem={this._onPressItem} onLongPressItem={this._onLongPressItem} />)
 
   render () {
@@ -103,7 +113,13 @@ export default class App extends Component {
           <Text>{this.state.selectedNote.title}</Text>
           <Text>{this.state.selectedNote.content}</Text>
         </Overlay>
+        
+        <Touchable onPress={this._goToAbout}><Text>Go to About</Text></Touchable>
       </View>
     );
   }
 }
+
+Main.propTypes = {
+  navigation: PropTypes.object
+};
