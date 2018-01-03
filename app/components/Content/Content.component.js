@@ -1,4 +1,5 @@
 import contentStyle from './Content.style';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -12,9 +13,11 @@ export default class Content extends Component {
   render () {
     return (
       <View style={contentStyle.boxTextArea}>
+        
         <Text style={contentStyle.welcome}>
-          Please type your note below
+          Please type your note below <Icon name='notebook' size={20} color='#900' />
         </Text>
+        
         <TextInput underlineColorAndroid='transparent' 
           style={contentStyle.inputText} 
           multiline = {true} 
