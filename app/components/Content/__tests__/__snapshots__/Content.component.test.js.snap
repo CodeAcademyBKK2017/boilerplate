@@ -9,21 +9,50 @@ exports[`Content snapshot test 1`] = `
     }
   }
 >
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
+  <View
     style={
       Object {
-        "fontSize": 15,
-        "fontStyle": "italic",
-        "paddingVertical": 10,
-        "textAlign": "left",
+        "flexDirection": "row",
       }
     }
   >
-    Please type your note below
-  </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "fontSize": 15,
+          "fontStyle": "italic",
+          "paddingVertical": 10,
+          "textAlign": "left",
+        }
+      }
+    >
+      Please type your note below
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "#900",
+            "fontSize": 30,
+          },
+          undefined,
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
   <TextInput
     allowFontScaling={true}
     multiline={true}
