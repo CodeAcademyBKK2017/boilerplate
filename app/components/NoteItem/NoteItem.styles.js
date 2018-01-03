@@ -4,9 +4,10 @@ export default StyleSheet.create({
   container: {
     width: '100%',
     padding: 10,
-    borderRadius: 10,
+    
     backgroundColor: 'white',
-    marginTop: 10
+    borderBottomColor: '#e5e5e5',
+    borderBottomWidth: 1
   },
   title: {
     fontWeight: 'bold',

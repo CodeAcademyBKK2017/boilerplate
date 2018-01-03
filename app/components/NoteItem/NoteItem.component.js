@@ -2,7 +2,9 @@ import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './NoteItem.styles';
+import Swipeout from 'react-native-swipeout';
 import Touchable from 'react-native-platform-touchable';
+
 import {
   Text,
   View
@@ -11,14 +13,23 @@ import {
 class NoteItem extends Component {
   render () {
     const {data, onPressItem, onLongPressItem} = this.props;
+    const swipeoutBtns = [
+      {
+        text: 'Delete',
+        onPress: onLongPressItem(data),
+        type: 'delete'
+      }
+    ];
 
     return (
-      <Touchable onPress={onPressItem(data)} onLongPress={onLongPressItem(data)}>
-        <View style={styles.container}>
-          <Text style={styles.title}>{data.title}</Text>
-          <Text style={styles.content}>{data.content}</Text>
-        </View>
-      </Touchable>
+      <Swipeout right={swipeoutBtns} style={{backgroundColor: '#e9e9ee'}}>
+        <Touchable onPress={onPressItem(data)}>
+          <View style={styles.container}>
+            <Text style={styles.title}>{data.title}</Text>
+            <Text style={styles.content}>{data.content}</Text>
+          </View>
+        </Touchable>
+      </Swipeout>
     );
   }
 }

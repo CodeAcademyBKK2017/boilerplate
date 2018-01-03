@@ -11,7 +11,7 @@ import {
 
 const Content = ({onChangeText, value}) => (
   <View style={styles.container}>
-    <Text style={styles.title}>Plase type your note below  <Icon name='note-add' color='gray' size={15} /></Text>
+    <Text style={styles.title}>Plase type your note below  <Icon name='note-add' color='gray' size={12} /></Text>
     <TextInput
       value={value}
       multiline={true}

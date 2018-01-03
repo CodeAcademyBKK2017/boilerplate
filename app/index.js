@@ -67,14 +67,15 @@ export default class App extends Component {
   }
 
   _onLongPressItem = (note) => () => {
-    Alert.alert(
-      'Confirm',
-      'Are you want to delete this note item?',
-      [
-        {text: 'Cancel'},
-        {text: 'Delete', style: 'destructive', onPress: () => this._removeNoteItem(note)}
-      ]
-    );
+    this._removeNoteItem(note);
+    // Alert.alert(
+    //   'Confirm',
+    //   'Are you want to delete this note item?',
+    //   [
+    //     {text: 'Cancel'},
+    //     {text: 'Delete', style: 'destructive', onPress: () => }
+    //   ]
+    // );
     
   }
 

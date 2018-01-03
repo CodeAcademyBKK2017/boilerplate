@@ -33,7 +33,8 @@ export default StyleSheet.create({
   },
   list: {
     flex: 1,
-    width: '100%'
+    width: '100%',
+    marginTop: 10
   },
   modalBackground: {
 
