@@ -7,7 +7,9 @@
 import AboutSection from './components/AboutSection/AboutSection.component';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
@@ -106,3 +108,11 @@ export default class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  navigation: PropTypes.func
+};
+
+App.defaultProps = {
+  navigation: noop
+};
