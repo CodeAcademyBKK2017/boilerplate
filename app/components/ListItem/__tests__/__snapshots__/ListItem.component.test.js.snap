@@ -54,7 +54,22 @@ exports[`ListItem ListItem: MatchSnapshot 1`] = `
 `;
 
 exports[`ListItem ListItem: renderItemList 1`] = `
-<View>
+<Swipeout
+  backgroundColor="#F5F5F5"
+  disabled={false}
+  right={
+    Array [
+      Object {
+        "onPress": undefined,
+        "text": "Delete",
+        "type": "delete",
+      },
+    ]
+  }
+  rowID={-1}
+  sectionID={-1}
+  sensitivity={50}
+>
   <TouchableOpacity
     activeOpacity={0.2}
     onPress={undefined}
@@ -101,36 +116,6 @@ exports[`ListItem ListItem: renderItemList 1`] = `
           Qweqw
         </Text>
       </View>
-      <TouchableOpacity
-        activeOpacity={0.2}
-        onPress={undefined}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "red",
-            "borderColor": "red",
-            "borderRadius": 50,
-            "borderWidth": 1,
-            "height": 30,
-            "justifyContent": "center",
-            "padding": 5,
-            "width": 30,
-          }
-        }
-      >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Object {
-              "color": "white",
-            }
-          }
-        >
-          X
-        </Text>
-      </TouchableOpacity>
     </View>
     <View
       style={
@@ -142,5 +127,5 @@ exports[`ListItem ListItem: renderItemList 1`] = `
       }
     />
   </TouchableOpacity>
-</View>
+</Swipeout>
 `;

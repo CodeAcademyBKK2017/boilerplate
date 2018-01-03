@@ -5,7 +5,6 @@
  */
 import ContentBox from './components/ContentBox/ContentBox.component';
 import Footer from './components/FooterBox/FooterBox.component';
-import HeaderBox from './components/HeaderBox/HeaderBox.component';
 import ListItem from './components/ListItem/ListItem.component';
 import Overlay from 'react-native-modal-overlay';
 import React, {Component} from 'react';
@@ -88,12 +87,11 @@ export default class App extends Component {
   render () {
     return (
       <View style={style.container}>
-        <HeaderBox />
         <TitleBox titleValueText={this.state.titleText} onTitleChange={this.onTitleChange}/>
         <ContentBox count={this.state.contentText.length} contentValueText={this.state.contentText} onContentChange={this.onContentChange} onSave={this.onSave} onDelete={this.onDelete}/>
         {this.showFlatList()}
         {this.viewOverlay()}
-        <Footer />
+        <Footer navigation={this.props.navigation}/>
       </View>
     );
   }

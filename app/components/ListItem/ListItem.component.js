@@ -2,6 +2,7 @@ import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import style from './ListItem.component.style';
+import Swipeout from 'react-native-swipeout';
 import {
   FlatList,
   Text,
@@ -11,8 +12,17 @@ import {
 
 export default class ListItem extends Component {
 
-  renderItemList = ({item}) =>
-    <View>
+  renderItemList = ({item}) => {
+    // Buttons
+    const swipeoutBtns = [
+      {
+        text: 'Delete',
+        type: 'delete',
+        onPress: this.props.onDelete(item)
+      }
+    ];
+
+    return <Swipeout backgroundColor= '#F5F5F5' right={swipeoutBtns}>
       <TouchableOpacity 
         onPress={ this.props.onShowModal(item)}>
         <View style={style.marginStyle}>
@@ -20,15 +30,11 @@ export default class ListItem extends Component {
             <Text style={style.textTitleStyle}>{item.title}</Text>
             <Text style={style.textContentStyle}>{item.content}</Text>
           </View>
-          <TouchableOpacity 
-            style={style.deleteButtonStyle}
-            onPress={ this.props.onDelete(item)}>
-            <Text style={style.textDeleteStyle}>X</Text>
-          </TouchableOpacity>
         </View>
         <View style={style.divide}/>
       </TouchableOpacity>
-    </View>
+    </Swipeout>;
+  }
   render () {
     return (
       <View>

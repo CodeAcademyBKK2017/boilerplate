@@ -2,6 +2,22 @@
 
 exports[`FooterBox FooterBox: Should return TextArea 1`] = `
 <View
+  accessibilityComponentType={undefined}
+  accessibilityLabel={undefined}
+  accessibilityTraits={undefined}
+  accessible={true}
+  collapsable={undefined}
+  hasTVPreferredFocus={undefined}
+  hitSlop={undefined}
+  isTVSelectable={true}
+  nativeID={undefined}
+  onLayout={undefined}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
   style={
     Object {
       "backgroundColor": "white",
@@ -9,9 +25,12 @@ exports[`FooterBox FooterBox: Should return TextArea 1`] = `
       "display": "flex",
       "height": 50,
       "justifyContent": "center",
+      "opacity": 1,
       "width": "100%",
     }
   }
+  testID={undefined}
+  tvParallaxProperties={undefined}
 >
   <Text
     accessible={true}
