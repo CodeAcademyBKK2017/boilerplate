@@ -81,7 +81,9 @@ export default class App extends Component {
         </View>
        
         <NoteList notes={this.state.notes} onDeletePress={this.onDeletePress}/>
-        <Button onPress={this.navigateTo('About')} title='Go to About'/>
+        <View style={styles.about}>
+          <Button onPress={this.navigateTo('About')} title='Go to About' color='#841584'/>
+        </View>
       </View>
     );
   }

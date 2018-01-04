@@ -6,7 +6,8 @@ const noteListStyles = StyleSheet.create({
   
   container: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    backgroundColor: 'lightgray'
   },
 
   boxContainer: {

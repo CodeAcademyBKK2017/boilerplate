@@ -25,6 +25,7 @@ exports[`App rendersItem correctly 1`] = `
   <View
     style={
       Object {
+        "backgroundColor": "lightgray",
         "flexDirection": "row",
         "justifyContent": "space-between",
       }
