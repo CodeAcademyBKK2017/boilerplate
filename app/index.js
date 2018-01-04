@@ -19,10 +19,13 @@ export default class App extends Component {
     notes: []
   }
 
+  onLoadData = async () => {
+    const data = await AsyncStorage.getItem('state');
+    this.setState(JSON.parse(data));
+  }
+
   componentDidMount () {
-    AsyncStorage.getItem('state').then((value) => {
-      this.setState(JSON.parse(value));
-    });
+    this.onLoadData();
   }
 
   onSavePress = () => {
