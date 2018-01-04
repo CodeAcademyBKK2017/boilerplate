@@ -141,3 +141,6 @@ export default class App extends Component {
 App.propTypes = {
   navigation: PropTypes.object.isRequired
 };
+App.defaultProps  = {
+  navigation: {}
+};
