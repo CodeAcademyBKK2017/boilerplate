@@ -21,7 +21,11 @@ const AboutRoutes = TabNavigator(
     tabBarOptions: {
       activeTintColor: '#007AFF',
       labelStyle: {
-        fontSize: 16
+        fontSize: 16,
+        marginTop: 0
+      },
+      tabStyle: {
+        justifyContent: 'center'
       }
     },
     swipeEnabled: true,
