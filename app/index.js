@@ -91,7 +91,7 @@ export default class Main extends Component {
   }
 
   _goToAbout = () => {
-    this.props.navigation.navigate('About');
+    this.props.navigation.navigate('AboutTab');
   }
 
   _renderItem = ({item}) => (<NoteItem data={item} onPressItem={this._onPressItem} onLongPressItem={this._onLongPressItem} />)
