@@ -22,7 +22,12 @@ export default class App extends Component {
   }
 
   componentDidMount () {
-    AsyncStorage.getItem('state').then((value) => this.setState(JSON.parse(value)));
+    this.onLoadDataState();
+  }
+
+  onLoadDataState = async () => {
+    const dataState = await AsyncStorage.getItem('state');
+    this.setState(JSON.parse(dataState));
   }
 
   onTitleChange = (title) => this.setState({titleText: title});

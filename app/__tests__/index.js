@@ -134,8 +134,36 @@ describe('App', () => {
     expect(instance.state).toEqual(expectRes);
   });
 
-  const notesKey = 'state';
+  it('Check Function openAbout with mock', () => { // mock
+    const props = {
+      navigation: {
+        navigate: jest.fn()
+      }
+    };
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+    instance.openAbout();
+    expect(instance.props.navigation.navigate).toHaveBeenCalledWith('About');
+  });
 
+  it('Check Function openAbout with spy', () => { // spy
+    const props = {
+      navigation: {
+        navigate: () => {}
+      }
+    };
+    const appComp = <App {...props}/>;
+    const wrapper = shallow(appComp);
+    const instance = wrapper.instance();
+    const spyFunc = jest.spyOn(props.navigation, 'navigate');
+
+    instance.openAbout();
+    
+    expect(spyFunc).toHaveBeenCalledWith('About');
+  });
+
+  const notesKey = 'state';
+  
   it('componentDidMount with existed notes', () => {
     const props = {};
     const wrapper = shallow(<App {...props}/>);
@@ -169,15 +197,7 @@ describe('App', () => {
     expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
   });
 
-  it('FooterBox: openAbout', () => { // example to test class methods
-    const props = {
-      navigation: {
-        navigate: jest.fn()
-      }
-    };
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
-    instance.openAbout();
-    expect(instance.props.navigation.navigate).toBeCalled();
+  it('Check Function onLoadDataState', () => {
+    
   });
 });
