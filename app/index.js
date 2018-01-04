@@ -7,6 +7,7 @@
 import Content from './components/contents/content.component';
 import Footer from './components/footers/footer.component';
 import globalStyle from './index.style';
+import Icon from 'react-native-vector-icons/Foundation';
 import List from './components/lists/list.component';
 import ProptTypes from 'prop-types';
 import React, {
@@ -24,6 +25,14 @@ export default class App extends Component {
     currentContent: '',
     currentTitle: '',
     arrayContent: []
+  }
+  
+  static navigationOptions = ({navigation}) => {
+    const _toggleNavigate = () => navigation.navigate('DrawerToggle');
+    return {
+      title: 'Home',
+      headerLeft: (<TouchableOpacity style={{marginLeft: 10}} onPress={_toggleNavigate}><Icon name='list' size={30}/></TouchableOpacity>)
+    };
   }
   
   componentDidMount () {
