@@ -14,6 +14,11 @@ import {
 
 export default class App extends Component {
 
+  static navigationOptions = {
+    drawerLabel: 'Home',
+    title: 'Home'
+  }
+
   state = {
     modalData: {},
     titleText: '',

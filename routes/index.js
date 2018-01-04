@@ -1,20 +1,30 @@
 import About from './about.routes';
+import Icon from 'react-native-vector-icons/Foundation';
 import Main from '../app/index';
 import React from 'react';
-import {StackNavigator} from 'react-navigation';
+import {DrawerNavigator, StackNavigator} from 'react-navigation';
+import {
+  TouchableOpacity
+} from 'react-native';
 
 const RootNavigator = StackNavigator({
   Main: {
-    screen: Main,
-    navigationOptions: {
-      headerTitle: 'Start taking notes.'
-    }
-  },
-  About: {
-    screen: About,
-    navigationOptions: {
-      headerTitle: 'About us'
-    }
+    screen: DrawerNavigator({
+      Main: {
+        screen: Main
+      },
+      Notifications: {
+        screen: About
+      }
+    }),
+    navigationOptions: ({navigation}) => ({
+      headerTitle: 'Start taking notes.',
+      headerLeft: (
+        <TouchableOpacity style={{marginLeft: 10}} onPress={() => navigation.navigate('DrawerToggle')}>
+          <Icon name='list' size={20} color='#333333' />
+        </TouchableOpacity>
+      )
+    })
   }
 });
 
