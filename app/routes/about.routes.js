@@ -1,22 +1,31 @@
-import {TabNavigator} from 'react-navigation'; // 1.0.0-beta.14
+import AboutApp from '../components/About/AboutApp.component'; // 1.0.0-beta.14
+import AboutDevs from '../components/About/AboutDevs.component';
+import {TabNavigator} from 'react-navigation';
 
 export default TabNavigator({
   aboutApp: {
-    screen: () => null,
+    screen: AboutApp,
     navigationOptions: {
       title: 'About the App'
     }
   },
   aboutDevs: {
-    screen: () => null,
+    screen: AboutDevs,
     navigationOptions: {
-      title: 'About the Creators'
+      title: 'About the Dev'
     }
   }
 }, {
   tabBarOptions: {
     upperCaseLabel: false,
-    showIcon: false
+    showIcon: false,
+    labelStyle: {
+      fontSize: 14,
+      marginTop: 0
+    },
+    tabStyle: {
+      justifyContent: 'center'
+    }
   },
   swipeEnabled: true,
   animationEnabled: true
