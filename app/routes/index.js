@@ -1,18 +1,19 @@
-import About from '../about';
+import AboutApp from '../components/About/AboutApp.component';
+import AboutDev from '../components/About/AboutDev.component';
 import App from '../index';
 import React from 'react';
 import {StackNavigator, TabNavigator} from 'react-navigation';
 
 const MyApp = TabNavigator({
   AboutApp: {
-    screen: About,
+    screen: AboutApp,
     navigationOptions: {
       headerTitle: 'About App Title',
       tabBarLabel: 'About App Tab'
     }
   },
   AboutDev: {
-    screen: About,
+    screen: AboutDev,
     navigationOptions: {
       headerTitle: 'About Dev Title',
       tabBarLabel: 'About Dev Tab'
