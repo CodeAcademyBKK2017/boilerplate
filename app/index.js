@@ -117,5 +117,5 @@ App.propTypes = {
 };
 
 App.defaultProps = {
-  navigation: noop
+  navigation: null
 };

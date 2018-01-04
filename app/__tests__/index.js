@@ -126,4 +126,35 @@ describe('App', () => {
 
     expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
   });
+
+  it('onAboutButtonPress with mock', () => {
+    const props = {
+      navigation: {
+        navigate: jest.fn()
+      }
+    };
+    const appComp = <App {...props}/>;
+    const wrapper = shallow(appComp);
+    const appInstance = wrapper.instance();
+
+    appInstance.onAboutButtonPress();
+
+    expect(appInstance.props.navigation.navigate).toHaveBeenCalledWith('About');
+  });
+
+  it('onAboutButtonPress with spy', () => {
+    const props = {
+      navigation: {
+        navigate: () => {}
+      }
+    };
+    const appComp = <App {...props}/>;
+    const wrapper = shallow(appComp);
+    const appInstance = wrapper.instance();
+    const spyFunc = jest.spyOn(props.navigation, 'navigate');
+
+    appInstance.onAboutButtonPress();
+    
+    expect(spyFunc).toHaveBeenCalledWith('About');
+  });
 });
