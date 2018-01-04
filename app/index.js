@@ -72,9 +72,11 @@ export default class App extends Component {
     );
   }
   componentDidMount () {
-    AsyncStorage.getItem('NOTES').then((res) => {
-      this.setState(JSON.parse(res));
-    });
+    this.onlode();
+  }
+  onlode = async () => {
+    const data = await AsyncStorage.getItem('NOTES');
+    this.setState(JSON.parse(data));
   }
   texts =(v) => {
     this.setState({text: v});
