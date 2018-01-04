@@ -102,6 +102,21 @@ describe('App', () => {
     expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected.notes));
   });
 
+  it('onShowAboutUs', () => {
+    const props = {
+      navigation: {
+        navigate: jest.fn()
+      }
+    };
+    const appComp = <App {...props}/>;
+    const wrapper = shallow(appComp);
+    const appInstance = wrapper.instance();
+
+    appInstance.onShowAboutUs();
+
+    expect(appInstance.props.navigation.navigate).toHaveBeenCalledWith('About');
+  });
+
   it('componentDidMount with existed notes', () => {
     const notes = [
       {

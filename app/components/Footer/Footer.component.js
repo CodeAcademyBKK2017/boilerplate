@@ -34,12 +34,10 @@ export default class Footer extends Component {
 
 Footer.propTypes = {
   textContentLength: PropTypes.number.isRequired,
-  onSaveButtonPress: PropTypes.func.isRequired,
-  onShowAboutUs: PropTypes.func.isRequired
+  onSaveButtonPress: PropTypes.func.isRequired
 };
 
 Footer.defaultProps = {
   textContentLength: 0,
-  onSaveButtonPress: noop,
-  onShowAboutUs: noop
+  onSaveButtonPress: noop
 };
