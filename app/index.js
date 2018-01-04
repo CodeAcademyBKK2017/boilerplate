@@ -78,5 +78,5 @@ state = this.initialstate
 }
 
 App.propTypes = {
-  navigation: PropTypes.func
+  navigation: PropTypes.object
 };
