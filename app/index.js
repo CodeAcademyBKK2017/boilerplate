@@ -7,6 +7,7 @@
 import Content from './components/Content/Content.components';
 import Footer from './components/Footer/Footer.components';
 import Overlay from 'react-native-modal-overlay';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Swipeout from 'react-native-swipeout';
@@ -106,7 +107,9 @@ export default class App extends Component {
       modalVisible: false
     });
   }
-  
+  about=() => {
+    this.props.navigation.navigate('About');
+  }
   render () {
     return (
       <View style={styles.container}>  
@@ -128,10 +131,13 @@ export default class App extends Component {
           <Text>{this.state.modalText.text}</Text>
         </Overlay>
         <Button
-          onPress={() => this.props.navigation.navigate('About')}
+          onPress={this.about}
           title='Go to About'
         />
       </View>
     );
   }
 }
+App.propTypes = {
+  navigation: PropTypes.object.isRequired
+};

@@ -1,51 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App rendersItem correctly 1`] = `
-<View>
-  <TouchableOpacity
-    activeOpacity={0.2}
-    onPress={[Function]}
-  >
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
-      style={
-        Object {
-          "fontWeight": "600",
-          "paddingTop": 5,
-        }
-      }
-    >
-      title
-    </Text>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
-    >
-      text
-    </Text>
-  </TouchableOpacity>
-  <TouchableOpacity
-    activeOpacity={0.2}
-    onPress={[Function]}
-  >
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
-      style={
-        Object {
-          "backgroundColor": "red",
-          "color": "#fff",
-          "flex": 2,
-          "fontWeight": "800",
-        }
-      }
-    >
-      DELETE
-    </Text>
-  </TouchableOpacity>
-</View>
+<Swipeout
+  disabled={false}
+  right={
+    Array [
+      Object {
+        "backgroundColor": "#49ba88",
+        "onPress": [Function],
+        "text": "SHOW",
+      },
+      Object {
+        "backgroundColor": "red",
+        "onPress": [Function],
+        "text": "DELETE",
+      },
+    ]
+  }
+  rowID={-1}
+  sectionID={-1}
+  sensitivity={50}
+>
+  <View>
+    <View>
+      <TouchableOpacity
+        activeOpacity={0.2}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontWeight": "600",
+              "paddingTop": 5,
+            }
+          }
+        >
+          title
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          text
+        </Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+</Swipeout>
 `;

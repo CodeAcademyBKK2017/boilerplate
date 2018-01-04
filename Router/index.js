@@ -15,22 +15,6 @@ const RootNavigator = StackNavigator({
     navigationOptions: {
       headerTitle: 'About'
     }
-  //   screen: TabNavigator({
-  //     AboutApp: {screen: AboutApp},
-  //     AboutDev: {screen: AboutDev}
-  //   },
-  //   navigationOptions: {
-  //     headerTitle: 'Home'
-  //   },
-  //   {
-  //     tabBarPosition: 'bottom',
-  //     animationEnabled: true,
-  //     tabBarOptions: {
-  //       activeTintColor: '#e91e63'
-  //     },
-  //     swipeEnabled: true
-  //   })
-    
   }
 });
 
