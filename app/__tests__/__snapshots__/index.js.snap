@@ -8,34 +8,53 @@ exports[`App rendersItem correctly 1`] = `
     }
   }
 >
-  <TouchableOpacity
-    activeOpacity={0.2}
-    onPress={[Function]}
-  >
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
-      style={
+  <Swipeout
+    disabled={false}
+    right={
+      Array [
         Object {
-          "fontWeight": "700",
-          "padding": 3,
-        }
+          "backgroundColor": "#49ba88",
+          "color": "#fff",
+          "text": "Edit",
+        },
+        Object {
+          "backgroundColor": "red",
+          "color": "#fff",
+          "onPress": [Function],
+          "text": "Delete",
+        },
+      ]
+    }
+    rowID={-1}
+    sectionID={-1}
+    sensitivity={50}
+    style={
+      Object {
+        "flex": 1,
       }
+    }
+  >
+    <TouchableOpacity
+      activeOpacity={0.2}
+      onPress={[Function]}
     >
-      title
-    </Text>
-    <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
-    >
-      content
-    </Text>
-  </TouchableOpacity>
-  <Button
-    onPress={[Function]}
-    title="Del"
-  />
+      <View>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          title
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          content
+        </Text>
+      </View>
+    </TouchableOpacity>
+  </Swipeout>
 </View>
 `;

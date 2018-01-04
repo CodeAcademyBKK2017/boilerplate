@@ -14,8 +14,8 @@ export default StyleSheet.create({
   conFlat: {
     flex: 1,
     flexDirection: 'row',
-    marginLeft: 30,
-    marginRight: 30
+    marginLeft: 10,
+    marginRight: 10
   },
   flatText: {
     padding: 3,

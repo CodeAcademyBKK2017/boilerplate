@@ -6,6 +6,7 @@
 
 import Content from '../components/Content/Content.component.js';
 import Overlay from 'react-native-modal-overlay';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './main.style';
 import Swipeout from 'react-native-swipeout';
@@ -66,6 +67,9 @@ export default class App extends Component {
 
     });
   }
+  pageAbout = () => {
+    this.props.navigation.navigate('About');
+  }
   _keyExtractor = (item) => item.unique;
   _renderItem = (args) =>
     <View style={styles.row}>
@@ -116,11 +120,14 @@ export default class App extends Component {
           />
         </View>
         <Button
-          onPress={() => this.props.navigation.navigate('About')}
+          onPress={this.pageAbout}
           title='About'
         />
       </View>
     );
   }
 }
+App.propTypes = {
+  navigation: PropTypes.object.isRequired
+};
 

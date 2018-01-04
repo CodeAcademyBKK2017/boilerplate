@@ -24,13 +24,13 @@ export default StyleSheet.create({
   conArea: {
     flex: 0,
     flexDirection: 'row',
-    marginLeft: 30,
-    marginRight: 30
+    marginLeft: 10,
+    marginRight: 10
   },
   title: {
     flex: 0,
     flexDirection: 'row',
-    margin: 30
+    margin: 10
   },
   noteLeft: {
     flex: 1

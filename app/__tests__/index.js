@@ -1,4 +1,4 @@
-import App from '../index';
+import App from '../Router/main';
 import React from 'react';
 import renderer from 'react-test-renderer';
 
@@ -114,5 +114,35 @@ describe('App', () => {
     };
     expect(appInstance.state).toEqual(expected);
     expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected));
+  });
+  it('pageAbout with mock', () => {
+    const props = {
+      navigation: {
+        navigate: jest.fn()
+      }
+    };
+    const appComp = <App {...props}/>;
+    const wrapper = shallow(appComp);
+    const appInstance = wrapper.instance();
+
+    appInstance.pageAbout();
+
+    expect(appInstance.props.navigation.navigate).toHaveBeenCalledWith('About');
+  });
+
+  it('pageAbout with spy', () => {
+    const props = {
+      navigation: {
+        navigate: () => {}
+      }
+    };
+    const appComp = <App {...props}/>;
+    const wrapper = shallow(appComp);
+    const appInstance = wrapper.instance();
+    const spyFunc = jest.spyOn(props.navigation, 'navigate');
+
+    appInstance.pageAbout();
+    
+    expect(spyFunc).toHaveBeenCalledWith('About');
   });
 });

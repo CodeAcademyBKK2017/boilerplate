@@ -3,7 +3,7 @@ import React, {StyleSheet} from 'react-native';
 export default StyleSheet.create({
   title: {
     flexDirection: 'column',
-    margin: 30
+    margin: 10
   },
   header: {
     flexDirection: 'row'
