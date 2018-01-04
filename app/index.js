@@ -39,7 +39,27 @@ export default class App extends Component {
     this.setState({textContent});
   }
 
-  onSaveButtonPress = () => {
+  // onSaveButtonPress = () => {
+  //   const newNotes = [...this.state.notes];
+  //   const note = {
+  //     key: uuid(),
+  //     title: this.state.textTitle,
+  //     content: this.state.textContent
+  //   };
+  //   newNotes.push(note);
+
+  //   const newState = {
+  //     textTitle: '',
+  //     textContent: '',
+  //     notes: newNotes
+  //   };
+  //   this.setState(newState);
+
+  //   AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
+    
+  // }
+
+  onSave = async () => {
     const newNotes = [...this.state.notes];
     const note = {
       key: uuid(),
@@ -54,35 +74,34 @@ export default class App extends Component {
       notes: newNotes
     };
     this.setState(newState);
-
-    AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
-    
+    await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
   }
 
   onShowAboutUs = () => {
     this.props.navigation.navigate('About');
   }
 
-  onDeleteButtonPress = (item) => () => {
+  onDeleteButtonPress = (item) => async () => {
     const filteredNotes = this.state.notes.filter((note) => note !== item);
     this.setState({notes: filteredNotes});
+    await AsyncStorage.setItem(notesKey, JSON.stringify(filteredNotes));
+  }
 
-    AsyncStorage.setItem(notesKey, JSON.stringify(filteredNotes));
+  onLoad = async () => {
+    const value = await AsyncStorage.getItem(notesKey);
+    let notes;
+    if (value) {
+      notes = JSON.parse(value);
+    } else {
+      notes = [];
+    }
+    this.setState({
+      notes
+    });
   }
 
   componentDidMount () {
-    AsyncStorage.getItem(notesKey).then((value) => {
-      let notes;
-      if (value) {
-        notes = JSON.parse(value);
-      } else {
-        notes = [];
-      }
-
-      this.setState({
-        notes
-      });
-    });
+    this.onLoad();
   }
 
   render () {
@@ -112,7 +131,7 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-  navigation: PropTypes.object
+  navigation: PropTypes.func
 };
 
 App.defaultProps = {
