@@ -33,7 +33,8 @@ describe('App', () => {
     expect(instance.state.content).toEqual('123');
   });
   it('onSave: Should have state Change', () => {
-    instance.setState({title: 'someTitle', content: 'someContent'});
+    wrapper.setState({title: 'someTitle', content: 'someContent'});
+    // instance.setState({title: 'someTitle', content: 'someContent'});
     instance.onSave();
     expect(instance.state.note).toEqual([{title: 'someTitle', content: 'someContent', key: 'someUUID'}]);
     instance.setState({title: 'abc', content: 'def'});
@@ -73,5 +74,24 @@ describe('App', () => {
     AsyncStorage.getItem.mockImplementation(() => Promise.resolve(null));
     instance.init();
     expect(AsyncStorage.getItem).toHaveBeenCalledWith('storageNote');
+  });
+  it('goToAbout', () => {
+    const navigation = {navigate: jest.fn()};
+    wrapper.setProps({navigation: navigation});
+    // instance.setProps({navigation: navigation});
+    instance.goToAbout();
+    expect(instance.props.navigation.navigate).toHaveBeenCalled();
+    expect(instance.props.navigation.navigate).toHaveBeenCalledWith('About');
+  });
+  it('goToAbout with spyOn Function', () => {
+    const props = {
+      navigation: {navigate: jest.fn()}
+    };
+    wrapper = shallow(<App {...props}/>);
+    instance = wrapper.instance();
+    const spyFn = jest.spyOn(props.navigation, 'navigate');
+    instance.goToAbout();
+    expect(spyFn).toHaveBeenCalled();
+    expect(spyFn).toHaveBeenCalledWith('About');
   });
 });

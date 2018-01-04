@@ -16,6 +16,7 @@ const aboutRoutes = TabNavigator(
   {
     swipeEnabled: true,
     animationEnabled: true,
+    tabBarPosition: 'bottom',
     tabBarOptions: {
       activeTintColor: '#e91e63',
       labelStyle: {

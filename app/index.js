@@ -71,7 +71,7 @@ state = this.initialstate
         <Content  onContentChange={this.changeContent} />
         <Footer characterCount={this.state.content.length} onPressSave={this.onSave} />
         {this.state.note.length > 0 ? <Note noteList={this.state.note} onDelete={this.onDelete}/> : null}
-        <View><Text onPress={this.goToAbout}>about</Text></View>
+        <View><Text onPress={this.goToAbout}>about us</Text></View>
       </this.WrapperView>
     );
   }
