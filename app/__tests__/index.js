@@ -57,7 +57,7 @@ describe('App', () => {
     instance.onDelete(item)();
     expect(instance.state.note).toEqual(expectedState.note);
   });
-  it('init should have been call with new note', () => {
+  it('init should have been call with new note', async () => {
     const storageNote = [
       {
         key: 'some uuid',
@@ -65,10 +65,13 @@ describe('App', () => {
         content: 'some message'
       }
     ];
-      // set custom mock result
+    // set custom mock result
     AsyncStorage.getItem.mockImplementation(() => Promise.resolve(JSON.stringify(storageNote)));
-    instance.init();
+    await instance.init();
     expect(AsyncStorage.getItem).toHaveBeenCalledWith('storageNote');
+    // await AsyncStorage.getItem('storageNote');
+    expect(instance.state.note).toEqual(storageNote);
+   
   });
   it('init should have been call with nothing', () => {
     AsyncStorage.getItem.mockImplementation(() => Promise.resolve(null));

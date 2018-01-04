@@ -19,16 +19,21 @@ export default class App extends Component {
     title: '',
     note: []
   }
-  init =() => {
-    AsyncStorage.getItem('storageNote')
-      .then((data) => {
-        const storageData = data ?  JSON.parse(data) : [];
-        this.setState({note: storageData});
-      }); 
-  }
-  componentDidMount () {
-    this.init();
-  }
+   init = async () => {
+     let storageData; 
+     try {
+       storageData = await AsyncStorage.getItem('storageNote');
+       const convertData = JSON.parse(storageData);
+       this.setState({note: convertData});
+     } catch (e) {
+       // This catch block is always require to avoid app crash but no need to do anything
+       // storageData = [];
+     }
+   
+   }
+   componentDidMount () {
+     this.init();
+   }
 state = this.initialstate
   WrapperView = Platform.select(
     {ios: KeyboardAvoidingView,
@@ -57,6 +62,7 @@ state = this.initialstate
     const isDelete = (value) => value.key !== item.key;
     const remainNote = delNote.filter(isDelete);
     this.setState({note: remainNote});
+    AsyncStorage.setItem('storageNote', JSON.stringify(remainNote));
   }
 
   goToAbout = () => {
