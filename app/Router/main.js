@@ -4,12 +4,12 @@
  * @flow
  */
 
-import Content from './components/Content/Content.component.js';
+import Content from '../components/Content/Content.component.js';
 import Overlay from 'react-native-modal-overlay';
 import React, {Component} from 'react';
-import styles from './index.style';
+import styles from './main.style';
 import Swipeout from 'react-native-swipeout';
-import Title from './components/Title/Title.component';
+import Title from '../components/Title/Title.component';
 import uuid from 'uuid';
 import {
   AsyncStorage,
