@@ -56,6 +56,7 @@ class NoteList extends Component {
   onModalClose = () => {
     this.setState({modalVisible: false});
   }
+  styleFlatList = {padding: 10, backgroundColor: '#dbddde'}
   render () {
     return (
       <View>
@@ -63,7 +64,7 @@ class NoteList extends Component {
           extraData={this.props.state}
           keyExtractor={this.keyExtractor}
           renderItem={this.renderItem}
-          style={{padding: 10, backgroundColor: '#dbddde'}}
+          style={this.styleFlatList}
         />
         <Overlay visible={this.state.modalVisible}
           closeOnTouchOutside animationType='zoomIn'
