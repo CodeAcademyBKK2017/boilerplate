@@ -31,9 +31,11 @@ export default class App extends Component {
     modalText: []
   }
   componentDidMount () {
-    AsyncStorage.getItem('NOTES').then((res) => {
-      this.setState(JSON.parse(res));
-    });
+    this.onLoadState();
+  }
+  onLoadState = async () => {
+    const data = await AsyncStorage.getItem('NOTES');
+    this.setState(JSON.parse(data));
   }
   onCount = (v) => this.setState({text: v});
   onTitle = (v) => this.setState({title: v});
@@ -129,5 +131,8 @@ export default class App extends Component {
 }
 App.propTypes = {
   navigation: PropTypes.object.isRequired
+};
+App.defaultProps = {
+  navigation: {}
 };
 
