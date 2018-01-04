@@ -34,9 +34,10 @@ export default class App extends Component {
       count: 0
     };
     componentDidMount () {
-      AsyncStorage.getItem('state').then((value) => {
-        this.setState(JSON.parse(value));
-      });
+    //   AsyncStorage.getItem('state').then((value) => {
+    //     this.setState(JSON.parse(value));
+    //   });
+      this.getStorageAndSetState();
     }
     // console.log(result);
     // state = {
@@ -45,6 +46,11 @@ export default class App extends Component {
     //   inputContent: '',
     //   note: []
     // }
+
+    getStorageAndSetState = async () => {
+      const value = await AsyncStorage.getItem('state');
+      this.setState(JSON.parse(value));
+    }
     
     onTypeTitle = (text) => {
       this.setState({inputTitle: text});
