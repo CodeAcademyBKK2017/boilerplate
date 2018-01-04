@@ -1,8 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 import ContentBox from './components/ContentBox/ContentBox.component';
 import Footer from './components/FooterBox/FooterBox.component';
 import ListItem from './components/ListItem/ListItem.component';

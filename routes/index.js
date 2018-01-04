@@ -1,11 +1,11 @@
-import About from './about';
-import App from '../index';
+import About from '../app/components/About/About.component';
+import Main from '../app/index';
 import React from 'react';
 import {StackNavigator} from 'react-navigation';
 
 const RootNavigator = StackNavigator({
   Main: {
-    screen: App,
+    screen: Main,
     navigationOptions: {
       headerTitle: 'Start taking notes.'
     }
@@ -13,7 +13,7 @@ const RootNavigator = StackNavigator({
   About: {
     screen: About,
     navigationOptions: {
-      headerTitle: 'Start taking notes.'
+      headerTitle: 'About us'
     }
   }
 });
