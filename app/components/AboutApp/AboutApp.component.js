@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Text} from 'react-native';
+import styles from './AboutApp.style';
+import {Text, View} from 'react-native';
 
 export default class AboutAppScreen extends Component {
     static navigationOptions = {
@@ -8,7 +9,10 @@ export default class AboutAppScreen extends Component {
       
     render () {
       return (
-        <Text>About App</Text>
+        <View style={styles.container}>
+          <Text>About App</Text>
+        </View>
+        
       );
     }
   

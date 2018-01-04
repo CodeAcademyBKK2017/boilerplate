@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {Text} from 'react-native';
+import styles from './AboutDev.style';
+import {Text, View} from 'react-native';
 
 export default class AboutDevScreen extends Component {
     static navigationOptions = {
@@ -8,7 +9,10 @@ export default class AboutDevScreen extends Component {
       
     render () {
       return (
-        <Text>About Developer</Text>
+        
+        <View style={styles.container}>
+          <Text>About Developer</Text>
+        </View>
       );
     }
   
