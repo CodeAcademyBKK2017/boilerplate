@@ -41,7 +41,6 @@ const Router = StackNavigator(
       headerStyle: {
         backgroundColor: 'green'
       },
-      title: 'Start taking notes',
       headerTitleStyle: {
         color: 'white'
       },
