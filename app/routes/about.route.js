@@ -1,15 +1,17 @@
+import AboutApp from '../components/About/AboutApp.component.js';
+import AboutDevs from '../components/About/AboutDevs.component.js';
 import {TabNavigator} from 'react-navigation';
 
 const AboutRoutes = TabNavigator(
   {
     aboutApp: {
-      screen: () => null,
+      screen: AboutApp,
       navigationOptions: {
         title: 'About the App'
       }
     },
     aboutDevs: {
-      screen: () => null,
+      screen: AboutDevs,
       navigationOptions: {
         title: 'About the Creators'
       }
