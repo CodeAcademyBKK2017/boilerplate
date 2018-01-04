@@ -12,11 +12,11 @@ import {
 
 class NoteItem extends Component {
   render () {
-    const {data, onPressItem, onLongPressItem} = this.props;
+    const {data, onPressItem, onDeleteItem} = this.props;
     const swipeoutBtns = [
       {
         text: 'Delete',
-        onPress: onLongPressItem(data),
+        onPress: onDeleteItem(data),
         type: 'delete'
       }
     ];
@@ -37,7 +37,7 @@ class NoteItem extends Component {
 NoteItem.propTypes = {
   data: PropTypes.object,
   onPressItem: PropTypes.func,
-  onLongPressItem: PropTypes.func
+  onDeleteItem: PropTypes.func
 };
 
 NoteItem.defaultTypes = {

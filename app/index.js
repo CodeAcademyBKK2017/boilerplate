@@ -31,9 +31,9 @@ export default class Main extends Component {
     AsyncStorage.getItem('notes')
       .then((notes) => JSON.parse(notes))
       .then((notes) => {
-        if (Array.isArray(notes)) {
-          this.setState({notes});
-        }
+        // if (Array.isArray(notes)) {
+        this.setState({notes});
+        // }
       });
   }
 
@@ -72,7 +72,7 @@ export default class Main extends Component {
     });
   }
 
-  _onLongPressItem = (note) => () => {
+  _onDeleteItem = (note) => () => {
     this._removeNoteItem(note);
   }
 
@@ -94,7 +94,7 @@ export default class Main extends Component {
     this.props.navigation.navigate('AboutTab');
   }
 
-  _renderItem = ({item}) => (<NoteItem data={item} onPressItem={this._onPressItem} onLongPressItem={this._onLongPressItem} />)
+  _renderItem = ({item}) => (<NoteItem data={item} onPressItem={this._onPressItem} onDeleteItem={this._onDeleteItem} />)
 
   render () {
     return (

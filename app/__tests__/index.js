@@ -7,6 +7,11 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 
+jest.mock('AsyncStorage', () => ({
+  getItem: jest.fn(() => Promise.resolve('[{"key":"key", "title":"title","content":"content"}]')),
+  setItem: jest.fn(() => Promise.resolve())
+}));
+
 describe('App', () => {
   it('renders correctly', () => {
     const tree = renderer.create(
@@ -69,9 +74,50 @@ describe('App', () => {
       content: 'content'
     };
     
-    const expectedItem = <NoteItem data={item} onPressItem={instance._onPressItem} onLongPressItem={instance._onLongPressItem} />;
+    const expectedItem = <NoteItem data={item} onPressItem={instance._onPressItem} onDeleteItem={instance._onDeleteItem} />;
     const noteItem = instance._renderItem({item});
     expect(noteItem).toEqual(expectedItem);
   });
+
+  it('Test navigation', () => {
+    const props = {
+      navigation: {
+        navigate: jest.fn()
+      }
+    };
+    
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+    instance._goToAbout('navigate');
+
+    expect(instance.props.navigation.navigate).toHaveBeenCalled();
+  });
+
+  it('On delete item', () => {
+    const props = {};
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+
+    const item = {
+      key: 'key',
+      title: 'title',
+      content: 'content'
+    };
+
+    instance.setState({
+      notes: [item]
+    });
+    
+    instance._onDeleteItem(item)();
+    expect(instance.state).toEqual({
+      currentTitle: '',
+      currentContent: '',
+      modalVisible: false,
+      selectedNote: {key: '', title: '', content: ''},
+      notes: []
+    });
+    
+  });
+  
 });
 
