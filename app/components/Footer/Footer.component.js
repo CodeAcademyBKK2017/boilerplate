@@ -19,12 +19,12 @@ export default class Footer extends Component {
             onPress={this.props.onSaveButtonPress}>
             <Text style={styles.saveButtonContent}>Save</Text>
           </Touchable>
-          <Touchable
+          {/* <Touchable
             style={styles.saveButtonTouch}
             background={Touchable.Ripple('blue')}
             onPress={this.props.onShowAboutUs}>
             <Text style={styles.saveButtonContent}>About</Text>
-          </Touchable>
+          </Touchable> */}
           <Text>{this.props.textContentLength} characters</Text>
         </View>
       </View>

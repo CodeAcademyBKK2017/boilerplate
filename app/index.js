@@ -6,13 +6,15 @@
 
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import Lower from './components/Lower/Lower.component';
 import NoteList from './components/NoteList/NoteList.component';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
-  AppRegistry, AsyncStorage, KeyboardAvoidingView, Platform, View
+  AsyncStorage, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 
 const notesKey = 'notes';
@@ -98,11 +100,21 @@ export default class App extends Component {
         <Footer
           textContentLength={this.state.textContent.length}
           onSaveButtonPress={this.onSaveButtonPress}
-          onShowAboutUs={this.onShowAboutUs}/>
+        />
         {
           this.state.notes.length > 0 ? <NoteList data={this.state.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
         }
+        <Lower
+          onShowAboutUs={this.onShowAboutUs} />
       </this.WrapperView>
     );
   }
 }
+
+App.propTypes = {
+  navigation: PropTypes.object
+};
+
+App.defaultProps = {
+  navigation: () => {}
+};

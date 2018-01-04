@@ -20,76 +20,78 @@ exports[`NoteList renderItem 1`] = `
       }
     }
   >
-    <View
+    <Swipeout
+      disabled={false}
+      right={
+        Array [
+          Object {
+            "backgroundColor": "gray",
+            "color": "#ffffff",
+            "onPress": [Function],
+            "text": "Open",
+          },
+          Object {
+            "backgroundColor": "red",
+            "onPress": undefined,
+            "text": "Delete",
+          },
+        ]
+      }
+      rowID={-1}
+      sectionID={-1}
+      sensitivity={50}
       style={
         Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "padding": 10,
+          "backgroundColor": "#FFFFFF",
+          "borderRadius": 10,
         }
       }
     >
       <View
         style={
           Object {
-            "flex": 1,
-          }
-        }
-      >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Object {
-              "fontSize": 14,
-              "fontWeight": "bold",
-              "paddingBottom": 10,
-            }
-          }
-        >
-          test title
-        </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={
-            Object {
-              "fontSize": 12,
-            }
-          }
-        >
-          test content
-        </Text>
-      </View>
-      <PlatformTouchable
-        background={Object {}}
-        onPress={undefined}
-        style={
-          Object {
-            "backgroundColor": "red",
-            "borderRadius": 5,
+            "alignItems": "center",
+            "flexDirection": "row",
             "padding": 10,
           }
         }
       >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+        <View
           style={
             Object {
-              "color": "white",
-              "fontSize": 14,
-              "fontWeight": "bold",
+              "flex": 1,
             }
           }
         >
-          Delete
-        </Text>
-      </PlatformTouchable>
-    </View>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "fontSize": 14,
+                "fontWeight": "bold",
+                "paddingBottom": 10,
+              }
+            }
+          >
+            test title
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "fontSize": 12,
+              }
+            }
+          >
+            test content
+          </Text>
+        </View>
+      </View>
+    </Swipeout>
   </PlatformTouchable>
 </View>
 `;
