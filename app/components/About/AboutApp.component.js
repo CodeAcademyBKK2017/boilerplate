@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import styles from './AboutApp.style';
+// import styles from './AboutApp.style';
 import {
   Text, View
 } from 'react-native';
