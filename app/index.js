@@ -35,9 +35,7 @@ export default class App extends Component {
     };
     componentDidMount () {
       AsyncStorage.getItem('state').then((value) => {
-        if (value) {
-          return this.setState(JSON.parse(value));
-        }
+        this.setState(JSON.parse(value));
       });
     }
     // console.log(result);
@@ -83,8 +81,8 @@ export default class App extends Component {
         });
     }
 
-    goToPage = (key) => () => {
-      this.props.navigation.navigate(key);
+    goToPage =() => {
+      this.props.navigation.navigate('About');
     }
 
     render () {
@@ -96,7 +94,7 @@ export default class App extends Component {
           <Footer showNumber={this.state.count} onSaveNote={this.onSaveNote}/>
 
           <Button
-            onPress={this.goToPage('About')}
+            onPress={this.goToPage}
             title='Go to About'
           />
         </View>

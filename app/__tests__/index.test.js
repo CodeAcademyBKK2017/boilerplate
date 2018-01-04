@@ -51,4 +51,28 @@ describe('App', () => {
     instance.onSaveNote();
     expect([{'title': 't1', 'content': 't2', 'uuid': '123'}]).toMatchObject(instance.state.note);
   });
+  
+  it('renders onDeleteItem() true', () => {
+    const wrapper = shallow(<App/>);
+    const instance = wrapper.instance();
+    instance.setState({'count': 0, 'inputTitle': '', 'inputContent': '', 'note': [{'title': 't1', 'content': 't2', 'uuid': '123'}]});
+    instance.onDeleteItem('123')();
+    expect([]).toMatchObject(instance.state.note);
+  });
+
+  it('navigation test', () => {
+    const wrapper = shallow(<App/>);
+    const instance = wrapper.instance();
+    instance.props.navigation.navigate = jest.fn();
+    instance.goToPage();
+    expect(instance.props.navigation.navigate).toHaveBeenLastCalledWith('About');
+  });
+
+  it('navigation (spyOn)', () => {
+    const wrapper = shallow(<App/>);
+    const instance = wrapper.instance();
+    const spyFunc = jest.spyOn(instance.props.navigation, 'navigate');
+    instance.goToPage();
+    expect(spyFunc).toHaveBeenLastCalledWith('About');
+  });
 });
