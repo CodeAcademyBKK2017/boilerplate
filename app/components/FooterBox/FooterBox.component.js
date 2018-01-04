@@ -1,3 +1,4 @@
+import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './FooterBox.component.style';
@@ -8,11 +9,9 @@ import {
 
 export default class Footer extends Component {
   
-  openAbout = () => this.props.navigation.navigate('About');
-
   render () {
     return (
-      <TouchableOpacity style={styles.footerStyle} onPress={this.openAbout}>
+      <TouchableOpacity style={styles.footerStyle} onPress={this.props.openAbout}>
         <Text style={styles.textFooter}>About Us</Text>
       </TouchableOpacity>
     );
@@ -20,9 +19,9 @@ export default class Footer extends Component {
 }
 
 Footer.propTypes = {
-  navigation: PropTypes.object.isRequired
+  openAbout: PropTypes.func.isRequired
 };
 
 Footer.defaultProps = {
-  navigation: {}
+  openAbout: noop
 };

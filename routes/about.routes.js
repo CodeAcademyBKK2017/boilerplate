@@ -1,5 +1,5 @@
-import AboutApp from './AboutApp.component';
-import AboutDev from './AboutDev.component';
+import AboutApp from '../app/components/About/AboutApp.component';
+import AboutDev from '../app/components/About/AboutDev.component';
 import React from 'react';
 import {TabNavigator} from 'react-navigation';
 

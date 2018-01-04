@@ -169,4 +169,15 @@ describe('App', () => {
     expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
   });
 
+  it('FooterBox: openAbout', () => { // example to test class methods
+    const props = {
+      navigation: {
+        navigate: jest.fn()
+      }
+    };
+    const wrapper = shallow(<App {...props}/>);
+    const instance = wrapper.instance();
+    instance.openAbout();
+    expect(instance.props.navigation.navigate).toBeCalled();
+  });
 });

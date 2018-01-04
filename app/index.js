@@ -2,6 +2,7 @@ import ContentBox from './components/ContentBox/ContentBox.component';
 import Footer from './components/FooterBox/FooterBox.component';
 import ListItem from './components/ListItem/ListItem.component';
 import Overlay from 'react-native-modal-overlay';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import style from './index.style';
 import TitleBox from './components/TitleBox/TitleBox.component';
@@ -79,6 +80,8 @@ export default class App extends Component {
     <Text style={style.textContentStyle}>{this.state.modalData.content}</Text>
   </Overlay>
 
+  openAbout = () => this.props.navigation.navigate('About');
+
   render () {
     return (
       <View style={style.container}>
@@ -86,8 +89,16 @@ export default class App extends Component {
         <ContentBox count={this.state.contentText.length} contentValueText={this.state.contentText} onContentChange={this.onContentChange} onSave={this.onSave} onDelete={this.onDelete}/>
         {this.showFlatList()}
         {this.viewOverlay()}
-        <Footer navigation={this.props.navigation}/>
+        <Footer openAbout={this.openAbout}/>
       </View>
     );
   }
 }
+
+App.propTypes = {
+  navigation: PropTypes.object.isRequired
+};
+
+App.defaultProps = {
+  navigation: {}
+};

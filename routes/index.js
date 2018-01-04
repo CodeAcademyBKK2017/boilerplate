@@ -1,4 +1,4 @@
-import About from '../app/components/About/About.component';
+import About from './about.routes';
 import Main from '../app/index';
 import React from 'react';
 import {StackNavigator} from 'react-navigation';
