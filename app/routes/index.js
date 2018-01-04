@@ -7,19 +7,22 @@ const MyApp = TabNavigator({
   AboutApp: {
     screen: About,
     navigationOptions: {
-      tabBarLabel: 'About App'
+      headerTitle: 'About App Title',
+      tabBarLabel: 'About App Tab'
     }
   },
   AboutDev: {
     screen: About,
     navigationOptions: {
-      tabBarLabel: 'About Dev'
+      headerTitle: 'About Dev Title',
+      tabBarLabel: 'About Dev Tab'
     }
   }
 }, {
   tabBarPosition: 'bottom',
   swipeEnabled: true,
-  animationEnabled: true
+  animationEnabled: true,
+  backBehavior: 'none'
   // tabBarOptions: {
   //   activeTintColor: '#e91e63'
   // }
