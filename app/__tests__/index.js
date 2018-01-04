@@ -84,9 +84,14 @@ describe('App', () => {
     instance.onDeleteNote(itemToDelete)();
     expect(instance.state).toMatchObject(expectedState);
   });
-  it('navigateTo', () => {
+  it('navigateTo (mock)', () => {
     instance.props.navigation.navigate = jest.fn();
     instance.navigateTo('About')();
     expect(instance.props.navigation.navigate).toHaveBeenCalledWith('About');
+  });
+  it('navigateTo (spy)', () => {
+    const spyFunc = jest.spyOn(instance.props.navigation, 'navigate');
+    instance.navigateTo('About')();
+    expect(spyFunc).toHaveBeenCalledWith('About');
   });
 });
