@@ -1,3 +1,5 @@
+import AboutApp from '../components/About/AboutApp.component';
+import AboutDev from '../components/About/AboutDev.component';
 import App from '../index';
 import theme from './theme.style';
 import {
@@ -7,13 +9,13 @@ import {
 
 const AboutRoutes = TabNavigator({
   aboutApp: {
-    screen: () => null,
+    screen: AboutApp,
     navigationOptions: {
       title: 'About the App'
     }
   },
   aboutDevs: {
-    screen: () => null,
+    screen: AboutDev,
     navigationOptions: {
       title: 'About the Creators'
     }
