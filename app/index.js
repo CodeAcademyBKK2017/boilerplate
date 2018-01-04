@@ -39,7 +39,7 @@ export default class App extends Component {
     this.setState({textContent});
   }
 
-  onSaveButtonPress = () => {
+  onSaveButtonPress = async () => {
     const newNotes = [...this.state.notes];
     const note = {
       key: uuid(),
@@ -55,33 +55,36 @@ export default class App extends Component {
     };
     this.setState(newState);
 
-    AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
+    await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
   }
 
-  onDeleteButtonPress = (item) => () => {
+  onDeleteButtonPress = (item) => async () => {
     const filteredNotes = this.state.notes.filter((note) => note !== item);
     this.setState({notes: filteredNotes});
 
-    AsyncStorage.setItem(notesKey, JSON.stringify(filteredNotes));
+    await AsyncStorage.setItem(notesKey, JSON.stringify(filteredNotes));
   }
 
   onAboutButtonPress = () => {
     this.props.navigation.navigate('About');
   }
 
-  componentDidMount () {
-    AsyncStorage.getItem(notesKey).then((value) => {
-      let notes;
-      if (value) {
-        notes = JSON.parse(value);
-      } else {
-        notes = [];
-      }
+  loadData = async () => {
+    const value = await AsyncStorage.getItem(notesKey);
+    let notes;
+    if (value) {
+      notes = JSON.parse(value);
+    } else {
+      notes = [];
+    }
 
-      this.setState({
-        notes
-      });
+    this.setState({
+      notes
     });
+  }
+
+  componentDidMount () {
+    this.loadData();
   }
 
   render () {

@@ -102,7 +102,7 @@ describe('App', () => {
     expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected.notes));
   });
 
-  it('componentDidMount with existed notes', () => {
+  it('componentDidMount with existed notes', async () => {
     const notes = [
       {
         key: 'some uuid',
@@ -113,8 +113,8 @@ describe('App', () => {
     // set custom mock result
     AsyncStorage.getItem.mockImplementation(() => Promise.resolve(JSON.stringify(notes)));
 
-    appInstance.componentDidMount();
-
+    await appInstance.componentDidMount();
+    expect(appInstance.state.notes).toEqual(notes);
     expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
   });
 
