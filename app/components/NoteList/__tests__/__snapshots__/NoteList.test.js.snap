@@ -1,66 +1,72 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NoteList renderItem 1`] = `
-<View
-  style={
-    Object {
-      "flexDirection": "row",
-      "justifyContent": "space-between",
-    }
+<Swipeout
+  autoClose={true}
+  disabled={false}
+  right={
+    Array [
+      Object {
+        "backgroundColor": "#003",
+        "onPress": [Function],
+        "text": "Info",
+      },
+      Object {
+        "backgroundColor": "#666",
+        "text": "Cancel",
+      },
+      Object {
+        "backgroundColor": "#900",
+        "onPress": undefined,
+        "text": "Delete",
+      },
+    ]
   }
+  rowID={-1}
+  sectionID={-1}
+  sensitivity={50}
 >
-  <TouchableOpacity
-    activeOpacity={0.2}
-    onPress={[Function]}
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      }
+    }
   >
-    <View>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "fontWeight": "bold",
+    <TouchableOpacity
+      activeOpacity={0.2}
+      onPress={[Function]}
+    >
+      <View>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontWeight": "bold",
+            }
           }
-        }
-      >
-        Title
-      </Text>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "paddingLeft": 10,
+        >
+          Title
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "paddingLeft": 10,
+            }
           }
-        }
-      >
-        Content
-      </Text>
-    </View>
-  </TouchableOpacity>
-  <TouchableOpacity
-    activeOpacity={0.2}
-    onPress={undefined}
-  >
-    <View>
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-        style={
-          Object {
-            "color": "#600",
-            "textAlign": "right",
-          }
-        }
-      >
-        Delete
-      </Text>
-    </View>
-  </TouchableOpacity>
-</View>
+        >
+          Content
+        </Text>
+      </View>
+    </TouchableOpacity>
+  </View>
+</Swipeout>
 `;
 
 exports[`NoteList renders correctly 1`] = `
@@ -104,6 +110,12 @@ exports[`NoteList renders correctly 1`] = `
     renderItem={[Function]}
     scrollEventThrottle={50}
     stickyHeaderIndices={Array []}
+    style={
+      Object {
+        "backgroundColor": "#dbddde",
+        "padding": 10,
+      }
+    }
     updateCellsBatchingPeriod={50}
     viewabilityConfigCallbackPairs={Array []}
     windowSize={21}
@@ -115,105 +127,102 @@ exports[`NoteList renders correctly 1`] = `
       >
         <View
           style={
-            Object {
-              "flexDirection": "row",
-              "justifyContent": "space-between",
-            }
+            Array [
+              Object {
+                "backgroundColor": "#dbddde",
+                "overflow": "hidden",
+              },
+              undefined,
+            ]
           }
         >
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
-            accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
-            isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
+            onLayout={[Function]}
+            onMoveShouldSetResponder={[Function]}
+            onMoveShouldSetResponderCapture={[Function]}
+            onResponderEnd={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
+            onResponderReject={[Function]}
             onResponderRelease={[Function]}
+            onResponderStart={[Function]}
             onResponderTerminate={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
+            onStartShouldSetResponderCapture={[Function]}
             style={
-              Object {
-                "opacity": 1,
-              }
+              Array [
+                Object {},
+                Object {
+                  "left": 0,
+                },
+              ]
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
-            <View>
-              <Text
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <View
+                accessibilityComponentType={undefined}
+                accessibilityLabel={undefined}
+                accessibilityTraits={undefined}
                 accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
+                collapsable={undefined}
+                hasTVPreferredFocus={undefined}
+                hitSlop={undefined}
+                isTVSelectable={true}
+                nativeID={undefined}
+                onLayout={undefined}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "fontWeight": "bold",
+                    "opacity": 1,
                   }
                 }
+                testID={undefined}
+                tvParallaxProperties={undefined}
               >
-                Title
-              </Text>
-              <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
-                style={
-                  Object {
-                    "paddingLeft": 10,
-                  }
-                }
-              >
-                Content
-              </Text>
+                <View>
+                  <Text
+                    accessible={true}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    style={
+                      Object {
+                        "fontWeight": "bold",
+                      }
+                    }
+                  >
+                    Title
+                  </Text>
+                  <Text
+                    accessible={true}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    style={
+                      Object {
+                        "paddingLeft": 10,
+                      }
+                    }
+                  >
+                    Content
+                  </Text>
+                </View>
+              </View>
             </View>
           </View>
-          <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
-            accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
-            isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-            testID={undefined}
-            tvParallaxProperties={undefined}
-          >
-            <View>
-              <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
-                style={
-                  Object {
-                    "color": "#600",
-                    "textAlign": "right",
-                  }
-                }
-              >
-                Delete
-              </Text>
-            </View>
-          </View>
+          <View />
+          <View />
         </View>
       </View>
       <View
@@ -222,105 +231,102 @@ exports[`NoteList renders correctly 1`] = `
       >
         <View
           style={
-            Object {
-              "flexDirection": "row",
-              "justifyContent": "space-between",
-            }
+            Array [
+              Object {
+                "backgroundColor": "#dbddde",
+                "overflow": "hidden",
+              },
+              undefined,
+            ]
           }
         >
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
-            accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
-            isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
+            onLayout={[Function]}
+            onMoveShouldSetResponder={[Function]}
+            onMoveShouldSetResponderCapture={[Function]}
+            onResponderEnd={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
+            onResponderReject={[Function]}
             onResponderRelease={[Function]}
+            onResponderStart={[Function]}
             onResponderTerminate={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
+            onStartShouldSetResponderCapture={[Function]}
             style={
-              Object {
-                "opacity": 1,
-              }
+              Array [
+                Object {},
+                Object {
+                  "left": 0,
+                },
+              ]
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
-            <View>
-              <Text
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <View
+                accessibilityComponentType={undefined}
+                accessibilityLabel={undefined}
+                accessibilityTraits={undefined}
                 accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
+                collapsable={undefined}
+                hasTVPreferredFocus={undefined}
+                hitSlop={undefined}
+                isTVSelectable={true}
+                nativeID={undefined}
+                onLayout={undefined}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "fontWeight": "bold",
+                    "opacity": 1,
                   }
                 }
+                testID={undefined}
+                tvParallaxProperties={undefined}
               >
-                Title 2
-              </Text>
-              <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
-                style={
-                  Object {
-                    "paddingLeft": 10,
-                  }
-                }
-              >
-                Content 2
-              </Text>
+                <View>
+                  <Text
+                    accessible={true}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    style={
+                      Object {
+                        "fontWeight": "bold",
+                      }
+                    }
+                  >
+                    Title 2
+                  </Text>
+                  <Text
+                    accessible={true}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    style={
+                      Object {
+                        "paddingLeft": 10,
+                      }
+                    }
+                  >
+                    Content 2
+                  </Text>
+                </View>
+              </View>
             </View>
           </View>
-          <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
-            accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
-            isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-            testID={undefined}
-            tvParallaxProperties={undefined}
-          >
-            <View>
-              <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
-                style={
-                  Object {
-                    "color": "#600",
-                    "textAlign": "right",
-                  }
-                }
-              >
-                Delete
-              </Text>
-            </View>
-          </View>
+          <View />
+          <View />
         </View>
       </View>
       <View
@@ -329,105 +335,102 @@ exports[`NoteList renders correctly 1`] = `
       >
         <View
           style={
-            Object {
-              "flexDirection": "row",
-              "justifyContent": "space-between",
-            }
+            Array [
+              Object {
+                "backgroundColor": "#dbddde",
+                "overflow": "hidden",
+              },
+              undefined,
+            ]
           }
         >
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
-            accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
-            isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
+            onLayout={[Function]}
+            onMoveShouldSetResponder={[Function]}
+            onMoveShouldSetResponderCapture={[Function]}
+            onResponderEnd={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
+            onResponderReject={[Function]}
             onResponderRelease={[Function]}
+            onResponderStart={[Function]}
             onResponderTerminate={[Function]}
             onResponderTerminationRequest={[Function]}
             onStartShouldSetResponder={[Function]}
+            onStartShouldSetResponderCapture={[Function]}
             style={
-              Object {
-                "opacity": 1,
-              }
+              Array [
+                Object {},
+                Object {
+                  "left": 0,
+                },
+              ]
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
-            <View>
-              <Text
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <View
+                accessibilityComponentType={undefined}
+                accessibilityLabel={undefined}
+                accessibilityTraits={undefined}
                 accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
+                collapsable={undefined}
+                hasTVPreferredFocus={undefined}
+                hitSlop={undefined}
+                isTVSelectable={true}
+                nativeID={undefined}
+                onLayout={undefined}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "fontWeight": "bold",
+                    "opacity": 1,
                   }
                 }
+                testID={undefined}
+                tvParallaxProperties={undefined}
               >
-                Title 3
-              </Text>
-              <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
-                style={
-                  Object {
-                    "paddingLeft": 10,
-                  }
-                }
-              >
-                Content 3
-              </Text>
+                <View>
+                  <Text
+                    accessible={true}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    style={
+                      Object {
+                        "fontWeight": "bold",
+                      }
+                    }
+                  >
+                    Title 3
+                  </Text>
+                  <Text
+                    accessible={true}
+                    allowFontScaling={true}
+                    ellipsizeMode="tail"
+                    style={
+                      Object {
+                        "paddingLeft": 10,
+                      }
+                    }
+                  >
+                    Content 3
+                  </Text>
+                </View>
+              </View>
             </View>
           </View>
-          <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
-            accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
-            isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-            testID={undefined}
-            tvParallaxProperties={undefined}
-          >
-            <View>
-              <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
-                style={
-                  Object {
-                    "color": "#600",
-                    "textAlign": "right",
-                  }
-                }
-              >
-                Delete
-              </Text>
-            </View>
-          </View>
+          <View />
+          <View />
         </View>
       </View>
     </View>

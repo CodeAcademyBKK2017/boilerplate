@@ -18,7 +18,28 @@ exports[`Content renders correctly 1`] = `
       }
     }
   >
-    Please type your note below
+    Please type your note below 
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "#333",
+            "fontSize": 16,
+          },
+          undefined,
+          Object {
+            "fontFamily": "simple-line-icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      
+    </Text>
   </Text>
   <TextInput
     allowFontScaling={true}
