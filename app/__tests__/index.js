@@ -70,4 +70,14 @@ describe('App', () => {
     expect(instance.props.navigation.navigate).toHaveBeenCalledWith('About');
   });
 
+  // it('App: _setStroage Function must set the state of note', () => {
+  //   const expectedState = [];
+  //   instance._onTitleChange('some');
+  //   instance._onContentChange('some');
+  //   instance._addContent();
+  //   instance._removeContent('123')();
+  //   instance._setStroage();
+  //   expect(instance.state.arrayContent).toEqual(expectedState);
+  // });
+
 });

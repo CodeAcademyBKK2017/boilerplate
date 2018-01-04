@@ -25,13 +25,14 @@ export default class App extends Component {
     currentTitle: '',
     arrayContent: []
   }
-
+  
   componentDidMount () {
-    AsyncStorage.getItem('theState').then((value) => {
-      this.setState(JSON.parse(value));
-    });
+    this._setStroage();
   }
-
+  _setStroage = async () => {
+    const value = await AsyncStorage.getItem('theState');
+    this.setState(JSON.parse(value));
+  }
   _onContentChange =  (currentContent) => {
     this.setState({currentContent});
   }
