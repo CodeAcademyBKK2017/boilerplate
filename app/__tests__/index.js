@@ -84,4 +84,9 @@ describe('App', () => {
     instance.onDeleteNote(itemToDelete)();
     expect(instance.state).toMatchObject(expectedState);
   });
+  it('navigateTo', () => {
+    instance.props.navigation.navigate = jest.fn();
+    instance.navigateTo('About')();
+    expect(instance.props.navigation.navigate).toHaveBeenCalledWith('About');
+  });
 });
