@@ -28,14 +28,23 @@ export default class Main extends Component {
   }
 
   componentDidMount () {
-    AsyncStorage.getItem('notes')
-      .then((notes) => JSON.parse(notes))
-      .then((notes) => {
-        // if (Array.isArray(notes)) {
-        this.setState({notes});
-        // }
-      });
+    //   AsyncStorage.getItem('notes')
+    //   .then((notes) => JSON.parse(notes))
+    //   .then((notes) => {
+    //     // if (Array.isArray(notes)) {
+    //     this.setState({notes});
+    //     // }
+    //   });
+
+    this.loadData();
   }
+
+   loadData = async () => {
+     const notesData = await AsyncStorage.getItem('notes');
+     const notes = JSON.parse(notesData);
+
+     this.setState({notes});
+   }
 
   onTitleChangeText = (currentTitle) => {
     this.setState({currentTitle});
