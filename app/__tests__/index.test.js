@@ -111,10 +111,15 @@ describe('App', () => {
     instance.componentDidMount();
     expect(AsyncStorage.getItem).toHaveBeenCalledWith('state');
   });
-  it('navigateTo', () => {
+  it('navigateTo Mock', () => {
     instance.props.navigation.navigate = jest.fn();
     instance.navigateTo('About')();
     expect(instance.props.navigation.navigate).toHaveBeenCalledWith('About');
+  });
+  it('navigateTo Spy', () => {
+    const spyFunc = jest.spyOn(instance.props.navigation, 'navigate');
+    instance.navigateTo('About')();
+    expect(spyFunc).toHaveBeenCalledWith('About');
   });
 });
 
