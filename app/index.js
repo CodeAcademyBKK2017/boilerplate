@@ -21,15 +21,14 @@ export default class App extends Component {
     notes: []
   }
   componentDidMount () {
-    // console.log('componentDidMount 1');
-    AsyncStorage.getItem('state').then((value) => {
-      // console.log('componentDidMount 2');
-      // if (value !== null) {
-      //   console.log(JSON.parse(value));
-      //   this.setState(JSON.parse(value));
-      // }
-      this.setState(JSON.parse(value));
-    });
+    // AsyncStorage.getItem('state').then((value) => {
+    //   this.setState(JSON.parse(value));
+    // });
+    this.getStateFromStorageAndSetState();
+  }
+  getStateFromStorageAndSetState = async () => {
+    const value = await AsyncStorage.getItem('state');
+    this.setState(JSON.parse(value));
   }
   onKeyPressTitle = (textInput) => {
     this.setState({titleTextInput: textInput});
@@ -53,14 +52,16 @@ export default class App extends Component {
     this.updateState({notes: otherNote, titleTextInput: '', contentTextInput: ''});
   }
   updateState = (obj) => {
-    this.setState(obj, () => {
-      // console.log(this.state);
-      AsyncStorage.setItem('state', JSON.stringify(this.state)).then(() => {
-        // AsyncStorage.getItem('state').then((value) => {
-        //   console.log('from storage');
-        //   console.log(JSON.parse(value));
-        // });
-      });
+    // this.setState(obj, () => {
+    //   AsyncStorage.setItem('state', JSON.stringify(this.state)).then(() => {
+    //     // AsyncStorage.getItem('state').then((value) => {
+    //     //   console.log('from storage');
+    //     //   console.log(JSON.parse(value));
+    //     // });
+    //   });
+    // });
+    this.setState(obj, async () => {
+      await AsyncStorage.setItem('state', JSON.stringify(this.state));
     });
   }
   navigateTo = (key) => () => this.props.navigation.navigate(key)
