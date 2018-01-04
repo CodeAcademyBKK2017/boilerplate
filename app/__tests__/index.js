@@ -19,7 +19,7 @@ describe('App', () => {
     );
     expect(tree).toBeDefined();
 
-    App.navigationOptions({navigate: jest.fn()})();
+    App.navigationOptions({navigation: {navigate: jest.fn()}})();
   });
 
   it('onTitleChangeText: Should be count the current of string', () => { // example to test class methods
