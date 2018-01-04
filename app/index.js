@@ -26,8 +26,6 @@ export default class App extends Component {
   }
 
   onSavePress = () => {
-
-    // console.log('uuid()', uuid());
     const newData = {
       title: this.state.title,
       content: this.state.content,
@@ -65,7 +63,6 @@ export default class App extends Component {
   navigateTo = (key) => () => this.props.navigation.navigate(key)
 
   render () {
-    // console.log(this.state);
     return (
       <View style={styles.container}>
         <View style={{flex: 1}}>

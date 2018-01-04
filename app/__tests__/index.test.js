@@ -111,6 +111,10 @@ describe('App', () => {
     instance.componentDidMount();
     expect(AsyncStorage.getItem).toHaveBeenCalledWith('state');
   });
-
+  it('navigateTo', () => {
+    instance.props.navigation.navigate = jest.fn();
+    instance.navigateTo('About')();
+    expect(instance.props.navigation.navigate).toHaveBeenCalledWith('About');
+  });
 });
 
