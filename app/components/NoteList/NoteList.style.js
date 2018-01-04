@@ -9,6 +9,10 @@ const noteListStyles = StyleSheet.create({
     justifyContent: 'space-between'
   },
 
+  boxContainer: {
+    maxHeight: 200
+  },
+
   noteListTitle: {
     fontWeight: '900',
     paddingBottom: 10,

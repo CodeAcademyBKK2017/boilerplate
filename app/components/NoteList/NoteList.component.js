@@ -49,7 +49,7 @@ class NoteList extends Component {
     </Swipeout>
   render () {
     return (
-      <View style={{maxHeight: 200}}>
+      <View style={noteListStyles.boxContainer}>
 
         <FlatList data={this.props.notes} renderItem={this.renderItem}/>
         <Overlay visible={this.state.showModal}

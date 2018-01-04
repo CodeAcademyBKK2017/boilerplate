@@ -65,7 +65,7 @@ export default class App extends Component {
   render () {
     return (
       <View style={styles.container}>
-        <View style={{flex: 1}}>
+        <View style={styles.boxContainer}>
           <Title onTypeTitle={this.onTypeTitle} text={this.state.title}/>
           <Content onTypeContent={this.onTypeContent} text={this.state.content}/>
           <Footer countContent={this.state.content.length} onSavePress={this.onSavePress} />
