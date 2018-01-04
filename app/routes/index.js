@@ -1,18 +1,37 @@
 
 import aboutRoutes from './aboutRoutes';
 import App from '../index'; 
+import Icon from 'react-native-vector-icons/Foundation';
 import React from 'react';
-import {StackNavigator} from 'react-navigation';
+import Touchable from 'react-native-platform-touchable';
+import {DrawerNavigator, StackNavigator} from 'react-navigation';
 
-const RootNavigator = StackNavigator({
+const homeStack = StackNavigator({
   home: {
     screen: App,
+    navigationOptions: (naviObject) =>  {
+      const toggle = () => naviObject.navigation.navigate('DrawerToggle');
+      return {
+        headerLeft: <Touchable onPress={toggle}><Icon name='list' size={20}/></Touchable>,
+        headerTitle: 'Start taking notes'
+      };
+    }
+  }
+});
+const RootNavigator = DrawerNavigator({
+  home: {
+    screen: homeStack,
     navigationOptions: {
-      title: 'Start taking notes'
+      drawerLabel: 'Home'
+
     }
   },
   About: {
-    screen: aboutRoutes
+    screen: aboutRoutes,
+    navigationOptions: {
+      drawerLabel: 'About'
+
+    }
   }
 });
 

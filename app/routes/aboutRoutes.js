@@ -1,8 +1,11 @@
 import AboutApp from '../components/About/AboutApp.component';
 import AboutDev from '../components/About/AboutDev.component';
-import {TabNavigator} from 'react-navigation';
+import Icon from 'react-native-vector-icons/Foundation';
+import React from 'react';
+import Touchable from 'react-native-platform-touchable';
+import {StackNavigator, TabNavigator} from 'react-navigation';
 
-const aboutRoutes = TabNavigator(
+const tabRoute = TabNavigator(
   {
     aboutApp: {
       screen: AboutApp,
@@ -29,4 +32,16 @@ const aboutRoutes = TabNavigator(
     }
   }
 );
+const aboutRoutes = StackNavigator({
+  About: {
+    screen: tabRoute,
+    navigationOptions: (naviObject) =>  {
+      const toggle = () => naviObject.navigation.navigate('DrawerToggle');
+      return {
+        headerLeft: <Touchable onPress={toggle}><Icon name='list' size={20}/></Touchable>,
+        headerTitle: 'About'
+      };
+    }
+  }
+});
 export default aboutRoutes;

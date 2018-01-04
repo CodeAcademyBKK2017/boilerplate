@@ -69,7 +69,6 @@ describe('App', () => {
     AsyncStorage.getItem.mockImplementation(() => Promise.resolve(JSON.stringify(storageNote)));
     await instance.init();
     expect(AsyncStorage.getItem).toHaveBeenCalledWith('storageNote');
-    // await AsyncStorage.getItem('storageNote');
     expect(instance.state.note).toEqual(storageNote);
    
   });
