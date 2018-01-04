@@ -1,5 +1,6 @@
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import NoteItem from './components/NoteItem/NoteItem.component';
 import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
@@ -15,9 +16,13 @@ import {
 } from 'react-native';
 
 export default class Main extends Component {
-  static navigationOptions = {
-    title: 'Start taking notes'
-  };
+  static navigationOptions = ({navigation}) => {
+    const toggleDrawer = (navigation) => () => navigation.navigate('DrawerToggle');
+    return {
+      title: 'Start taking notes',
+      headerLeft: <Touchable onPress={toggleDrawer(navigation)}><Icon name='bars' size={24} /></Touchable>
+    };
+  }
 
   state = {
     currentTitle: '',
@@ -28,14 +33,6 @@ export default class Main extends Component {
   }
 
   componentDidMount () {
-    //   AsyncStorage.getItem('notes')
-    //   .then((notes) => JSON.parse(notes))
-    //   .then((notes) => {
-    //     // if (Array.isArray(notes)) {
-    //     this.setState({notes});
-    //     // }
-    //   });
-
     this.loadData();
   }
 
@@ -130,5 +127,5 @@ export default class Main extends Component {
 }
 
 Main.propTypes = {
-  navigation: PropTypes.object
+  navigation: PropTypes.any
 };

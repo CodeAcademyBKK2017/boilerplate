@@ -1,10 +1,14 @@
 import AboutRouter from './about';
 import MainScreen from '../app/index';
 
-import {StackNavigator} from 'react-navigation';
-  
-const Router = StackNavigator({
-  Main: {screen: MainScreen},
+import {DrawerNavigator, StackNavigator} from 'react-navigation';
+
+const MainStack = StackNavigator({
+  Home: {screen: MainScreen}
+}); 
+
+const Router = DrawerNavigator({
+  Main: {screen: MainStack},
   AboutTab: {screen: AboutRouter}
 });
 

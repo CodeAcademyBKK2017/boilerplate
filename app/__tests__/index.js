@@ -15,9 +15,11 @@ jest.mock('AsyncStorage', () => ({
 describe('App', () => {
   it('renders correctly', () => {
     const tree = renderer.create(
-      <App />
+      <App/>
     );
     expect(tree).toBeDefined();
+
+    App.navigationOptions({navigate: jest.fn()})();
   });
 
   it('onTitleChangeText: Should be count the current of string', () => { // example to test class methods
