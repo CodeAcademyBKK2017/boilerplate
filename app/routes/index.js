@@ -27,6 +27,10 @@ const styleHamburger = {
   paddingLeft: 20
 };
 
+const styleSettings = {
+  paddingRight: 20
+};
+
 const Router = StackNavigator(
   {
     drawerMenu: {screen: DrawerStack}
@@ -41,7 +45,8 @@ const Router = StackNavigator(
       headerTitleStyle: {
         color: 'white'
       },
-      headerLeft: <Text style={styleHamburger} onPress={openDrawer(navigation)}><Icon name='menu' size={22} color='#fff' /></Text>
+      headerLeft: <Text style={styleHamburger} onPress={openDrawer(navigation)}><Icon name='menu' size={22} color='#fff' /></Text>,
+      headerRight: <Text style={styleSettings} ><Icon name='settings' size={22} color='#fff' /></Text>
     })
   }
 );
