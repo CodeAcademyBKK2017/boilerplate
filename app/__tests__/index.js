@@ -60,7 +60,7 @@ describe('App', () => {
 
     appInstance.onChangeTextTitle(title);
     appInstance.onChangeTextContent(content);
-    appInstance.onSaveButtonPress();
+    appInstance.onSave();
 
     const expected = {
       textTitle: '',
