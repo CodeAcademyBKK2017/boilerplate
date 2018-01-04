@@ -1,4 +1,4 @@
-import AboutScreen from '../components/about/about.component';
+import AboutScreen from './about.route';
 import App from '../index';
 import {StackNavigator} from 'react-navigation';
 

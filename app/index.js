@@ -57,7 +57,7 @@ export default class App extends Component {
       arrayContent: newArray
     }));
   }
-
+  
   _gotoAbout = () => this.props.navigation.navigate('About');
 
   render () {

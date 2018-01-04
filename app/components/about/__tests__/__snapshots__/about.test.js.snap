@@ -1,13 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`About About: renders correctly 1`] = `
+exports[`About AboutApp: renders correctly 1`] = `
 <View>
   <Text
     accessible={true}
     allowFontScaling={true}
     ellipsizeMode="tail"
   >
-    Hello From About
+    Hello From AboutApp
+  </Text>
+</View>
+`;
+
+exports[`About AboutDev: renders correctly 1`] = `
+<View>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+  >
+    Hello From AboutDev
   </Text>
 </View>
 `;

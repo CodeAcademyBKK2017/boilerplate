@@ -3,8 +3,8 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-import AboutApp from './aboutApp.component';
-import AboutDev from './aboutDev.vomponent';
+import AboutApp from '../components/about/aboutApp.component';
+import AboutDev from '../components/about/aboutDev.vomponent';
 import React from 'react';
 import {TabNavigator} from 'react-navigation';
 

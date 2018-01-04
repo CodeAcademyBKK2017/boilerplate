@@ -1,7 +1,6 @@
 import 'react-native';
 import App from '../index';
 import React from 'react';
-
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
@@ -60,6 +59,15 @@ describe('App', () => {
     instance._addContent();
     instance._removeContent('123')();
     expect(instance.state.arrayContent).toEqual(expectedState);
+  });
+
+  it('App: _gotoAbout Function must have to called', () => {
+    wrapper.setProps({navigation: {
+      navigate: jest.fn()
+    }});
+    instance._gotoAbout();
+    expect(instance.props.navigation.navigate).toHaveBeenCalled();
+    expect(instance.props.navigation.navigate).toHaveBeenCalledWith('About');
   });
 
 });
