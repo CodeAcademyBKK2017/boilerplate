@@ -85,6 +85,7 @@
   "globals": {
     "GLOBAL": false,
     "global": false,
+    "__DEV__": false,
     "it": false,
     "xit": false,
     "expect": false,
