@@ -2,5 +2,14 @@
 import Router from './app/routes/index';
 import {AppRegistry} from 'react-native';
 
+if (__DEV__) {
+  global.XMLHttpRequest = global.originalXMLHttpRequest ?
+    global.originalXMLHttpRequest :
+    global.XMLHttpRequest;
+  global.FormData = global.originalFormData ?
+    global.originalFormData :
+    global.FormData;
+}
+
 // AppRegistry.registerComponent('NoteTaker', () => App);
 AppRegistry.registerComponent('NoteTaker', () => Router);

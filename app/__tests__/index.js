@@ -11,6 +11,11 @@ jest.mock('AsyncStorage', () => ({
   getItem: jest.fn(() => Promise.resolve('')),
   setItem: jest.fn(() => Promise.resolve())
 }));
+jest.mock('api', () => ({
+  getNotes: jest.fn(() => Promise.resolve('')),
+  addNote: jest.fn(() => Promise.resolve()),
+  deleteNote: jest.fn(() => Promise.resolve())
+}));
 
 describe('App', () => {
   let wrapper, instance;
@@ -46,7 +51,7 @@ describe('App', () => {
       titleTextInput: '',
       contentTextInput: '',
       notes: [
-        {title: 'Title', content: 'Content', uuid: '123'}
+        {title: 'Title', content: 'Content', id: '123'}
       ]
     };
     instance.setState(newNoteState);
@@ -59,7 +64,7 @@ describe('App', () => {
       titleTextInput: '',
       contentTextInput: '',
       notes: [
-        {title: 'Title', content: 'Content', uuid: '123'}
+        {title: 'Title', content: 'Content', id: '123'}
       ]
     };
     instance.setState(newNoteState);
@@ -71,7 +76,7 @@ describe('App', () => {
       titleTextInput: '',
       contentTextInput: '',
       notes: [
-        {title: 'Title', content: 'Content', uuid: '123'}
+        {title: 'Title', content: 'Content', id: '123'}
       ]
     };
     const expectedState = {
@@ -79,7 +84,7 @@ describe('App', () => {
       contentTextInput: '',
       notes: []
     };
-    const itemToDelete = {title: 'Title', content: 'Content', uuid: '123'};
+    const itemToDelete = {title: 'Title', content: 'Content', id: '123'};
     instance.setState(initState);
     instance.onDeleteNote(itemToDelete)();
     expect(instance.state).toMatchObject(expectedState);

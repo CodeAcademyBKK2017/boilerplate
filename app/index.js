@@ -1,12 +1,14 @@
+import api from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './index.style.js';
+// import uuid from 'uuid';
 import Title from './components/Title/Title.component';
-import uuid from 'uuid';
 import {
+  Alert,
   AsyncStorage,
   Button,
   View
@@ -21,14 +23,18 @@ export default class App extends Component {
     notes: []
   }
   componentDidMount () {
-    // AsyncStorage.getItem('state').then((value) => {
-    //   this.setState(JSON.parse(value));
-    // });
-    this.getStateFromStorageAndSetState();
+    this.componentDidMountFn();
   }
-  getStateFromStorageAndSetState = async () => {
-    const value = await AsyncStorage.getItem('state');
-    this.setState(JSON.parse(value));
+  componentDidMountFn = async () => {
+    const notes = await api.getNotes();
+    if (notes instanceof Array) {
+      this.setState({titleTextInput: '', contentTextInput: '', notes: notes});
+    } else {
+      Alert.alert('get Notes API fail');
+      await AsyncStorage.getItem('notes').then((value) => {
+        this.setState({titleTextInput: '', contentTextInput: '', notes: JSON.parse(value)});
+      });
+    }
   }
   onKeyPressTitle = (textInput) => {
     this.setState({titleTextInput: textInput});
@@ -36,32 +42,30 @@ export default class App extends Component {
   onKeyPressContent = (textInput) => {
     this.setState({contentTextInput: textInput});
   }
-  onSave = () => {
+  onSave = async () => {
     if (this.state.titleTextInput && this.state.contentTextInput) {
-      const newNote = {
-        title: this.state.titleTextInput,
-        content: this.state.contentTextInput,
-        uuid: uuid()
-      };
-      const newStateNote = [...this.state.notes, newNote];
-      this.updateState({notes: newStateNote, titleTextInput: '', contentTextInput: ''});
+      const note = await api.addNote({title: this.state.titleTextInput, content: this.state.contentTextInput});
+      if (note.hasOwnProperty('id') && note.hasOwnProperty('title') && note.hasOwnProperty('content')) {
+        const newStateNote = [...this.state.notes, note];
+        this.updateState({notes: newStateNote, titleTextInput: '', contentTextInput: ''});
+      } else {
+        Alert.alert('save not API fail!');
+      }
     }
   }
-  onDeleteNote = ({uuid}) => () => {
-    const otherNote = this.state.notes.filter((note) => note.uuid !== uuid);
+  onDeleteNote =  ({id}) => async () => {
+    await api.deleteNote(id);
+    const otherNote = this.state.notes.filter((note) => note.id !== id);
     this.updateState({notes: otherNote, titleTextInput: '', contentTextInput: ''});
   }
   updateState = (obj) => {
-    // this.setState(obj, () => {
-    //   AsyncStorage.setItem('state', JSON.stringify(this.state)).then(() => {
-    //     // AsyncStorage.getItem('state').then((value) => {
-    //     //   console.log('from storage');
-    //     //   console.log(JSON.parse(value));
-    //     // });
-    //   });
-    // });
     this.setState(obj, async () => {
-      await AsyncStorage.setItem('state', JSON.stringify(this.state));
+      await AsyncStorage.setItem('notes', JSON.stringify(this.state.notes)).then(() => {
+        // AsyncStorage.getItem('notes').then((value) => {
+        //   console.log('updateState : AsyncStorage');
+        //   console.log(JSON.parse(value));
+        // });
+      });
     });
   }
   navigateTo = (key) => () => this.props.navigation.navigate(key)

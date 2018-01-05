@@ -10,9 +10,9 @@ describe('NoteList', () => {
     wrapper = shallow(<NoteList />);
     instance = wrapper.instance();
     notes = [
-      {title: 'Title', content: 'Content', uuid: '1'},
-      {title: 'Title 2', content: 'Content 2', uuid: '2'},
-      {title: 'Title 3', content: 'Content 3', uuid: '3'}
+      {title: 'Title', content: 'Content', id: '1'},
+      {title: 'Title 2', content: 'Content 2', id: '2'},
+      {title: 'Title 3', content: 'Content 3', id: '3'}
     ];
   });
   it('renders correctly', () => {
@@ -20,11 +20,11 @@ describe('NoteList', () => {
     expect(snapshot).toMatchSnapshot();
   });
   it('keyExtractor', () => {
-    const value = instance.keyExtractor({title: 'Title', content: 'Content', uuid: '1'});
+    const value = instance.keyExtractor({title: 'Title', content: 'Content', id: '1'});
     expect(value).toEqual('1');
   });
   it('renderItem', () => {
-    const item = {title: 'Title', content: 'Content', uuid: '1'};
+    const item = {title: 'Title', content: 'Content', id: '1'};
     const snapshot = instance.renderItem({item});
     expect(snapshot).toMatchSnapshot();
   });

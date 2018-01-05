@@ -17,7 +17,7 @@ class NoteList extends Component {
     modalTitle: '',
     modalContent: ''
   }  
-  keyExtractor = (item) => item.uuid;
+  keyExtractor = (item) => item.id;
   // renderItem = ({item}) => <TouchableOpacity onPress={this.showAlert(item)}><View><Text style={styles.title}>{item.title}</Text><Text style={styles.content}>{item.content}</Text></View></TouchableOpacity>;
   // showAlert = (item) => () => Alert.alert(item.title, item.content)
   renderItem = ({item}) => <Swipeout autoClose={true} right={[
@@ -32,7 +32,7 @@ class NoteList extends Component {
     },
     {
       text: 'Delete',
-      onPress: this.props.onDeleteNote({uuid: item.uuid}),
+      onPress: this.props.onDeleteNote({id: item.id}),
       backgroundColor: '#900'
     }
   ]}>
@@ -43,7 +43,7 @@ class NoteList extends Component {
           <Text style={styles.content}>{item.content}</Text>
         </View>
       </TouchableOpacity>
-      {/* <TouchableOpacity onPress={this.props.onDeleteNote({uuid: item.uuid})}>
+      {/* <TouchableOpacity onPress={this.props.onDeleteNote({id: item.id})}>
         <View>
           <Text style={styles.delete}>Delete</Text>
         </View>
