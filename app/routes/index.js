@@ -1,5 +1,5 @@
 import AboutRouter from './about';
-import MainScreen from '../app/index';
+import MainScreen from '../index';
 
 import {DrawerNavigator, StackNavigator} from 'react-navigation';
 

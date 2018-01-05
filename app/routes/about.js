@@ -1,5 +1,5 @@
-import AboutAppScreen from '../app/components/AboutApp/AboutApp.component';
-import AboutDevScreen from '../app/components/AboutDev/AboutDev.component';
+import AboutAppScreen from '../components/AboutApp/AboutApp.component';
+import AboutDevScreen from '../components/AboutDev/AboutDev.component';
 
 import {StackNavigator, TabNavigator} from 'react-navigation';
   

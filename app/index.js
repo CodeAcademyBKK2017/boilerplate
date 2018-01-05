@@ -1,3 +1,4 @@
+import API from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -12,7 +13,7 @@ import Title from './components/Title/Title.component';
 import Touchable from 'react-native-platform-touchable';
 
 import {
-  AsyncStorage, FlatList, Text, View
+  FlatList, Text, View
 } from 'react-native';
 
 export default class Main extends Component {
@@ -36,12 +37,11 @@ export default class Main extends Component {
     this.loadData();
   }
 
-   loadData = async () => {
-     const notesData = await AsyncStorage.getItem('notes');
-     const notes = JSON.parse(notesData);
-
-     this.setState({notes});
-   }
+  loadData = async () => {
+    API.getNotes().then((notes) => {
+      this.setState({notes});
+    });
+  }
 
   onTitleChangeText = (currentTitle) => {
     this.setState({currentTitle});
@@ -59,10 +59,10 @@ export default class Main extends Component {
       title: currentTitle,
       content: currentContent
     };
-
+    
     const newNotes = [...notes, saveNote];
 
-    AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+    API.addNotes(saveNote);
 
     this.setState({
       notes: newNotes,
@@ -83,12 +83,10 @@ export default class Main extends Component {
   }
 
   _removeNoteItem = (deleteNote) => {
-    const newNotes = this.state.notes.filter((note) => note !== deleteNote);
-
-    AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+    API.deleteNotes(deleteNote.id);
 
     this.setState({
-      notes: newNotes
+      notes: this.state.notes.filter((note) => note !== deleteNote)
     });
   }
 
