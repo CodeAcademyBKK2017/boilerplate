@@ -13,7 +13,6 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
-import uuid from 'uuid';
 import {
   Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
 } from 'react-native';
@@ -43,15 +42,14 @@ export default class App extends Component {
   onSaveButtonPress = async () => {
     try {
       const note = {
-        key: uuid(),
         title: this.state.textTitle,
         content: this.state.textContent
       };
 
-      await new ApiNotes().addNote(note);
+      const response = await new ApiNotes().addNote(note);
 
       const newNotes = [...this.state.notes];
-      newNotes.push(note);
+      newNotes.push(response);
 
       await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
 
