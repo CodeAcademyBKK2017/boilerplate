@@ -62,7 +62,7 @@ export default class Main extends Component {
     
     const newNotes = [...notes, saveNote];
 
-    API.addNotes(saveNote);
+    API.addNote(saveNote);
 
     this.setState({
       notes: newNotes,
@@ -83,7 +83,7 @@ export default class Main extends Component {
   }
 
   _removeNoteItem = (deleteNote) => {
-    API.deleteNotes(deleteNote.id);
+    API.deleteNote(deleteNote.id);
 
     this.setState({
       notes: this.state.notes.filter((note) => note !== deleteNote)
