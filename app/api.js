@@ -1,5 +1,5 @@
 // const dbHost = 'http://localhost:3000';
-const dbHost = 'http://jaondev.com:3000';
+const dbHost = 'http://jaoddndev.com:3000';
 
 const getNotes = () => fetch(dbHost + '/notes').then((data) => data.json());
 

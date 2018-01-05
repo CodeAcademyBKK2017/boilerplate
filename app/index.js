@@ -13,7 +13,7 @@ import Title from './components/Title/Title.component';
 import Touchable from 'react-native-platform-touchable';
 
 import {
-  FlatList, Text, View
+  AsyncStorage, FlatList, Text, View
 } from 'react-native';
 
 export default class Main extends Component {
@@ -38,9 +38,15 @@ export default class Main extends Component {
   }
 
   loadData = async () => {
-    API.getNotes().then((notes) => {
-      this.setState({notes});
-    });
+    let notes = null;
+
+    try {
+      notes = await API.getNotes();
+    } catch ($e) {
+      notes = JSON.parse(await AsyncStorage.getItem('notes'));
+    }  
+
+    this.setState({notes});
   }
 
   onTitleChangeText = (currentTitle) => {
