@@ -1,3 +1,4 @@
+import apiNotes from './api';
 import ContentBox from './components/ContentBox/ContentBox.component';
 import Footer from './components/FooterBox/FooterBox.component';
 import ListItem from './components/ListItem/ListItem.component';
@@ -7,6 +8,7 @@ import React, {Component} from 'react';
 import style from './index.style';
 import TitleBox from './components/TitleBox/TitleBox.component';
 import {
+  Alert,
   AsyncStorage,
   Text,
   View
@@ -31,15 +33,19 @@ export default class App extends Component {
   }
 
   onLoadDataState = async () => {
-    const dataState = await AsyncStorage.getItem('state');
-    this.setState(JSON.parse(dataState));
+    try {
+      await apiNotes.getNotes().then((notes) => this.setState({NOTES: notes}));
+    } catch (err) {
+      const dataState = await AsyncStorage.getItem('state');
+      this.setState(JSON.parse(dataState));
+    }
   }
 
   onTitleChange = (title) => this.setState({titleText: title});
 
   onContentChange = (content) => this.setState({contentText: content});
 
-  onSave = () => {
+  onSave = async () => {
     const newData = {
       title: this.state.titleText,
       content: this.state.contentText,
@@ -52,29 +58,52 @@ export default class App extends Component {
       contentText: '',
       NOTES: newDataNOTES
     };
+
+    try {
+      await apiNotes.addNotes(newData).then(() => {
+        AsyncStorage.setItem('state', JSON.stringify(newStateData));
+        this.setState(newStateData);
+      });
+    } catch (err) {
+      this.onShowAlert(err);
+    }
     
-    AsyncStorage.setItem('state', JSON.stringify(newStateData));
-    this.setState(newStateData);
   }
 
-  onDelete = (item) => () => {
-    const dataNOTES = [...this.state.NOTES];
-    const deletePosition = dataNOTES.indexOf(item);
-    dataNOTES.splice(deletePosition, 1);
-
-    const newStateData = {
-      modalData: {},
-      titleText: '',
-      contentText: '',
-      NOTES: dataNOTES
-    };
-    AsyncStorage.setItem('state', JSON.stringify(newStateData));
-    this.setState(newStateData);
+  onDelete = (item) => async () => {
+    try {
+      await apiNotes.deleteNotes(item).then(() => {
+        const dataNOTES = [...this.state.NOTES];
+        const deletePosition = dataNOTES.indexOf(item);
+        dataNOTES.splice(deletePosition, 1);
+        const newStateData = {
+          modalData: {},
+          titleText: '',
+          contentText: '',
+          NOTES: dataNOTES
+        };
+        AsyncStorage.setItem('state', JSON.stringify(newStateData));
+        this.setState(newStateData);
+      });
+    } catch (err) {
+      this.onShowAlert(err);
+    }
   }
 
   onShowModal = (note) => () => this.setState({modalData: note});
 
   onCloseModal = () => this.setState({modalData: {}});
+
+  onShowAlert = (err) => {
+    Alert.alert(
+      'Error',
+      err.message,
+      [
+        {text: 'OK'}
+      ],
+      {cancelable: false}
+    );
+  }
 
   showFlatList = () => (this.state.NOTES.length > 0) ? 
     <ListItem 
