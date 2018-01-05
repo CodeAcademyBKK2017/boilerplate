@@ -90,6 +90,18 @@ export default class App extends Component {
       });
     } catch (error) {
       console.error(error);
+
+      const value = await AsyncStorage.getItem(notesKey);
+      let notes;
+      if (value) {
+        notes = JSON.parse(value);
+      } else {
+        notes = [];
+      }
+
+      this.setState({
+        notes
+      });
     }
   }
 
