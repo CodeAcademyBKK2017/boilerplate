@@ -5,6 +5,7 @@
  */
 
 import AboutSection from './components/AboutSection/AboutSection.component';
+import ApiNotes from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import NoteList from './components/NoteList/NoteList.component';
@@ -18,7 +19,6 @@ import {
 } from 'react-native';
 
 const notesKey = 'notes';
-const API_NOTES = 'http://localhost:3000/notes';
 
 export default class App extends Component {
   state = {
@@ -41,51 +41,37 @@ export default class App extends Component {
   }
 
   onSaveButtonPress = async () => {
-    const newNotes = [...this.state.notes];
-    const note = {
-      key: uuid(),
-      title: this.state.textTitle,
-      content: this.state.textContent
-    };
-    newNotes.push(note);
-
-    const newState = {
-      textTitle: '',
-      textContent: '',
-      notes: newNotes
-    };
-    this.setState(newState);
-
-    // ----------
-
     try {
-      const option = {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(note)
+      const note = {
+        key: uuid(),
+        title: this.state.textTitle,
+        content: this.state.textContent
       };
-      const response = await fetch(API_NOTES, option);
-      // const responseJson = await response.json();
+
+      await new ApiNotes().addNote(note);
+
+      const newNotes = [...this.state.notes];
+      newNotes.push(note);
+
+      const newState = {
+        textTitle: '',
+        textContent: '',
+        notes: newNotes
+      };
+      this.setState(newState);
     } catch (error) {
       console.error(error);
     }
   }
 
   onDeleteButtonPress = (item) => async () => {
-    const filteredNotes = this.state.notes.filter((note) => note !== item);
-    this.setState({notes: filteredNotes});
-
-    // ----------
-    
     try {
-      const option = {
-        method: 'DELETE'
-      };
-      const response = await fetch(`${API_NOTES}/${item.id}`, option);
-      // const responseJson = await response.json();
+      await new ApiNotes().deleteNote(item.id);
+
+      const filteredNotes = this.state.notes.filter((note) => note !== item);
+      this.setState({
+        notes: filteredNotes
+      });
     } catch (error) {
       console.error(error);
     }
@@ -97,16 +83,10 @@ export default class App extends Component {
 
   loadData = async () => {
     try {
-      const option = {
-        method: 'GET'
-      };
-      const response = await fetch(API_NOTES, option);
-      const responseJson = await response.json();
-    
-      // ----------
+      const response = await new ApiNotes().getNotes();
 
       this.setState({
-        notes: responseJson
+        notes: response
       });
     } catch (error) {
       console.error(error);
