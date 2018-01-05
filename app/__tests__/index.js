@@ -54,7 +54,7 @@ describe('App', () => {
     expect(appInstance.state.textContent).toBe(text);
   });
 
-  xit('onSaveButtonPress', () => {
+  it('onSaveButtonPress', () => {
     const title = 'my test title';
     const content = 'my test message';
 
@@ -77,7 +77,7 @@ describe('App', () => {
     expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected.notes));
   });
 
-  xit('onDeleteButtonPress', () => {
+  it('onDeleteButtonPress', () => {
     const note00 = {
       key: 'some uuid',
       title: 'title 00',
