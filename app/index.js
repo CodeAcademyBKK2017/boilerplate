@@ -7,6 +7,7 @@ import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import shortid from 'shortid';
+import Snackbar from 'react-native-snackbar';
 import styles from './index.styles';
 import Title from './components/Title/Title.component';
 
@@ -15,6 +16,12 @@ import Touchable from 'react-native-platform-touchable';
 import {
   AsyncStorage, FlatList, Text, View
 } from 'react-native';
+
+const warningBar = {
+  title: 'Offline Mode: Can\'t connect to server.',
+  duration: 3000,
+  backgroundColor: '#d9bf56'
+};
 
 export default class Main extends Component {
   static navigationOptions = ({navigation}) => {
@@ -43,7 +50,8 @@ export default class Main extends Component {
     try {
       notes = await API.getNotes();
     } catch ($e) {
-      notes = JSON.parse(await AsyncStorage.getItem('notes'));
+      notes = JSON.parse(await AsyncStorage.getItem('notes') || []);
+      Snackbar.show(warningBar);
     }  
 
     this.setState({notes});
@@ -66,14 +74,18 @@ export default class Main extends Component {
       content: currentContent
     };
     
-    const newNotes = [...notes, saveNote];
+    API.addNote(saveNote).then(() => {
+      const newNotes = [...notes, saveNote];
+      
+      AsyncStorage.setItem('notes', JSON.stringify(newNotes));
 
-    API.addNote(saveNote);
-
-    this.setState({
-      notes: newNotes,
-      currentTitle: '',
-      currentContent: ''
+      this.setState({
+        notes: newNotes,
+        currentTitle: '',
+        currentContent: ''
+      });
+    }).catch(() => {
+      Snackbar.show(warningBar);
     });
   }
 
@@ -89,10 +101,16 @@ export default class Main extends Component {
   }
 
   _removeNoteItem = (deleteNote) => {
-    API.deleteNote(deleteNote.id);
+    API.deleteNote(deleteNote.id).then(() => {
+      const newNotes = this.state.notes.filter((note) => note !== deleteNote);
+      
+      AsyncStorage.setItem('notes', JSON.stringify(newNotes));
 
-    this.setState({
-      notes: this.state.notes.filter((note) => note !== deleteNote)
+      this.setState({
+        notes: newNotes
+      });
+    }).catch(() => {
+      Snackbar.show(warningBar);
     });
   }
 
