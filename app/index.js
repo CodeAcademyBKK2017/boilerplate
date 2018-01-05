@@ -53,6 +53,8 @@ export default class App extends Component {
       const newNotes = [...this.state.notes];
       newNotes.push(note);
 
+      await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
+      
       const newState = {
         textTitle: '',
         textContent: '',
