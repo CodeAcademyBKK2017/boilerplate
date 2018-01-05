@@ -4,8 +4,11 @@ import Main from '../app/index';
 import React from 'react';
 import {DrawerNavigator, StackNavigator} from 'react-navigation';
 import {
+  StyleSheet,
   TouchableOpacity
 } from 'react-native';
+
+const onOpenDrawer = (navigation) => () => navigation.navigate('DrawerToggle');
 
 const RootNavigator = StackNavigator({
   Main: {
@@ -13,18 +16,24 @@ const RootNavigator = StackNavigator({
       Main: {
         screen: Main
       },
-      Notifications: {
+      About: {
         screen: About
       }
     }),
     navigationOptions: ({navigation}) => ({
       headerTitle: 'Start taking notes.',
       headerLeft: (
-        <TouchableOpacity style={{marginLeft: 10}} onPress={() => navigation.navigate('DrawerToggle')}>
+        <TouchableOpacity style={styles.iconDrawer} onPress={onOpenDrawer(navigation)}>
           <Icon name='list' size={20} color='#333333' />
         </TouchableOpacity>
       )
     })
+  }
+});
+
+const styles = StyleSheet.create({
+  iconDrawer: {
+    marginLeft: 10
   }
 });
 
