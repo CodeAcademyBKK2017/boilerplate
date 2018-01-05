@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 
 const notesKey = 'notes';
+const API_NOTES = 'http://localhost:3000/notes';
 
 export default class App extends Component {
   state = {
@@ -55,14 +56,39 @@ export default class App extends Component {
     };
     this.setState(newState);
 
-    await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
+    // ----------
+
+    try {
+      const option = {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(note)
+      };
+      const response = await fetch(API_NOTES, option);
+      // const responseJson = await response.json();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   onDeleteButtonPress = (item) => async () => {
     const filteredNotes = this.state.notes.filter((note) => note !== item);
     this.setState({notes: filteredNotes});
 
-    await AsyncStorage.setItem(notesKey, JSON.stringify(filteredNotes));
+    // ----------
+    
+    try {
+      const option = {
+        method: 'DELETE'
+      };
+      const response = await fetch(`${API_NOTES}/${item.id}`, option);
+      // const responseJson = await response.json();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   onAboutButtonPress = () => {
@@ -70,17 +96,21 @@ export default class App extends Component {
   }
 
   loadData = async () => {
-    const value = await AsyncStorage.getItem(notesKey);
-    let notes;
-    if (value) {
-      notes = JSON.parse(value);
-    } else {
-      notes = [];
-    }
+    try {
+      const option = {
+        method: 'GET'
+      };
+      const response = await fetch(API_NOTES, option);
+      const responseJson = await response.json();
+    
+      // ----------
 
-    this.setState({
-      notes
-    });
+      this.setState({
+        notes: responseJson
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   componentDidMount () {
