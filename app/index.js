@@ -1,3 +1,4 @@
+import Api from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import NoteList from './components/NoteList/NoteList.component';
@@ -7,6 +8,7 @@ import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
+  Alert,
   AsyncStorage,
   Button,
   View
@@ -19,46 +21,76 @@ export default class App extends Component {
     notes: []
   }
 
-  // componentDidMount () {
-  //   AsyncStorage.getItem('state').then((value) => {
-  //     this.setState(JSON.parse(value));
-  //   });
-  // }
-
   onLoadData = async () => {
-    const data = await AsyncStorage.getItem('state');
-    this.setState(JSON.parse(data));
+    try {
+      await  Api.getNote().then((notes) => this.setState({notes: notes}));
+      
+    } catch (err) {
+      AsyncStorage.getItem('state').then((value) => {
+        this.setState(JSON.parse(value));
+      });
+    }
   }
 
   componentDidMount () {
     this.onLoadData();
   }
 
-  onSavePress = () => {
+  onSavePress = async () => {
     const newData = {
       title: this.state.title,
       content: this.state.content,
       key: uuid()
     };
-
+    try {
+      await Api.addNote(newData).then(() => {
+        this.setState({
+          notes: [...this.state.notes, newData],
+          title: '',
+          content: ''
+        }, () => {
+          AsyncStorage.setItem('state', JSON.stringify(this.state));
+        });
+      });
+    } catch (err) {
+      Alert.alert(
+        'Error',
+        err.message,
+        [
+          {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+          {text: 'OK', onPress: () => console.log('OK Pressed')}
+        ],
+        {cancelable: false}
+      );
+    }
     this.setState({
-      notes: [...this.state.notes, newData],
       title: '',
       content: ''
-    }, () => {
-      AsyncStorage.setItem('state', JSON.stringify(this.state)).then(() => {
-        AsyncStorage.getItem('state');
-      });
-    }
-    );
+    });
   }
 
-  onDeletePress = (item) => () => {
-    const newNotes = [...this.state.notes];
-    newNotes.splice(newNotes.indexOf(item), 1);
-    this.setState({notes: newNotes}, () => {
-      AsyncStorage.setItem('state', JSON.stringify(this.state));
-    });
+  onDeletePress = (item) => async () => {
+    try {
+      await Api.deleteNote(item).then(() => {
+        const newNotes = [...this.state.notes];
+        newNotes.splice(newNotes.indexOf(item), 1);
+        this.setState({notes: newNotes}, () => {
+          AsyncStorage.setItem('state', JSON.stringify(this.state));
+        });
+      });
+    } catch (err) {
+      Alert.alert(
+        'Error',
+        err.message,
+        [
+          {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+          {text: 'OK', onPress: () => console.log('OK Pressed')}
+        ],
+        {cancelable: false}
+      );
+    }
   }
 
   onTypeContent = (textInput) => {
