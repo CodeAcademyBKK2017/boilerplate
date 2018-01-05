@@ -15,7 +15,7 @@ import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
-  AsyncStorage, KeyboardAvoidingView, Platform, View
+  Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 
 const notesKey = 'notes';
@@ -54,7 +54,7 @@ export default class App extends Component {
       newNotes.push(note);
 
       await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
-      
+
       const newState = {
         textTitle: '',
         textContent: '',
@@ -62,7 +62,16 @@ export default class App extends Component {
       };
       this.setState(newState);
     } catch (error) {
-      console.error(error);
+      Alert.alert(
+        'Save Failed',
+        String(error),
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')}
+        ],
+        {
+          cancelable: false
+        }
+      );
     }
   }
 
@@ -75,7 +84,14 @@ export default class App extends Component {
         notes: filteredNotes
       });
     } catch (error) {
-      console.error(error);
+      Alert.alert(
+        'Delete Failed',
+        String(error),
+        null,
+        {
+          cancelable: false
+        }
+      );
     }
   }
 
@@ -91,8 +107,6 @@ export default class App extends Component {
         notes: response
       });
     } catch (error) {
-      console.error(error);
-
       const value = await AsyncStorage.getItem(notesKey);
       let notes;
       if (value) {
