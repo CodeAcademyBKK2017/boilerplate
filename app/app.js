@@ -102,12 +102,12 @@ export default class App extends Component {
     );
   }
 
-  showFlatList = () => (this.state.NOTES.length > 0) ? 
+  showFlatList = () => (// this.state.NOTES.length > 0) ? 
     <ListItem 
       dataNotes={this.state.NOTES}
       onShowModal={this.onShowModal}
       onDelete={this.onDelete}
-    /> : null
+    />)// : null
 
   viewOverlay = () => <Overlay 
     visible={!!(this.state.modalData.title)}
