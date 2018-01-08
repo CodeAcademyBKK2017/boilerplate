@@ -14,14 +14,15 @@ class Api {
     }  
 
     onAddNote = async (note) => {
-        await fetch('http://localhost:3000/posts', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(note)
-        });
+      await fetch('http://localhost:3000/posts', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(note)
+      });
+    }
 
     onDelete = async (id, filteredNotes) => {
       try {
@@ -41,5 +42,4 @@ class Api {
       }
     } 
 }
-
-export default new Api;
+export default new Api();

@@ -16,8 +16,9 @@ jest.mock('AsyncStorage', () => ({
 jest.mock('uuid', () => () => 'some uuid');
 
 jest.mock('../api', () => ({
-  onGetNote: jest.fn(() => Promise.resolve()),
-  onAddNote: jest.fn(() => Promise.resolve())
+  onGetNote: jest.fn(() => Promise.resolve([])),
+  onAddNote: jest.fn(() => Promise.resolve()),
+  onDeleteNote: jest.fn(() => Promise.resolve())
 }));
 
 // constant
@@ -60,7 +61,7 @@ describe('App', () => {
     expect(appInstance.state.textContent).toBe(text);
   });
 
-  xit('onSaveButtonPress', async () => {
+  it('onSaveButtonPress', async () => {
     const title = '';
     const content = '';
 
@@ -72,11 +73,11 @@ describe('App', () => {
       textTitle: '',
       textContent: '',
       notes: [
-        // {
-        //   key: 'some uuid',
-        //   title,
-        //   content
-        // }
+        {
+          key: 'some uuid',
+          title,
+          content
+        }
       ]
     };
     expect(appInstance.state).toEqual(expected);
@@ -112,6 +113,7 @@ describe('App', () => {
     const title = 'my test title';
     const content = 'my test message';
     appInstance.setState({textTitle: title, textContent: content, notes: []});
+
     await appInstance.onSaveButtonPress();
     
     const expected = {
@@ -131,7 +133,7 @@ describe('App', () => {
     };
     expect(Api.onAddNote).toHaveBeenLastCalledWith(expectedNote);
     expect(AsyncStorage.setItem).toHaveBeenLastCalledWith('notes', JSON.stringify(expected.notes));
-    // expect(appInstance.state).toEqual(expected);
+    expect(appInstance.state).toEqual(expected);
     
   });
 
@@ -140,6 +142,18 @@ describe('App', () => {
     AsyncStorage.setItem.mockClear();
     Api.onAddNote.mockImplementation(() => Promise.reject('API failed'));
     await appInstance.onSaveButtonPress();
+    expect(AsyncStorage.setItem).not.toBeCalled();
+  });
+
+  it('onDeleteButtonPress success', () => {
+    
+  });
+
+  it('onDeleteButtonPress failure', async () => {
+    Api.onDelete.mockClear();
+    AsyncStorage.setItem.mockClear();
+    Api.onGetNote.mockImplementation(() => Promise.reject('API failed'));
+    await appInstance.onDeleteButtonPress();
     expect(AsyncStorage.setItem).not.toBeCalled();
   });
 
@@ -166,6 +180,10 @@ describe('App', () => {
         content: 'my test message'
       }
     ];
+
+    Api.onGetNote.mockClear();
+    Api.onGetNote.mockImplementation(() => Promise.reject('API Fail'));
+
     // set custom mock result
     AsyncStorage.getItem.mockImplementation(() => Promise.resolve(JSON.stringify(notes)));
 

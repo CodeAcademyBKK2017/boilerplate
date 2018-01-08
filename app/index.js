@@ -18,7 +18,7 @@ import {
   Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 
-const notesKey = 'notes';
+// const notesKey = 'notes';
 //
 export default class App extends Component {
   state = {
