@@ -97,6 +97,7 @@
     "beforeEach": false,
     "afterAll": false,
     "afterEach": false,
-    "__DEV__": false
+    "__DEV__": false,
+    "Snackbar": false
   }
 }

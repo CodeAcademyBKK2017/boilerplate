@@ -2,14 +2,20 @@ import 'react-native';
 import App from '../index';
 import NoteItem from '../components/NoteItem/NoteItem.component';
 import React from 'react';
+import renderer from 'react-test-renderer';
 
 // Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 
 jest.mock('AsyncStorage', () => ({
   getItem: jest.fn(() => Promise.resolve('[{"key":"key", "title":"title","content":"content"}]')),
   setItem: jest.fn(() => Promise.resolve())
+}));
+
+jest.mock('../api', () => ({
+  getNotes: jest.fn(() => Promise.resolve('[{"key":"key", "title":"title","content":"content"}]')),
+  addNote: jest.fn(() => Promise.resolve()),
+  deleteNote: jest.fn(() => Promise.resolve())
 }));
 
 describe('App', () => {
@@ -18,8 +24,6 @@ describe('App', () => {
       <App/>
     );
     expect(tree).toBeDefined();
-
-    App.navigationOptions({navigation: {navigate: jest.fn()}})();
   });
 
   it('onTitleChangeText: Should be count the current of string', () => { // example to test class methods
@@ -34,15 +38,11 @@ describe('App', () => {
 
     instance.onSaveButtonPress();
     expect(instance.state).toEqual({
-      currentTitle: '',
-      currentContent: '',
+      currentTitle: 'Title',
+      currentContent: 'Content',
       modalVisible: false,
       selectedNote: {key: '', title: '', content: ''},
-      notes: [{
-        key: 'key',
-        title: 'Title', 
-        content: 'Content'
-      }]
+      notes: []
     });
     
   });
@@ -66,6 +66,7 @@ describe('App', () => {
   });
 
   it('Render Items: should get the correct the note item', () => {
+    
     const props = {};
     const wrapper = shallow(<App {...props}/>);
     const instance = wrapper.instance();
