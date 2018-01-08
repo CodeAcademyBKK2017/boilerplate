@@ -4,9 +4,10 @@ import React, {Component} from 'react';
 import styles from './Note.style';
 import Swipeout from 'react-native-swipeout';
 import Touchable from 'react-native-platform-touchable';
+import {connect} from 'react-redux';
 import {FlatList, Text, View} from 'react-native';
 
-export default class Note extends Component {
+class Note extends Component {
   initialstate ={
     modalVisible: false,
     title: '',
@@ -71,4 +72,5 @@ Note.propTypes = {
   noteList: PropTypes.array,
   onDelete: PropTypes.func
 };
-  
+const mapStateToProps = (storeState) => ({noteList: storeState.notes});
+export default connect(mapStateToProps)(Note);

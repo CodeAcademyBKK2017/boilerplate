@@ -26,7 +26,6 @@ export default class App extends Component {
        const response = await ApiNotes.getNotes();
        this.setState({note: response});
      } catch (error) {
-       console.log('error', error);
        const value = await AsyncStorage.getItem('storageNote');
        const note = value ? JSON.parse(value) : [];
        this.setState({note});
@@ -111,7 +110,7 @@ export default class App extends Component {
         <Title onTitleChange={this.changeTitle}/>
         <Content  onContentChange={this.changeContent} />
         <Footer characterCount={this.state.content.length} onPressSave={this.onSave} />
-        {this.state.note.length > 0 ? <Note noteList={this.state.note} onDelete={this.onDelete}/> : null}
+        {this.state.note.length > 0 ? <Note onDelete={this.onDelete}/> : null}
         <View><Text onPress={this.goToAbout}>about us</Text></View>
       </this.WrapperView>
     );

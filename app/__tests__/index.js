@@ -139,18 +139,18 @@ describe('App', () => {
     expect(ApiNotes.getNotes).toHaveBeenLastCalledWith();
   });
   xit('init Fail Case', async () => {
-    // ApiNotes.getNotes.mockClear();
+    ApiNotes.getNotes.mockClear();
     ApiNotes.getNotes.mockImplementation(() => Promise.reject('API failed'));
-    // await instance.init();
-    // expect(AsyncStorage.getItem).toHaveBeenLastCalledWith('storageNote');
+    await instance.init();
+    expect(AsyncStorage.getItem).toHaveBeenLastCalledWith('storageNote');
 
     AsyncStorage.getItem.mockClear();
     AsyncStorage.getItem.mockImplementation(() => Promise.resolve('[{"title":"Assad’s","content":"Asdasdas"}]'));
     await instance.init();
     const value = await AsyncStorage.getItem('storageNote');
     expect(value).toEqual('[{"title":"Assad’s","content":"Asdasdas"}]');
-    // AsyncStorage.getItem.mockClear();
-    // AsyncStorage.getItem.mockImplementation(() => Promise.reject(''));
+    AsyncStorage.getItem.mockClear();
+    AsyncStorage.getItem.mockImplementation(() => Promise.reject(''));
 
     await instance.init();
     expect(AsyncStorage.getItem).toHaveBeenLastCalledWith('storageNote');
