@@ -1,9 +1,34 @@
-import AboutScreen from './about.route';
-import App from '../index';
+import AboutApp from '../components/about/aboutApp.component';
+import AboutDev from '../components/about/aboutDev.vomponent';
+import App from '../app';
 import Icon from 'react-native-vector-icons/Foundation';
 import React from 'react';
-import {DrawerNavigator, StackNavigator} from 'react-navigation';
+import {DrawerNavigator, StackNavigator, TabNavigator} from 'react-navigation';
 import {TouchableOpacity} from 'react-native';
+
+const MyApp = TabNavigator({
+  Home: {
+    screen: AboutApp
+  },
+  Notifications: {
+    screen: AboutDev
+  }
+}, {
+  tabBarPosition: 'bottom',
+  animationEnabled: true,
+  swipeEnabled: true,
+  lazy: true,
+  tabBarOptions: {
+    activeTintColor: '#e91e63',
+    tabStyle: {
+      justifyContent: 'center'
+    },
+    labelStyle: {
+      fontSize: 20,
+      marginTop: 0
+    }
+  }
+});
 
 const Nav = ({navigation}) => {
   const _toggleNavigate = () => navigation.navigate('DrawerToggle');
@@ -13,7 +38,7 @@ const Nav = ({navigation}) => {
   };
 };
 const HomeApp = StackNavigator({home: {screen: App}});
-const AboutPage = StackNavigator({about: {screen: AboutScreen,
+const AboutPage = StackNavigator({about: {screen: MyApp,
   navigationOptions: Nav
 }});
  

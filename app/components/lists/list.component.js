@@ -35,7 +35,7 @@ export default class List extends Component {
           <Swipeout  right={[
             {
               text: 'Delete!',
-              onPress: this.props.removeNote(item.key),
+              onPress: this.props.removeNote(item),
               type: 'delete'
             }
           ]} style={styles.swipoutStyle}>
