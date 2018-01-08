@@ -107,6 +107,12 @@ describe('App', () => {
       title: 'title',
       content: 'content',
       key: 'someId'};
+    const initialData = {
+      title: '',
+      content: '',
+      notes: [item]
+    };
+    await instance.setState(initialData);
     await instance.onDeletePress(item)();
     const expectState = {
       title: '',
