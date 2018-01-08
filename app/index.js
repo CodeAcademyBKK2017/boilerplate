@@ -13,7 +13,6 @@ import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {Alert, AsyncStorage, KeyboardAvoidingView, Platform, Text, View} from 'react-native';
-import {log} from 'util';
 
 export default class App extends Component {
   initialstate = {
@@ -21,32 +20,22 @@ export default class App extends Component {
     title: '',
     note: []
   }
+  state = this.initialstate
    init = async () => {
      try {
        const response = await ApiNotes.getNotes();
-  
-       this.setState({
-         note: response
-       });
+       this.setState({note: response});
      } catch (error) {
        const value = await AsyncStorage.getItem('storageNote');
-       let note;
-       if (value) {
-         note = JSON.parse(value);
-       } else {
-         note = [];
-       }
-  
-       this.setState({
-         note
-       });
+       const note = value ? JSON.parse(value) : [];
+       this.setState({note});
      }
    
    }
    componentDidMount () {
      this.init();
    }
-state = this.initialstate
+
   WrapperView = Platform.select(
     {ios: KeyboardAvoidingView,
       android: View
@@ -90,14 +79,14 @@ state = this.initialstate
     }
   }
 
-  onDelete=(item) => async () => {
+  onDelete = (item) => async () => {
     try {
       await  ApiNotes.deleteNote(item.id);
       const delNote = [...this.state.note];
       const isDelete = (value) => value !== item;
       const remainNote = delNote.filter(isDelete);
       this.setState({note: remainNote});
-      AsyncStorage.setItem('storageNote', JSON.stringify(remainNote));
+
     } catch (error) {
       Alert.alert(
         'Delete Failed',

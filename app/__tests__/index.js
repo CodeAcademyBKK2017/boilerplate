@@ -39,27 +39,6 @@ describe('App', () => {
     instance.changeContent('123');
     expect(instance.state.content).toEqual('123');
   });
-
-  it('init should have been call with new note', async () => {
-    const storageNote = [
-      {
-        key: 'some uuid',
-        title: 'some title',
-        content: 'some message'
-      }
-    ];
-    // set custom mock result
-    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(JSON.stringify(storageNote)));
-    await instance.init();
-    expect(AsyncStorage.getItem).toHaveBeenCalledWith('storageNote');
-    expect(instance.state.note).toEqual(storageNote);
-   
-  });
-  it('init should have been call with nothing', () => {
-    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(null));
-    instance.init();
-    expect(AsyncStorage.getItem).toHaveBeenCalledWith('storageNote');
-  });
   it('goToAbout', () => {
     const navigation = {navigate: jest.fn()};
     wrapper.setProps({navigation: navigation});
@@ -117,5 +96,52 @@ describe('App', () => {
       'API failed',
       [{text: 'OK'}],
       {cancelable: false});
+  });
+  it('onDelete success', async () => {
+    const title = 'my test title';
+    const content = 'my test message';
+    instance.setState({title: title, content: content});
+    const item = {
+      id: 'someid',
+      title,
+      content
+    };
+    const remainNote = {
+      title: 'my test title',
+      content: 'my test message',
+      note: []
+    };
+    const curryFn = instance.onDelete(item);
+    await curryFn();
+    expect(ApiNotes.deleteNote).toHaveBeenLastCalledWith(item.id);
+    expect(instance.state).toEqual(remainNote);
+  });
+  it('onDelete failure', async () => {
+    const title = 'my test title';
+    const content = 'my test message';
+    const item = {
+      id: 'someid',
+      title,
+      content
+    };
+    ApiNotes.deleteNote.mockClear();
+    ApiNotes.deleteNote.mockImplementation(() => Promise.reject('API failed'));
+    const curryFn = instance.onDelete(item);
+    await curryFn();
+    expect(Alert.alert).toHaveBeenLastCalledWith(
+      'Delete Failed',
+      'API failed',
+      null,
+      {cancelable: false});
+  });
+  it('init Success Case', async () => {
+    instance.init();
+    expect(ApiNotes.getNotes).toHaveBeenLastCalledWith();
+  });
+  it('init Fail Case', async () => {
+    ApiNotes.getNotes.mockClear();
+    ApiNotes.getNotes.mockImplementation(() => Promise.reject('API failed'));
+    await instance.init();
+    expect(AsyncStorage.getItem).toHaveBeenLastCalledWith('storageNote');
   });
 });
