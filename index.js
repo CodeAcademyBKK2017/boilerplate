@@ -1,4 +1,4 @@
-import Router from './app/routes';
+import Router from './app/index';
 import {AppRegistry} from 'react-native';
 
 if (__DEV__) {
