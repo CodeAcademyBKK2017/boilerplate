@@ -36,6 +36,8 @@ describe('App', () => {
     appInstance = wrapper.instance();
     
     AsyncStorage.setItem.mockClear();
+    
+    ApiNotes.deleteNote.mockClear();
     ApiNotes.addNote.mockClear();
   });
   
@@ -150,19 +152,37 @@ describe('App', () => {
   });
 
   it('componentDidMount with existed notes', async () => {
-    const notes = [
-      {
-        key: 'some uuid',
-        title: 'my test title',
-        content: 'my test message'
-      }
-    ];
-    // set custom mock result
-    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(JSON.stringify(notes)));
+    ApiNotes.getNotes.mockClear();
+    ApiNotes.getNotes.mockImplementation(() => Promise.resolve([{
+      id: 1,
+      title: 'my test title',
+      content: 'my test message'
+    }, {
+      id: 2,
+      title: 'my test title',
+      content: 'my test message'
+    }]));
+
+    const title = 'my test title';
+    const content = 'my test message';
+    const expected = {
+      textTitle: '',
+      textContent: '',
+      notes: [{
+        id: 1,
+        title,
+        content
+      }, {
+        id: 2,
+        title,
+        content
+      }]
+    };
 
     await appInstance.componentDidMount();
-    expect(appInstance.state.notes).toEqual(notes);
-    expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
+
+    expect(ApiNotes.getNotes).toBeCalled();
+    expect(appInstance.state).toEqual(expected);
   });
 
   it('componentDidMount with null', () => {
