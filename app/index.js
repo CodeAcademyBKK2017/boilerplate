@@ -13,6 +13,7 @@ import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {Alert, AsyncStorage, KeyboardAvoidingView, Platform, Text, View} from 'react-native';
+import {log} from 'util';
 
 export default class App extends Component {
   initialstate = {
@@ -22,7 +23,7 @@ export default class App extends Component {
   }
    init = async () => {
      try {
-       const response = await new ApiNotes().getNotes();
+       const response = await ApiNotes.getNotes();
   
        this.setState({
          note: response
@@ -64,14 +65,14 @@ state = this.initialstate
         content: this.state.content,
         key: uuid()
       };
-      await new ApiNotes().addNote(note);
+      await  ApiNotes.addNote(note);
       const newNote = [...this.state.note];
       newNote.push(note);
       await AsyncStorage.setItem('storageNote', JSON.stringify(newNote));
       const newState = {
-        textTitle: '',
-        textContent: '',
-        notes: newNote
+        title: '',
+        content: '',
+        note: newNote
       };
       this.setState(newState);
      
@@ -80,7 +81,7 @@ state = this.initialstate
         'Save Failed',
         String(error),
         [
-          {text: 'OK', onPress: () => {}}
+          {text: 'OK'}
         ],
         {
           cancelable: false
@@ -91,7 +92,7 @@ state = this.initialstate
 
   onDelete=(item) => async () => {
     try {
-      await new ApiNotes().deleteNote(item.id);
+      await  ApiNotes.deleteNote(item.id);
       const delNote = [...this.state.note];
       const isDelete = (value) => value !== item;
       const remainNote = delNote.filter(isDelete);

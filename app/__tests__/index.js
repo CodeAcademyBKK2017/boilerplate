@@ -4,7 +4,7 @@ import App from '../index';
 import React from 'react';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
-import {AsyncStorage} from 'react-native';
+import {Alert, AsyncStorage} from 'react-native';
 import {shallow} from 'enzyme';
 
 jest.mock('AsyncStorage', () => ({
@@ -13,6 +13,11 @@ jest.mock('AsyncStorage', () => ({
   mergeItem: jest.fn(() => Promise.resolve()),
   multiGet: jest.fn(() => Promise.resolve('{}'))
 }));
+
+jest.mock('Alert', () => ({
+  alert: jest.fn()
+}));
+
 jest.mock('../api');
 jest.mock('uuid', () => () => 'someUUID');
 
@@ -85,16 +90,16 @@ describe('App', () => {
       title: '',
       content: '',
       note: [{
-        key: 'some uuid',
         title,
-        content
+        content,
+        key: 'someUUID'
       }]
     };
 
     const expectedNote = {
-      'content': 'my test message',
-      'key': 'some uuid',
-      'title': 'my test title'
+      key: 'someUUID',
+      title,
+      content
     };
     expect(ApiNotes.addNote).toHaveBeenLastCalledWith(expectedNote);
     expect(AsyncStorage.setItem).toHaveBeenLastCalledWith('storageNote', JSON.stringify(expected.note));
@@ -102,10 +107,15 @@ describe('App', () => {
   });
 
   it('onSave failure', async () => {
-    await instance.onSave();
     ApiNotes.addNote.mockClear();
     AsyncStorage.setItem.mockClear();
     ApiNotes.addNote.mockImplementation(() => Promise.reject('API failed'));
+    await instance.onSave();
     expect(AsyncStorage.setItem).not.toBeCalled();
+    expect(Alert.alert).toHaveBeenLastCalledWith(
+      'Save Failed',
+      'API failed',
+      [{text: 'OK'}],
+      {cancelable: false});
   });
 });
