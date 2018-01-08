@@ -1,6 +1,6 @@
 
 import aboutRoutes from './aboutRoutes';
-import App from '../index'; 
+import App from '../app'; 
 import Icon from 'react-native-vector-icons/Foundation';
 import React from 'react';
 import Touchable from 'react-native-platform-touchable';

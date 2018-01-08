@@ -13,8 +13,8 @@
     "eslint-plugin-import"
   ],
   "settings": {
-    "import/ignore": [".util","node_modules"], # ignore this check for utils since they may contain module.exports and this rule doesn't work for modules containing module.exports. Reference: https://github.com/benmosher/eslint-plugin-import/blob/master/README.md#importignore
-    "import/core-modules": ["resolveAssetSource"] # add modules which cannot be resolved automatically, eg react-native modules
+    "import/ignore": [".util","node_modules"], 
+    "import/core-modules": ["resolveAssetSource"] 
   },
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "rules": {

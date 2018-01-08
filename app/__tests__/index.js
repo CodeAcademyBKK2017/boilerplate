@@ -1,6 +1,6 @@
 
 import ApiNotes from '../api';
-import App from '../index';
+import App from '../app';
 import React from 'react';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
@@ -138,10 +138,15 @@ describe('App', () => {
     instance.init();
     expect(ApiNotes.getNotes).toHaveBeenLastCalledWith();
   });
-  it('init Fail Case', async () => {
+  xit('init Fail Case', async () => {
     ApiNotes.getNotes.mockClear();
     ApiNotes.getNotes.mockImplementation(() => Promise.reject('API failed'));
     await instance.init();
     expect(AsyncStorage.getItem).toHaveBeenLastCalledWith('storageNote');
+    AsyncStorage.getItem.mockClear();
+    AsyncStorage.getItem.mockImplementation(() => Promise.resolve('x'));
+    await instance.init();
+    const value = AsyncStorage.getItem('storageNote');
+    expect(value).toEqual('x');
   });
 });
