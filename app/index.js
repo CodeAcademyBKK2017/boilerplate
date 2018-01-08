@@ -46,14 +46,16 @@ export default class App extends Component {
     if (this.state.titleTextInput && this.state.contentTextInput) {
       try {
         const note = await api.addNote({title: this.state.titleTextInput, content: this.state.contentTextInput});
-        if (note.hasOwnProperty('id') && note.hasOwnProperty('title') && note.hasOwnProperty('content')) {
-          const newStateNote = [...this.state.notes, note];
-          // this.setState({notes: newStateNote, titleTextInput: '', contentTextInput: ''});
-          // await AsyncStorage.setItem('notes', JSON.stringify(this.state.notes));
-          this.updateState({notes: newStateNote, titleTextInput: '', contentTextInput: ''});
-        } else {
-          Alert.alert('save Note API fail!');
-        }
+        // if (note.hasOwnProperty('id') && note.hasOwnProperty('title') && note.hasOwnProperty('content')) {
+        //   const newStateNote = [...this.state.notes, note];
+        //   // this.setState({notes: newStateNote, titleTextInput: '', contentTextInput: ''});
+        //   // await AsyncStorage.setItem('notes', JSON.stringify(this.state.notes));
+        //   this.updateState({notes: newStateNote, titleTextInput: '', contentTextInput: ''});
+        // } else {
+        //   Alert.alert('save Note API fail!');
+        // }
+        const newStateNote = [...this.state.notes, note];
+        this.updateState({notes: newStateNote, titleTextInput: '', contentTextInput: ''});
       } catch (error) {
         Alert.alert(
           'save Note API fail!',
