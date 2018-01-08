@@ -9,6 +9,6 @@ if (__DEV__) {
   global.FormData = global.originalFormData ?
     global.originalFormData :
     global.FormData;
-}
+} 
 
 AppRegistry.registerComponent('NoteTaker', () => Router);

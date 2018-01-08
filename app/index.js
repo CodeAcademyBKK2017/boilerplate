@@ -40,17 +40,17 @@ export default class Main extends Component {
     selectedNote: {key: '', title: '', content: ''}
   }
 
-  componentDidMount () {
+  componentDidMount () { 
     this.loadData();
   }
 
   loadData = async () => {
-    let notes = null;
+    let notes = [];
 
     try {
       notes = await API.getNotes();
     } catch (e) {
-      notes = JSON.parse(await AsyncStorage.getItem('notes') || []);
+      notes = JSON.parse(await AsyncStorage.getItem('notes')) || [];
       SnackBar.show(warningBar());
     }  
 
@@ -73,20 +73,21 @@ export default class Main extends Component {
       title: currentTitle,
       content: currentContent
     };
+
+    const newNotes = [...notes, saveNote];
     
-    API.addNote(saveNote).then(() => {
-      const newNotes = [...notes, saveNote];
-      
-      AsyncStorage.setItem('notes', JSON.stringify(newNotes)).then(() => {
+    return API.addNote(saveNote)
+      .then(() => AsyncStorage.setItem('notes', JSON.stringify(newNotes)))
+      .then(() => {
         this.setState({
           notes: newNotes,
           currentTitle: '',
           currentContent: ''
         });
+      }).catch(() => {
+        SnackBar.show(warningBar());
+        throw new Error('API Error');
       });
-    }).catch(() => {
-      SnackBar.show(warningBar());
-    });
   }
 
   _onPressItem = (item) => () => {
@@ -96,22 +97,22 @@ export default class Main extends Component {
     });
   }
 
-  _onDeleteItem = (note) => () => {
-    this._removeNoteItem(note);
-  }
+  _onDeleteItem = (note) => () => this._removeNoteItem(note)
 
   _removeNoteItem = (deleteNote) => {
-    API.deleteNote(deleteNote.id).then(() => {
-      const newNotes = this.state.notes.filter((note) => note !== deleteNote);
-       
-      AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+    const newNotes = this.state.notes.filter((note) => note !== deleteNote);
 
-      this.setState({
-        notes: newNotes
+    return API.deleteNote(deleteNote.id)
+      .then(AsyncStorage.setItem('notes', JSON.stringify(newNotes)))
+      .then(() => {
+        this.setState({
+          notes: newNotes
+        });
+      })
+      .catch(() => {
+        SnackBar.show(warningBar());
+        return new Error('API Error');
       });
-    }).catch(() => {
-      SnackBar.show(warningBar());
-    });
   }
 
   _hideOverlay = () => {
