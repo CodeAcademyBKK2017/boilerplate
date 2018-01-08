@@ -1,10 +1,10 @@
-
 import noop from 'lodash/noop';
 import noteListStyles from './NoteList.style';
 import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import Swipeout from 'react-native-swipeout';
+import {connect} from 'react-redux';
 
 import {
   FlatList,
@@ -78,5 +78,6 @@ NoteList.defaultProps = {
   onDeletePress: noop
 };
 
-export default NoteList;
+const mapStateToProps = (storeState) => ({notes: storeState.notes});
 
+export default connect(mapStateToProps)(NoteList);
