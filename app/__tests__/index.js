@@ -1,9 +1,10 @@
-import 'react-native';
+import api from '../api';
 import App from '../index';
 import React from 'react';
+import renderer from 'react-test-renderer';
 
 // Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
+import {Alert, AsyncStorage} from 'react-native';
 import {shallow} from 'enzyme';
 
 jest.mock('uuid', () => () => '123');
@@ -11,11 +12,10 @@ jest.mock('AsyncStorage', () => ({
   getItem: jest.fn(() => Promise.resolve('')),
   setItem: jest.fn(() => Promise.resolve())
 }));
-jest.mock('api', () => ({
-  getNotes: jest.fn(() => Promise.resolve('')),
-  addNote: jest.fn(() => Promise.resolve()),
-  deleteNote: jest.fn(() => Promise.resolve())
+jest.mock('Alert', () => ({
+  alert: jest.fn()
 }));
+jest.mock('../api');
 
 describe('App', () => {
   let wrapper, instance;
@@ -45,38 +45,80 @@ describe('App', () => {
     instance.onKeyPressContent('123 45 6');
     expect(instance.state.contentTextInput).not.toEqual('123 45');
   });
-  it('onSave: Success', () => {
-    const newNoteState = {titleTextInput: 'Title', contentTextInput: 'Content'};
+  // it('onSave: Success', () => {
+  //   const newNoteState = {titleTextInput: 'Title', contentTextInput: 'Content'};
+  //   const expectedState = {
+  //     titleTextInput: '',
+  //     contentTextInput: '',
+  //     notes: [
+  //       {title: 'Title', content: 'Content', id: '123'}
+  //     ]
+  //   };
+  //   instance.setState(newNoteState);
+  //   instance.onSave();
+  //   expect(instance.state).toMatchObject(expectedState);
+  // });
+  it('onSave: Success', async () => {
+    const newNoteState = {titleTextInput: 'someTitle', contentTextInput: 'someContent'};
+    const expectedNote = {title: 'someTitle', content: 'someContent'};
     const expectedState = {
       titleTextInput: '',
       contentTextInput: '',
       notes: [
-        {title: 'Title', content: 'Content', id: '123'}
+        {id: 1, title: 'someTitle', content: 'someContent'}
       ]
     };
     instance.setState(newNoteState);
-    instance.onSave();
-    expect(instance.state).toMatchObject(expectedState);
+    await instance.onSave();
+    expect(api.addNote).toHaveBeenLastCalledWith(expectedNote);
+    expect(AsyncStorage.setItem).toHaveBeenLastCalledWith('notes', JSON.stringify(expectedState.notes));
+    expect(instance.state).toEqual(expectedState);
   });
-  it('onSave: Failure', () => {
-    const newNoteState = {titleTextInput: '', contentTextInput: ''};
-    const expectedState = {
-      titleTextInput: '',
-      contentTextInput: '',
-      notes: [
-        {title: 'Title', content: 'Content', id: '123'}
-      ]
-    };
-    instance.setState(newNoteState);
-    instance.onSave();
-    expect(instance.state).not.toMatchObject(expectedState);
+  // it('onSave: Failure', () => {
+  //   const newNoteState = {titleTextInput: '', contentTextInput: ''};
+  //   const expectedState = {
+  //     titleTextInput: '',
+  //     contentTextInput: '',
+  //     notes: [
+  //       {title: 'Title', content: 'Content', id: '123'}
+  //     ]
+  //   };
+  //   instance.setState(newNoteState);
+  //   instance.onSave();
+  //   expect(instance.state).not.toMatchObject(expectedState);
+  // });
+  it('onSave: Failure', async () => {
+    api.addNote.mockClear();
+    AsyncStorage.setItem.mockClear();
+    api.addNote.mockImplementation(() => Promise.reject('API failed'));
+    await instance.onSave();
+    expect(AsyncStorage.setItem).not.toBeCalled();
+    expect(Alert.alert).toBeCalled();
   });
-  it('onDeleteNote: Success', () => {
+  // it('onDeleteNote: Success', () => {
+  //   const initState = {
+  //     titleTextInput: '',
+  //     contentTextInput: '',
+  //     notes: [
+  //       {title: 'Title', content: 'Content', id: '123'}
+  //     ]
+  //   };
+  //   const expectedState = {
+  //     titleTextInput: '',
+  //     contentTextInput: '',
+  //     notes: []
+  //   };
+  //   const itemToDelete = {title: 'Title', content: 'Content', id: '123'};
+  //   instance.setState(initState);
+  //   instance.onDeleteNote(itemToDelete)();
+  //   expect(instance.state).toMatchObject(expectedState);
+  // });
+  it('onDeleteNote: Success', async () => {
     const initState = {
       titleTextInput: '',
       contentTextInput: '',
       notes: [
-        {title: 'Title', content: 'Content', id: '123'}
+        {id: 1, title: 'someTitle', content: 'someContent'}
       ]
     };
     const expectedState = {
@@ -84,10 +126,11 @@ describe('App', () => {
       contentTextInput: '',
       notes: []
     };
-    const itemToDelete = {title: 'Title', content: 'Content', id: '123'};
     instance.setState(initState);
-    instance.onDeleteNote(itemToDelete)();
-    expect(instance.state).toMatchObject(expectedState);
+    await instance.onDeleteNote({id: 1})();
+    expect(api.deleteNote).toHaveBeenLastCalledWith(1);
+    expect(AsyncStorage.setItem).toHaveBeenLastCalledWith('notes', JSON.stringify(expectedState.notes));
+    expect(instance.state).toEqual(expectedState);
   });
   it('navigateTo (mock)', () => {
     instance.props.navigation.navigate = jest.fn();
