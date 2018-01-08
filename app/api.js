@@ -1,8 +1,8 @@
-const getNote = () => fetch('https://json-server-example-coeershfcg.now.sh/notes').then((resq) => resq.json());
+const getNote = () => fetch('http://localhost:3000/notes').then((resq) => resq.json());
 
-const deleteNote = (item) => fetch(`https://json-server-example-coeershfcg.now.sh/notes/${item.id}`, {method: 'DELETE'});
+const deleteNote = (item) => fetch(`http://localhost:3000/notes/${item.id}`, {method: 'DELETE'});
 
-const addNote = (newData) => fetch('https://json-server-example-coeershfcg.now.sh/notes', {
+const addNote = (newData) => fetch('http://localhost:3000/notes', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json'

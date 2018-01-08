@@ -23,7 +23,8 @@ export default class App extends Component {
 
   onLoadData = async () => {
     try {
-      await  Api.getNote().then((notes) => this.setState({notes: notes}));
+      const notes = await Api.getNote();
+      this.setState({notes: notes});
       
     } catch (err) {
       AsyncStorage.getItem('state').then((value) => {
@@ -43,23 +44,22 @@ export default class App extends Component {
       key: uuid()
     };
     try {
-      await Api.addNote(newData).then(() => {
-        this.setState({
-          notes: [...this.state.notes, newData],
-          title: '',
-          content: ''
-        }, () => {
-          AsyncStorage.setItem('state', JSON.stringify(this.state));
-        });
+      await Api.addNote(newData);
+      const newNotes = [...this.state.notes, newData];
+      this.setState({
+        notes: newNotes,
+        title: '',
+        content: ''
       });
+      AsyncStorage.setItem('notes', JSON.stringify(newNotes));
     } catch (err) {
       Alert.alert(
         'Error',
         err.message,
         [
-          {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: () => console.log('OK Pressed')}
+          {text: 'Ask me later'},
+          {text: 'Cancel', style: 'cancel'},
+          {text: 'OK'}
         ],
         {cancelable: false}
       );
@@ -72,21 +72,20 @@ export default class App extends Component {
 
   onDeletePress = (item) => async () => {
     try {
-      await Api.deleteNote(item).then(() => {
-        const newNotes = [...this.state.notes];
-        newNotes.splice(newNotes.indexOf(item), 1);
-        this.setState({notes: newNotes}, () => {
-          AsyncStorage.setItem('state', JSON.stringify(this.state));
-        });
+      await Api.deleteNote(item);
+      const newNotes = [...this.state.notes];
+      newNotes.splice(newNotes.indexOf(item), 1);
+      this.setState({notes: newNotes}, () => {
+        AsyncStorage.setItem('notes', JSON.stringify(this.state));
       });
     } catch (err) {
       Alert.alert(
         'Error',
         err.message,
         [
-          {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: () => console.log('OK Pressed')}
+          {text: 'Ask me later'},
+          {text: 'Cancel', style: 'cancel'},
+          {text: 'OK'}
         ],
         {cancelable: false}
       );
