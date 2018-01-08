@@ -107,9 +107,16 @@ export default class App extends Component {
 
   onDeleteButtonPress = (item) => async () => {
     const filteredNotes = this.state.notes.filter((note) => note !== item);
-    if (await new Api.onDelete(item.id, filteredNotes)) {
+    try {
+      await new Api.onDelete(item.id, filteredNotes);
       this.setState({notes: filteredNotes});
-    } 
+    } catch (e) {
+      Alert.alert(
+        'Error',
+        'Internet error',
+        {cancelable: true}
+      );
+    }
     
     // await AsyncStorage.setItem(notesKey, JSON.stringify(filteredNotes));
     // await fetch('http://localhost:3000/posts/' + `${item.id}`, {

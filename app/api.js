@@ -25,21 +25,10 @@ class Api {
     }
 
     onDelete = async (id, filteredNotes) => {
-      try {
-        await fetch('http://localhost:3000/posts/' + `${id}`, {
-          method: 'DELETE'
-        });
-        await AsyncStorage.setItem('notes', JSON.stringify(filteredNotes));
-        return true;
-      } catch (error) {
-        // console.log(error, 'delete error :: ');
-        Alert.alert(
-          'Error',
-          'Internet error',
-          {cancelable: true}
-        );
-        return false;
-      }
+      await fetch('http://localhost:3000/posts/' + `${id}`, {
+        method: 'DELETE'
+      });
+      return await AsyncStorage.setItem('notes', JSON.stringify(filteredNotes));
     } 
 }
 export default new Api();

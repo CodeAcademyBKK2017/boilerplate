@@ -18,7 +18,7 @@ jest.mock('uuid', () => () => 'some uuid');
 jest.mock('../api', () => ({
   onGetNote: jest.fn(() => Promise.resolve([])),
   onAddNote: jest.fn(() => Promise.resolve()),
-  onDeleteNote: jest.fn(() => Promise.resolve())
+  onDelete: jest.fn(() => Promise.resolve())
 }));
 
 // constant
