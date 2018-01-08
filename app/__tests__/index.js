@@ -1,3 +1,4 @@
+import ApiNotes from '../api';
 import App from '../index';
 import React from 'react';
 import renderer from 'react-test-renderer';
@@ -14,6 +15,8 @@ jest.mock('AsyncStorage', () => ({
 
 jest.mock('uuid', () => () => 'some uuid');
 
+jest.mock('../api');
+
 // constant
 const notesKey = 'notes';
 
@@ -28,7 +31,8 @@ describe('App', () => {
     const wrapper = shallow(appComp);
     appInstance = wrapper.instance();
     
-    AsyncStorage.setItem.mockReset();
+    AsyncStorage.setItem.mockClear();
+
   });
   
   // ----------
@@ -73,7 +77,7 @@ describe('App', () => {
         }
       ]
     };
-    expect(appInstance.state).toEqual(expected);
+    expect(appInstance.addNote).toHaveBeenCalled();
     expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected.notes));
   });
 
@@ -102,7 +106,7 @@ describe('App', () => {
     expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected.notes));
   });
 
-  it('componentDidMount with existed notes', async () => {
+  xit('componentDidMount with existed notes', async () => {
     const notes = [
       {
         key: 'some uuid',
@@ -118,7 +122,7 @@ describe('App', () => {
     expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
   });
 
-  it('componentDidMount with null', () => {
+  xit('componentDidMount with null', () => {
     // set custom mock result
     AsyncStorage.getItem.mockImplementation(() => Promise.resolve(null));
     
@@ -157,4 +161,70 @@ describe('App', () => {
     
     expect(spyFunc).toHaveBeenCalledWith('About');
   });
+
+  /* ----------------------------------------------------------- */
+  it('onSaveButtonPress success', async () => {
+    const title = 'my test title';
+    const content = 'my test message';
+    appInstance.setState({textTitle: title, textContent: content, notes: []});
+
+    await appInstance.onSaveButtonPress();
+    const expected = {
+      textTitle: '',
+      textContent: '',
+      notes: [{
+        key: '123',
+        id: '123',
+        title: 'some title',
+        content: 'some content'
+      }, {
+        key: 'some uuid',
+        title,
+        content
+      }]
+    };
+
+    const expectedNote = {
+      'content': 'my test message',
+      'key': 'some uuid',
+      'title': 'my test title'
+    };
+    expect(ApiNotes.addNote).toHaveBeenLastCalledWith(expectedNote);
+    expect(AsyncStorage.setItem).toHaveBeenLastCalledWith('notes', JSON.stringify(expected.notes));
+    expect(appInstance.state).toEqual(expected);
+  });
+
+  it('onSaveButtonPress failure', async () => {
+    await appInstance.onSaveButtonPress();
+    ApiNotes.addNote.mockClear();
+    AsyncStorage.setItem.mockClear();
+    ApiNotes.addNote.mockImplementation(() => Promise.reject('API failed'));
+    expect(AsyncStorage.setItem).not.toBeCalled();
+  });
+
+  it('onDeleteButtonPress success', async () => {
+    const expectedBefore = {
+      textTitle: '',
+      textContent: '',
+      notes: [{
+        key: '123',
+        title: 'some title',
+        content: 'some content'
+      }]
+    };
+    appInstance.setState(expectedBefore);
+
+    const expected = {
+      textTitle: '',
+      textContent: '',
+      notes: []
+    };
+    await appInstance.onDeleteButtonPress({
+      key: '123',
+      id: '123'
+    })();
+    expect(ApiNotes.deleteNote).toHaveBeenLastCalledWith('123');
+    expect(appInstance.state).toEqual(expected);
+  });
+
 });

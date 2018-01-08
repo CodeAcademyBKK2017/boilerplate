@@ -47,12 +47,9 @@ export default class App extends Component {
         title: this.state.textTitle,
         content: this.state.textContent
       };
-
-      await new ApiNotes().addNote(note);
-
+      await ApiNotes.addNote(note);
       const newNotes = [...this.state.notes];
       newNotes.push(note);
-
       await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
 
       const newState = {
@@ -66,7 +63,7 @@ export default class App extends Component {
         'Save Failed',
         String(error),
         [
-          {text: 'OK', onPress: () => {}}
+          {text: 'OK'}
         ],
         {
           cancelable: false
@@ -77,9 +74,9 @@ export default class App extends Component {
 
   onDeleteButtonPress = (item) => async () => {
     try {
-      await new ApiNotes().deleteNote(item.id);
+      await ApiNotes.deleteNote(item.id);
 
-      const filteredNotes = this.state.notes.filter((note) => note !== item);
+      const filteredNotes = this.state.notes.filter((note) => note.key !== item.key);
       this.setState({
         notes: filteredNotes
       });
@@ -101,7 +98,7 @@ export default class App extends Component {
 
   loadData = async () => {
     try {
-      const response = await new ApiNotes().getNotes();
+      const response = await ApiNotes.getNotes();
 
       this.setState({
         notes: response
