@@ -1,4 +1,4 @@
-import Router from './app/routes';
+import NoteTaker from './app/index';
 import {AppRegistry} from 'react-native';
 
 if (__DEV__) {
@@ -11,4 +11,4 @@ if (__DEV__) {
     global.FormData;
 } 
 
-AppRegistry.registerComponent('NoteTaker', () => Router);
+AppRegistry.registerComponent('NoteTaker', () => NoteTaker);
