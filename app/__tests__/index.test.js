@@ -121,7 +121,7 @@ describe('App', () => {
     Api.deleteNote.mockClear();
     AsyncStorage.setItem.mockClear();
     Api.deleteNote.mockImplementation(() => Promise.reject('API failed'));
-    await instance.onDeletePress();
+    await instance.onDeletePress()();
     expect(AsyncStorage.setItem).not.toBeCalled();
     expect(Alert.alert).toBeCalled();
   });
