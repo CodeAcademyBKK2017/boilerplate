@@ -25,7 +25,6 @@ export default class App extends Component {
     try {
       const notes = await Api.getNote();
       this.setState({notes: notes});
-      
     } catch (err) {
       AsyncStorage.getItem('state').then((value) => {
         this.setState(JSON.parse(value));
@@ -72,6 +71,7 @@ export default class App extends Component {
 
   onDeletePress = (item) => async () => {
     try {
+      console.log(item);
       await Api.deleteNote(item);
       const newNotes = [...this.state.notes];
       newNotes.splice(newNotes.indexOf(item), 1);
