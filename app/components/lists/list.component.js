@@ -9,6 +9,7 @@ import ProptTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './list.style';
 import Swipeout from 'react-native-swipeout';
+import {connect} from 'react-redux';
 import {
   FlatList,
   Text,
@@ -16,7 +17,7 @@ import {
   View
 } from 'react-native';
 
-export default class List extends Component {
+class List extends Component {
     state = {
       modalVisible: false,
       currentItem: {}
@@ -76,3 +77,7 @@ List.defaultProps = {
   arrayContent: [],
   removeNote: noop
 };
+
+const mapStateToProps = (storeState) => ({arrayContent: storeState.notes});
+
+export default connect(mapStateToProps)(List);

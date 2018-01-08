@@ -1,5 +1,10 @@
 import {combineReducers} from 'redux';
 
 export default combineReducers({
-  init: () => ({})
+  notes: () => ([
+    {
+      title: 'hello',
+      content: 'world'
+    }
+  ])
 });
