@@ -1,5 +1,5 @@
 import ApiNotes from '../api';
-import App from '../index';
+import App from '../app';
 import React from 'react';
 import renderer from 'react-test-renderer';
 
