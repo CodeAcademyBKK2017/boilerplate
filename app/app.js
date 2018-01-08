@@ -88,7 +88,6 @@ export default class App extends Component {
 
   _removeContent = (content) => async () => { 
     try {
-      console.log(this.state);
       await ApiNotes.deleteNote(content.id);
       const newArray = this.state.arrayContent.filter((item) => item.key !== content.key);
       const newState = {

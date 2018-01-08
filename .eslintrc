@@ -96,6 +96,7 @@
     "beforeAll": false,
     "beforeEach": false,
     "afterAll": false,
-    "afterEach": false
+    "afterEach": false,
+    "__DEV__":false
   }
 }
