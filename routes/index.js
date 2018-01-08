@@ -1,6 +1,6 @@
 import About from './about.routes';
+import App from '../app/app';
 import Icon from 'react-native-vector-icons/Foundation';
-import Main from '../app/index';
 import React from 'react';
 import {DrawerNavigator, StackNavigator} from 'react-navigation';
 import {
@@ -14,7 +14,7 @@ const RootNavigator = StackNavigator({
   Main: {
     screen: DrawerNavigator({
       Main: {
-        screen: Main
+        screen: App
       },
       About: {
         screen: About

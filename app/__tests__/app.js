@@ -1,5 +1,5 @@
 import apiNotes from '../api';
-import App from '../index';
+import App from '../app';
 import React from 'react';
 
 // Note: test renderer must be required after react-native.
