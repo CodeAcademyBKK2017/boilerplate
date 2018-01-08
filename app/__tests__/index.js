@@ -1,17 +1,33 @@
+import apiNotes from '../api';
 import App from '../index';
 import React from 'react';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
-import {AsyncStorage} from 'react-native';
+import {Alert, AsyncStorage} from 'react-native';
 import {shallow} from 'enzyme';
+
+jest.mock('../api'); // file mock
 
 jest.mock('AsyncStorage', () => ({
   getItem: jest.fn(() => Promise.resolve('')),
   setItem: jest.fn(() => Promise.resolve())
 }));
 
+jest.mock('uuid', () => () => 'some uuid');
+
 describe('App', () => {
+
+  const props = {};
+  const wrapper = shallow(<App {...props}/>);
+  const instance = wrapper.instance();
+      
+  const stateClear = {
+    modalData: {},
+    titleText: '',
+    contentText: '',
+    NOTES: []
+  };
 
   it('renders correctly', () => {
     const tree = renderer.create(<App />);
@@ -24,34 +40,22 @@ describe('App', () => {
   });
 
   it('Check state', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
     expect(instance.state.titleText).toEqual('');
     expect(instance.state.contentText).toEqual('');
   });
 
   it('Check Function onContentChange', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
     instance.onContentChange('some');
     expect(instance.state.contentText).toEqual('some');
     expect(instance.state.contentText.length).toEqual(4);
   });
   
   it('Check Function onTitleChenge', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
     instance.onTitleChange('title');
     expect(instance.state.titleText).toEqual('title');
   });
 
   it('Check Function showFlatList', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
     instance.onTitleChange('React Native');
     instance.onContentChange('- UI');
     instance.onSave();
@@ -59,9 +63,6 @@ describe('App', () => {
   }); 
 
   it('Check Function viewOverlay', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
     const note = {
       title: 'React Native',
       content: '- UI',
@@ -72,9 +73,6 @@ describe('App', () => {
   });
 
   it('Check Function onShowModal', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
     const note = {
       title: 'React Native',
       content: '- UI',
@@ -85,53 +83,8 @@ describe('App', () => {
   });
 
   it('Check Function onCloseModal', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
     instance.onCloseModal();
     expect(instance.state.modalData).toEqual({});
-  });
-
-  it('Check Function onSave', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
-    const expectRes = {
-      modalData: {},
-      titleText: '',
-      contentText: '',
-      NOTES: [{
-        title: 'React Native',
-        content: '- UI',
-        key: 0
-      }]
-    };
-    instance.onTitleChange('React Native');
-    instance.onContentChange('- UI');
-    instance.onSave();
-    expect(instance.state).toEqual(expectRes);
-  });
-
-  it('Check Function onDelete', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
-    const note = {
-      title: 'React Native',
-      content: '- UI',
-      key: 0
-    };
-    const expectRes = {
-      modalData: {},
-      titleText: '',
-      contentText: '',
-      NOTES: []
-    };
-    instance.onTitleChange('React Native');
-    instance.onContentChange('- UI');
-    instance.onSave();
-    instance.onDelete(note)();
-    expect(instance.state).toEqual(expectRes);
   });
 
   it('Check Function openAbout with mock', () => { // mock
@@ -162,42 +115,98 @@ describe('App', () => {
     expect(spyFunc).toHaveBeenCalledWith('About');
   });
 
-  const notesKey = 'state';
-  
   it('componentDidMount with existed notes', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
-
-    const notes = [
-      {
-        key: 'some uuid',
-        title: 'my test title',
-        content: 'my test message'
-      }
-    ];
-    // set custom mock result
-    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(JSON.stringify(notes)));
-
-    instance.componentDidMount();
-
-    expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
+    jest.spyOn(instance, 'onLoadDataState');
+    instance.componentDidMount();    
+    expect(instance.onLoadDataState).toBeCalled();
   });
 
-  it('componentDidMount with null', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
+  it('onLoadDataState', async () => { // connect server success !!
 
-    // set custom mock result
-    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(null));
+    instance.setState(stateClear); // clear state
     
-    instance.componentDidMount();
+    const notes = await apiNotes.getNotes();
+    instance.setState({NOTES: notes});
 
-    expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
+    const expected = {
+      modalData: {},
+      titleText: '',
+      contentText: '',
+      NOTES: [{
+        title: 'React Native',
+        content: '- UI',
+        key: 0,
+        id: 1
+      }]
+    };
+    expect(instance.state).toEqual(expected);
   });
 
-  it('Check Function onLoadDataState', () => {
+  xit('Check Function onSave success', async () => {
+
+    instance.setState(stateClear); // clear state
+
+    const title = 'React Native';
+    const content = '- UI';
+    instance.setState({titleText: title, contentText: content});
+
+    await instance.onSave();
+
+    const expectedNote = {
+      'title': 'React Native',
+      'content': '- UI',
+      'key': 0,
+      'id': 1
+    };
+
+    const expected = {
+      modalData: {},
+      titleText: '',
+      contentText: '',
+      NOTES: [{
+        title: 'React Native',
+        content: '- UI',
+        key: 0,
+        id: 1
+      }]
+    };
+
+    expect(apiNotes.addNotes).toHaveBeenLastCalledWith(expectedNote);
+    expect(AsyncStorage.setItem).toHaveBeenLastCalledWith('state', JSON.stringify(expected));
+    expect(instance.state).toEqual(expected);
+  });
+
+  it('Check Function onSave failure', async () => {
+    await instance.onSave();
+    apiNotes.addNotes.mockClear();
+    AsyncStorage.setItem.mockClear();
+    apiNotes.addNotes.mockImplementation(() => Promise.reject('API failed'));
+    expect(AsyncStorage.setItem).not.toBeCalled();
+  });
+
+  xit('Check Function onDelete', async () => {
+
+    instance.setState(stateClear); // clear state
+
+    const note = {
+      title: 'React Native',
+      content: '- UI',
+      key: 0
+    };
     
+    instance.setState({NOTES: note});
+
+    await instance.onDelete(note);
+
+    expect(instance.state).toEqual(stateClear);
+  });
+
+  xit('onDeletePress failure', async () => {
+    apiNotes.deleteNote.mockClear();
+    AsyncStorage.setItem.mockClear();
+    apiNotes.deleteNote.mockImplementation(() => Promise.reject('API failed'));
+    await instance.onDeletePress()();
+    expect(AsyncStorage.setItem).not.toBeCalled();
+    expect(Alert.alert).toBeCalled();
   });
 });

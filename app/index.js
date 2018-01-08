@@ -34,7 +34,8 @@ export default class App extends Component {
 
   onLoadDataState = async () => {
     try {
-      await apiNotes.getNotes().then((notes) => this.setState({NOTES: notes}));
+      const notes = await apiNotes.getNotes();
+      this.setState({NOTES: notes});
     } catch (err) {
       const dataState = await AsyncStorage.getItem('state');
       this.setState(JSON.parse(dataState));
@@ -46,45 +47,48 @@ export default class App extends Component {
   onContentChange = (content) => this.setState({contentText: content});
 
   onSave = async () => {
-    const newData = {
-      title: this.state.titleText,
-      content: this.state.contentText,
-      key: this.state.NOTES.length
-    };
-    const newDataNOTES = [...this.state.NOTES, newData];
-    const newStateData = {
-      modalData: {},
-      titleText: '',
-      contentText: '',
-      NOTES: newDataNOTES
-    };
-
     try {
-      await apiNotes.addNotes(newData).then(() => {
-        AsyncStorage.setItem('state', JSON.stringify(newStateData));
-        this.setState(newStateData);
+      const aa = await apiNotes.addNotes({
+        title: this.state.titleText,
+        content: this.state.contentText,
+        key: this.state.NOTES.length
       });
+
+      const newData = {
+        title: this.state.titleText,
+        content: this.state.contentText,
+        key: this.state.NOTES.length,
+        id: (JSON.parse(aa._bodyText)).id
+      };
+      const newDataNOTES = [...this.state.NOTES, newData];
+      const newStateData = {
+        modalData: {},
+        titleText: '',
+        contentText: '',
+        NOTES: newDataNOTES
+      };
+
+      AsyncStorage.setItem('state', JSON.stringify(newStateData));
+      this.setState(newStateData);
     } catch (err) {
       this.onShowAlert(err);
     }
-    
   }
 
   onDelete = (item) => async () => {
     try {
-      await apiNotes.deleteNotes(item).then(() => {
-        const dataNOTES = [...this.state.NOTES];
-        const deletePosition = dataNOTES.indexOf(item);
-        dataNOTES.splice(deletePosition, 1);
-        const newStateData = {
-          modalData: {},
-          titleText: '',
-          contentText: '',
-          NOTES: dataNOTES
-        };
-        AsyncStorage.setItem('state', JSON.stringify(newStateData));
-        this.setState(newStateData);
-      });
+      await apiNotes.deleteNotes(item);
+      const dataNOTES = [...this.state.NOTES];
+      const deletePosition = dataNOTES.indexOf(item);
+      dataNOTES.splice(deletePosition, 1);
+      const newStateData = {
+        modalData: {},
+        titleText: '',
+        contentText: '',
+        NOTES: dataNOTES
+      };
+      AsyncStorage.setItem('state', JSON.stringify(newStateData));
+      this.setState(newStateData);
     } catch (err) {
       this.onShowAlert(err);
     }
