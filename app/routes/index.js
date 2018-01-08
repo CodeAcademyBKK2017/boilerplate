@@ -1,5 +1,5 @@
 import AboutRoutes from './about.routes.js';
-import App from '../index';
+import App from '../app';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import React from 'react';
 import {DrawerNavigator, StackNavigator} from 'react-navigation';

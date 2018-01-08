@@ -1,4 +1,4 @@
-import Routes from './app/routes/index';
+import App from './app/index';
 import {AppRegistry} from 'react-native';
 
 global.XMLHttpRequest = global.originalXMLHttpRequest ?
@@ -8,4 +8,4 @@ global.FormData = global.originalFormData ?
   global.originalFormData :
   global.FormData;
 
-AppRegistry.registerComponent('NoteTaker', () => Routes);
+AppRegistry.registerComponent('NoteTaker', () => App);

@@ -1,5 +1,5 @@
 import Api from '../api';
-import App from '../index';
+import App from '../app';
 import NoteList from '../components/NoteList/NoteList.component';
 import React from 'react';
 // Note: test renderer must be required after react-native.
