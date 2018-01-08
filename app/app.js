@@ -10,12 +10,15 @@ import shortid from 'shortid';
 import SnackBar from 'react-native-snackbar';
 import styles from './app.styles';
 import Title from './components/Title/Title.component';
-
 import Touchable from 'react-native-platform-touchable';
+
+const NewFlatList = connect((storeState) => ({data: storeState.notes}))(FlatList);
 
 import {
   AsyncStorage, FlatList, Text, View
 } from 'react-native';
+
+import {connect} from 'react-redux';
 
 const warningBar = () => ({
   title: 'Network errors: Can\'t connect to server.',
@@ -126,14 +129,13 @@ export default class Main extends Component {
   _renderItem = ({item}) => (<NoteItem data={item} onPressItem={this._onPressItem} onDeleteItem={this._onDeleteItem} />)
 
   render () {
+
     return (
       <View style={styles.container}>
         <Title onChangeText={this.onTitleChangeText} value={this.state.currentTitle} />
         <Content onChangeText={this.onContentChangeText} value={this.state.currentContent} />
         <Footer characterCount={this.state.currentContent.length} onSaveButtonPress={this.onSaveButtonPress} />
-        <View style={styles.list}>
-          <FlatList data={this.state.notes} renderItem={this._renderItem}  />
-        </View> 
+        <View style={styles.list}><NewFlatList renderItem={this._renderItem} /></View>
 
         <Overlay visible={this.state.modalVisible}
           onClose={this._hideOverlay}
