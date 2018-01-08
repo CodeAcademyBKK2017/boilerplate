@@ -17,6 +17,10 @@ jest.mock('uuid', () => () => 'some uuid');
 
 jest.mock('../api');
 
+jest.mock('Alert', () => ({
+  alert: jest.fn()
+}));
+
 // constant
 const notesKey = 'notes';
 
@@ -89,12 +93,11 @@ describe('App', () => {
 
   it('onSaveButtonPress failure', async () => {
     ApiNotes.addNote.mockImplementation(() => Promise.reject('API failed'));
-    const spyFunc = jest.spyOn(Alert, 'alert');
-
+    
     await appInstance.onSaveButtonPress();
     
     expect(AsyncStorage.setItem).not.toBeCalled();
-    expect(spyFunc).toHaveBeenCalledWith('Save Failed', 'API failed',
+    expect(Alert.alert).toHaveBeenCalledWith('Save Failed', 'API failed',
       [
         {text: 'OK'}
       ],
