@@ -35,8 +35,10 @@ describe('App', () => {
     const wrapper = shallow(appComp);
     appInstance = wrapper.instance();
     
+    AsyncStorage.getItem.mockClear();
     AsyncStorage.setItem.mockClear();
     
+    ApiNotes.getNotes.mockClear();
     ApiNotes.deleteNote.mockClear();
     ApiNotes.addNote.mockClear();
   });
@@ -151,8 +153,7 @@ describe('App', () => {
     );
   });
 
-  it('componentDidMount with existed notes', async () => {
-    ApiNotes.getNotes.mockClear();
+  it('loadData with existed notes', async () => {
     ApiNotes.getNotes.mockImplementation(() => Promise.resolve([{
       id: 1,
       title: 'my test title',
@@ -179,19 +180,19 @@ describe('App', () => {
       }]
     };
 
-    await appInstance.componentDidMount();
+    await appInstance.loadData();
 
     expect(ApiNotes.getNotes).toBeCalled();
     expect(appInstance.state).toEqual(expected);
   });
 
-  it('componentDidMount with null', () => {
-    // set custom mock result
-    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(null));
-    
-    appInstance.componentDidMount();
+  it('loadData with empty', async () => {
+    ApiNotes.getNotes.mockImplementation(() => Promise.resolve([]));
 
-    expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
+    await appInstance.loadData();
+
+    expect(ApiNotes.getNotes).toBeCalled();
+    expect(appInstance.state.notes).toEqual([]);
   });
 
   it('onAboutButtonPress with mock', () => {
