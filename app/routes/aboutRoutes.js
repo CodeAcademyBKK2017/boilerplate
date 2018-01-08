@@ -38,6 +38,7 @@ const aboutRoutes = StackNavigator({
     navigationOptions: (naviObject) =>  {
       const toggle = () => naviObject.navigation.navigate('DrawerToggle');
       return {
+        // eslint-disable-next-line
         headerLeft: <Touchable onPress={toggle}><Icon name='list' size={20}/></Touchable>,
         headerTitle: 'About'
       };

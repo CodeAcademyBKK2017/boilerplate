@@ -1,8 +1,9 @@
 
+import ApiNotes from '../api';
 import App from '../index';
 import React from 'react';
-import renderer from 'react-test-renderer';
 // Note: test renderer must be required after react-native.
+import renderer from 'react-test-renderer';
 import {AsyncStorage} from 'react-native';
 import {shallow} from 'enzyme';
 
@@ -12,6 +13,7 @@ jest.mock('AsyncStorage', () => ({
   mergeItem: jest.fn(() => Promise.resolve()),
   multiGet: jest.fn(() => Promise.resolve('{}'))
 }));
+jest.mock('../api');
 jest.mock('uuid', () => () => 'someUUID');
 
 describe('App', () => {
@@ -32,31 +34,7 @@ describe('App', () => {
     instance.changeContent('123');
     expect(instance.state.content).toEqual('123');
   });
-  it('onSave: Should have state Change', () => {
-    wrapper.setState({title: 'someTitle', content: 'someContent'});
-    // instance.setState({title: 'someTitle', content: 'someContent'});
-    instance.onSave();
-    expect(instance.state.note).toEqual([{title: 'someTitle', content: 'someContent', key: 'someUUID'}]);
-    instance.setState({title: 'abc', content: 'def'});
-    instance.onSave();
-    expect(instance.state.note).toEqual([
-      {title: 'someTitle', content: 'someContent', key: 'someUUID'},
-      {title: 'abc', content: 'def', key: 'someUUID'}
-    ]);
-  });
-  it('onDelete Should have Change state', () => {
-    const item = {title: 'y', content: 2, key: 2};
-    const expectedState = {
-      title: '',
-      content: '',
-      note: [{title: 'x', content: 1, key: 1}]
-    };
-    instance.setState({
-      note: [{title: 'x', content: 1, key: 1}, {title: 'y', content: 2, key: 2}]});
 
-    instance.onDelete(item)();
-    expect(instance.state.note).toEqual(expectedState.note);
-  });
   it('init should have been call with new note', async () => {
     const storageNote = [
       {
@@ -95,5 +73,39 @@ describe('App', () => {
     instance.goToAbout();
     expect(spyFn).toHaveBeenCalled();
     expect(spyFn).toHaveBeenCalledWith('About');
+  });
+
+  it('onSave success', async () => {
+    const title = 'my test title';
+    const content = 'my test message';
+    instance.setState({title: title, content: content});
+
+    await instance.onSave();
+    const expected = {
+      title: '',
+      content: '',
+      note: [{
+        key: 'some uuid',
+        title,
+        content
+      }]
+    };
+
+    const expectedNote = {
+      'content': 'my test message',
+      'key': 'some uuid',
+      'title': 'my test title'
+    };
+    expect(ApiNotes.addNote).toHaveBeenLastCalledWith(expectedNote);
+    expect(AsyncStorage.setItem).toHaveBeenLastCalledWith('storageNote', JSON.stringify(expected.note));
+    expect(instance.state).toEqual(expected);
+  });
+
+  it('onSave failure', async () => {
+    await instance.onSave();
+    ApiNotes.addNote.mockClear();
+    AsyncStorage.setItem.mockClear();
+    ApiNotes.addNote.mockImplementation(() => Promise.reject('API failed'));
+    expect(AsyncStorage.setItem).not.toBeCalled();
   });
 });
