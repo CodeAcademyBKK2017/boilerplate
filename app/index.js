@@ -46,7 +46,7 @@ export default class App extends Component {
         content: this.state.textContent
       };
 
-      const response = await new ApiNotes().addNote(note);
+      const response = await ApiNotes.addNote(note);
 
       const newNotes = [...this.state.notes];
       newNotes.push(response);
@@ -75,7 +75,7 @@ export default class App extends Component {
 
   onDeleteButtonPress = (item) => async () => {
     try {
-      await new ApiNotes().deleteNote(item.id);
+      await ApiNotes.deleteNote(item.id);
 
       const filteredNotes = this.state.notes.filter((note) => note !== item);
       this.setState({
@@ -99,7 +99,7 @@ export default class App extends Component {
 
   loadData = async () => {
     try {
-      const response = await new ApiNotes().getNotes();
+      const response = await ApiNotes.getNotes();
 
       this.setState({
         notes: response

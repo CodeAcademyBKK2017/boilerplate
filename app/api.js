@@ -1,4 +1,4 @@
-export default class ApiNotes {
+class ApiNotes {
   API_NOTES = 'http://localhost:3000/notes';
 
   getNotes = () => {
@@ -30,3 +30,5 @@ export default class ApiNotes {
       .then((response) => response.json());
   }
 }
+
+export default new ApiNotes();
