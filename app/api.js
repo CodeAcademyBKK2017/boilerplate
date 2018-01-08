@@ -1,5 +1,5 @@
 import {
-  Alert, AsyncStorage
+  AsyncStorage
 } from 'react-native';
 
 // AsyncStorage.clear();

@@ -1,6 +1,6 @@
 import About from '../components/About/About.component';
 import AboutDev from '../components/About/AboutDev.component';
-import App from '../index';
+import App from '../app';
 import Icon from 'react-native-vector-icons/Foundation';
 import React from 'react';
 import styles from './index.style';
