@@ -2,7 +2,7 @@ import API from '../api';
 import App from '../index';
 import NoteItem from '../components/NoteItem/NoteItem.component';
 import React from 'react';
-import renderer from 'react-test-renderer';
+// import renderer from 'react-test-renderer';
 import SnackBar from 'react-native-snackbar';
 import {AsyncStorage} from 'react-native';
 
@@ -145,7 +145,7 @@ describe('App', () => {
     API.getNotes.mockImplementation(() => Promise.reject('API failed'));
     AsyncStorage.getItem.mockImplementation(() => Promise.resolve(undefined));
 
-    await instance.loadData();
+    await instance.loadData(); 
     
     expect(AsyncStorage.getItem).toBeCalled();
   });
