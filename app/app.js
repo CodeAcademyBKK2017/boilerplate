@@ -26,6 +26,7 @@ export default class App extends Component {
        const response = await ApiNotes.getNotes();
        this.setState({note: response});
      } catch (error) {
+       console.log('error', error);
        const value = await AsyncStorage.getItem('storageNote');
        const note = value ? JSON.parse(value) : [];
        this.setState({note});
