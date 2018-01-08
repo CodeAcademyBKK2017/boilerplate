@@ -3,5 +3,6 @@ export default {
     id: 1,
     title: 'my test title',
     content: 'my test message'
-  }))
+  })),
+  deleteNote: jest.fn()
 };

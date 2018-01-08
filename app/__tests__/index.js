@@ -97,18 +97,17 @@ describe('App', () => {
     await appInstance.onSaveButtonPress();
     
     expect(AsyncStorage.setItem).not.toBeCalled();
-    expect(Alert.alert).toHaveBeenCalledWith('Save Failed', 'API failed',
-      [
-        {text: 'OK'}
-      ],
-      {
-        cancelable: false
-      });
+    expect(Alert.alert).toHaveBeenCalledWith(
+      'Save Failed',
+      'API failed',
+      [{text: 'OK'}],
+      {cancelable: false}
+    );
   });
 
-  xit('onDeleteButtonPress', () => {
+  it('onDeleteButtonPress success', async () => {
     const note00 = {
-      key: 'some uuid',
+      id: 1,
       title: 'title 00',
       content: 'content 00'
     };
@@ -120,15 +119,34 @@ describe('App', () => {
     appInstance.setState(initialState);
     
     const curryFunc = appInstance.onDeleteButtonPress(note00);
-    curryFunc();
+    await curryFunc();
 
     const expected = {
       textTitle: '',
       textContent: '',
       notes: []
     };
+    expect(ApiNotes.deleteNote).toHaveBeenCalledWith(note00.id);
     expect(appInstance.state).toEqual(expected);
-    expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected.notes));
+  });
+
+  it('onDeleteButtonPress failure', async () => {
+    ApiNotes.deleteNote.mockImplementation(() => Promise.reject('API failed'));
+    const note00 = {
+      id: 1,
+      title: 'title 00',
+      content: 'content 00'
+    };
+    
+    const curryFunc = appInstance.onDeleteButtonPress(note00);
+    await curryFunc();
+
+    expect(Alert.alert).toHaveBeenCalledWith(
+      'Delete Failed',
+      'API failed',
+      null,
+      {cancelable: false}
+    );
   });
 
   it('componentDidMount with existed notes', async () => {
