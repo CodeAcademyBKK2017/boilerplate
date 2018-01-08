@@ -61,7 +61,7 @@ export default class App extends Component {
           'save Note API fail!',
           String(error),
           [
-            {text: 'OK', onPress: () => {}}
+            {text: 'OK'}
           ],
           {
             cancelable: false

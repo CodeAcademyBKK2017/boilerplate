@@ -65,6 +65,7 @@ describe('App', () => {
       titleTextInput: '',
       contentTextInput: '',
       notes: [
+        {id: 0, title: 'someTitle', content: 'someContent'},
         {id: 1, title: 'someTitle', content: 'someContent'}
       ]
     };
@@ -89,11 +90,19 @@ describe('App', () => {
   // });
   it('onSave: Failure', async () => {
     api.addNote.mockClear();
+    Alert.alert.mockClear();
     AsyncStorage.setItem.mockClear();
     api.addNote.mockImplementation(() => Promise.reject('API failed'));
+    instance.setState({titleTextInput: 'someTitle', contentTextInput: 'someContent'});
     await instance.onSave();
     expect(AsyncStorage.setItem).not.toBeCalled();
-    expect(Alert.alert).toBeCalled();
+    expect(Alert.alert).toHaveBeenLastCalledWith('save Note API fail!', 'API failed',
+      [
+        {text: 'OK'}
+      ],
+      {
+        cancelable: false
+      });
   });
   // it('onDeleteNote: Success', () => {
   //   const initState = {
@@ -114,19 +123,13 @@ describe('App', () => {
   //   expect(instance.state).toMatchObject(expectedState);
   // });
   it('onDeleteNote: Success', async () => {
-    const initState = {
-      titleTextInput: '',
-      contentTextInput: '',
-      notes: [
-        {id: 1, title: 'someTitle', content: 'someContent'}
-      ]
-    };
     const expectedState = {
       titleTextInput: '',
       contentTextInput: '',
-      notes: []
+      notes: [
+        {id: 0, title: 'someTitle', content: 'someContent'}
+      ]
     };
-    instance.setState(initState);
     await instance.onDeleteNote({id: 1})();
     expect(api.deleteNote).toHaveBeenLastCalledWith(1);
     expect(AsyncStorage.setItem).toHaveBeenLastCalledWith('notes', JSON.stringify(expectedState.notes));
