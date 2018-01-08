@@ -4,7 +4,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 // Note: test renderer must be required after react-native.
-import {AsyncStorage} from 'react-native';
+import {Alert, AsyncStorage} from 'react-native';
 import {shallow} from 'enzyme';
 
 // mock function with default result
@@ -87,7 +87,23 @@ describe('App', () => {
     expect(appInstance.state).toEqual(expectedState);
   });
 
-  it('onDeleteButtonPress', () => {
+  it('onSaveButtonPress failure', async () => {
+    ApiNotes.addNote.mockImplementation(() => Promise.reject('API failed'));
+    const spyFunc = jest.spyOn(Alert, 'alert');
+
+    await appInstance.onSaveButtonPress();
+    
+    expect(AsyncStorage.setItem).not.toBeCalled();
+    expect(spyFunc).toHaveBeenCalledWith('Save Failed', 'API failed',
+      [
+        {text: 'OK'}
+      ],
+      {
+        cancelable: false
+      });
+  });
+
+  xit('onDeleteButtonPress', () => {
     const note00 = {
       key: 'some uuid',
       title: 'title 00',

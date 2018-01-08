@@ -64,7 +64,7 @@ export default class App extends Component {
         'Save Failed',
         String(error),
         [
-          {text: 'OK', onPress: () => {}}
+          {text: 'OK'}
         ],
         {
           cancelable: false
