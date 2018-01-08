@@ -10,7 +10,7 @@ const getNaviHome = ({navigation}) => {
   const onShowNaviDrawer = () => {
     navigation.navigate('DrawerToggle');
   };
-  const btn = (
+  const btn = ( // eslint-disable-next-line
     <Icon.Button iconStyle={styles.buttom} backgroundColor='transparent' color='black' name='list-thumbnails' onPress={onShowNaviDrawer} />
   );
   return {
@@ -23,7 +23,7 @@ const getNaviAboutApp = ({navigation}) => {
   const onShowNaviDrawer = () => {
     navigation.navigate('DrawerToggle');
   };
-  const btn = (
+  const btn = ( // eslint-disable-next-line
     <Icon.Button iconStyle={styles.buttom} backgroundColor='transparent' color='black' name='list-thumbnails' onPress={onShowNaviDrawer} />
   );
   return {
@@ -37,7 +37,7 @@ const getNaviAboutDev = ({navigation}) => {
   const onShowNaviDrawer = () => {
     navigation.navigate('DrawerToggle');
   };
-  const btn = (
+  const btn = ( // eslint-disable-next-line
     <Icon.Button iconStyle={styles.buttom} backgroundColor='transparent' color='black' name='list-thumbnails' onPress={onShowNaviDrawer} />
   );
   return {

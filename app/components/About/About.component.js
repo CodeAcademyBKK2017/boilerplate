@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, View
+import {View
 } from 'react-native';
 
 export default class About extends Component {

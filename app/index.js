@@ -4,6 +4,7 @@
  * @flow
  */
 
+import Api from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import Lower from './components/Lower/Lower.component';
@@ -14,7 +15,7 @@ import styles from './index.style';
 import Title from './components/Title/Title.component';
 import uuid from 'uuid';
 import {
-  AsyncStorage, KeyboardAvoidingView, Platform, View
+  Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 
 const notesKey = 'notes';
@@ -59,7 +60,7 @@ export default class App extends Component {
     
   // }
 
-  onSave = async () => {
+  onSaveButtonPress = async () => {
     const newNotes = [...this.state.notes];
     const note = {
       key: uuid(),
@@ -68,13 +69,36 @@ export default class App extends Component {
     };
     newNotes.push(note);
 
-    const newState = {
-      textTitle: '',
-      textContent: '',
-      notes: newNotes
-    };
-    this.setState(newState);
-    await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
+    try {
+      
+      await Api.onAddNote(note);
+      const newState = {
+        textTitle: '',
+        textContent: '',
+        notes: newNotes
+      };
+      
+      await AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+      this.setState(newState);
+
+    } catch (e) {
+      Alert.alert(
+        'Error',
+        'Internet error',
+        {cancelable: true}
+      );
+    }
+    
+    // await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
+    // await fetch('http://localhost:3000/posts', {
+    //   method: 'POST',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(note)
+    // });
+    
   }
 
   onShowAboutUs = () => {
@@ -83,21 +107,35 @@ export default class App extends Component {
 
   onDeleteButtonPress = (item) => async () => {
     const filteredNotes = this.state.notes.filter((note) => note !== item);
-    this.setState({notes: filteredNotes});
-    await AsyncStorage.setItem(notesKey, JSON.stringify(filteredNotes));
+    if (await new Api.onDelete(item.id, filteredNotes)) {
+      this.setState({notes: filteredNotes});
+    } 
+    
+    // await AsyncStorage.setItem(notesKey, JSON.stringify(filteredNotes));
+    // await fetch('http://localhost:3000/posts/' + `${item.id}`, {
+    //   method: 'DELETE',
+    //   headers: {
+    //     Accept: 'application/json',
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify(filteredNotes)
+    // });
+    
   }
 
   onLoad = async () => {
-    const value = await AsyncStorage.getItem(notesKey);
-    let notes;
-    if (value) {
-      notes = JSON.parse(value);
-    } else {
-      notes = [];
+    // const value = await AsyncStorage.getItem(notesKey);
+    try {
+      const notes = await new Api.onGetNote();
+      this.setState({
+        notes: notes
+      });
+    } catch (e) {
+      const notes =  JSON.parse(await AsyncStorage.getItem('notes')) || [];
+      this.setState({
+        notes: notes
+      });
     }
-    this.setState({
-      notes
-    });
   }
 
   componentDidMount () {
