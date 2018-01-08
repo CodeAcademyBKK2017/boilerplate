@@ -88,7 +88,9 @@ export default class App extends Component {
     }
 
     goToPage =() => {
-      this.props.navigation.navigate('About');
+    //   this.props.navigation.navigate('About');
+      this.props.navigation.navigate('DrawerToggle');
+
     }
 
     render () {

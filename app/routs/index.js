@@ -3,6 +3,7 @@ import AboutDev from '../components/About/AboutDev.component';
 import App from '../index';
 import theme from './theme.style';
 import {
+  DrawerNavigator,
   StackNavigator,
   TabNavigator
 } from 'react-navigation';
@@ -39,18 +40,25 @@ const AboutRoutes = TabNavigator({
   
 });
 
-const Router = StackNavigator({
+const HomeRouter = StackNavigator({
   Main: {
     screen: App,
     navigationOptions: {
       title: 'Start Taker Note'
     }
-  },
-  About: {
-    screen: AboutRoutes
   }
-}, {
-  mode: 'card'
 });
 
-export default Router;
+const MyApp = DrawerNavigator({
+  Home: {
+    screen: HomeRouter
+  },
+  About: {
+    screen: AboutRoutes,
+    navigationOptions: {
+      title: 'About'
+    }
+  }
+});
+
+export default MyApp;
