@@ -1,3 +1,4 @@
+import ApiNotes from '../api';
 import App from '../index';
 import React from 'react';
 import renderer from 'react-test-renderer';
@@ -14,6 +15,8 @@ jest.mock('AsyncStorage', () => ({
 
 jest.mock('uuid', () => () => 'some uuid');
 
+jest.mock('../api');
+
 // constant
 const notesKey = 'notes';
 
@@ -28,7 +31,8 @@ describe('App', () => {
     const wrapper = shallow(appComp);
     appInstance = wrapper.instance();
     
-    AsyncStorage.setItem.mockReset();
+    AsyncStorage.setItem.mockClear();
+    ApiNotes.addNote.mockClear();
   });
   
   // ----------
@@ -54,27 +58,33 @@ describe('App', () => {
     expect(appInstance.state.textContent).toBe(text);
   });
 
-  it('onSaveButtonPress', () => {
+  it('onSaveButtonPress success', async () => {
     const title = 'my test title';
     const content = 'my test message';
+    appInstance.setState({
+      textTitle: title,
+      textContent: content,
+      notes: []
+    });
 
-    appInstance.onChangeTextTitle(title);
-    appInstance.onChangeTextContent(content);
-    appInstance.onSaveButtonPress();
+    await appInstance.onSaveButtonPress();
 
-    const expected = {
+    const expectedState = {
       textTitle: '',
       textContent: '',
-      notes: [
-        {
-          key: 'some uuid',
-          title,
-          content
-        }
-      ]
+      notes: [{
+        id: 1,
+        title,
+        content
+      }]
     };
-    expect(appInstance.state).toEqual(expected);
-    expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected.notes));
+    const expectedNote = {
+      title,
+      content
+    };
+    expect(ApiNotes.addNote).toHaveBeenCalledWith(expectedNote);
+    expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expectedState.notes));
+    expect(appInstance.state).toEqual(expectedState);
   });
 
   it('onDeleteButtonPress', () => {
