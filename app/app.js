@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
+import TransformerUtil from './utils/TransformerUtil';
 import {
   Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
 } from 'react-native';
@@ -73,7 +74,7 @@ class App extends Component {
     try {
       await ApiNotes.deleteNote(item.id);
 
-      const filteredNotes = this.props.notes.filter((note) => note !== item);
+      const filteredNotes = TransformerUtil.removeNote(this.props.notes, item.id);
       await AsyncStorage.setItem(notesKey, JSON.stringify(filteredNotes));
 
       this.props.deleteNote(item.id);
