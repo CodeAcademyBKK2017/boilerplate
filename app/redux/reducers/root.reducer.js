@@ -18,15 +18,10 @@ export default combineReducers({
   ], action) => {
     switch (action.type) {
     case 'ADD_NOTE':
-      return [...prevState, {
-        title: 'title from reducer xx',
-        content: 'content from reducer xx'
-      }];
-      // break;
+      return [...prevState, action.payload];
     
     default:
       return prevState;
-      // break;
     }
   }
 });

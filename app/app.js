@@ -40,7 +40,11 @@ class App extends Component {
   }
 
   onSaveButtonPress = async () => {
-    this.props.addNote();
+    const note = {
+      title: this.state.textTitle,
+      content: this.state.textContent
+    };
+    this.props.addNote(note);
 
     // try {
     //   const note = {
@@ -165,9 +169,10 @@ const mapStateToProps = (storeState) => ({
 });
 
 const mapDisplatchToProps = (dispatch) => ({
-  addNote: () => {
+  addNote: (note) => {
     dispatch({
-      type: 'ADD_NOTE'
+      type: 'ADD_NOTE',
+      payload: note
     });
   }
 });
