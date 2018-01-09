@@ -49,7 +49,6 @@ class App extends Component {
     this.setState({content: text});
   }
   onSave = async () => {
-    
     try {
       const note =   {
         title: this.state.title,
@@ -57,8 +56,8 @@ class App extends Component {
       };
       const noteWithId = await  ApiNotes.addNote(note);
       this.props.addNote(noteWithId);      
-      const newNote = [...this.props.noteList];
-      newNote.push(noteWithId);
+      // const newNote = [...this.props.noteList];
+      // newNote.push(noteWithId);
       // await AsyncStorage.setItem('storageNote', JSON.stringify(newNote));
       // const newState = {
       //   title: '',
@@ -120,6 +119,9 @@ App.propTypes = {
   addNote: PropTypes.func,
   deleteNote: PropTypes.func,
   populateNote: PropTypes.func
+};
+App.defaultProps = {
+  noteList: []
 };
 const mapStateToProps = (storeState) => ({noteList: storeState.notes});
 const mapDispatchToProps = (dispatch) => ({
