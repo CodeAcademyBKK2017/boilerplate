@@ -17,10 +17,11 @@ import uuid from 'uuid';
 import {
   Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
 } from 'react-native';
+import {connect} from 'react-redux';
 
 const notesKey = 'notes';
 
-export default class App extends Component {
+class App extends Component {
   state = {
     textTitle: '',
     textContent: '',
@@ -43,7 +44,7 @@ export default class App extends Component {
   onSaveButtonPress = async () => {
     try {
       const note = {
-        key: uuid(),
+        id: uuid(),
         title: this.state.textTitle,
         content: this.state.textContent
       };
@@ -51,6 +52,8 @@ export default class App extends Component {
       const newNotes = [...this.state.notes];
       newNotes.push(note);
       await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
+
+      this.props.addNote(note);
 
       const newState = {
         textTitle: '',
@@ -76,10 +79,11 @@ export default class App extends Component {
     try {
       await ApiNotes.deleteNote(item.id);
 
-      const filteredNotes = this.state.notes.filter((note) => note.key !== item.key);
+      const filteredNotes = this.state.notes.filter((note) => note.id !== item.id);
       this.setState({
         notes: filteredNotes
       });
+      this.props.deleteNote(item);
     } catch (error) {
       Alert.alert(
         'Delete Failed',
@@ -100,9 +104,10 @@ export default class App extends Component {
     try {
       const response = await ApiNotes.getNotes();
 
-      this.setState({
-        notes: response
-      });
+      //   this.setState({
+      //     notes: response
+      //   });
+      this.props.getNotes(response);
     } catch (error) {
       const value = await AsyncStorage.getItem(notesKey);
       let notes;
@@ -111,10 +116,10 @@ export default class App extends Component {
       } else {
         notes = [];
       }
-
-      this.setState({
-        notes
-      });
+      this.props.getNotes(notes);
+    //   this.setState({
+    //     notes
+    //   });
     }
   }
 
@@ -139,7 +144,7 @@ export default class App extends Component {
             textContentLength={this.state.textContent.length}
             onSaveButtonPress={this.onSaveButtonPress}/>
           {
-            this.state.notes.length > 0 ? <NoteList data={this.state.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
+            this.props.notes.length > 0 ? <NoteList data={this.props.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
           }
         </View>
         
@@ -156,3 +161,26 @@ App.propTypes = {
 App.defaultProps = {
   navigation: null
 };
+
+const mapStateToProps = (state) => ({notes: state.notes});
+const mapDispatchToProps = (dispatch) => ({
+  addNote: (dataNote) => {
+    dispatch({
+      type: 'ADD_NOTE',
+      payload: dataNote
+    });
+  },
+  deleteNote: (item) => {
+    dispatch({
+      type: 'DELETE_NOTE',
+      payload: item
+    });
+  },
+  getNotes: (items) => {
+    dispatch({
+      type: 'GET_NOTE',
+      payload: items
+    });
+  }
+});
+export default connect(mapStateToProps, mapDispatchToProps)(App);
