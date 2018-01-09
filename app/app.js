@@ -8,6 +8,7 @@ import AboutSection from './components/AboutSection/AboutSection.component';
 import ApiNotes from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -137,11 +138,19 @@ class App extends Component {
 }
 
 App.propTypes = {
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
+  notes: PropTypes.array.isRequired,
+  addNote: PropTypes.func.isRequired,
+  deleteNote: PropTypes.func.isRequired,
+  populateNote: PropTypes.func.isRequired
 };
 
 App.defaultProps = {
-  navigation: null
+  navigation: null,
+  notes: [],
+  addNote: noop,
+  deleteNote: noop,
+  populateNote: noop
 };
 
 const mapStateToProps = (storeState) => ({
