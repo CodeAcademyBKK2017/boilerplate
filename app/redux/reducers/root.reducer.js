@@ -1,6 +1,13 @@
 import {combineReducers} from 'redux';
 
 export default combineReducers({
-  init: () => ({}),
-  notes: () => ([{title: 'title from redux', content: 'content from redux'}])
+  notes: (previousState = [], action) => {
+    switch (action.type) {
+    case 'ADD_NOTE': {
+      return [...previousState, action.payload];
+    }
+    default:
+      return previousState;
+    }
+  }
 });

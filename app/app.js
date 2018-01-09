@@ -11,10 +11,11 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
-import uuid from 'uuid';
+// import uuid from 'uuid';
 import {Alert, AsyncStorage, KeyboardAvoidingView, Platform, Text, View} from 'react-native';
+import {connect} from 'react-redux';
 
-export default class App extends Component {
+class App extends Component {
   initialstate = {
     content: '',
     title: '',
@@ -48,12 +49,13 @@ export default class App extends Component {
     this.setState({content: text});
   }
   onSave = async () => {
+    
     try {
       const note =   {
         title: this.state.title,
-        content: this.state.content,
-        key: uuid()
+        content: this.state.content
       };
+      this.props.addNote(note);
       await  ApiNotes.addNote(note);
       const newNote = [...this.state.note];
       newNote.push(note);
@@ -82,7 +84,7 @@ export default class App extends Component {
   onDelete = (item) => async () => {
     try {
       await  ApiNotes.deleteNote(item.id);
-      const delNote = [...this.state.note];
+      const delNote = [...this.props.noteList];
       const isDelete = (value) => value !== item;
       const remainNote = delNote.filter(isDelete);
       this.setState({note: remainNote});
@@ -104,13 +106,12 @@ export default class App extends Component {
   }
   
   render () {
-
     return (
       <this.WrapperView style={styles.container} behavior={'padding'} >
         <Title onTitleChange={this.changeTitle}/>
         <Content  onContentChange={this.changeContent} />
         <Footer characterCount={this.state.content.length} onPressSave={this.onSave} />
-        {this.state.note.length > 0 ? <Note onDelete={this.onDelete}/> : null}
+        {this.state.note.length > 0 ? <Note noteList={this.props.noteList} onDelete={this.onDelete}/> : null}
         <View><Text onPress={this.goToAbout}>about us</Text></View>
       </this.WrapperView>
     );
@@ -118,5 +119,17 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-  navigation: PropTypes.object
+  noteList: PropTypes.array,
+  navigation: PropTypes.object,
+  addNote: PropTypes.func
 };
+const mapStateToProps = (storeState) => ({noteList: storeState.notes});
+const mapDispatchToProps = (dispatch) => ({
+  addNote: (note) => {
+    dispatch({
+      type: 'ADD_NOTE',
+      payload: note
+    });
+  }
+});
+export default connect(mapStateToProps, mapDispatchToProps)(App);

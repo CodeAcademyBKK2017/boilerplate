@@ -4,10 +4,10 @@ import React, {Component} from 'react';
 import styles from './Note.style';
 import Swipeout from 'react-native-swipeout';
 import Touchable from 'react-native-platform-touchable';
-import {connect} from 'react-redux';
+
 import {FlatList, Text, View} from 'react-native';
 
-class Note extends Component {
+export default class Note extends Component {
   initialstate ={
     modalVisible: false,
     title: '',
@@ -23,7 +23,7 @@ onOpen=(title, content) => () => {
 onClose=() => {
   this.setState(this.initialstate);
 }
-
+_keyExtractor = (item) => item.id;
 generateList = ({item}) => {
   const  swipeoutBtns = [
     {
@@ -50,11 +50,10 @@ generateList = ({item}) => {
   );
 }
 render () {
-       
   return (
     <View style={styles.container}>
       <Text style={styles.header} >Notes:</Text>
-      <FlatList data={this.props.noteList} renderItem={this.generateList} />
+      <FlatList data={this.props.noteList}  keyExtractor={this._keyExtractor} renderItem={this.generateList} />
       <Overlay visible={this.state.modalVisible}
         closeOnTouchOutside={true}  
         onClose={this.onClose}
@@ -72,5 +71,3 @@ Note.propTypes = {
   noteList: PropTypes.array,
   onDelete: PropTypes.func
 };
-const mapStateToProps = (storeState) => ({noteList: storeState.notes});
-export default connect(mapStateToProps)(Note);
