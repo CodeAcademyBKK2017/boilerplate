@@ -1,8 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
 
 import AboutSection from './components/AboutSection/AboutSection.component';
 import ApiNotes from './api';
@@ -104,9 +99,6 @@ class App extends Component {
     try {
       const response = await ApiNotes.getNotes();
 
-      //   this.setState({
-      //     notes: response
-      //   });
       this.props.getNotes(response);
     } catch (error) {
       const value = await AsyncStorage.getItem(notesKey);
@@ -117,9 +109,6 @@ class App extends Component {
         notes = [];
       }
       this.props.getNotes(notes);
-    //   this.setState({
-    //     notes
-    //   });
     }
   }
 

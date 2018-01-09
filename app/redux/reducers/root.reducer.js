@@ -1,4 +1,3 @@
-// import test from './test.reducer';
 import {combineReducers} from 'redux';
 
 export default combineReducers({
@@ -9,12 +8,11 @@ export default combineReducers({
       return [...previousState, action.payload];
     }
     case 'DELETE_NOTE': {
-      // filter: no mutation, push(): mutation, splice: mutation, slice: no mutation
       const filteredNotes = previousState.filter((note) => note.id !== action.payload.id);
       return filteredNotes;
     }
     case 'GET_NOTE': {
-      return action.payload; // no mutation
+      return action.payload;
     }
     default:
       return previousState;
