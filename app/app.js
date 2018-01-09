@@ -13,8 +13,9 @@ import {
   Text,
   View
 } from 'react-native';
+import {connect} from 'react-redux';
 
-export default class App extends Component {
+class App extends Component {
 
   static navigationOptions = {
     drawerLabel: 'Home',
@@ -66,6 +67,9 @@ export default class App extends Component {
         key: this.state.NOTES.length,
         id: (JSON.parse(aa._bodyText)).id
       };
+
+      this.props.addNotes(newData);
+
       const newDataNOTES = [...this.state.NOTES, newData];
       AsyncStorage.setItem('state', JSON.stringify(this.newStateData(newDataNOTES)));
       this.setState(this.newStateData(newDataNOTES));
@@ -102,12 +106,12 @@ export default class App extends Component {
     );
   }
 
-  showFlatList = () => (// this.state.NOTES.length > 0) ? 
+  showFlatList = () => // (this.state.NOTES.length > 0) ? 
     <ListItem 
-      dataNotes={this.state.NOTES}
+      dataNotes={this.props.notes}
       onShowModal={this.onShowModal}
       onDelete={this.onDelete}
-    />)// : null
+    /> // : null ;
 
   viewOverlay = () => <Overlay 
     visible={!!(this.state.modalData.title)}
@@ -138,3 +142,15 @@ App.propTypes = {
 App.defaultProps = {
   navigation: {}
 };
+
+const mapStateToProps = (state) => ({notes: state.notes});
+const mapDispatchToProps = (dispatch) => ({
+  addNotes: (dataNote) => {
+    dispatch({
+      type: 'ADD_NOTES',
+      payload: dataNote
+    });
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

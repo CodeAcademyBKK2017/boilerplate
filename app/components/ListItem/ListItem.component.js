@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import style from './ListItem.component.style';
 import Swipeout from 'react-native-swipeout';
-import {connect} from 'react-redux';
 import {
   FlatList,
   Text,
@@ -11,7 +10,7 @@ import {
   View
 } from 'react-native';
 
-class ListItem extends Component {
+export default class ListItem extends Component {
 
   renderItemList = ({item}) => {
     // Buttons
@@ -37,7 +36,6 @@ class ListItem extends Component {
     </Swipeout>;
   }
   render () {
-    console.log('list props ::', this.props);
     return (
       <View>
         <Text style={style.textNotesStyle}>Notes:</Text>
@@ -61,7 +59,3 @@ ListItem.defaultProps = {
   onDelete: noop,
   onShowModal: noop
 };
-
-const mapStateToProps = (storeState) => ({dataNotes: storeState.notes});
-
-export default connect(mapStateToProps)(ListItem);

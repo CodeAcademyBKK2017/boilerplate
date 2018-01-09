@@ -32,10 +32,6 @@ describe('App', () => {
   it('renders correctly', () => {
     const tree = renderer.create(<App />);
     expect(tree).toBeDefined();
-  });
-
-  it('getName: Should return Yo', () => {
-    const tree = renderer.create(<App />);
     expect(tree).toMatchSnapshot();
   });
 
@@ -155,8 +151,7 @@ describe('App', () => {
     const expectedNote = {
       'title': 'React Native',
       'content': '- UI',
-      'key': 0,
-      'id': 1
+      'key': 0
     };
 
     const expected = {
@@ -188,16 +183,24 @@ describe('App', () => {
 
     instance.setState(stateClear); // clear state
 
-    const note = {
+    const note = [{
       title: 'React Native',
       content: '- UI',
-      key: 0
-    };
+      key: 0,
+      id: 1
+    }];
     
+    console.log(instance.state);
+
     instance.setState({NOTES: note});
 
-    await instance.onDelete(note);
+    console.log(instance.state);
 
+    instance.onDelete(note);
+
+    console.log(instance.state);
+
+    expect(apiNotes.deleteNotes).toBeCalled();
     expect(instance.state).toEqual(stateClear);
   });
 

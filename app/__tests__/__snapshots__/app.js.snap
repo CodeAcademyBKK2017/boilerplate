@@ -4,7 +4,7 @@ exports[`App Check Function showFlatList 1`] = `[Function]`;
 
 exports[`App Check Function viewOverlay 1`] = `[Function]`;
 
-exports[`App getName: Should return Yo 1`] = `
+exports[`App renders correctly 1`] = `
 <View
   style={
     Object {
