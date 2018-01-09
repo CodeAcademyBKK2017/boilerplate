@@ -17,10 +17,11 @@ import uuid from 'uuid';
 import {
   Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
 } from 'react-native';
+import {connect} from 'react-redux';
 
 // const notesKey = 'notes';
 //
-export default class App extends Component {
+class App extends Component {
   state = {
     textTitle: '',
     textContent: '',
@@ -63,21 +64,23 @@ export default class App extends Component {
   onSaveButtonPress = async () => {
     const newNotes = [...this.state.notes];
     const note = {
-      key: uuid(),
       title: this.state.textTitle,
       content: this.state.textContent
     };
     newNotes.push(note);
-
     try {
-      
-      await Api.onAddNote(note);
+      const api =  await Api.onAddNote(note);
+      const newData = {
+        title: this.state.textTitle,
+        content: this.state.textContent,
+        id: (JSON.parse(api._bodyText)).id
+      };
+      this.props.addNote(newData);
       const newState = {
         textTitle: '',
         textContent: '',
         notes: newNotes
       };
-      
       await AsyncStorage.setItem('notes', JSON.stringify(newNotes));
       this.setState(newState);
 
@@ -109,7 +112,7 @@ export default class App extends Component {
     const filteredNotes = this.state.notes.filter((note) => note !== item);
     try {
       await new Api.onDelete(item.id, filteredNotes);
-      this.setState({notes: filteredNotes});
+      this.props.deleNote(item);
     } catch (e) {
       Alert.alert(
         'Error',
@@ -134,9 +137,11 @@ export default class App extends Component {
     // const value = await AsyncStorage.getItem(notesKey);
     try {
       const notes = await new Api.onGetNote();
-      this.setState({
-        notes: notes
-      });
+      // this.setState({
+      //   notes: notes
+      // });
+      this.props.loadServer(notes);
+      // this.props.addNote(JSON.parse(notes));
     } catch (e) {
       const notes =  JSON.parse(await AsyncStorage.getItem('notes')) || [];
       this.setState({
@@ -166,7 +171,7 @@ export default class App extends Component {
           onSaveButtonPress={this.onSaveButtonPress}
         />
         {
-          this.state.notes.length > 0 ? <NoteList data={this.state.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
+          this.props.notes.length > 0 ? <NoteList data={this.props.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
         }
         <Lower
           onShowAboutUs={this.onShowAboutUs} />
@@ -176,9 +181,32 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-  navigation: PropTypes.func
+  navigation: PropTypes.object
 };
 
 App.defaultProps = {
   navigation: () => {}
 };
+
+const mapStateToProps = (state) => ({notes: state.notes});
+const mapDispatchToProps = (dispatch) => ({
+  addNote: (note) => {
+    dispatch({
+      type: 'ADD_NOTE',
+      payload: note
+    });
+  },
+  deleNote: (note) => {
+    dispatch({
+      type: 'DELE_NOTE',
+      payload: note
+    });
+  },
+  loadServer: (note) => {
+    dispatch({
+      type: 'LOAD_SERVER',
+      payload: note
+    });
+  }
+});
+export default connect(mapStateToProps, mapDispatchToProps)(App);

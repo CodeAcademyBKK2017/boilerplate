@@ -14,7 +14,7 @@ class Api {
     }  
 
     onAddNote = async (note) => {
-      await fetch('http://localhost:3000/posts', {
+      const apiresponse = await fetch('http://localhost:3000/posts', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -22,6 +22,7 @@ class Api {
         },
         body: JSON.stringify(note)
       });
+      return apiresponse;
     }
 
     onDelete = async (id, filteredNotes) => {
