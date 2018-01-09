@@ -111,22 +111,17 @@ class App extends Component {
     try {
       const response = await ApiNotes.getNotes();
       this.props.populateNotes(response);
-
-      this.setState({
-        notes: response
-      });
+      AsyncStorage.setItem('notes', JSON.stringify(response));
+      
     } catch (error) {
       const value = await AsyncStorage.getItem(notesKey);
+      this.props.populateNotes(JSON.parse(value));
       let notes;
       if (value) {
         notes = JSON.parse(value);
       } else {
         notes = [];
       }
-
-      this.setState({
-        notes
-      });
     }
   }
 
