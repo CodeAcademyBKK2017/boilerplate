@@ -6,14 +6,10 @@ import NoteItem from './components/NoteItem/NoteItem.component';
 import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import shortid from 'shortid';
 import SnackBar from 'react-native-snackbar';
 import styles from './app.styles';
 import Title from './components/Title/Title.component';
 import Touchable from 'react-native-platform-touchable';
-
-const NewFlatList = connect((storeState) => ({data: storeState.notes}))(FlatList);
-
 import {
   AsyncStorage, FlatList, Text, View
 } from 'react-native';
@@ -26,7 +22,7 @@ const warningBar = () => ({
   backgroundColor: '#d9bf56'
 });
 
-export default class Main extends Component {
+class App extends Component {
   static navigationOptions = ({navigation}) => {
     const toggleDrawer = (navigation) => () => navigation.navigate('DrawerToggle');
     return {
@@ -38,9 +34,8 @@ export default class Main extends Component {
   state = {
     currentTitle: '',
     currentContent: '',
-    notes: [],
     modalVisible: false,
-    selectedNote: {key: '', title: '', content: ''}
+    selectedNote: {id: '', title: '', content: ''}
   }
 
   componentDidMount () { 
@@ -55,9 +50,9 @@ export default class Main extends Component {
     } catch (e) {
       notes = JSON.parse(await AsyncStorage.getItem('notes')) || [];
       SnackBar.show(warningBar());
-    }  
+    }
 
-    this.setState({notes});
+    this.props.populateNotes(notes);
   }
 
   onTitleChangeText = (currentTitle) => {
@@ -69,25 +64,26 @@ export default class Main extends Component {
   }
 
   onSaveButtonPress = () => {
-    const {notes, currentTitle, currentContent} = this.state;
+    const {currentTitle, currentContent} = this.state;
     
     const saveNote = {
-      key: shortid(),
       title: currentTitle,
       content: currentContent
     };
-
-    const newNotes = [...notes, saveNote];
     
     return API.addNote(saveNote)
-      .then(() => AsyncStorage.setItem('notes', JSON.stringify(newNotes)))
-      .then(() => {
+      .then((res) => res.json())
+      .then((noteWithID) => {
+        this.props.addNote(noteWithID);
+
         this.setState({
-          notes: newNotes,
           currentTitle: '',
           currentContent: ''
         });
-      }).catch(() => {
+
+        return AsyncStorage.setItem('notes', JSON.stringify([...this.props.notes, noteWithID]));
+      })
+      .catch(() => {
         SnackBar.show(warningBar());
         throw new Error('API Error');
       });
@@ -103,15 +99,11 @@ export default class Main extends Component {
   _onDeleteItem = (note) => () => this._removeNoteItem(note)
 
   _removeNoteItem = (deleteNote) => {
-    const newNotes = this.state.notes.filter((note) => note !== deleteNote);
+    const newNotes = this.props.notes.filter((note) => note !== deleteNote);
 
     return API.deleteNote(deleteNote.id)
-      .then(AsyncStorage.setItem('notes', JSON.stringify(newNotes)))
-      .then(() => {
-        this.setState({
-          notes: newNotes
-        });
-      })
+      .then(() => this.props.deleteNote(deleteNote))
+      .then(() => AsyncStorage.setItem('notes', JSON.stringify(newNotes)))
       .catch(() => {
         SnackBar.show(warningBar());
         return new Error('API Error');
@@ -128,14 +120,15 @@ export default class Main extends Component {
 
   _renderItem = ({item}) => (<NoteItem data={item} onPressItem={this._onPressItem} onDeleteItem={this._onDeleteItem} />)
 
-  render () {
+  _keyExtractor = (item) => item.id
 
+  render () {
     return (
       <View style={styles.container}>
         <Title onChangeText={this.onTitleChangeText} value={this.state.currentTitle} />
         <Content onChangeText={this.onContentChangeText} value={this.state.currentContent} />
         <Footer characterCount={this.state.currentContent.length} onSaveButtonPress={this.onSaveButtonPress} />
-        <View style={styles.list}><NewFlatList renderItem={this._renderItem} /></View>
+        <View style={styles.list}><FlatList data={this.props.notes} renderItem={this._renderItem} keyExtractor={this._keyExtractor} /></View>
 
         <Overlay visible={this.state.modalVisible}
           onClose={this._hideOverlay}
@@ -151,6 +144,35 @@ export default class Main extends Component {
   }
 }
 
-Main.propTypes = {
-  navigation: PropTypes.any
+App.propTypes = {
+  navigation: PropTypes.any,
+  notes: PropTypes.array,
+  addNote: PropTypes.func,
+  deleteNote: PropTypes.func,
+  populateNotes: PropTypes.func
 };
+
+const mapStateToProps = (storeState) => ({notes: storeState.notes});
+
+const mapDispatchToProps = (dispatch) => ({
+  addNote: (note) => {
+    dispatch({
+      type: 'ADD_NOTE',
+      payload: note
+    });
+  },
+  deleteNote: (note) => {
+    dispatch({
+      type: 'DELETE_NOTE',
+      payload: note
+    });
+  },
+  populateNotes: (notes) => {
+    dispatch({
+      type: 'POPULATE_NOTES',
+      payload: notes
+    });
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
