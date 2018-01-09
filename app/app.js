@@ -101,7 +101,7 @@ class App extends Component {
 
       this.props.getNotes(response);
     } catch (error) {
-      const value = await storageUtil.getItemsFromAsyncStorage(notesKey); // AsyncStorage.getItem(notesKey);
+      const value = await storageUtil.getItemsFromAsyncStorage(notesKey);
       let notes;
       if (value) {
         notes = JSON.parse(value);
