@@ -7,6 +7,7 @@ import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import SnackBar from 'react-native-snackbar';
+import StorageUtil from './utils/storage.util';
 import styles from './app.styles';
 import Title from './components/Title/Title.component';
 import Touchable from 'react-native-platform-touchable';
@@ -15,6 +16,7 @@ import {
 } from 'react-native';
 
 import {connect} from 'react-redux';
+import {removeNote} from './utils/transformer.util';
 
 const warningBar = () => ({
   title: 'Network errors: Can\'t connect to server.',
@@ -48,7 +50,7 @@ class App extends Component {
     try {
       notes = await API.getNotes();
     } catch (e) {
-      notes = JSON.parse(await AsyncStorage.getItem('notes')) || [];
+      notes = await StorageUtil.getItem('notes') || [];
       SnackBar.show(warningBar());
     }
 
@@ -74,15 +76,12 @@ class App extends Component {
     return API.addNote(saveNote)
       .then((res) => res.json())
       .then((noteWithID) => {
+        const newNotes = [...this.props.notes, noteWithID];
         this.props.addNote(noteWithID);
-
-        this.setState({
-          currentTitle: '',
-          currentContent: ''
-        });
-
-        return AsyncStorage.setItem('notes', JSON.stringify([...this.props.notes, noteWithID]));
+        return newNotes;
       })
+      .then((newNotes) => StorageUtil.setItem('notes', newNotes))
+      .then(() => this.setState({currentTitle: '', currentContent: ''}))
       .catch(() => {
         SnackBar.show(warningBar());
         throw new Error('API Error');
@@ -98,17 +97,17 @@ class App extends Component {
 
   _onDeleteItem = (note) => () => this._removeNoteItem(note)
 
-  _removeNoteItem = (deleteNote) => {
-    const newNotes = this.props.notes.filter((note) => note !== deleteNote);
-
-    return API.deleteNote(deleteNote.id)
-      .then(() => this.props.deleteNote(deleteNote))
-      .then(() => AsyncStorage.setItem('notes', JSON.stringify(newNotes)))
-      .catch(() => {
-        SnackBar.show(warningBar());
-        return new Error('API Error');
-      });
-  }
+  _removeNoteItem = (deleteNote) => API.deleteNote(deleteNote.id)
+    .then(() => {
+      const newNotes = removeNote(this.props.notes, deleteNote.id);
+      this.props.deleteNote(deleteNote);
+      return newNotes;
+    })
+    .then((newNotes) => AsyncStorage.setItem('notes', JSON.stringify(newNotes)))
+    .catch(() => {
+      SnackBar.show(warningBar());
+      return new Error('API Error');
+    })
 
   _hideOverlay = () => {
     this.setState({modalVisible: false});
@@ -128,7 +127,10 @@ class App extends Component {
         <Title onChangeText={this.onTitleChangeText} value={this.state.currentTitle} />
         <Content onChangeText={this.onContentChangeText} value={this.state.currentContent} />
         <Footer characterCount={this.state.currentContent.length} onSaveButtonPress={this.onSaveButtonPress} />
-        <View style={styles.list}><FlatList data={this.props.notes} renderItem={this._renderItem} keyExtractor={this._keyExtractor} /></View>
+
+        <View style={styles.list}>
+          <FlatList data={this.props.notes} renderItem={this._renderItem} keyExtractor={this._keyExtractor} />
+        </View>
 
         <Overlay visible={this.state.modalVisible}
           onClose={this._hideOverlay}

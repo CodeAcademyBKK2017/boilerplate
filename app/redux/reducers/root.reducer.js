@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
+import {removeNote} from '../../utils/transformer.util';
 
 export default combineReducers({
   notes: (previousState = [], action) => {
@@ -7,7 +8,7 @@ export default combineReducers({
       return [...previousState, action.payload];
     }
     case 'DELETE_NOTE': {
-      return previousState.filter((note) => note.id !== action.payload.id);
+      return removeNote(previousState, action.payload.id);
     }
     case 'POPULATE_NOTES': {
       return [...action.payload];
