@@ -1,4 +1,4 @@
-import AboutApp from '../components/About/AboutApp.component'; // 1.0.0-beta.14
+import AboutApp from '../components/About/AboutApp.component';
 import AboutDevs from '../components/About/AboutDevs.component';
 import {TabNavigator} from 'react-navigation';
 

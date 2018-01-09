@@ -1,34 +1,35 @@
 import Api from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './app.style';
 import Title from './components/Title/Title.component';
-import uuid from 'uuid';
 import {
   Alert,
   AsyncStorage,
   Button,
   View
 } from 'react-native';
+import {connect} from 'react-redux';
 
-export default class App extends Component {
+class App extends Component {
   state = {
     title: '',
-    content: '',
-    notes: []
+    content: ''
   }
 
   onLoadData = async () => {
+    
     try {
       const notes = await Api.getNote();
-      this.setState({notes: notes});
+      this.props.showNote(notes);
+      await AsyncStorage.setItem('notes', JSON.stringify(notes));
     } catch (err) {
-      AsyncStorage.getItem('state').then((value) => {
-        this.setState(JSON.parse(value));
-      });
+      const notes =  JSON.parse(await AsyncStorage.getItem('notes')) || [];
+      this.props.showNote(notes);
     }
   }
 
@@ -37,20 +38,18 @@ export default class App extends Component {
   }
 
   onSavePress = async () => {
+    
     const newData = {
       title: this.state.title,
-      content: this.state.content,
-      key: uuid()
+      content: this.state.content
     };
+
     try {
-      await Api.addNote(newData);
-      const newNotes = [...this.state.notes, newData];
-      this.setState({
-        notes: newNotes,
-        title: '',
-        content: ''
-      });
-      AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+      const response  = await Api.addNote(newData);
+      const newNote = await response.json();
+      const newNotes = [...this.props.notes, newNote];
+      await AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+      this.props.addNote(newNote);
     } catch (err) {
       Alert.alert(
         'Error',
@@ -72,11 +71,8 @@ export default class App extends Component {
   onDeletePress = (item) => async () => {
     try {
       await Api.deleteNote(item);
-      const newNotes = [...this.state.notes];
-      newNotes.splice(newNotes.indexOf(item), 1);
-      this.setState({notes: newNotes}, () => {
-        AsyncStorage.setItem('notes', JSON.stringify(this.state));
-      });
+      this.props.deleteNote(item);
+      AsyncStorage.setItem('notes', JSON.stringify(this.props.notes));
     } catch (err) {
       Alert.alert(
         'Error',
@@ -110,7 +106,7 @@ export default class App extends Component {
           <Footer countContent={this.state.content.length} onSavePress={this.onSavePress} />
         </View>
        
-        <NoteList notes={this.state.notes} onDeletePress={this.onDeletePress}/>
+        <NoteList notes={this.props.notes} onDeletePress={this.onDeletePress}/>
         <View style={styles.about}>
           <Button onPress={this.navigateTo('About')} title='Go to About' color='#841584'/>
         </View>
@@ -120,8 +116,39 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
+  addNote: PropTypes.func,
+  deleteNote: PropTypes.func,
+  showNote: PropTypes.func,
+  notes: PropTypes.array
 };
 App.defaultProps = {
-  navigation: {}
+  navigation: {},
+  addNote: noop,
+  deleteNote: noop,
+  showNote: PropTypes.func,
+  notes: []
 };
+
+const mapStateToProps = (state) => ({notes: state.notes});
+const mapDispatchToProps = (dispatch) => ({
+  addNote: (newData) => {
+    dispatch({
+      type: 'ADD_NOTE',
+      payload: newData
+    });
+  },
+  deleteNote: (newData) => {
+    dispatch({
+      type: 'DELETE_NOTE',
+      payload: newData
+    });
+  },
+  showNote: (notes) => {
+    dispatch({
+      type: 'POPULATE_NOTE',
+      payload: notes
+    });
+  }
+});
+export default connect(mapStateToProps, mapDispatchToProps)(App);

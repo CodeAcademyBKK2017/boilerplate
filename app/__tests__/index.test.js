@@ -2,7 +2,6 @@ import Api from '../api';
 import App from '../app';
 import NoteList from '../components/NoteList/NoteList.component';
 import React from 'react';
-// Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 import {Alert, AsyncStorage} from 'react-native';
 import {shallow} from 'enzyme';
@@ -48,25 +47,6 @@ describe('App', () => {
     instance.onTypeTitle('');  
     expect(instance.state.title).toBe('');
   });
-  // it('onSavePress: should add note', () => {
-  //   const newData = {
-  //     title: 'title',
-  //     content: 'content'
-  //   };
-  //   instance.setState(newData);
-  //   instance.onSavePress();
-  //   const expectState = {
-  //     title: '',
-  //     content: '',
-  //     notes: [{
-  //       title: 'title',
-  //       content: 'content',
-  //       key: 'someId'
-  //     }]
-  //   };
-  //   expect(instance.state).toEqual(expectState);
-  //   expect(AsyncStorage.setItem).toHaveBeenCalledWith('state', JSON.stringify(expectState));
-  // });
   it('onSavePress success', async () => {
     const title = 'my test title';
     const content = 'my test message';
@@ -147,27 +127,6 @@ describe('App', () => {
     instance.onCloseModal();
     expect(instance.state.showModal).toBe(false);
   });
-
-  // it('onDeletePress: should delete the selected note', () => {
-  //   const item = {
-  //     title: 'title',
-  //     content: 'content',
-  //     key: 'someId'};
-  //   const initialData = {
-  //     title: '',
-  //     content: '',
-  //     notes: [item]
-  //   };
-  //   instance.setState(initialData);
-  //   instance.onDeletePress(item)();
-  //   const expectState = {
-  //     title: '',
-  //     content: '',
-  //     notes: []
-  //   };
-  //   expect(instance.state).toEqual(expectState);
-  //   expect(AsyncStorage.setItem).toHaveBeenCalledWith('state', JSON.stringify(expectState));
-  // });
   it('componentDidMount with existed notes', () => {
     const expectState = [
       {
@@ -176,10 +135,9 @@ describe('App', () => {
         content: 'my test message'
       }
     ];
-    // set custom mock result
     AsyncStorage.getItem.mockImplementation(() => Promise.resolve(JSON.stringify(expectState)));
     instance.componentDidMount();
-    expect(AsyncStorage.getItem).toHaveBeenCalledWith('state');
+    expect(AsyncStorage.getItem).toHaveBeenCalledWith('notes');
   });
   it('navigateTo Mock', () => {
     instance.props.navigation.navigate = jest.fn();

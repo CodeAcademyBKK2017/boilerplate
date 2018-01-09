@@ -6,7 +6,6 @@ const contentStyles = StyleSheet.create({
   container: {
     marginTop: 20,
     flex: 1
-    // minHeight: 400
   },
   inputBox: {
     borderColor: 'gray',

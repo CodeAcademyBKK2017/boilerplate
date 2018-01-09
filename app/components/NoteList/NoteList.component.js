@@ -4,7 +4,6 @@ import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import Swipeout from 'react-native-swipeout';
-import {connect} from 'react-redux';
 
 import {
   FlatList,
@@ -27,6 +26,8 @@ class NoteList extends Component {
   onCloseModal = () => {
     this.setState({showModal: false});
   }
+
+  keyExtractor = (item) => item.id;
 
   renderItem = ({item}) => 
     <Swipeout autoClose={true} right={[
@@ -51,7 +52,7 @@ class NoteList extends Component {
     return (
       <View style={noteListStyles.boxContainer}>
 
-        <FlatList data={this.props.notes} renderItem={this.renderItem}/>
+        <FlatList data={this.props.notes} renderItem={this.renderItem} keyExtractor={this.keyExtractor}/>
         <Overlay visible={this.state.showModal}
           closeOnTouchOutside animationType='zoomIn'
           animationDuration={500} onClose={this.onCloseModal}>
@@ -78,6 +79,4 @@ NoteList.defaultProps = {
   onDeletePress: noop
 };
 
-const mapStateToProps = (storeState) => ({notes: storeState.notes});
-
-export default connect(mapStateToProps)(NoteList);
+export default NoteList;

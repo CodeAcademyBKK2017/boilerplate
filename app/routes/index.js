@@ -32,17 +32,6 @@ const Router = StackNavigator(
       headerLeft: <Text style={styles.menu} onPress={openDrawer(navigation)}><Icon name='menu' size={30} color='grey'/></Text>
     })
   }
- 
-  // Main: {
-  //   screen: App,
-  //   navigationOptions: ({navigation}) => ({
-  //     title: 'Start taking notes',
-  //     headerLeft: <Text onPress={() => navigation.navigate('DrawerOpen')}><Icon name='menu' fontSize='100px' color='grey'/></Text>
-  //   })
-  // },
-  // About: {
-  //   screen: AboutRoutes
-  // }
 );
 
 const styles = StyleSheet.create({
