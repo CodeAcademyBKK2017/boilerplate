@@ -40,13 +40,13 @@ class App extends Component {
   onChangeTextContent = (textContent) => {
     this.setState({textContent});
   }
-  onSaveButtonPress =() => {
+  onSaveButtonPress = async () => {
     const note = {
-      id: uuid(),
       title: this.state.textTitle,
       content: this.state.textContent
     };
-    this.props.addNote(note);
+    const response = await ApiNotes.addNote(note);
+    this.props.addNote(response);
   }
   // onSaveButtonPress = async () => {
   //   try {
@@ -116,12 +116,12 @@ class App extends Component {
     } catch (error) {
       const value = await AsyncStorage.getItem(notesKey);
       this.props.populateNotes(JSON.parse(value));
-      let notes;
-      if (value) {
-        notes = JSON.parse(value);
-      } else {
-        notes = [];
-      }
+      // let notes;
+      // if (value) {
+      //   notes = JSON.parse(value);
+      // } else {
+      //   notes = [];
+      // }
     }
   }
 
