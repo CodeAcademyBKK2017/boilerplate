@@ -53,7 +53,7 @@ class App extends Component {
 
       await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
 
-      this.props.addNote(note);
+      this.props.addNote(response);
     } catch (error) {
       Alert.alert(
         'Save Failed',
