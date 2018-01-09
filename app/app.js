@@ -12,11 +12,12 @@ import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import StorageUtil from './utils/StorageUtil';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
 import TransformerUtil from './utils/TransformerUtil';
 import {
-  Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
+  Alert, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 import {connect} from 'react-redux';
 
@@ -53,7 +54,7 @@ class App extends Component {
       const newNotes = [...this.props.notes];
       newNotes.push(response);
 
-      await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
+      await StorageUtil.setItem(notesKey, newNotes);
 
       this.props.addNote(response);
     } catch (error) {
@@ -75,7 +76,7 @@ class App extends Component {
       await ApiNotes.deleteNote(item.id);
 
       const filteredNotes = TransformerUtil.removeNote(this.props.notes, item.id);
-      await AsyncStorage.setItem(notesKey, JSON.stringify(filteredNotes));
+      await StorageUtil.setItem(notesKey, filteredNotes);
 
       this.props.deleteNote(item.id);
     } catch (error) {
@@ -99,14 +100,8 @@ class App extends Component {
       const response = await ApiNotes.getNotes();
       this.props.populateNote(response);
     } catch (error) {
-      const value = await AsyncStorage.getItem(notesKey);
-      let notes;
-      if (value) {
-        notes = JSON.parse(value);
-      } else {
-        notes = [];
-      }
-
+      const value = await StorageUtil.getItem(notesKey);
+      const notes = value ? value : [];
       this.props.populateNote(notes);
     }
   }
