@@ -1,3 +1,4 @@
+import notesUtil from '../../utils/transfromer.util';
 import {combineReducers} from 'redux';
 
 export default combineReducers({
@@ -7,8 +8,7 @@ export default combineReducers({
     case 'ADD_NOTE':
       return [...previousstate, action.payload];
     case 'DELETE_NOTE': {
-      const otherNote = previousstate.filter((note) => note.id !== action.payload.id);
-      return [...otherNote];
+      return notesUtil.deleteNote(previousstate, action.payload.id);
     }
     case 'POPULATE_NOTES': { 
       return action.payload;
@@ -17,18 +17,4 @@ export default combineReducers({
       return previousstate;
     }
   }
-  // notes: () => ([
-  //   {
-  //     title: 'title from reducer 00',
-  //     content: 'content from reducer 00'
-  //   },
-  //   {
-  //     title: 'title from reducer 01',
-  //     content: 'content from reducer 01'
-  //   },
-  //   {
-  //     title: 'title from reducer 02',
-  //     content: 'content from reducer 02'
-  //   }
-  // ])
 });

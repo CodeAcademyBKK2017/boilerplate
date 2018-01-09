@@ -9,13 +9,14 @@ import ApiNotes from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import NoteList from './components/NoteList/NoteList.component';
+import notesUtil from './utils/transfromer.util';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import storage from './utils/storage.util';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
-import uuid from 'uuid';
 import {
-  Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
+  Alert, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 import {connect} from 'react-redux';
 
@@ -47,50 +48,14 @@ class App extends Component {
     };
     const response = await ApiNotes.addNote(note);
     this.props.addNote(response);
+    storage.setItem('notes', this.props.notes);
   }
-  // onSaveButtonPress = async () => {
-  //   try {
-  //     const note = {
-  //       title: this.state.textTitle,
-  //       content: this.state.textContent
-  //     };
-
-  //     const response = await ApiNotes.addNote(note);
-
-  //     const newNotes = [...this.state.notes];
-  //     newNotes.push(response);
-
-  //     await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
-
-  //     const newState = {
-  //       textTitle: '',
-  //       textContent: '',
-  //       notes: newNotes
-  //     };
-  //     this.setState(newState);
-  //   } catch (error) {
-  //     Alert.alert(
-  //       'Save Failed',
-  //       String(error),
-  //       [
-  //         {text: 'OK'}
-  //       ],
-  //       {
-  //         cancelable: false
-  //       }
-  //     );
-  //   }
-  // }
 
   onDeleteButtonPress = (item) => async () => {
     this.props.deleteNote(item.id);
     try {
       await ApiNotes.deleteNote(item.id);
-
-      const filteredNotes = this.state.notes.filter((note) => note !== item);
-      this.setState({
-        notes: filteredNotes
-      });
+      storage.setItem('notes', notesUtil.deleteNote(this.props.notes));
     } catch (error) {
       Alert.alert(
         'Delete Failed',
@@ -111,17 +76,11 @@ class App extends Component {
     try {
       const response = await ApiNotes.getNotes();
       this.props.populateNotes(response);
-      AsyncStorage.setItem('notes', JSON.stringify(response));
-      
+      storage.setItem('notes', response);
     } catch (error) {
-      const value = await AsyncStorage.getItem(notesKey);
+      const value = await storage.getItem(notesKey);
       this.props.populateNotes(JSON.parse(value));
-      // let notes;
-      // if (value) {
-      //   notes = JSON.parse(value);
-      // } else {
-      //   notes = [];
-      // }
+      
     }
   }
 
@@ -157,7 +116,11 @@ class App extends Component {
 }
 
 App.propTypes = {
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
+  addNote: PropTypes.func,
+  deleteNote: PropTypes.func,
+  populateNotes: PropTypes.func,
+  notes: PropTypes.array
 };
 
 App.defaultProps = {
