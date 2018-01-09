@@ -25,11 +25,11 @@ class App extends Component {
    init = async () => {
      try {
        const response = await ApiNotes.getNotes();
-       this.setState({note: response});
+       this.props.populateNote(response);
      } catch (error) {
        const value = await AsyncStorage.getItem('storageNote');
        const note = value ? JSON.parse(value) : [];
-       this.setState({note});
+       this.props.populateNote(note);
      }
    
    }
@@ -55,17 +55,17 @@ class App extends Component {
         title: this.state.title,
         content: this.state.content
       };
-      this.props.addNote(note);
-      await  ApiNotes.addNote(note);
-      const newNote = [...this.state.note];
-      newNote.push(note);
-      await AsyncStorage.setItem('storageNote', JSON.stringify(newNote));
-      const newState = {
-        title: '',
-        content: '',
-        note: newNote
-      };
-      this.setState(newState);
+      const noteWithId = await  ApiNotes.addNote(note);
+      this.props.addNote(noteWithId);      
+      const newNote = [...this.props.noteList];
+      newNote.push(noteWithId);
+      // await AsyncStorage.setItem('storageNote', JSON.stringify(newNote));
+      // const newState = {
+      //   title: '',
+      //   content: '',
+      //   note: newNote
+      // };
+      // this.setState(newState);
      
     } catch (error) {
       Alert.alert(
@@ -84,11 +84,7 @@ class App extends Component {
   onDelete = (item) => async () => {
     try {
       await  ApiNotes.deleteNote(item.id);
-      const delNote = [...this.props.noteList];
-      const isDelete = (value) => value !== item;
-      const remainNote = delNote.filter(isDelete);
-      this.setState({note: remainNote});
-
+      this.props.deleteNote(item.id);
     } catch (error) {
       Alert.alert(
         'Delete Failed',
@@ -111,7 +107,7 @@ class App extends Component {
         <Title onTitleChange={this.changeTitle}/>
         <Content  onContentChange={this.changeContent} />
         <Footer characterCount={this.state.content.length} onPressSave={this.onSave} />
-        {this.state.note.length > 0 ? <Note noteList={this.props.noteList} onDelete={this.onDelete}/> : null}
+        {this.props.noteList.length > 0 ? <Note noteList={this.props.noteList} onDelete={this.onDelete}/> : null}
         <View><Text onPress={this.goToAbout}>about us</Text></View>
       </this.WrapperView>
     );
@@ -121,13 +117,27 @@ class App extends Component {
 App.propTypes = {
   noteList: PropTypes.array,
   navigation: PropTypes.object,
-  addNote: PropTypes.func
+  addNote: PropTypes.func,
+  deleteNote: PropTypes.func,
+  populateNote: PropTypes.func
 };
 const mapStateToProps = (storeState) => ({noteList: storeState.notes});
 const mapDispatchToProps = (dispatch) => ({
   addNote: (note) => {
     dispatch({
       type: 'ADD_NOTE',
+      payload: note
+    });
+  },
+  deleteNote: (id) => {
+    dispatch({
+      type: 'DELETE_NOTE',
+      payload: id
+    });
+  },
+  populateNote: (note) => {
+    dispatch({
+      type: 'POPULATE_NOTE',
       payload: note
     });
   }

@@ -1,6 +1,6 @@
 class ApiNotes {
-    API_NOTES = 'http://localhost:3000/notes';
-  
+    API_NOTES = 'http://localhost:4000/notes'; // fail port
+    // API_NOTES = 'http://localhost:4000/notes'; //success port
     getNotes = () => {
       const option = {
         method: 'GET'
