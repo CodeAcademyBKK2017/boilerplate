@@ -6,8 +6,10 @@ import Footer from './components/Footer/Footer.component';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import storageUtil from './utility/storage.util';
 import styles from './app.style';
 import Title from './components/Title/Title.component';
+import transformerutil from './utility/transformerutil';
 import uuid from 'uuid';
 import {
   Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
@@ -44,16 +46,15 @@ class App extends Component {
         content: this.state.textContent
       };
       await ApiNotes.addNote(note);
-      const newNotes = [...this.state.notes];
+      const newNotes = [...this.props.notes];
       newNotes.push(note);
-      await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
+      await storageUtil.setItemsFromAsyncStorage(notesKey, JSON.stringify(newNotes));
 
       this.props.addNote(note);
 
       const newState = {
         textTitle: '',
-        textContent: '',
-        notes: newNotes
+        textContent: ''
       };
       this.setState(newState);
     } catch (error) {
@@ -74,10 +75,9 @@ class App extends Component {
     try {
       await ApiNotes.deleteNote(item.id);
 
-      const filteredNotes = this.state.notes.filter((note) => note.id !== item.id);
-      this.setState({
-        notes: filteredNotes
-      });
+      const filteredNotes = transformerutil.deleteNote(this.props.notes, item.id);
+      await storageUtil.setItemsFromAsyncStorage(notesKey, JSON.stringify(filteredNotes));
+
       this.props.deleteNote(item);
     } catch (error) {
       Alert.alert(
@@ -101,7 +101,7 @@ class App extends Component {
 
       this.props.getNotes(response);
     } catch (error) {
-      const value = await AsyncStorage.getItem(notesKey);
+      const value = await storageUtil.getItemsFromAsyncStorage(notesKey); // AsyncStorage.getItem(notesKey);
       let notes;
       if (value) {
         notes = JSON.parse(value);
