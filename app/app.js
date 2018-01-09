@@ -5,11 +5,12 @@ import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import storageUtil from './utility/storage.util';
 import styles from './app.style';
 import Title from './components/Title/Title.component';
+import transformerutil from './utility/transformer.util';
 import {
   Alert,
-  AsyncStorage,
   Button,
   View
 } from 'react-native';
@@ -26,9 +27,9 @@ class App extends Component {
     try {
       const notes = await Api.getNote();
       this.props.showNote(notes);
-      await AsyncStorage.setItem('notes', JSON.stringify(notes));
+      await storageUtil.setItem('notes', notes);
     } catch (err) {
-      const notes =  JSON.parse(await AsyncStorage.getItem('notes')) || [];
+      const notes =  await storageUtil.getItem('notes') || [];
       this.props.showNote(notes);
     }
   }
@@ -48,7 +49,7 @@ class App extends Component {
       const response  = await Api.addNote(newData);
       const newNote = await response.json();
       const newNotes = [...this.props.notes, newNote];
-      await AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+      await storageUtil.setItem('notes', newNotes);
       this.props.addNote(newNote);
     } catch (err) {
       Alert.alert(
@@ -71,8 +72,12 @@ class App extends Component {
   onDeletePress = (item) => async () => {
     try {
       await Api.deleteNote(item);
+      
+      const newNotes = transformerutil.deleteItem(item);
+      await storageUtil.setItem('notes', newNotes);
+
       this.props.deleteNote(item);
-      AsyncStorage.setItem('notes', JSON.stringify(this.props.notes));
+      
     } catch (err) {
       Alert.alert(
         'Error',
