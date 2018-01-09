@@ -72,6 +72,10 @@ class App extends Component {
   onDeleteButtonPress = (item) => async () => {
     try {
       await ApiNotes.deleteNote(item.id);
+
+      const filteredNotes = this.props.notes.filter((note) => note !== item);
+      await AsyncStorage.setItem(notesKey, JSON.stringify(filteredNotes));
+
       this.props.deleteNote(item.id);
     } catch (error) {
       Alert.alert(
