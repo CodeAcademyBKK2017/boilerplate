@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux';
+import {filterNote} from '../../utils/transformerutil';
 
 export default combineReducers({
   notes: (previousState = [], action) => {
@@ -7,9 +8,7 @@ export default combineReducers({
       return [...previousState, action.payload];
     }
     case 'DELETE_NOTE': {
-      const delNote = [...previousState];
-      const isDelete = (value) => value.id !== action.payload;
-      const remainNote = delNote.filter(isDelete);
+      const remainNote = filterNote(previousState, action.payload);
       return remainNote;
     }
     case 'POPULATE_NOTE': {

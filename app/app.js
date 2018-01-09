@@ -11,9 +11,10 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
-// import uuid from 'uuid';
-import {Alert, AsyncStorage, KeyboardAvoidingView, Platform, Text, View} from 'react-native';
+import {Alert,  KeyboardAvoidingView, Platform, Text, View} from 'react-native';
 import {connect} from 'react-redux';
+import {filterNote} from './utils/transformerutil';
+import {getItemToStorage, setItemToStorage} from './utils/storageutil';
 
 class App extends Component {
   initialstate = {
@@ -27,8 +28,7 @@ class App extends Component {
        const response = await ApiNotes.getNotes();
        this.props.populateNote(response);
      } catch (error) {
-       const value = await AsyncStorage.getItem('storageNote');
-       const note = value ? JSON.parse(value) : [];
+       const note = await getItemToStorage('storageNote');
        this.props.populateNote(note);
      }
    
@@ -56,16 +56,8 @@ class App extends Component {
       };
       const noteWithId = await  ApiNotes.addNote(note);
       this.props.addNote(noteWithId);      
-      // const newNote = [...this.props.noteList];
-      // newNote.push(noteWithId);
-      // await AsyncStorage.setItem('storageNote', JSON.stringify(newNote));
-      // const newState = {
-      //   title: '',
-      //   content: '',
-      //   note: newNote
-      // };
-      // this.setState(newState);
-     
+      const newNote = [...this.props.noteList, noteWithId];
+      await setItemToStorage('storageNote', newNote);
     } catch (error) {
       Alert.alert(
         'Save Failed',
@@ -84,6 +76,8 @@ class App extends Component {
     try {
       await  ApiNotes.deleteNote(item.id);
       this.props.deleteNote(item.id);
+      const remainNote = filterNote(this.props.noteList, item.id);
+      await setItemToStorage('storageNote', remainNote);
     } catch (error) {
       Alert.alert(
         'Delete Failed',
