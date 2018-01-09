@@ -5,12 +5,11 @@ import React, {Component} from 'react';
 import styles from './NoteList.style';
 import Swipeout from 'react-native-swipeout';
 import Touchable from 'react-native-platform-touchable';
-import {connect} from 'react-redux';
 import {
   FlatList, Text, View
 } from 'react-native';
 
-class NoteList extends Component {
+export default class NoteList extends Component {
   state = {
     modalVisible: false,
     selectedNoteItem: {}
@@ -94,8 +93,3 @@ NoteList.defaultProps = {
   onDeleteButtonPress: noop
 };
 
-const mapStateToProps = (storeState) => ({
-  data: storeState.notes
-});
-
-export default connect(mapStateToProps)(NoteList);
