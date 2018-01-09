@@ -2,23 +2,16 @@ import {combineReducers} from 'redux';
 
 export default combineReducers({
   init: () => ({}), // reducer
-  notes: (prevState = [
-    {
-      title: 'title from reducer 00',
-      content: 'content from reducer 00'
-    },
-    {
-      title: 'title from reducer 01',
-      content: 'content from reducer 01'
-    },
-    {
-      title: 'title from reducer 02',
-      content: 'content from reducer 02'
-    }
-  ], action) => {
+  notes: (prevState = [], action) => {
     switch (action.type) {
     case 'ADD_NOTE':
       return [...prevState, action.payload];
+      
+    case 'DELETE_NOTE':
+      return prevState.filter((note) => note.id !== action.payload.id);
+
+    case 'POPULATE_NOTES':
+      return action.payload;
     
     default:
       return prevState;

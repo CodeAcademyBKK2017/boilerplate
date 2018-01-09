@@ -40,53 +40,38 @@ class App extends Component {
   }
 
   onSaveButtonPress = async () => {
-    const note = {
-      title: this.state.textTitle,
-      content: this.state.textContent
-    };
-    this.props.addNote(note);
+    try {
+      const note = {
+        title: this.state.textTitle,
+        content: this.state.textContent
+      };
 
-    // try {
-    //   const note = {
-    //     title: this.state.textTitle,
-    //     content: this.state.textContent
-    //   };
+      const response = await ApiNotes.addNote(note);
 
-    //   const response = await ApiNotes.addNote(note);
+      const newNotes = [...this.props.notes];
+      newNotes.push(response);
 
-    //   const newNotes = [...this.state.notes];
-    //   newNotes.push(response);
+      await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
 
-    //   await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
-
-    //   const newState = {
-    //     textTitle: '',
-    //     textContent: '',
-    //     notes: newNotes
-    //   };
-    //   this.setState(newState);
-    // } catch (error) {
-    //   Alert.alert(
-    //     'Save Failed',
-    //     String(error),
-    //     [
-    //       {text: 'OK'}
-    //     ],
-    //     {
-    //       cancelable: false
-    //     }
-    //   );
-    // }
+      this.props.addNote(note);
+    } catch (error) {
+      Alert.alert(
+        'Save Failed',
+        String(error),
+        [
+          {text: 'OK'}
+        ],
+        {
+          cancelable: false
+        }
+      );
+    }
   }
 
   onDeleteButtonPress = (item) => async () => {
     try {
       await ApiNotes.deleteNote(item.id);
-
-      const filteredNotes = this.state.notes.filter((note) => note !== item);
-      this.setState({
-        notes: filteredNotes
-      });
+      this.props.deleteNote(item.id);
     } catch (error) {
       Alert.alert(
         'Delete Failed',
@@ -106,10 +91,7 @@ class App extends Component {
   loadData = async () => {
     try {
       const response = await ApiNotes.getNotes();
-
-      this.setState({
-        notes: response
-      });
+      this.props.populateNote(response);
     } catch (error) {
       const value = await AsyncStorage.getItem(notesKey);
       let notes;
@@ -119,9 +101,7 @@ class App extends Component {
         notes = [];
       }
 
-      this.setState({
-        notes
-      });
+      this.props.populateNote(notes);
     }
   }
 
@@ -173,6 +153,20 @@ const mapDisplatchToProps = (dispatch) => ({
     dispatch({
       type: 'ADD_NOTE',
       payload: note
+    });
+  },
+  deleteNote: (id) => {
+    dispatch({
+      type: 'DELETE_NOTE',
+      payload: {
+        id
+      }
+    });
+  },
+  populateNote: (notes) => {
+    dispatch({
+      type: 'POPULATE_NOTES',
+      payload: notes
     });
   }
 });
