@@ -10,22 +10,22 @@ import Footer from './components/footers/footer.component';
 import globalStyle from './app.style';
 import Icon from 'react-native-vector-icons/Foundation';
 import List from './components/lists/list.component';
+import noop from 'lodash/noop';
 import ProptTypes from 'prop-types';
 import React, {
   Component
 } from 'react';
 import Title from './components/titles/title.component';
-import uuid from 'uuid';
 import {Alert, 
   AsyncStorage,
   Text,
   TouchableOpacity, View} from 'react-native';
+import {connect} from 'react-redux';
 
-export default class App extends Component {
+class App extends Component {
   state = {
     currentContent: '',
-    currentTitle: '',
-    arrayContent: []
+    currentTitle: ''
   }
   
   static navigationOptions = ({navigation}) => {
@@ -39,13 +39,11 @@ export default class App extends Component {
   componentDidMount () {
     this._setStroage();
   }
+
   _setStroage = async () => {
     try {
       const response = await ApiNotes.getNotes();
-      this.setState({
-        arrayContent: response
-      });
-      
+      (response.length !== 0) && this.props.populateFromReducer(response);
     } catch (e) {
       const value = await AsyncStorage.getItem('theState');
       let arrayContent;
@@ -54,10 +52,7 @@ export default class App extends Component {
       } else {
         arrayContent = [];
       }
-
-      this.setState({
-        arrayContent
-      });
+      this.props.populateFromReducer(arrayContent);
     }
    
   }
@@ -69,9 +64,11 @@ export default class App extends Component {
   }
   _addContent = async () => {
     try {
-      const newValue = {title: this.state.currentTitle, content: this.state.currentContent, key: uuid()};
-      await ApiNotes.addNote(newValue);
-      await this._setStroage();
+      const newnote = {title: this.state.currentTitle, content: this.state.currentContent};
+      const noteWithID = await ApiNotes.addNote(newnote);  
+      this.props.addNoteToReducer(noteWithID);
+      this.setState({currentContent: '', currentTitle: ''});
+      await AsyncStorage.setItem('theState', JSON.stringify(this.props.arrayContent));
     } catch (e) {
       Alert.alert(
         'Save Failed',
@@ -89,14 +86,7 @@ export default class App extends Component {
   _removeContent = (content) => async () => { 
     try {
       await ApiNotes.deleteNote(content.id);
-      const newArray = this.state.arrayContent.filter((item) => item.key !== content.key);
-      const newState = {
-        currentContent: '',
-        currentTitle: '',
-        arrayContent: newArray
-      };
-      await AsyncStorage.setItem('theState', JSON.stringify(newState));
-      this.setState({arrayContent: newArray});
+      this.props.deleteNoteFromReducer(content.id);
     } catch (e) {
       Alert.alert(
         'Delete Failed',
@@ -118,7 +108,7 @@ export default class App extends Component {
         <Title text={this.state.currentTitle} FTitle={this._onTitleChange} />  
         <Content FText={this._onContentChange} textState={this.state.currentContent}/>
         <Footer textState={this.state.currentContent.length} addContent={this._addContent}/>
-        <List arrayContent={this.state.arrayContent} removeNote={this._removeContent}/>
+        <List arrayContent={this.props.arrayContent} removeNote={this._removeContent}/>
         <TouchableOpacity style={globalStyle.touchStyle} onPress={this._gotoAbout}>
           <View>
             <Text style={globalStyle.TextS}>
@@ -132,9 +122,42 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-  navigation: ProptTypes.object.isRequired
+  navigation: ProptTypes.object.isRequired,
+  addNoteToReducer: ProptTypes.func.isRequired,
+  arrayContent: ProptTypes.array.isRequired,
+  deleteNoteFromReducer: ProptTypes.func.isRequired,
+  populateFromReducer: ProptTypes.func.isRequired
 };
   
 App.defaultProps = {
-  navigation: {}
+  navigation: {},
+  addNoteToReducer: noop,
+  deleteNoteFromReducer: noop,
+  arrayContent: [],
+  populateFromReducer: noop
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  addNoteToReducer: (noteWithID) => {
+    dispatch({
+      type: 'ADD_NOTE',
+      payload: noteWithID
+    });
+  },
+  deleteNoteFromReducer: (id) => {
+    dispatch({
+      type: 'DELETE_NOTE',
+      payload: id
+    });
+  },
+  populateFromReducer: (allNote) => {
+    dispatch({
+      type: 'POPULATE_NOTE',
+      payload: allNote
+    });
+  }
+});
+const mapStateToProps = (stateStore) => ({
+  arrayContent: stateStore.notes
+});
+export default connect(mapStateToProps, mapDispatchToProps)(App);

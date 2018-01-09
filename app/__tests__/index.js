@@ -61,6 +61,8 @@ describe('App', () => {
     instance._onContentChange('some');
     await instance._addContent();
     expect(ApiNotes.addNote).toHaveBeenLastCalledWith(expectedNote);
+    const spy = jest.spyOn(App, '_setStroage');
+    expect(spy).toBeCalled();
     expect(instance.state.arrayContent).toEqual(expectRes);
   }); 
 

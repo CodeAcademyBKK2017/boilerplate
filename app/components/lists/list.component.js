@@ -9,7 +9,6 @@ import ProptTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './list.style';
 import Swipeout from 'react-native-swipeout';
-import {connect} from 'react-redux';
 import {
   FlatList,
   Text,
@@ -78,6 +77,4 @@ List.defaultProps = {
   removeNote: noop
 };
 
-const mapStateToProps = (storeState) => ({arrayContent: storeState.notes});
-
-export default connect(mapStateToProps)(List);
+export default List;
