@@ -5,11 +5,12 @@ import ListItem from './components/ListItem/ListItem.component';
 import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import storageUtil from './utility/storage.util';
 import style from './app.style';
 import TitleBox from './components/TitleBox/TitleBox.component';
+import transformerUtil from './utility/transformer.util';
 import {
   Alert,
-  AsyncStorage,
   Text,
   View
 } from 'react-native';
@@ -37,8 +38,8 @@ class App extends Component {
       const notes = await apiNotes.getNotes();
       this.props.populateNotes(notes);
     } catch (err) {
-      const dataState = await AsyncStorage.getItem('state');
-      this.props.populateNotes(JSON.parse(dataState));
+      const dataState = await storageUtil.getItemFromAsyncStorage('state');
+      this.props.populateNotes(dataState);
     }
   }
 
@@ -52,13 +53,11 @@ class App extends Component {
         title: this.state.titleText,
         content: this.state.contentText
       });
-      this.props.addNotes(newNote);
       const newDataNOTES = [...this.props.notes, newNote];
-      AsyncStorage.setItem('state', JSON.stringify(newDataNOTES));
-      this.setState({
-        titleText: '',
-        contentText: ''
-      });
+
+      this.props.addNotes(newNote);
+      await storageUtil.setItemFromAsyncStorage('state', newDataNOTES);
+      this.setState({titleText: '', contentText: ''});
     } catch (err) {
       this.onShowAlert(err);
     }
@@ -67,11 +66,9 @@ class App extends Component {
   onDelete = (item) => async () => {
     try {
       await apiNotes.deleteNotes(item);
-      const dataNOTES = [...this.props.notes];
-      const deletePosition = dataNOTES.indexOf(item);
-      dataNOTES.splice(deletePosition, 1);
-      AsyncStorage.setItem('state', JSON.stringify(dataNOTES));
-      this.props.deleteNotes(deletePosition);
+      const dataNOTES = transformerUtil.deleteItem(this.props.notes, item);
+      await storageUtil.setItemFromAsyncStorage('state', dataNOTES);
+      this.props.deleteNotes(item);
     } catch (err) {
       this.onShowAlert(err);
     }
