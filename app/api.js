@@ -4,14 +4,8 @@ import {
 
 // AsyncStorage.clear();
 class Api {
-    onGetNote = async () => {
-      try {
-        return await  fetch('http://localhost:3000/posts').then((res) => res.json());
-      } catch (error) {
-        return false;
-      }
+    onGetNote = async () => await fetch('http://localhost:3000/posts').then((res) => res.json())     
     //   await return fetch('http://localhost:3000/posts').then((res) => res.json());
-    }  
 
     onAddNote = async (note) => {
       const apiresponse = await fetch('http://localhost:3000/posts', {

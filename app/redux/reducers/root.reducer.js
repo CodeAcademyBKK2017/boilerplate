@@ -1,3 +1,4 @@
+import Tranformerutil from '../../utils/tranformerutil';
 import {combineReducers} from 'redux';
 
 export default combineReducers({
@@ -24,9 +25,7 @@ export default combineReducers({
         id: action.payload.id}];
     }
     case 'DELE_NOTE' : {
-      const afterDel = [...perviousState];
-      const filteredNotes = afterDel.filter((note) => note.id !== action.payload.id);
-      return filteredNotes;
+      return Tranformerutil.removeNote(perviousState, action.payload.id);
     }
     case 'LOAD_SERVER' : {
       return action.payload;

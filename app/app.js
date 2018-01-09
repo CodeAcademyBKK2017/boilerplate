@@ -11,8 +11,10 @@ import Lower from './components/Lower/Lower.component';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import storageutil from './utils/storageutil';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
+import Tranformerutil from './utils/tranformerutil';
 import {
   Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
 } from 'react-native';
@@ -61,12 +63,12 @@ class App extends Component {
   // }
 
   onSaveButtonPress = async () => {
-    const newNotes = [...this.state.notes];
+    const newNotes = [...this.props.notes];
     const note = {
       title: this.state.textTitle,
       content: this.state.textContent
     };
-    newNotes.push(note);
+    
     try {
       const api =  await Api.onAddNote(note);
       const newData = {
@@ -74,13 +76,15 @@ class App extends Component {
         content: this.state.textContent,
         id: (JSON.parse(api._bodyText)).id
       };
+      newNotes.push(newData);
       this.props.addNote(newData);
       const newState = {
         textTitle: '',
         textContent: '',
         notes: newNotes
       };
-      await AsyncStorage.setItem('notes', JSON.stringify(newNotes));
+      console.log(newNotes);
+      await storageutil.setItem(newNotes);
       this.setState(newState);
 
     } catch (e) {
@@ -108,9 +112,8 @@ class App extends Component {
   }
 
   onDeleteButtonPress = (item) => async () => {
-    const filteredNotes = this.state.notes.filter((note) => note !== item);
     try {
-      await new Api.onDelete(item.id, filteredNotes);
+      await new Api.onDelete(item.id, Tranformerutil.removeNote(this.props.notes, item.id));
       this.props.deleNote(item);
     } catch (e) {
       Alert.alert(
@@ -142,10 +145,11 @@ class App extends Component {
       this.props.loadServer(notes);
       // this.props.addNote(JSON.parse(notes));
     } catch (e) {
-      const notes =  JSON.parse(await AsyncStorage.getItem('notes')) || [];
-      this.setState({
-        notes: notes
-      });
+      // const notes =  storageutil.getItem();
+      // this.setState({
+      //   notes: notes
+      // });
+      this.props.loadServer(await storageutil.getItem());
     }
   }
 
