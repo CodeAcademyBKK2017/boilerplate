@@ -25,8 +25,7 @@ class App extends Component {
   state = {
     modalData: {},
     titleText: '',
-    contentText: '',
-    NOTES: []
+    contentText: ''
   }
 
   componentDidMount () {
@@ -36,43 +35,30 @@ class App extends Component {
   onLoadDataState = async () => {
     try {
       const notes = await apiNotes.getNotes();
-      this.setState({NOTES: notes});
+      this.props.populateNotes(notes);
     } catch (err) {
       const dataState = await AsyncStorage.getItem('state');
-      this.setState(JSON.parse(dataState));
+      this.props.populateNotes(JSON.parse(dataState));
     }
   }
 
   onTitleChange = (title) => this.setState({titleText: title});
 
   onContentChange = (content) => this.setState({contentText: content});
-
-  newStateData = (dataNOTES) => ({
-    modalData: {},
-    titleText: '',
-    contentText: '',
-    NOTES: dataNOTES
-  });
   
   onSave = async () => {
     try {
-      const aa = await apiNotes.addNotes({
+      const newNote = await apiNotes.addNotes({
         title: this.state.titleText,
-        content: this.state.contentText,
-        key: this.state.NOTES.length
+        content: this.state.contentText
       });
-      const newData = {
-        title: this.state.titleText,
-        content: this.state.contentText,
-        key: this.state.NOTES.length,
-        id: (JSON.parse(aa._bodyText)).id
-      };
-
-      this.props.addNotes(newData);
-
-      const newDataNOTES = [...this.state.NOTES, newData];
-      AsyncStorage.setItem('state', JSON.stringify(this.newStateData(newDataNOTES)));
-      this.setState(this.newStateData(newDataNOTES));
+      this.props.addNotes(newNote);
+      const newDataNOTES = [...this.props.notes, newNote];
+      AsyncStorage.setItem('state', JSON.stringify(newDataNOTES));
+      this.setState({
+        titleText: '',
+        contentText: ''
+      });
     } catch (err) {
       this.onShowAlert(err);
     }
@@ -81,11 +67,11 @@ class App extends Component {
   onDelete = (item) => async () => {
     try {
       await apiNotes.deleteNotes(item);
-      const dataNOTES = [...this.state.NOTES];
+      const dataNOTES = [...this.props.notes];
       const deletePosition = dataNOTES.indexOf(item);
       dataNOTES.splice(deletePosition, 1);
-      AsyncStorage.setItem('state', JSON.stringify(this.newStateData(dataNOTES)));
-      this.setState(this.newStateData(dataNOTES));
+      AsyncStorage.setItem('state', JSON.stringify(dataNOTES));
+      this.props.deleteNotes(deletePosition);
     } catch (err) {
       this.onShowAlert(err);
     }
@@ -106,12 +92,12 @@ class App extends Component {
     );
   }
 
-  showFlatList = () => // (this.state.NOTES.length > 0) ? 
+  showFlatList = () => (this.props.notes.length > 0) ? 
     <ListItem 
       dataNotes={this.props.notes}
       onShowModal={this.onShowModal}
       onDelete={this.onDelete}
-    /> // : null ;
+    /> : null ;
 
   viewOverlay = () => <Overlay 
     visible={!!(this.state.modalData.title)}
@@ -136,18 +122,35 @@ class App extends Component {
 }
 
 App.propTypes = {
-  navigation: PropTypes.object.isRequired
+  navigation: PropTypes.object.isRequired,
+  notes: PropTypes.array.isRequired,
+  addNotes: PropTypes.func.isRequired,
+  deleteNotes: PropTypes.func.isRequired,
+  populateNotes: PropTypes.func.isRequired
 };
 
 App.defaultProps = {
-  navigation: {}
+  navigation: {},
+  notes: []
 };
 
 const mapStateToProps = (state) => ({notes: state.notes});
 const mapDispatchToProps = (dispatch) => ({
+  populateNotes: (dataNote) => {
+    dispatch({
+      type: 'POPULATE_NOTES',
+      payload: dataNote
+    });
+  },
   addNotes: (dataNote) => {
     dispatch({
       type: 'ADD_NOTES',
+      payload: dataNote
+    });
+  },
+  deleteNotes: (dataNote) => {
+    dispatch({
+      type: 'DELETE_NOTES',
       payload: dataNote
     });
   }

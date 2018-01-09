@@ -8,6 +8,6 @@ const addNotes = (newData) => fetch('http://localhost:3000/notes', {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify(newData)
-});
+}).then((data) => data.json());
 
 export default {getNotes, deleteNotes, addNotes};

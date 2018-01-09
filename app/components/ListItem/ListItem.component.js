@@ -12,8 +12,9 @@ import {
 
 export default class ListItem extends Component {
 
+  _keyExtractor = (item) => item.id;
+
   renderItemList = ({item}) => {
-    // Buttons
     const swipeoutBtns = [
       {
         text: 'Delete',
@@ -42,6 +43,7 @@ export default class ListItem extends Component {
         <FlatList 
           style={style.flatListStyle}
           data={this.props.dataNotes}
+          keyExtractor={this._keyExtractor}
           renderItem={this.renderItemList}/>
       </View>
     );
