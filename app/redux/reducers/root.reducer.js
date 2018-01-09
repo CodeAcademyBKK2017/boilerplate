@@ -1,3 +1,4 @@
+import utility from '../../util/utility';
 import {combineReducers} from 'redux';
 
 export default combineReducers({
@@ -6,7 +7,7 @@ export default combineReducers({
     case 'ADD_NOTE':
       return [...previousState, action.payload];
     case 'DELETE_NOTE':
-      return previousState.filter((item) => item.id !== action.payload);
+      return utility.filterNotes(previousState, action.payload);
     case 'POPULATE_NOTE':
       return action.payload; 
     default:

@@ -16,8 +16,8 @@ import React, {
   Component
 } from 'react';
 import Title from './components/titles/title.component';
-import {Alert, 
-  AsyncStorage,
+import Utility from './util/utility';
+import {Alert,
   Text,
   TouchableOpacity, View} from 'react-native';
 import {connect} from 'react-redux';
@@ -44,8 +44,10 @@ class App extends Component {
     try {
       const response = await ApiNotes.getNotes();
       (response.length !== 0) && this.props.populateFromReducer(response);
+      Utility.setItemToStroage('theState', this.props.arrayContent);
+      await Utility.getItemToStroage('theState');
     } catch (e) {
-      const value = await AsyncStorage.getItem('theState');
+      const value = await Utility.getItemToStroage('theState');
       let arrayContent;
       if (value) {
         arrayContent = JSON.parse(value);
@@ -65,10 +67,13 @@ class App extends Component {
   _addContent = async () => {
     try {
       const newnote = {title: this.state.currentTitle, content: this.state.currentContent};
+      if (newnote.title === '' || newnote.content === '') {
+        throw 'must not empty';
+      }
       const noteWithID = await ApiNotes.addNote(newnote);  
       this.props.addNoteToReducer(noteWithID);
       this.setState({currentContent: '', currentTitle: ''});
-      await AsyncStorage.setItem('theState', JSON.stringify(this.props.arrayContent));
+      Utility.setItemToStroage('theState', this.props.arrayContent);
     } catch (e) {
       Alert.alert(
         'Save Failed',
@@ -87,6 +92,7 @@ class App extends Component {
     try {
       await ApiNotes.deleteNote(content.id);
       this.props.deleteNoteFromReducer(content.id);
+      Utility.setItemToStroage('theState', this.props.arrayContent);
     } catch (e) {
       Alert.alert(
         'Delete Failed',
