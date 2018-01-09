@@ -30,6 +30,8 @@ class List extends Component {
       this.setState({modalVisible: false, currentItem: {}});
      
     }
+    _keyExtractor = (item) => item.id;
+
       _renderItems = ({item}) =>
         (
           <Swipeout  right={[
@@ -61,7 +63,7 @@ class List extends Component {
         return (
           <View style={styles.container}>
             <Overlay item={this.state.currentItem} modalVisible={this.state.modalVisible} closeModal={this._closeModal}/>
-            <FlatList data={arrayContent} renderItem={this._renderItems}/>
+            <FlatList data={arrayContent} keyExtractor={this._keyExtractor} renderItem={this._renderItems}/>
           </View>
         );
 
