@@ -108,7 +108,7 @@ describe('App', () => {
     
     await appInstance.onSaveButtonPress();
     
-    expect(AsyncStorage.setItem).not.toBeCalled();
+    expect(StorageUtil.setItem).not.toBeCalled();
     expect(Alert.alert).toHaveBeenCalledWith(
       'Save Failed',
       'API failed',
