@@ -7,3 +7,4 @@ export const DELETE_NOTES = 'DELETE_NOTES';
 export const addNotes = createAction(ADD_NOTES);
 export const deleteNotes = createAction(DELETE_NOTES);
 export const populateNotes = createAction(POPULATE_NOTES);
+

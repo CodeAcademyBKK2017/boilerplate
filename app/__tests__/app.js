@@ -1,37 +1,32 @@
 import apiNotes from '../api';
-import App from '../app';
+import ConnectApp from '../app';
 import React from 'react';
-
-// Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
-import {Alert, AsyncStorage} from 'react-native';
+import {Alert} from 'react-native';
+import {createStore} from 'redux';
 import {shallow} from 'enzyme';
 
-jest.mock('../api'); // file mock
-
-jest.mock('AsyncStorage', () => ({
-  getItem: jest.fn(() => Promise.resolve('')),
-  setItem: jest.fn(() => Promise.resolve())
+jest.mock('../api');
+jest.mock('uuid', () => () => 'some uuid');
+jest.mock('Alert', () => ({
+  alert: jest.fn()
 }));
 
-jest.mock('uuid', () => () => 'some uuid');
+const store = createStore(() => ({}));
 
 describe('App', () => {
 
-  const props = {};
-  const wrapper = shallow(<App {...props}/>);
-  const instance = wrapper.instance();
-      
-  const stateClear = {
-    modalData: {},
-    titleText: '',
-    contentText: '',
-    NOTES: []
-  };
+  let appComp;
+  let instance;
+
+  beforeEach(() => {
+    appComp = <ConnectApp store={store}/>;
+    const wrapper = shallow(appComp);
+    instance = wrapper.find('App').shallow().instance();
+  });
 
   it('renders correctly', () => {
-    const tree = renderer.create(<App />);
-    expect(tree).toBeDefined();
+    const tree = renderer.create(appComp).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
@@ -61,8 +56,7 @@ describe('App', () => {
   it('Check Function viewOverlay', () => {
     const note = {
       title: 'React Native',
-      content: '- UI',
-      key: 0
+      content: '- UI'
     };
     instance.onShowModal(note);
     expect(instance.viewOverlay).toMatchSnapshot();
@@ -71,10 +65,9 @@ describe('App', () => {
   it('Check Function onShowModal', () => {
     const note = {
       title: 'React Native',
-      content: '- UI',
-      key: 0
+      content: '- UI'
     };
-    instance.onShowModal(note)();
+    instance.onShowModal(note);
     expect(instance.state.modalData).toEqual(note);
   });
 
@@ -89,10 +82,13 @@ describe('App', () => {
         navigate: jest.fn()
       }
     };
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
-    instance.openAbout();
-    expect(instance.props.navigation.navigate).toHaveBeenCalledWith('About');
+    appComp = <ConnectApp store={store}/>;
+    const wrapper = shallow(appComp);
+    const appWrapper = wrapper.find('App').shallow();
+    const appInstance = appWrapper.instance();
+    appWrapper.setProps(props);
+    appInstance.openAbout();
+    expect(appInstance.props.navigation.navigate).toHaveBeenCalledWith('About');
   });
 
   it('Check Function openAbout with spy', () => { // spy
@@ -101,13 +97,14 @@ describe('App', () => {
         navigate: () => {}
       }
     };
-    const appComp = <App {...props}/>;
+    appComp = <ConnectApp store={store}/>;
     const wrapper = shallow(appComp);
-    const instance = wrapper.instance();
-    const spyFunc = jest.spyOn(props.navigation, 'navigate');
+    const appWrapper = wrapper.find('App').shallow();
+    const appInstance = appWrapper.instance();
+    appWrapper.setProps(props);
 
-    instance.openAbout();
-    
+    const spyFunc = jest.spyOn(props.navigation, 'navigate');
+    appInstance.openAbout();
     expect(spyFunc).toHaveBeenCalledWith('About');
   });
 
@@ -117,99 +114,74 @@ describe('App', () => {
     expect(instance.onLoadDataState).toBeCalled();
   });
 
-  it('onLoadDataState', async () => { // connect server success !!
-
-    instance.setState(stateClear); // clear state
-    
-    const notes = await apiNotes.getNotes();
-    instance.setState({NOTES: notes});
-
-    const expected = {
-      modalData: {},
-      titleText: '',
-      contentText: '',
-      NOTES: [{
-        title: 'React Native',
-        content: '- UI',
-        key: 0,
-        id: 1
-      }]
-    };
-    expect(instance.state).toEqual(expected);
-  });
-
-  xit('Check Function onSave success', async () => {
-
-    instance.setState(stateClear); // clear state
-
+  it('Check Function onSave success', async () => {
     const title = 'React Native';
     const content = '- UI';
     instance.setState({titleText: title, contentText: content});
-
     await instance.onSave();
-
     const expectedNote = {
       'title': 'React Native',
-      'content': '- UI',
-      'key': 0
+      'content': '- UI'
     };
-
-    const expected = {
-      modalData: {},
-      titleText: '',
-      contentText: '',
-      NOTES: [{
-        title: 'React Native',
-        content: '- UI',
-        key: 0,
-        id: 1
-      }]
-    };
-
     expect(apiNotes.addNotes).toHaveBeenLastCalledWith(expectedNote);
-    expect(AsyncStorage.setItem).toHaveBeenLastCalledWith('state', JSON.stringify(expected));
-    expect(instance.state).toEqual(expected);
+    expect(instance.state.titleText).toEqual('');
+    expect(instance.state.contentText).toEqual('');
   });
 
   it('Check Function onSave failure', async () => {
-    await instance.onSave();
+    instance.onShowAlert = jest.fn(); // this is mock FN
     apiNotes.addNotes.mockClear();
-    AsyncStorage.setItem.mockClear();
     apiNotes.addNotes.mockImplementation(() => Promise.reject('API failed'));
-    expect(AsyncStorage.setItem).not.toBeCalled();
+    await instance.onSave();
+    expect(instance.onShowAlert).toHaveBeenCalledWith('API failed');
   });
 
-  xit('Check Function onDelete', async () => {
+  it('Check Function onDelete', async () => {
+    const title = 'React Native';
+    const content = '- UI';
+    const note = {
+      content: content,
+      id: 1,
+      title: title
+    };
+    instance.setState({titleText: title, contentText: content});
+    await instance.onSave();
+    await instance.onDelete(note);
+    expect(apiNotes.deleteNotes).toBeCalled();
+    expect(apiNotes.deleteNotes).toHaveBeenCalledWith(note);
+  });
 
-    instance.setState(stateClear); // clear state
+  it('Check Function Delete failure', async () => {
+    instance.onShowAlert = jest.fn(); // this is mock FN
+    apiNotes.deleteNotes.mockClear();
+    apiNotes.deleteNotes.mockImplementation(() => Promise.reject('API failed'));
+    await instance.onDelete();
+    expect(apiNotes.deleteNotes).toBeCalled();
+    expect(instance.onShowAlert).toHaveBeenCalledWith('API failed');
+  });
 
-    const note = [{
+  it('Check Function onShowAlert', () => {
+    instance.onShowAlert('err');
+    expect(Alert.alert).toBeCalled();
+  });
+
+  it('onLoadDataState', async () => { // connect server success !!
+    const props = {
+      populateNotes: jest.fn()
+    };
+    appComp = <ConnectApp store={store}/>;
+    const wrapper = shallow(appComp);
+    const appWrapper = wrapper.find('App').shallow();
+    const appInstance = appWrapper.instance();
+    appWrapper.setProps(props);
+    await appInstance.onLoadDataState();
+
+    expect(apiNotes.getNotes).toBeCalled();
+    expect(appInstance.props.populateNotes).toHaveBeenCalledWith([{
       title: 'React Native',
       content: '- UI',
       key: 0,
       id: 1
-    }];
-    
-    console.log(instance.state);
-
-    instance.setState({NOTES: note});
-
-    console.log(instance.state);
-
-    instance.onDelete(note);
-
-    console.log(instance.state);
-
-    expect(apiNotes.deleteNotes).toBeCalled();
-    expect(instance.state).toEqual(stateClear);
-  });
-
-  xit('onDeletePress failure', async () => {
-    apiNotes.deleteNote.mockClear();
-    AsyncStorage.setItem.mockClear();
-    apiNotes.deleteNote.mockImplementation(() => Promise.reject('API failed'));
-    await instance.onDeletePress()();
-    expect(AsyncStorage.setItem).not.toBeCalled();
-    expect(Alert.alert).toBeCalled();
+    }]);
   });
 });

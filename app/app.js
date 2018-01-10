@@ -15,6 +15,7 @@ import {
   Text,
   View
 } from 'react-native';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as actions from './redux/actions/index.action';
 
@@ -40,8 +41,7 @@ class App extends Component {
       const notes = await apiNotes.getNotes();
       this.props.populateNotes(notes);
     } catch (err) {
-      const dataState = await storageUtil.getItemFromAsyncStorage('state') || [];
-      this.props.populateNotes(dataState);
+      this.props.populateNotes(await storageUtil.getItemFromAsyncStorage('state') || []);
     }
   }
 
@@ -65,7 +65,7 @@ class App extends Component {
     }
   }
 
-  onDelete = (item) => async () => {
+  onDelete = async (item) => {
     try {
       await apiNotes.deleteNotes(item);
       const dataNOTES = transformerUtil.deleteItem(this.props.notes, item);
@@ -76,7 +76,7 @@ class App extends Component {
     }
   }
 
-  onShowModal = (note) => () => this.setState({modalData: note});
+  onShowModal = (note) => this.setState({modalData: note});
 
   onCloseModal = () => this.setState({modalData: {}});
 
@@ -138,15 +138,12 @@ App.defaultProps = {
 
 const mapStateToProps = (state) => ({notes: state.notes});
 const mapDispatchToProps = (dispatch) => ({
-  addNotes: (dataNote) => {
-    dispatch(actions.addNotes(dataNote));
-  },
-  deleteNotes: (dataNote) => {
-    dispatch(actions.deleteNotes(dataNote));
-  },
-  populateNotes: (dataNote) => {
-    dispatch(actions.populateNotes(dataNote));
-  }
+  addNotes: bindActionCreators(actions.addNotes, dispatch),
+  deleteNotes: bindActionCreators(actions.deleteNotes, dispatch),
+  populateNotes: bindActionCreators(actions.populateNotes, dispatch)
+
+  // old **
+  // deleteNotes: (dataNote) => dispatch(actions.deleteNotes(dataNote)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
