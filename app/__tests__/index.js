@@ -206,6 +206,20 @@ describe('App', () => {
     expect(appInstance.props.populateNote).toHaveBeenCalledWith(notes);
   });
 
+  it('loadData failure with null', async () => {
+    ApiNotes.getNotes.mockImplementation(() => Promise.reject());
+    StorageUtil.getItem.mockImplementation(() => Promise.resolve(null));
+    const props = {
+      populateNote: jest.fn()
+    };
+    appWrapper.setProps(props);
+
+    await appInstance.loadData();
+
+    expect(StorageUtil.getItem).toHaveBeenCalledWith(notesKey);
+    expect(appInstance.props.populateNote).toHaveBeenCalledWith([]);
+  });
+
   it('onAboutButtonPress with mock', () => {
     const props = {
       navigation: {
