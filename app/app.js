@@ -15,6 +15,7 @@ import {
   View
 } from 'react-native';
 import {connect} from 'react-redux';
+import * as indexAction from './redux/actions/index.actions';
 
 class App extends Component {
   state = {
@@ -138,22 +139,13 @@ App.defaultProps = {
 const mapStateToProps = (state) => ({notes: state.notes});
 const mapDispatchToProps = (dispatch) => ({
   addNote: (newData) => {
-    dispatch({
-      type: 'ADD_NOTE',
-      payload: newData
-    });
+    dispatch(indexAction.addNote(newData));
   },
   deleteNote: (newData) => {
-    dispatch({
-      type: 'DELETE_NOTE',
-      payload: newData
-    });
+    dispatch(indexAction.deleteNote(newData));
   },
   showNote: (notes) => {
-    dispatch({
-      type: 'POPULATE_NOTE',
-      payload: notes
-    });
+    dispatch(indexAction.showNote(notes));
   }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
