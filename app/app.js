@@ -17,9 +17,11 @@ import React, {
 } from 'react';
 import Title from './components/titles/title.component';
 import Utility from './util/utility';
+import {addnote, deletenote, populatenote} from '../app/redux/actions/index.action';
 import {Alert,
   Text,
   TouchableOpacity, View} from 'react-native';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 class App extends Component {
@@ -144,24 +146,9 @@ App.defaultProps = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  addNoteToReducer: (noteWithID) => {
-    dispatch({
-      type: 'ADD_NOTE',
-      payload: noteWithID
-    });
-  },
-  deleteNoteFromReducer: (id) => {
-    dispatch({
-      type: 'DELETE_NOTE',
-      payload: id
-    });
-  },
-  populateFromReducer: (allNote) => {
-    dispatch({
-      type: 'POPULATE_NOTE',
-      payload: allNote
-    });
-  }
+  addNoteToReducer: bindActionCreators(addnote, dispatch),
+  deleteNoteFromReducer: bindActionCreators(deletenote, dispatch),
+  populateFromReducer: bindActionCreators(populatenote, dispatch)
 });
 const mapStateToProps = (stateStore) => ({
   arrayContent: stateStore.notes
