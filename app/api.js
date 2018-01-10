@@ -9,7 +9,7 @@ const addNote = (notes) => fetch(dbHost + '/notes', {
     'Content-Type': 'application/json'
   },
   body: JSON.stringify(notes)
-});
+}).then((res) => res.json());
 
 const deleteNote = (id) => fetch(dbHost + `/notes/${id}`, {method: 'DELETE'});
 

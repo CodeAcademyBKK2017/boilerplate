@@ -1,33 +1,66 @@
 import API from '../api';
-import App from '../index';
+import ConnectedApp from '../app';
 import NoteItem from '../components/NoteItem/NoteItem.component';
 import React from 'react';
-// import renderer from 'react-test-renderer';
+import renderer from 'react-test-renderer';
 import SnackBar from 'react-native-snackbar';
-import {AsyncStorage} from 'react-native';
+import StorageUtil from '../utils/storage.util';
 
 // Note: test renderer must be required after react-native.
+
+import {createStore} from 'redux';
 import {shallow} from 'enzyme';
 
-jest.mock('AsyncStorage', () => ({
-  getItem: jest.fn(() => Promise.resolve('[{"key":"key", "title":"title","content":"content"}]')),
-  setItem: jest.fn(() => Promise.resolve())
-}));
+const store = createStore(() => ({notes: []}));
 
 jest.mock('../api', () => ({
-  getNotes: jest.fn(() => Promise.resolve('[{"key":"key", "title":"title","content":"content"}]').then((data) => data.json())),
-  addNote: jest.fn(() => Promise.resolve()),
+  getNotes: jest.fn(() => Promise.resolve([{id: 1, title: 'title', content: 'content'}])),
+  addNote: jest.fn(() => Promise.resolve({id: 2, title: 'title', content: 'content'})),
   deleteNote: jest.fn(() => Promise.resolve())
 }));
 
-describe('App', () => {
+jest.mock('../utils/storage.util', () => ({
+  getItem: jest.fn(() => Promise.resolve([{id: 1, title: 'title', content: 'content'}])),
+  setItem: jest.fn(() => Promise.resolve())
+}));
 
-  it('onTitleChangeText: Should be count the current of string', () => { // example to test class methods
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
+describe('App', () => {
+  const props = {
+    navigation: {
+      navigate: jest.fn()
+    },
+    store
+  };
+  
+  let component;
+  let wrapper;
+  let instance;
+
+  beforeEach(() => {
+    component = <ConnectedApp {...props} />;
+    wrapper = shallow(component).find('App').shallow();
+    instance = wrapper.instance();
+    StorageUtil.getItem.mockClear();
+    StorageUtil.setItem.mockClear();
+
+    API.getNotes.mockClear();
+    API.addNote.mockClear();
+    API.deleteNote.mockClear();
+  });
+
+  it('App should be renders correctly', () => {
+    const tree = renderer.create(component);
+    expect(tree).toBeDefined();
+  });
+
+  it('onSavePress: Should be count the current of string', () =>  {
+    
+    wrapper.setProps({
+      addNote: jest.fn()
+    });
 
     return instance.onSaveButtonPress().then(() => {
+
       instance.onTitleChangeText('Title');
       expect(instance.state.currentTitle).toBe('Title');
 
@@ -38,38 +71,27 @@ describe('App', () => {
         currentTitle: 'Title',
         currentContent: 'Content',
         modalVisible: false,
-        selectedNote: {key: '', title: '', content: ''},
-        notes: [{key: 'key', title: 'title', content: 'content'}]
+        selectedNote: {id: '', title: '', content: ''}
       });
+
+      expect(instance.props.addNote).toHaveBeenCalledWith({id: 2, title: 'title', content: 'content'});
     });
+  
   });
 
   it('onPressItem', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
-
     instance._onPressItem({title: 'title', content: 'content'})();
     expect(instance.state.modalVisible).toBeTruthy();
   });
 
   it('_hideOverlay', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
-
     instance._hideOverlay();
     expect(instance.state.modalVisible).toBeFalsy();
   });
 
   it('Render Items: should get the correct the note item', () => {
-    
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
-
     const item = {
-      key: 'key',
+      id: 'id',
       title: 'title',
       content: 'content'
     };
@@ -80,89 +102,62 @@ describe('App', () => {
   });
 
   it('Test navigation', () => {
-    const props = {
-      navigation: {
-        navigate: jest.fn()
-      }
-    };
-    
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
     instance._goToAbout('navigate');
-
     expect(instance.props.navigation.navigate).toHaveBeenCalled();
   });
 
   it('On delete item', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
+    wrapper.setProps({
+      deleteNote: jest.fn()
+    });
 
-    const item = {
-      key: 'key',
+    const deleteItem = {
+      id: '1',
       title: 'title',
       content: 'content'
     };
-
-    instance.setState({
-      notes: [item]
-    });
     
-    instance._onDeleteItem(item)().then(() => {
+    instance._onDeleteItem(deleteItem)().then(() => {
       expect(instance.state).toEqual({
         currentTitle: '',
         currentContent: '',
         modalVisible: false,
-        selectedNote: {key: '', title: '', content: ''},
-        notes: []
+        selectedNote: {id: '', title: '', content: ''}
       });
+
+      expect(instance.props.deleteNote).toHaveBeenCalledWith(deleteItem);
     });
   });
 
   it('On Save item: fail', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
-
-    API.addNote.mockClear();
-    AsyncStorage.setItem.mockClear();
     API.addNote.mockImplementation(() => Promise.reject('API failed'));
 
     return instance.onSaveButtonPress().catch(() => {
-      expect(AsyncStorage.setItem).not.toBeCalled();
+      console.log(SnackBar.show, 'SNAck bacr');
       expect(SnackBar.show).toHaveBeenCalledWith({backgroundColor: '#d9bf56', duration: 3000, title: 'Network errors: Can\'t connect to server.'});
     });
   });
 
-  it('Load Data', async () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
-
-    API.getNotes.mockClear();
-    AsyncStorage.getItem.mockClear();
-
+  it('Load Data fail', async () => {
     API.getNotes.mockImplementation(() => Promise.reject('API failed'));
-    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(undefined));
+    StorageUtil.getItem.mockImplementation(() => Promise.resolve(undefined));
 
     await instance.loadData(); 
     
-    expect(AsyncStorage.getItem).toBeCalled();
+    expect(StorageUtil.getItem).toBeCalled();
   });
 
   it('On delete item: fail', () => {
-    const props = {};
-    const wrapper = shallow(<App {...props}/>);
-    const instance = wrapper.instance();
-
-    API.addNote.mockClear();
-    AsyncStorage.setItem.mockClear();
     API.deleteNote.mockImplementation(() => Promise.reject('API failed'));
 
     return instance._onDeleteItem({id: 1})().catch(() => {
-      expect(AsyncStorage.setItem).not.toBeCalled();
+      expect(StorageUtil.setItem).not.toBeCalled();
       expect(SnackBar.show).toHaveBeenCalledWith({backgroundColor: '#d9bf56', duration: 3000, title: 'Network errors: Can\'t connect to server.'});
     });
+  });
+
+  it('key extractor', () => {
+    expect(instance._keyExtractor({id: 1})).toBe(1);
   });
 
 });

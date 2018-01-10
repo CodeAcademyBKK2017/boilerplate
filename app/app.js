@@ -11,6 +11,7 @@ import StorageUtil from './utils/storage.util';
 import styles from './app.styles';
 import Title from './components/Title/Title.component';
 import Touchable from 'react-native-platform-touchable';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {
   FlatList, Text, View
@@ -75,7 +76,6 @@ class App extends Component {
     };
     
     return API.addNote(saveNote)
-      .then((res) => res.json())
       .then((noteWithID) => {
         const newNotes = [...this.props.notes, noteWithID];
         this.props.addNote(noteWithID);
@@ -158,15 +158,9 @@ App.propTypes = {
 const mapStateToProps = (storeState) => ({notes: storeState.notes});
 
 const mapDispatchToProps = (dispatch) => ({
-  addNote: (note) => {
-    dispatch(actions.addNote(note));
-  },
-  deleteNote: (note) => {
-    dispatch(actions.deleteNote(note));
-  },
-  populateNotes: (notes) => {
-    dispatch(actions.populateNotes(notes));
-  }
+  addNote: bindActionCreators(actions.addNote, dispatch),
+  deleteNote: bindActionCreators(actions.deleteNote, dispatch),
+  populateNotes: bindActionCreators(actions.populateNotes, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
