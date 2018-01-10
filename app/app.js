@@ -124,7 +124,8 @@ App.propTypes = {
 };
 
 App.defaultProps = {
-  navigation: null
+  navigation: null,
+  notes: []
 };
 const mapStateToProps = (storeState) => ({
   notes: storeState.notes
