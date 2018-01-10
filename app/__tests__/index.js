@@ -145,8 +145,8 @@ describe('App', () => {
       content: 'content 00'
     };
     
-    const curryFunc = appInstance.onDeleteButtonPress(note00);
-    await curryFunc();
+    const deleteHandler = appInstance.onDeleteButtonPress(note00);
+    await deleteHandler();
 
     expect(Alert.alert).toHaveBeenCalledWith(
       'Delete Failed',
