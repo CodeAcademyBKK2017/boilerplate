@@ -169,7 +169,20 @@ describe('App', () => {
       content
     }];
     ApiNotes.getNotes.mockImplementation(() => Promise.resolve(notes));
+    const props = {
+      populateNote: jest.fn()
+    };
+    appWrapper.setProps(props);
+
+    await appInstance.loadData();
+
     const expectedNotes = notes;
+    expect(ApiNotes.getNotes).toBeCalled();
+    expect(appInstance.props.populateNote).toHaveBeenCalledWith(expectedNotes);
+  });
+
+  it('loadData with empty', async () => {
+    ApiNotes.getNotes.mockImplementation(() => Promise.resolve([]));
     const props = {
       populateNote: jest.fn()
     };
@@ -178,16 +191,7 @@ describe('App', () => {
     await appInstance.loadData();
 
     expect(ApiNotes.getNotes).toBeCalled();
-    expect(appInstance.props.populateNote).toHaveBeenCalledWith(expectedNotes);
-  });
-
-  it('loadData with empty', async () => {
-    ApiNotes.getNotes.mockImplementation(() => Promise.resolve([]));
-
-    await appInstance.loadData();
-
-    expect(ApiNotes.getNotes).toBeCalled();
-    expect(appInstance.state.notes).toEqual([]);
+    expect(appInstance.props.populateNote).toHaveBeenCalledWith([]);
   });
 
   it('onAboutButtonPress with mock', () => {
