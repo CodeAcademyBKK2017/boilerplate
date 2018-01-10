@@ -1,6 +1,6 @@
 import {removeNote} from '../transformer.util';
 
-test('', () => {
+it('', () => {
   const initialNotes = [
     {id: 1, title: 'title', content: 'content'},
     {id: 2, title: 'title', content: 'content'},

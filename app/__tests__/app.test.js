@@ -133,7 +133,6 @@ describe('App', () => {
     API.addNote.mockImplementation(() => Promise.reject('API failed'));
 
     return instance.onSaveButtonPress().catch(() => {
-      console.log(SnackBar.show, 'SNAck bacr');
       expect(SnackBar.show).toHaveBeenCalledWith({backgroundColor: '#d9bf56', duration: 3000, title: 'Network errors: Can\'t connect to server.'});
     });
   });
