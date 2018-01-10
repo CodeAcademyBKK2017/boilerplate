@@ -1,4 +1,4 @@
-import {ADD_NOTE, DELETE_NOTE, POPULATE_NOTE} from '../actions/index.actions';
+import {ADD_NOTE, DELETE_NOTE, POPULATE_NOTES} from '../actions/index.actions';
 import {filterNote} from '../../utils/transformerutil';
 
 export default (previousState = [], action) => {
@@ -10,7 +10,7 @@ export default (previousState = [], action) => {
     const remainNote = filterNote(previousState, action.payload);
     return remainNote;
   }
-  case POPULATE_NOTE: {
+  case POPULATE_NOTES: {
     return action.payload;
   }
   default:

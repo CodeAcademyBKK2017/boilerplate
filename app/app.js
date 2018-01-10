@@ -12,6 +12,7 @@ import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
 import {Alert,  KeyboardAvoidingView, Platform, Text, View} from 'react-native';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {filterNote} from './utils/transformerutil';
 import {getItemToStorage, setItemToStorage} from './utils/storageutil';
@@ -120,10 +121,7 @@ App.defaultProps = {
 };
 const mapStateToProps = (storeState) => ({noteList: storeState.notes});
 const mapDispatchToProps = (dispatch) => ({
-  addNote: (note) => {
-    const action = actions.addNote(note);
-    dispatch(action);
-  },
+  addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: (id) => {
     const action = actions.deleteNote(id);
     dispatch(action);
