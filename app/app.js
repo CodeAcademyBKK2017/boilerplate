@@ -19,6 +19,7 @@ import {
   Alert, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 import {connect} from 'react-redux';
+import * as actions from './redux/actions/index.actions';
 
 // const notesKey = 'notes';
 //
@@ -194,22 +195,13 @@ App.defaultProps = {
 const mapStateToProps = (state) => ({notes: state.notes});
 const mapDispatchToProps = (dispatch) => ({
   addNote: (note) => {
-    dispatch({
-      type: 'ADD_NOTE',
-      payload: note
-    });
+    dispatch(actions.addNote(note));
   },
   deleNote: (note) => {
-    dispatch({
-      type: 'DELE_NOTE',
-      payload: note
-    });
+    dispatch(actions.deleNote(note));
   },
   loadServer: (note) => {
-    dispatch({
-      type: 'LOAD_SERVER',
-      payload: note
-    });
+    dispatch(actions.loadServer(note));
   }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
