@@ -1,5 +1,5 @@
 export default {
-  addNote: jest.fn(() => Promise.resolve()),
+  addNote: jest.fn(() => Promise.resolve([{title: 'some', content: 'some', id: 1}])),
   deleteNote: jest.fn(() => Promise.resolve()),
-  getNotes: jest.fn(() => Promise.resolve('[{title: "some",content: "some",key: "123"}]'))
+  getNotes: jest.fn(() => Promise.resolve([{title: 'some', content: 'some', id: 1}]))
 };

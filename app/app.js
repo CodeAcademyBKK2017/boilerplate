@@ -50,12 +50,14 @@ class App extends Component {
       await Utility.getItemToStroage('theState');
     } catch (e) {
       const value = await Utility.getItemToStroage('theState');
+      console.log(value);
       let arrayContent;
       if (value) {
         arrayContent = JSON.parse(value);
       } else {
         arrayContent = [];
       }
+      
       this.props.populateFromReducer(arrayContent);
     }
    
@@ -72,7 +74,7 @@ class App extends Component {
       if (newnote.title === '' || newnote.content === '') {
         throw 'must not empty';
       }
-      const noteWithID = await ApiNotes.addNote(newnote);  
+      const noteWithID = await ApiNotes.addNote(newnote);
       this.props.addNoteToReducer(noteWithID);
       this.setState({currentContent: '', currentTitle: ''});
       Utility.setItemToStroage('theState', this.props.arrayContent);
