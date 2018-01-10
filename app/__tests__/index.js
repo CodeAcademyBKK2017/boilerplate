@@ -157,36 +157,28 @@ describe('App', () => {
   });
 
   it('loadData with existed notes', async () => {
-    ApiNotes.getNotes.mockImplementation(() => Promise.resolve([{
-      id: 1,
-      title: 'my test title',
-      content: 'my test message'
-    }, {
-      id: 2,
-      title: 'my test title',
-      content: 'my test message'
-    }]));
-
     const title = 'my test title';
     const content = 'my test message';
-    const expected = {
-      textTitle: '',
-      textContent: '',
-      notes: [{
-        id: 1,
-        title,
-        content
-      }, {
-        id: 2,
-        title,
-        content
-      }]
+    const notes = [{
+      id: 1,
+      title,
+      content
+    }, {
+      id: 2,
+      title,
+      content
+    }];
+    ApiNotes.getNotes.mockImplementation(() => Promise.resolve(notes));
+    const expectedNotes = notes;
+    const props = {
+      populateNote: jest.fn()
     };
+    appWrapper.setProps(props);
 
     await appInstance.loadData();
 
     expect(ApiNotes.getNotes).toBeCalled();
-    expect(appInstance.state).toEqual(expected);
+    expect(appInstance.props.populateNote).toHaveBeenCalledWith(expectedNotes);
   });
 
   it('loadData with empty', async () => {
