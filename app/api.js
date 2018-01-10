@@ -6,7 +6,7 @@ class ApiNotes {
       method: 'GET'
     };
     return fetch(this.API_NOTES, option)
-      .then((response) => response.json());
+      .then((response) => JSON.parse(response.json()));
   }
 
   deleteNote = (id) => {

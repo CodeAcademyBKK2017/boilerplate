@@ -41,14 +41,26 @@ class App extends Component {
   onChangeTextContent = (textContent) => {
     this.setState({textContent});
   }
+
   onSaveButtonPress = async () => {
-    const note = {
-      title: this.state.textTitle,
-      content: this.state.textContent
-    };
-    const response = await ApiNotes.addNote(note);
-    this.props.addNote(response);
-    storage.setItem('notes', this.props.notes);
+    try {
+      const note = {
+        title: this.state.textTitle,
+        content: this.state.textContent
+      };
+      const response = await ApiNotes.addNote(note);
+      this.props.addNote(response);
+      storage.setItem('notes', this.props.notes);
+    } catch (error) {
+      Alert.alert(
+        'Delete Failed',
+        String(error),
+        null,
+        {
+          cancelable: false
+        }
+      );
+    }
   }
 
   onDeleteButtonPress = (item) => async () => {
@@ -79,8 +91,7 @@ class App extends Component {
       storage.setItem('notes', response);
     } catch (error) {
       const value = await storage.getItem(notesKey);
-      this.props.populateNotes(JSON.parse(value));
-      
+      this.props.populateNotes(value);
     }
   }
 
