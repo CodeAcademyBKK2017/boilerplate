@@ -50,7 +50,6 @@ class App extends Component {
       await Utility.getItemToStroage('theState');
     } catch (e) {
       const value = await Utility.getItemToStroage('theState');
-      console.log(value);
       let arrayContent;
       if (value) {
         arrayContent = JSON.parse(value);
