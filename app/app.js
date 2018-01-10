@@ -14,6 +14,7 @@ import {
   Button,
   View
 } from 'react-native';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as indexAction from './redux/actions/index.actions';
 
@@ -138,14 +139,9 @@ App.defaultProps = {
 
 const mapStateToProps = (state) => ({notes: state.notes});
 const mapDispatchToProps = (dispatch) => ({
-  addNote: (newData) => {
-    dispatch(indexAction.addNote(newData));
-  },
-  deleteNote: (newData) => {
-    dispatch(indexAction.deleteNote(newData));
-  },
-  showNote: (notes) => {
-    dispatch(indexAction.showNote(notes));
-  }
+  addNote: bindActionCreators(indexAction.addNote, dispatch),
+  deleteNote: bindActionCreators(indexAction.deleteNote, dispatch),
+  showNote: bindActionCreators(indexAction.showNote, dispatch)
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(App);
