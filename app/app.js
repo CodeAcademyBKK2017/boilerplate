@@ -122,13 +122,15 @@ App.defaultProps = {
 const mapStateToProps = (storeState) => ({noteList: storeState.notes});
 const mapDispatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
-  deleteNote: (id) => {
-    const action = actions.deleteNote(id);
-    dispatch(action);
-  },
-  populateNote: (note) => {
-    const action = actions.populateNotes(note);
-    dispatch(action);
-  }
+  deleteNote: bindActionCreators(actions.deleteNote, dispatch),
+  populateNote: bindActionCreators(actions.populateNotes, dispatch)
+  // deleteNote: (id) => {
+  //   const action = actions.deleteNote(id);
+  //   dispatch(action);
+  // },
+  // populateNote: (note) => {
+  //   const action = actions.populateNotes(note);
+  //   dispatch(action);
+  // }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
