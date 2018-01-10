@@ -156,7 +156,7 @@ describe('App', () => {
     );
   });
 
-  it('loadData with existed notes', async () => {
+  it('loadData success', async () => {
     const title = 'my test title';
     const content = 'my test message';
     const notes = [{
@@ -181,8 +181,20 @@ describe('App', () => {
     expect(appInstance.props.populateNote).toHaveBeenCalledWith(expectedNotes);
   });
 
-  it('loadData with empty', async () => {
-    ApiNotes.getNotes.mockImplementation(() => Promise.resolve([]));
+  it('loadData failure with data', async () => {
+    ApiNotes.getNotes.mockImplementation(() => Promise.reject());
+    const title = 'my test title';
+    const content = 'my test message';
+    const notes = [{
+      id: 1,
+      title,
+      content
+    }, {
+      id: 2,
+      title,
+      content
+    }];
+    StorageUtil.getItem.mockImplementation(() => Promise.resolve(notes));
     const props = {
       populateNote: jest.fn()
     };
@@ -190,8 +202,8 @@ describe('App', () => {
 
     await appInstance.loadData();
 
-    expect(ApiNotes.getNotes).toBeCalled();
-    expect(appInstance.props.populateNote).toHaveBeenCalledWith([]);
+    expect(StorageUtil.getItem).toHaveBeenCalledWith(notesKey);
+    expect(appInstance.props.populateNote).toHaveBeenCalledWith(notes);
   });
 
   it('onAboutButtonPress with mock', () => {
