@@ -15,6 +15,7 @@ import {Alert,  KeyboardAvoidingView, Platform, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {filterNote} from './utils/transformerutil';
 import {getItemToStorage, setItemToStorage} from './utils/storageutil';
+import * as actions from './redux/actions/index.actions';
 
 class App extends Component {
   initialstate = {
@@ -120,22 +121,16 @@ App.defaultProps = {
 const mapStateToProps = (storeState) => ({noteList: storeState.notes});
 const mapDispatchToProps = (dispatch) => ({
   addNote: (note) => {
-    dispatch({
-      type: 'ADD_NOTE',
-      payload: note
-    });
+    const action = actions.addNote(note);
+    dispatch(action);
   },
   deleteNote: (id) => {
-    dispatch({
-      type: 'DELETE_NOTE',
-      payload: id
-    });
+    const action = actions.deleteNote(id);
+    dispatch(action);
   },
   populateNote: (note) => {
-    dispatch({
-      type: 'POPULATE_NOTE',
-      payload: note
-    });
+    const action = actions.populateNotes(note);
+    dispatch(action);
   }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
