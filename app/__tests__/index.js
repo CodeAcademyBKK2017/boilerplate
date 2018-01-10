@@ -200,9 +200,7 @@ describe('App', () => {
         navigate: jest.fn()
       }
     };
-    const appComp = <App {...props}/>;
-    const wrapper = shallow(appComp);
-    const appInstance = wrapper.instance();
+    appWrapper.setProps(props);
 
     appInstance.onAboutButtonPress();
 
@@ -215,9 +213,7 @@ describe('App', () => {
         navigate: () => {}
       }
     };
-    const appComp = <App {...props}/>;
-    const wrapper = shallow(appComp);
-    const appInstance = wrapper.instance();
+    appWrapper.setProps(props);
     const spyFunc = jest.spyOn(props.navigation, 'navigate');
 
     appInstance.onAboutButtonPress();
