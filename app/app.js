@@ -29,10 +29,8 @@ class App extends Component {
     try {
       const notes = await Api.getNote();
       this.props.showNote(notes);
-      await storageUtil.setItem('notes', notes);
     } catch (err) {
-      const notes =  await storageUtil.getItem('notes') || [];
-      this.props.showNote(notes);
+      this.props.showNote(await storageUtil.getItem('notes') || []);
     }
   }
 
