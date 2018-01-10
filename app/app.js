@@ -2,6 +2,7 @@ import apiNotes from './api';
 import ContentBox from './components/ContentBox/ContentBox.component';
 import Footer from './components/FooterBox/FooterBox.component';
 import ListItem from './components/ListItem/ListItem.component';
+import noop from 'lodash/noop';
 import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -128,7 +129,10 @@ App.propTypes = {
 
 App.defaultProps = {
   navigation: {},
-  notes: []
+  notes: [],
+  addNotes: noop,
+  deleteNotes: noop,
+  populateNotes: noop
 };
 
 const mapStateToProps = (state) => ({notes: state.notes});
