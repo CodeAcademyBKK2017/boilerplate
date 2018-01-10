@@ -16,6 +16,7 @@ import {
   View
 } from 'react-native';
 import {connect} from 'react-redux';
+import * as actions from './redux/actions/index.action';
 
 class App extends Component {
 
@@ -39,7 +40,7 @@ class App extends Component {
       const notes = await apiNotes.getNotes();
       this.props.populateNotes(notes);
     } catch (err) {
-      const dataState = await storageUtil.getItemFromAsyncStorage('state');
+      const dataState = await storageUtil.getItemFromAsyncStorage('state') || [];
       this.props.populateNotes(dataState);
     }
   }
@@ -137,23 +138,14 @@ App.defaultProps = {
 
 const mapStateToProps = (state) => ({notes: state.notes});
 const mapDispatchToProps = (dispatch) => ({
-  populateNotes: (dataNote) => {
-    dispatch({
-      type: 'POPULATE_NOTES',
-      payload: dataNote
-    });
-  },
   addNotes: (dataNote) => {
-    dispatch({
-      type: 'ADD_NOTES',
-      payload: dataNote
-    });
+    dispatch(actions.addNotes(dataNote));
   },
   deleteNotes: (dataNote) => {
-    dispatch({
-      type: 'DELETE_NOTES',
-      payload: dataNote
-    });
+    dispatch(actions.deleteNotes(dataNote));
+  },
+  populateNotes: (dataNote) => {
+    dispatch(actions.populateNotes(dataNote));
   }
 });
 
