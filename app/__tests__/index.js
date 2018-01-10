@@ -1,10 +1,12 @@
 import ApiNotes from '../api';
-import App from '../app';
+import ConnectedApp from '../app';
 import React from 'react';
 import renderer from 'react-test-renderer';
 
 // Note: test renderer must be required after react-native.
-import {Alert, AsyncStorage} from 'react-native';
+import StorageUtil from '../utils/StorageUtil';
+import {Alert} from 'react-native';
+import {createStore} from 'redux';
 import {shallow} from 'enzyme';
 
 // mock function with default result
@@ -15,38 +17,44 @@ jest.mock('AsyncStorage', () => ({
 
 jest.mock('uuid', () => () => 'some uuid');
 
-jest.mock('../api');
-
 jest.mock('Alert', () => ({
   alert: jest.fn()
 }));
 
+jest.mock('../api');
+jest.mock('../utils/StorageUtil');
+
 // constant
 const notesKey = 'notes';
+const store = createStore(() => ({}));
 
 // test case
 describe('App', () => {
-  let appComp;
+  let connectedAppComp;
+  let appWrapper;
   let appInstance;
 	
   beforeEach(() => {
-    appComp = <App/>;
+    connectedAppComp = <ConnectedApp store={store}/>;
 		
-    const wrapper = shallow(appComp);
-    appInstance = wrapper.instance();
-    
-    AsyncStorage.getItem.mockClear();
-    AsyncStorage.setItem.mockClear();
+    const wrapper = shallow(connectedAppComp);
+    appWrapper = wrapper.find('App').shallow();
+    appInstance = appWrapper.instance();
+
+    // -----
     
     ApiNotes.getNotes.mockClear();
     ApiNotes.deleteNote.mockClear();
     ApiNotes.addNote.mockClear();
+
+    StorageUtil.getItem.mockClear();
+    StorageUtil.setItem.mockClear();
   });
   
   // ----------
 
   it('renders correctly', () => {
-    const snapshot = renderer.create(appComp).toJSON();
+    const snapshot = renderer.create(connectedAppComp).toJSON();
     expect(snapshot).toMatchSnapshot();
   });
 
