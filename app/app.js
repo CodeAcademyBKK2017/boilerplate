@@ -16,7 +16,7 @@ import styles from './index.style';
 import Title from './components/Title/Title.component';
 import Tranformerutil from './utils/tranformerutil';
 import {
-  Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
+  Alert, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 import {connect} from 'react-redux';
 
