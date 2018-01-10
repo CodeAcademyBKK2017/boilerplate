@@ -103,7 +103,7 @@ class App extends Component {
       this.props.deleteNote(deleteNote);
       return newNotes;
     })
-    .then((newNotes) => AsyncStorage.setItem('notes', JSON.stringify(newNotes)))
+    .then((newNotes) => StorageUtil.setItem('notes', newNotes))
     .catch(() => {
       SnackBar.show(warningBar());
       return new Error('API Error');
