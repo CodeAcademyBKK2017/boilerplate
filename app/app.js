@@ -19,6 +19,7 @@ import TransformerUtil from './utils/TransformerUtil';
 import {
   Alert, KeyboardAvoidingView, Platform, View
 } from 'react-native';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as actions from './redux/actions/index.actions';
 
@@ -159,20 +160,9 @@ const mapStateToProps = (storeState) => ({
 });
 
 const mapDisplatchToProps = (dispatch) => ({
-  addNote: (note) => {
-    const action = actions.addNote(note);
-    dispatch(action);
-  },
-  deleteNote: (id) => {
-    const action = actions.deleteNote({
-      id
-    });
-    dispatch(action);
-  },
-  populateNote: (notes) => {
-    const action = actions.populateNotes(notes);
-    dispatch(action);
-  }
+  addNote: bindActionCreators(actions.addNote, dispatch),
+  deleteNote: bindActionCreators(actions.deleteNote, dispatch),
+  populateNote: bindActionCreators(actions.populateNotes, dispatch)
 });
 
 export default connect(mapStateToProps, mapDisplatchToProps)(App);
