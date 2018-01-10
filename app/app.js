@@ -11,12 +11,13 @@ import StorageUtil from './utils/storage.util';
 import styles from './app.styles';
 import Title from './components/Title/Title.component';
 import Touchable from 'react-native-platform-touchable';
+import {connect} from 'react-redux';
 import {
-  AsyncStorage, FlatList, Text, View
+  FlatList, Text, View
 } from 'react-native';
 
-import {connect} from 'react-redux';
 import {removeNote} from './utils/transformer.util';
+import * as actions from './redux/actions/index.actions';
 
 const warningBar = () => ({
   title: 'Network errors: Can\'t connect to server.',
@@ -158,22 +159,13 @@ const mapStateToProps = (storeState) => ({notes: storeState.notes});
 
 const mapDispatchToProps = (dispatch) => ({
   addNote: (note) => {
-    dispatch({
-      type: 'ADD_NOTE',
-      payload: note
-    });
+    dispatch(actions.addNote(note));
   },
   deleteNote: (note) => {
-    dispatch({
-      type: 'DELETE_NOTE',
-      payload: note
-    });
+    dispatch(actions.deleteNote(note));
   },
   populateNotes: (notes) => {
-    dispatch({
-      type: 'POPULATE_NOTES',
-      payload: notes
-    });
+    dispatch(actions.populateNotes(notes));
   }
 });
 
