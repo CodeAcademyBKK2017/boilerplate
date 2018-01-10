@@ -123,23 +123,18 @@ describe('App', () => {
       title: 'title 00',
       content: 'content 00'
     };
-    const initialState = {
-      textTitle: '',
-      textContent: '',
-      notes: [note00]
+    const props = {
+      notes: [note00],
+      deleteNote: jest.fn()
     };
-    appInstance.setState(initialState);
+    appWrapper.setProps(props);
     
-    const curryFunc = appInstance.onDeleteButtonPress(note00);
-    await curryFunc();
+    const deleteHandler = appInstance.onDeleteButtonPress(note00);
+    await deleteHandler();
 
-    const expected = {
-      textTitle: '',
-      textContent: '',
-      notes: []
-    };
     expect(ApiNotes.deleteNote).toHaveBeenCalledWith(note00.id);
-    expect(appInstance.state).toEqual(expected);
+    expect(StorageUtil.setItem).toHaveBeenCalledWith(notesKey, []);
+    expect(appInstance.props.deleteNote).toHaveBeenCalledWith(note00.id);
   });
 
   it('onDeleteButtonPress failure', async () => {
