@@ -40,4 +40,9 @@ describe('Note', () => {
     instance.onClose();
     expect(instance.state).toEqual(expectedInitialstate);
   });
+  it('_keyExtractor', () => {
+    const item = {id: 1};
+    instance._keyExtractor(item);
+    expect(item.id).toEqual(1);
+  });
 });

@@ -21,4 +21,11 @@ describe('notesReducer', () => {
     result =  notesReducer(previousState, action);
     expect(result).toEqual(expected);
   });
+  it('Case default', () => {
+    previousState = [{id: 2}];
+    action = {type: '', payload: 2};
+    expected = [{id: 2}];
+    result =  notesReducer(previousState, action);
+    expect(result).toEqual(expected);
+  });
 });
