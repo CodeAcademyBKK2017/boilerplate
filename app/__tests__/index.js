@@ -79,28 +79,28 @@ describe('App', () => {
     const content = 'my test message';
     appInstance.setState({
       textTitle: title,
-      textContent: content,
-      notes: []
+      textContent: content
     });
+    const props = {
+      addNote: jest.fn()
+    };
+    appWrapper.setProps(props);
 
     await appInstance.onSaveButtonPress();
 
-    const expectedState = {
-      textTitle: '',
-      textContent: '',
-      notes: [{
-        id: 1,
-        title,
-        content
-      }]
+    const expectedResponseNote = {
+      id: 1,
+      title,
+      content
     };
+    const expectedNotes = [expectedResponseNote];
     const expectedNote = {
       title,
       content
     };
     expect(ApiNotes.addNote).toHaveBeenCalledWith(expectedNote);
-    expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expectedState.notes));
-    expect(appInstance.state).toEqual(expectedState);
+    expect(StorageUtil.setItem).toHaveBeenCalledWith(notesKey, expectedNotes);
+    expect(appInstance.props.addNote).toHaveBeenCalledWith(expectedResponseNote);
   });
 
   it('onSaveButtonPress failure', async () => {
