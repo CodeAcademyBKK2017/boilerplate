@@ -15,6 +15,7 @@ import {
   Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 import {connect} from 'react-redux';
+import * as actions from './redux/actions/index.actions';
 
 const notesKey = 'notes';
 
@@ -154,22 +155,13 @@ App.defaultProps = {
 const mapStateToProps = (state) => ({notes: state.notes});
 const mapDispatchToProps = (dispatch) => ({
   addNote: (dataNote) => {
-    dispatch({
-      type: 'ADD_NOTE',
-      payload: dataNote
-    });
+    dispatch(actions.addNote(dataNote));
   },
   deleteNote: (item) => {
-    dispatch({
-      type: 'DELETE_NOTE',
-      payload: item
-    });
+    dispatch(actions.deleteNote(item));
   },
   getNotes: (items) => {
-    dispatch({
-      type: 'GET_NOTE',
-      payload: items
-    });
+    dispatch(actions.getNotes(items));
   }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
