@@ -16,10 +16,15 @@ jest.mock('Alert', () => ({
 describe('App', () => {
   let appComp;
   let appInstance;
+  let appWrapper;
   beforeEach(() => {
     appComp = <ConnectedApp store={store}/>;
-    const wrapper = shallow(appComp);
-    appInstance = wrapper.find('App').shallow().instance();
+    appWrapper = shallow(appComp).find('App').shallow();
+    appInstance = appWrapper.instance();
+    const props = {
+      showNote: jest.fn()
+    };
+    appWrapper.setProps(props);
   });
   it('renders correctly', () => {
     const snapshot = renderer.create(appComp).toJSON();
@@ -84,6 +89,19 @@ describe('App', () => {
     jest.spyOn(appInstance, 'onLoadData');
     appInstance.componentDidMount();
     expect(appInstance.onLoadData).toBeCalled();
+  });
+  it('onLoadData success', async () => {
+    await appInstance.onLoadData();
+    expect(Api.getNote).toBeCalled();
+    expect(appInstance.props.showNote).toHaveBeenCalledWith([{
+      title: 'React Native',
+      content: '- UI'
+    }]);
+  });
+  it('onLoadData failure', async () => {
+    Api.getNote.mockImplementation(jest.fn(() => Promise.reject('API FAILED')));
+    await appInstance.onLoadData();
+    expect(appInstance.props.showNote).toHaveBeenCalledWith([]);
   });
   it('navigateTo Mock', () => {
     appInstance.props.navigation.navigate = jest.fn();

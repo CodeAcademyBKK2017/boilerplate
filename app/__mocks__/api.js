@@ -1,4 +1,8 @@
 export default {
-  addNote: jest.fn(),
-  deleteNote: jest.fn()
+  getNote: jest.fn(() => Promise.resolve([{
+    title: 'React Native',
+    content: '- UI'
+  }])),
+  deleteNote: jest.fn(),
+  addNote: jest.fn()
 };
