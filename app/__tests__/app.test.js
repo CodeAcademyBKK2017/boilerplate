@@ -137,7 +137,6 @@ describe('App', () => {
     
     const delFunc = appInstance.onDeleteButtonPress(note00);
     await delFunc();
-
     // expect(dispatch).toHaveBeenLastCalledWith({
     //   payload: {
     //     'content': 'content 00', 
@@ -155,8 +154,7 @@ describe('App', () => {
   it('onDeleteButtonPress failure', async () => {
     Api.onDelete.mockClear();
     storageutil.setItem.mockClear();
-    Alert.alert.mockClear();
-
+    Alert.alert.mockClear();     
     Api.onDelete.mockImplementation(jest.fn(() => Promise.reject('API fail')));
 
     await appInstance.onDeleteButtonPress()();
