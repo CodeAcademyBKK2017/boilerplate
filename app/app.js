@@ -40,18 +40,15 @@ class App extends Component {
   }
 
   onSavePress = async () => {
-    
-    const newData = {
-      title: this.state.title,
-      content: this.state.content
-    };
-
     try {
-      const response  = await Api.addNote(newData);
-      const newNote = await response.json();
+      const newNote  = await Api.addNote({
+        title: this.state.title,
+        content: this.state.content
+      });
       const newNotes = [...this.props.notes, newNote];
-      await storageUtil.setItem('notes', newNotes);
       this.props.addNote(newNote);
+      await storageUtil.setItem('notes', newNotes);
+      this.setState({title: '', content: ''});
     } catch (err) {
       Alert.alert(
         'Error',
@@ -64,10 +61,6 @@ class App extends Component {
         {cancelable: false}
       );
     }
-    this.setState({
-      title: '',
-      content: ''
-    });
   }
 
   onDeletePress = (item) => async () => {

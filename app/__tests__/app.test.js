@@ -43,6 +43,7 @@ describe('App', () => {
     appInstance.onTypeTitle('');  
     expect(appInstance.state.title).toBe('');
   });
+
   it('onSavePress success', async () => {
     const title = 'my test title';
     const content = 'my test content';
@@ -63,6 +64,7 @@ describe('App', () => {
     await appInstance.onSavePress();
     expect(Alert.alert).toBeCalled();
   });
+  
   it('onDeletePress success', async () => {
     const item = {
       title: 'title',
