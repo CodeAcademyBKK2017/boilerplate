@@ -17,7 +17,7 @@ const homeStack = StackNavigator({
         headerTitle: 'Start taking notes'
       };
     }
-  }
+  }   
 });
 const RootNavigator = DrawerNavigator({
   home: {

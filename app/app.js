@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
-import {Alert,  KeyboardAvoidingView, Platform, Text, View} from 'react-native';
+import {Alert, KeyboardAvoidingView, Platform, Text, View} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {filterNote} from './utils/transformerutil';
@@ -25,6 +25,7 @@ class App extends Component {
     note: []
   }
   state = this.initialstate
+  
    init = async () => {
      try {
        const response = await ApiNotes.getNotes();
@@ -57,8 +58,8 @@ class App extends Component {
         content: this.state.content
       };
       const noteWithId = await  ApiNotes.addNote(note);
-      this.props.addNote(noteWithId);      
       const newNote = [...this.props.noteList, noteWithId];
+      this.props.addNote(noteWithId);      
       await setItemToStorage('storageNote', newNote);
     } catch (error) {
       Alert.alert(
