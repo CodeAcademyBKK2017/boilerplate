@@ -96,8 +96,7 @@ describe('App', () => {
       content
     };
     expect(ApiNotes.addNote).toHaveBeenCalledWith(expectedNote);
-    // expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expectedState.notes));
-    // expect(appInstance.state).toEqual(expectedState);
+
   });
 
   xit('onSaveButtonPress failure', async () => {
@@ -136,27 +135,10 @@ describe('App', () => {
       notes: []
     };
     expect(ApiNotes.deleteNote).toHaveBeenCalledWith(note00.id);
-    // expect(appInstance.state).toEqual(expected);
   });
 
   it('onDeleteButtonPress failure', async () => {
-    // ApiNotes.deleteNote.mockImplementation(() => Promise.reject('API failed'));
-    // const note00 = {
-    //   id: 1,
-    //   title: 'title 00',
-    //   content: 'content 00'
-    // };
-    
-    // const curryFunc = appInstance.onDeleteButtonPress(note00);
-    // await curryFunc();
 
-    // expect(Alert.alert).toHaveBeenCalledWith(
-    //   'Delete Failed',
-    //   'API failed',
-    //   null,
-    //   {cancelable: false}
-    // );
-    
   });
 
   it('loadData with existed notes', async () => {
