@@ -1,5 +1,5 @@
 import rootReducer from './reducers/root.reducer';
-import {compose, createStore} from 'redux';
+import {applyMiddleware, compose, createStore} from 'redux';
 
 const enhancerList = [];
 const devToolsExtension = window && window.__REDUX_DEVTOOLS_EXTENSION__;
@@ -8,6 +8,13 @@ if (typeof devToolsExtension === 'function') {
   enhancerList.push(devToolsExtension());
 }
 
-const composedEnhancer = compose(...enhancerList);
+const logger = ({dispatch, getState}) => (next) => (action) => {
+  console.log('action is: ', action);
+  if (action.type !== 'Navigation/NAVIGATE') {
+    next(action);
+  }
+};
+
+const composedEnhancer = compose(applyMiddleware(logger), ...enhancerList);
 
 export const initStore = () => createStore(rootReducer, {}, composedEnhancer);
