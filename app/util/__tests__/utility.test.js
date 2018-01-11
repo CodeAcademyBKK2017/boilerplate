@@ -32,4 +32,15 @@ describe('Utility', () => {
     expect(AsyncStorage.getItem).toHaveBeenLastCalledWith('state');
     expect(result).toEqual(data);
   });
+
+  it('getItemToStroage function is get Item from stroage and not data it will be catch', async () => {
+    const data = '';
+    AsyncStorage.setItem.mockClear();
+    AsyncStorage.getItem.mockClear();
+    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(''));
+    Utility.setItemToStroage('state', data);
+    expect(AsyncStorage.setItem).toHaveBeenLastCalledWith('state', JSON.stringify(data));
+    await Utility.getItemToStroage('state');
+    expect(AsyncStorage.getItem).toHaveBeenLastCalledWith('state');
+  });
 });

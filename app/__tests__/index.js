@@ -3,6 +3,7 @@ import ConnectedApp from '../app';
 import React from 'react';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+import Util from '../util/utility';
 import {Alert, AsyncStorage} from 'react-native';
 import {createStore} from 'redux';
 import {shallow} from 'enzyme';
@@ -113,7 +114,7 @@ describe('ConnectedApp', () => {
     expect(instance.props.populateFromReducer).toHaveBeenLastCalledWith(sendParm);
   });
 
-  it('App: _setStroage Function must fail try', async () => {
+  it('App: _setStroage Function must fail api but try to populate from stroage and not have a data', async () => {
     const sendParm = [{
       title: 'some',
       content: 'some',
@@ -124,7 +125,7 @@ describe('ConnectedApp', () => {
     await instance._addContent();
     await instance._removeContent(sendParm)();
     await instance._setStroage();
-    expect(instance.props.populateFromReducer).toHaveBeenLastCalledWith([]);
+    expect(instance.props.populateFromReducer).toHaveBeenLastCalledWith(null);
   });
 
 });

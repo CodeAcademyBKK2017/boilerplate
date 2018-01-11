@@ -8,7 +8,6 @@ import ApiNotes from './api';
 import Content from './components/contents/content.component';
 import Footer from './components/footers/footer.component';
 import globalStyle from './app.style';
-import Icon from 'react-native-vector-icons/Foundation';
 import List from './components/lists/list.component';
 import noop from 'lodash/noop';
 import ProptTypes from 'prop-types';
@@ -29,15 +28,7 @@ class App extends Component {
     currentContent: '',
     currentTitle: ''
   }
-  
-  static navigationOptions = ({navigation}) => {
-    const _toggleNavigate = () => navigation.navigate('DrawerToggle');
-    return {
-      title: 'Home',
-      headerLeft: (<TouchableOpacity style={{marginLeft: 10}} onPress={_toggleNavigate}><Icon name='list' size={30}/></TouchableOpacity>)
-    };
-  }
-  
+
   componentDidMount () {
     this._setStroage();
   }
@@ -50,13 +41,7 @@ class App extends Component {
       await Utility.getItemToStroage('theState');
     } catch (e) {
       const value = await Utility.getItemToStroage('theState');
-      let arrayContent;
-      if (value) {
-        arrayContent = JSON.parse(value);
-      } else {
-        arrayContent = [];
-      }
-      
+      const arrayContent = JSON.parse(value); 
       this.props.populateFromReducer(arrayContent);
     }
    

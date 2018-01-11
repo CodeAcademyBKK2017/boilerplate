@@ -53,4 +53,12 @@ describe('List', () => {
     expect(instance.state.modalVisible).toEqual(ExpectedmodalVisible);
     expect(instance.state.currentItem).toEqual(Expectedparam);
   });
+
+  it('List: _keyExtractor return the id', () => {
+    const item = {
+      id: 1
+    };
+    const val = instance._keyExtractor(item);
+    expect(val).toEqual(1);
+  });
 });
