@@ -3,6 +3,7 @@ import AboutSection from './components/AboutSection/AboutSection.component';
 import ApiNotes from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -12,10 +13,10 @@ import Title from './components/Title/Title.component';
 import transformerutil from './utility/transformerutil';
 import uuid from 'uuid';
 import {
-  Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
+  Alert, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 import {bindActionCreators} from 'redux';
-import {connect, Provider} from 'react-redux';
+import {connect} from 'react-redux';
 import {NavigationActions} from 'react-navigation';
 import * as actions from './redux/actions/index.actions';
 
@@ -143,12 +144,18 @@ class App extends Component {
 
 App.propTypes = {
   goToAbout: PropTypes.func,
-  notes: PropTypes.array
+  notes: PropTypes.array,
+  getNotes: PropTypes.func,
+  deleteNote: PropTypes.func,
+  addNote: PropTypes.func
 };
 
 App.defaultProps = {
   navigation: null,
-  notes: []
+  notes: [],
+  getNotes: noop,
+  deleteNote: noop,
+  addNote: noop
 };
 
 const mapStateToProps = (state) => ({notes: state.notes});
