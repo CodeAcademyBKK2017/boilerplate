@@ -1,7 +1,12 @@
+import Router from '../../Routes/index';
 import utility from '../../util/utility';
 import {ADDNOTE, DELETENOTE, POPULATENOTE} from '../actions/index.action';
 import {combineReducers} from 'redux';
 
+const nav = (state, action) => (
+  Router.router.getStateForAction(action, state) || state
+);
+ 
 export default combineReducers({
   notes: (previousState = [], action) => {
     switch (action.type) {
@@ -14,5 +19,6 @@ export default combineReducers({
     default:
       return previousState;
     }
-  }
+  },
+  nav
 });

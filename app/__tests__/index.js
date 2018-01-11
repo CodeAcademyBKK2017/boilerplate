@@ -1,9 +1,8 @@
 import ApiNotes from '../api';
-import ConnectedApp from '../app';
+import ConnectedApp, {mapDispatchToProps} from '../app';
 import React from 'react';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
-import Util from '../util/utility';
 import {Alert, AsyncStorage} from 'react-native';
 import {createStore} from 'redux';
 import {shallow} from 'enzyme';
@@ -14,9 +13,11 @@ jest.mock('AsyncStorage', () => ({
   getItem: jest.fn(() => Promise.resolve(null)),
   setItem: jest.fn(() => Promise.resolve())
 }));
+
 jest.mock('Alert', () => ({
   alert: jest.fn()
 }));
+// jest.mock('dispatch', () => jest.fn());
 describe('ConnectedApp', () => {
   let wrapper, instance;
 
@@ -91,13 +92,12 @@ describe('ConnectedApp', () => {
     expect(Alert.alert).toHaveBeenCalled();
   }); 
 
-  it('App: _gotoAbout Function must have to called', () => {
-    wrapper.setProps({navigation: {
-      navigate: jest.fn()
-    }});
-    instance._gotoAbout();
-    expect(instance.props.navigation.navigate).toHaveBeenCalled();
-    expect(instance.props.navigation.navigate).toHaveBeenCalledWith('About');
+  it('App: gotoAbout Function must have to called', () => {
+    const result = {routeName: 'About', type: 'Navigation/NAVIGATE'};
+    const dispatch = jest.fn();
+    const dispatcher = mapDispatchToProps(dispatch);
+    dispatcher.gotoAbout();
+    expect(dispatch).toHaveBeenCalledWith(result);
   });
 
   it('App: _setStroage Function must get data from store state and success try', async () => {

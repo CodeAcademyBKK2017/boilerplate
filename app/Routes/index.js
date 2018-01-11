@@ -8,14 +8,7 @@ import {TouchableOpacity} from 'react-native';
 
 const MyApp = TabNavigator({
   Home: {
-    screen: AboutApp,
-    navigationOptions: ({navigation}) => {
-      const _toggleNavigate = () => navigation.navigate('DrawerToggle');
-      return {
-        title: 'Home',
-        headerLeft: (<TouchableOpacity style={{marginLeft: 10}} onPress={_toggleNavigate}><Icon name='list' size={30}/></TouchableOpacity>)
-      };
-    }
+    screen: AboutApp
   },
   Notifications: {
     screen: AboutDev
@@ -44,7 +37,16 @@ const Nav = ({navigation}) => {
     headerLeft: (<TouchableOpacity style={{marginLeft: 10}} onPress={_toggleNavigate}><Icon name='list' size={30}/></TouchableOpacity>)
   };
 };
-const HomeApp = StackNavigator({home: {screen: App}});
+const HomeApp = StackNavigator({home: {
+  screen: App,
+  navigationOptions: ({navigation}) => {
+    const _toggleNavigate = () => navigation.navigate('DrawerToggle');
+    return {
+      title: 'Home',
+      headerLeft: (<TouchableOpacity style={{marginLeft: 10}} onPress={_toggleNavigate}><Icon name='list' size={30}/></TouchableOpacity>)
+    };
+  }
+}});
 const AboutPage = StackNavigator({about: {screen: MyApp,
   navigationOptions: Nav
 }});

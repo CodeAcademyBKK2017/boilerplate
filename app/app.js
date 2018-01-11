@@ -22,6 +22,7 @@ import {Alert,
   TouchableOpacity, View} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {NavigationActions} from 'react-navigation';
 
 class App extends Component {
   state = {
@@ -41,7 +42,7 @@ class App extends Component {
       await Utility.getItemToStroage('theState');
     } catch (e) {
       const value = await Utility.getItemToStroage('theState');
-      const arrayContent = JSON.parse(value); 
+      const arrayContent = value; 
       this.props.populateFromReducer(arrayContent);
     }
    
@@ -94,7 +95,8 @@ class App extends Component {
    
   }
   
-  _gotoAbout = () => this.props.navigation.navigate('About');
+  // console.log(this.props);
+  // return this.props.navigation.navigate('About');
 
   render () {
     return (
@@ -103,7 +105,7 @@ class App extends Component {
         <Content FText={this._onContentChange} textState={this.state.currentContent}/>
         <Footer textState={this.state.currentContent.length} addContent={this._addContent}/>
         <List arrayContent={this.props.arrayContent} removeNote={this._removeContent}/>
-        <TouchableOpacity style={globalStyle.touchStyle} onPress={this._gotoAbout}>
+        <TouchableOpacity style={globalStyle.touchStyle} onPress={this.props.gotoAbout}>
           <View>
             <Text style={globalStyle.TextS}>
               About Us
@@ -116,7 +118,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  navigation: ProptTypes.object.isRequired,
+  gotoAbout: ProptTypes.func.isRequired,
   addNoteToReducer: ProptTypes.func.isRequired,
   arrayContent: ProptTypes.array.isRequired,
   deleteNoteFromReducer: ProptTypes.func.isRequired,
@@ -124,17 +126,18 @@ App.propTypes = {
 };
   
 App.defaultProps = {
-  navigation: {},
+  gotoAbout: noop,
   addNoteToReducer: noop,
   deleteNoteFromReducer: noop,
   arrayContent: [],
   populateFromReducer: noop
 };
 
-const mapDispatchToProps = (dispatch) => ({
+export const mapDispatchToProps = (dispatch) => ({
   addNoteToReducer: bindActionCreators(addnote, dispatch),
   deleteNoteFromReducer: bindActionCreators(deletenote, dispatch),
-  populateFromReducer: bindActionCreators(populatenote, dispatch)
+  populateFromReducer: bindActionCreators(populatenote, dispatch),
+  gotoAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'}))
 });
 const mapStateToProps = (stateStore) => ({
   arrayContent: stateStore.notes

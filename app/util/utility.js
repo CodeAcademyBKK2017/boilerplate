@@ -5,7 +5,8 @@ class Utility {
     setItemToStroage = (key, data) =>  AsyncStorage.setItem(key, JSON.stringify(data));
     getItemToStroage = async (key) => {
       try {
-        return JSON.parse(await AsyncStorage.getItem(key));
+        const data = await AsyncStorage.getItem(key);
+        return JSON.parse(data);
       } catch (e) {
         return e;
       }
