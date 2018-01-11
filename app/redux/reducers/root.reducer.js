@@ -1,5 +1,10 @@
 import notesUtil from '../../utils/transfromer.util';
+import Router from '../../routes/index';
 import {combineReducers} from 'redux';
+
+const nav = (state, action) => (
+  Router.router.getStateForAction(action, state) || state
+);
 
 export default combineReducers({
   init: () => ({}), // reducer
@@ -16,5 +21,6 @@ export default combineReducers({
     default:
       return previousstate;
     }
-  }
+  },
+  nav
 });

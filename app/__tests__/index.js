@@ -1,10 +1,11 @@
 import ApiNotes from '../api';
-import ConnectedApp from '../app';
+import ConnectedApp, {mapDispatchToProps} from '../app';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {Alert, AsyncStorage} from 'react-native';
 import {createStore} from 'redux';
 // Note: test renderer must be required after react-native.
+import {NavigationActions} from 'react-navigation';
 import {shallow} from 'enzyme';
 
 const store = createStore(() => ({}));
@@ -155,6 +156,7 @@ describe('App', () => {
     //   null,
     //   {cancelable: false}
     // );
+    
   });
 
   it('loadData with existed notes', async () => {
@@ -184,19 +186,12 @@ describe('App', () => {
   });
 
   it('onAboutButtonPress with mock', () => {
-    const props = {
-      navigation: {
-        navigate: jest.fn()
-      }
-    };
-    appComp =  <ConnectedApp store={store} {...props}/>;
-    const wrapper = shallow(appComp);
-    appInstance = wrapper.find('App').shallow().instance();
-    appInstance.onAboutButtonPress();
-    expect(appInstance.props.navigation.navigate).toHaveBeenCalledWith('About');
+    const dispatch = jest.fn();
+    mapDispatchToProps(dispatch).gotoAbout();
+    expect(dispatch).toHaveBeenCalledWith(NavigationActions.navigate({routeName: 'About'}));
   });
 
-  it('onAboutButtonPress with spy', () => {
+  xit('onAboutButtonPress with spy', () => {
     const props = {
       navigation: {
         navigate: () => {}
