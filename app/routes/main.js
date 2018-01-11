@@ -13,7 +13,7 @@ const MainStack = StackNavigator({
       const toggleDrawer = (navigation) => () => navigation.navigate('DrawerToggle');
       return {
         title: 'Start taking notes',
-        headerLeft: (<Touchable onPress={toggleDrawer(navigation)}><Icon name='bars' size={24} /></Touchable>)
+        headerLeft: (<Touchable onPress={toggleDrawer(navigation)} ><Icon name='bars' size={24} /></Touchable>)
       };
     }
   }
