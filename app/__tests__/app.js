@@ -1,5 +1,5 @@
 import apiNotes from '../api';
-import ConnectApp from '../app';
+import ConnectApp, {mapDispatchToProps} from '../app';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {Alert} from 'react-native';
@@ -67,45 +67,13 @@ describe('App', () => {
       title: 'React Native',
       content: '- UI'
     };
-    instance.onShowModal(note);
+    instance.onShowModal(note)();
     expect(instance.state.modalData).toEqual(note);
   });
 
   it('Check Function onCloseModal', () => {
     instance.onCloseModal();
     expect(instance.state.modalData).toEqual({});
-  });
-
-  it('Check Function openAbout with mock', () => { // mock
-    const props = {
-      navigation: {
-        navigate: jest.fn()
-      }
-    };
-    appComp = <ConnectApp store={store}/>;
-    const wrapper = shallow(appComp);
-    const appWrapper = wrapper.find('App').shallow();
-    const appInstance = appWrapper.instance();
-    appWrapper.setProps(props);
-    appInstance.openAbout();
-    expect(appInstance.props.navigation.navigate).toHaveBeenCalledWith('About');
-  });
-
-  it('Check Function openAbout with spy', () => { // spy
-    const props = {
-      navigation: {
-        navigate: () => {}
-      }
-    };
-    appComp = <ConnectApp store={store}/>;
-    const wrapper = shallow(appComp);
-    const appWrapper = wrapper.find('App').shallow();
-    const appInstance = appWrapper.instance();
-    appWrapper.setProps(props);
-
-    const spyFunc = jest.spyOn(props.navigation, 'navigate');
-    appInstance.openAbout();
-    expect(spyFunc).toHaveBeenCalledWith('About');
   });
 
   it('componentDidMount with existed notes', () => {
@@ -146,7 +114,7 @@ describe('App', () => {
     };
     instance.setState({titleText: title, contentText: content});
     await instance.onSave();
-    await instance.onDelete(note);
+    await instance.onDelete(note)();
     expect(apiNotes.deleteNotes).toBeCalled();
     expect(apiNotes.deleteNotes).toHaveBeenCalledWith(note);
   });
@@ -155,7 +123,7 @@ describe('App', () => {
     instance.onShowAlert = jest.fn(); // this is mock FN
     apiNotes.deleteNotes.mockClear();
     apiNotes.deleteNotes.mockImplementation(() => Promise.reject('API failed'));
-    await instance.onDelete();
+    await instance.onDelete()();
     expect(apiNotes.deleteNotes).toBeCalled();
     expect(instance.onShowAlert).toHaveBeenCalledWith('API failed');
   });
@@ -165,7 +133,7 @@ describe('App', () => {
     expect(Alert.alert).toBeCalled();
   });
 
-  it('onLoadDataState', async () => { // connect server success !!
+  it('onLoadDataState Success!!!', async () => { // connect server success !!
     const props = {
       populateNotes: jest.fn()
     };
@@ -184,4 +152,28 @@ describe('App', () => {
       id: 1
     }]);
   });
+
+  it('onLoadDataState Failure!!!', async () => {
+    const props = {
+      populateNotes: jest.fn()
+    };
+    appComp = <ConnectApp store={store}/>;
+    const wrapper = shallow(appComp);
+    const appWrapper = wrapper.find('App').shallow();
+    const appInstance = appWrapper.instance();
+    appWrapper.setProps(props);
+    apiNotes.getNotes.mockClear();
+    apiNotes.getNotes.mockImplementation(() => Promise.reject('API failed'));
+    await appInstance.onLoadDataState();
+    expect(apiNotes.getNotes).toBeCalled();
+    // expect(appInstance.props.populateNotes).toHaveBeenCalledWith('API failed');
+  });
+
+  it('Check Function OpenAbout', () => {
+    const dispatch = jest.fn();
+    const dispatcher = mapDispatchToProps(dispatch);
+    dispatcher.navigateToAbout();
+    expect(dispatch).toHaveBeenCalledWith({routeName: 'About', type: 'Navigation/NAVIGATE'});
+  });
 });
+

@@ -1,5 +1,5 @@
 import About from './about.routes';
-import App from '../app/app';
+import App from '../app';
 import Icon from 'react-native-vector-icons/Foundation';
 import React from 'react';
 import {DrawerNavigator, StackNavigator} from 'react-navigation';
@@ -21,7 +21,7 @@ const RootNavigator = StackNavigator({
       }
     }),
     navigationOptions: ({navigation}) => ({
-      headerTitle: 'Start taking notes.',
+      headerTitle: navigation.state.routeName,
       headerLeft: (
         <TouchableOpacity style={styles.iconDrawer} onPress={onOpenDrawer(navigation)}>
           <Icon name='list' size={20} color='#333333' />
@@ -30,6 +30,17 @@ const RootNavigator = StackNavigator({
     })
   }
 });
+
+/*
+
+              DrawerNavigator
+
+                    ||
+                    vv
+
+Home StackNavigator,    About StackNavigator
+  title: Home               title: 'about'
+*/
 
 const styles = StyleSheet.create({
   iconDrawer: {
