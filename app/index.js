@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import Router from './routes/index';
+import {addNavigationHelpers} from 'react-navigation';
+import {connect, Provider} from 'react-redux';
 import {initStore} from './redux/store';
-
-import {Provider} from 'react-redux';
 
 const store = initStore();
 
@@ -10,10 +10,22 @@ class NoteTaker extends Component {
   render () {
     return (
       <Provider store={store}>
-        <Router />
+        <ConnectedRouter />
       </Provider>
     );
   }
 }
+
+class ReduxRouter extends Component {
+  render () {
+    const {dispatch, nav} = this.props;
+    const navigation = addNavigationHelpers({dispatch, state: nav});
+    return <Router navigation={navigation} />;
+  }
+}
+
+const mapStateToProps = (state) => ({nav: state.nav});
+
+const ConnectedRouter = connect(mapStateToProps)(ReduxRouter);
 
 export default NoteTaker;
