@@ -20,9 +20,9 @@ import {
 } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {NavigationActions} from 'react-navigation';
 import * as actions from './redux/reducers/actions/index.actions';
 
-// const notesKey = 'notes';
 //
 class App extends Component {
   state = {
@@ -75,21 +75,11 @@ class App extends Component {
         {cancelable: true}
       );
     }
-    
-    // await AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
-    // await fetch('http://localhost:3000/posts', {
-    //   method: 'POST',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(note)
-    // });
-    
   }
 
   onShowAboutUs = () => {
-    this.props.navigation.navigate('About');
+    // this.props.navigation.navigate('About');
+    // this.props.showAboutUs();
   }
 
   onDeleteButtonPress = (item) => async () => {
@@ -98,40 +88,19 @@ class App extends Component {
       this.props.deleNote(item);
       await storageutil.setItem(Tranformerutil.removeNote(this.props.notes, item.id));
     } catch (e) {
-      console.log('Am in in error?');
       Alert.alert(
         'Error',
         'Internet error',
         {cancelable: true}
       );
     }
-    
-    // await AsyncStorage.setItem(notesKey, JSON.stringify(filteredNotes));
-    // await fetch('http://localhost:3000/posts/' + `${item.id}`, {
-    //   method: 'DELETE',
-    //   headers: {
-    //     Accept: 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify(filteredNotes)
-    // });
-    
   }
 
   onLoad = async () => {
-    // const value = await AsyncStorage.getItem(notesKey);
     try {
       const notes = await new Api.onGetNote();
-      // this.setState({
-      //   notes: notes
-      // });
       this.props.loadServer(notes);
-      // this.props.addNote(JSON.parse(notes));
     } catch (e) {
-      // const notes =  storageutil.getItem();
-      // this.setState({
-      //   notes: notes
-      // });
       this.props.loadServer(await storageutil.getItem());
     }
   }
@@ -160,14 +129,19 @@ class App extends Component {
           this.props.notes.length > 0 ? <NoteList data={this.props.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
         }
         <Lower
-          onShowAboutUs={this.onShowAboutUs} />
+          onShowAboutUs={this.props.showAboutUs} />
       </this.WrapperView>
     );
   }
 }
 
 App.propTypes = {
-  navigation: PropTypes.object
+  // navigation: PropTypes.func,
+  showAboutUs: PropTypes.func,
+  notes: PropTypes.array,
+  loadServer: PropTypes.func,
+  deleNote: PropTypes.func,
+  addNote: PropTypes.func
 };
 
 App.defaultProps = {
@@ -175,7 +149,8 @@ App.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({notes: state.notes});
-const mapDispatchToProps = (dispatch) => ({
+
+export const mapDispatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
   // addNote: (note) => {
   //   dispatch(actions.addNote(note));
@@ -185,6 +160,13 @@ const mapDispatchToProps = (dispatch) => ({
   },
   loadServer: (note) => {
     dispatch(actions.loadServer(note));
+  },
+  showAboutUs: () => {
+    // dispatch({
+    //   type: 'Navigation/NAVIGATE',
+    //   routeName: 'About'
+    // });
+    dispatch(NavigationActions.navigate({routeName: 'About'}));
   }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);

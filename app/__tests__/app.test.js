@@ -1,5 +1,5 @@
 import Api from '../api';
-import ConnectedApp from '../app';
+import ConnectedApp, {mapDispatchToProps} from '../app';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import storageutil from '../utils/storageutil';
@@ -7,6 +7,7 @@ import storageutil from '../utils/storageutil';
 // Note: test renderer must be required after react-native.
 import {Alert} from 'react-native';
 import {createStore} from 'redux';
+import {NavigationActions} from 'react-navigation';
 import {shallow} from 'enzyme';
 
 const store = createStore(() => ({notes: []}));
@@ -28,7 +29,7 @@ jest.mock('../api', () => ({
 }));
 
 // constant
-const notesKey = 'notes';
+// const notesKey = 'notes';
 
 // test case
 describe('App', () => {
@@ -129,10 +130,23 @@ describe('App', () => {
     };
 
     appWrapper.setProps(props);
+
+    const dispatch = jest.fn();
+    const propss = mapDispatchToProps(dispatch);
+    propss.deleNote(note00);
     
     const delFunc = appInstance.onDeleteButtonPress(note00);
     await delFunc();
 
+    // expect(dispatch).toHaveBeenLastCalledWith({
+    //   payload: {
+    //     'content': 'content 00', 
+    //     'id': 1, 
+    //     'title': 'title 00'
+    //   }, 
+    //   'type': 'DELE_NOTE'
+    // });
+    expect(dispatch).toHaveBeenCalled();
     expect(Api.onDelete).toHaveBeenLastCalledWith(note00.id);
     expect(storageutil.setItem).toHaveBeenLastCalledWith([]);
     // expect(appInstance.props.deleNote).toHaveBeenCalledWith(expected.notes);
@@ -155,15 +169,19 @@ describe('App', () => {
   });
 
   it('onShowAboutUs', () => {
-    const props = {
-      navigation: {
-        navigate: jest.fn()
-      }
-    };
-    appWrapper.setProps(props);
-    appInstance.onShowAboutUs();
+    // const props = {
+    //   navigation: {
+    //     navigate: jest.fn()
+    //   }
+    // };
+    // appWrapper.setProps(props);
+    // appInstance.onShowAboutUs();
+    // expect(appInstance.props.navigation.navigate).toHaveBeenCalledWith('About');
 
-    expect(appInstance.props.navigation.navigate).toHaveBeenCalledWith('About');
+    const dispatch = jest.fn();
+    const props = mapDispatchToProps(dispatch);
+    props.showAboutUs();
+    expect(dispatch).toHaveBeenLastCalledWith(NavigationActions.navigate({routeName: 'About'}));
   });
 
   it('componentDidMount with existed notes', async () => {
@@ -197,4 +215,5 @@ describe('App', () => {
 
     expect(storageutil.getItem).toHaveBeenCalledWith();
   });
+  
 });
