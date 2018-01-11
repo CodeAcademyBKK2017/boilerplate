@@ -11,12 +11,12 @@ if (typeof devToolsExtension === 'function') {
   enhancerList.push(devToolsExtension());
 }
 
-const logger = ({dispatch, getState}) => (next) => (action) => {
+const logger = () => (next) => (action) => {
   // console.log('action is', action);
   next(action);
 };
 
-const notAllowToSaveEmptyNote = ({dispatch, getState}) => (next) => (action) => {
+const notAllowToSaveEmptyNote = () => (next) => (action) => {
   if (action.type === actions.ADD_NOTE) {
     if (!action.payload.title || !action.payload.content) {
       // console.log('please save valid note');

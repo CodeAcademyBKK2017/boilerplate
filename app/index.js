@@ -30,12 +30,12 @@ class ReduxRouter extends Component {
 
 ReduxRouter.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  nav: PropTypes.func.isRequired
+  nav: PropTypes.object.isRequired
 };
 
 ReduxRouter.defaultProps = {
-  navigation: noop,
-  notes: noop
+  dispatch: noop,
+  nav: null
 };
 
 const mapStateToProps = (state) => ({nav: state.nav});
