@@ -140,7 +140,17 @@ export const mapDispatchToProps = (dispatch) => ({
   addNotes: bindActionCreators(actions.addNotes, dispatch),
   deleteNotes: bindActionCreators(actions.deleteNotes, dispatch),
   populateNotes: bindActionCreators(actions.populateNotes, dispatch),
-  navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'}))
+  navigateToAbout: () => {
+    dispatch(NavigationActions.navigate({routeName: 'About'}));
+    // const resetAction = NavigationActions.reset({
+    //   index: 0,
+    //   actions: [
+    //     NavigationActions.navigate({routeName: 'Main'}),
+    //     NavigationActions.navigate({routeName: 'About'})
+    //   ]
+    // });
+    // dispatch(resetAction);
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
