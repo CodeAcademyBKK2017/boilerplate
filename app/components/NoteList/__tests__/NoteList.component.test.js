@@ -59,4 +59,16 @@ describe('NoteList', () => {
     };
     expect(noteListInstance.state).toEqual(expected);
   });
+
+  it('keyExtractor', () => {
+    const item = {
+      id: 1,
+      title: 'test title',
+      content: 'test content'
+    };
+
+    const result = noteListInstance.keyExtractor(item);
+
+    expect(result).toEqual(item.id);
+  });
 });

@@ -29,7 +29,7 @@ export default class NoteList extends Component {
     });
   }
 
-  _keyExtractor = (item) => item.id;
+  keyExtractor = (item) => item.id;
   
   renderItem = ({item}) => {
     const swipeoutBtns = [
@@ -69,7 +69,7 @@ export default class NoteList extends Component {
         <FlatList
           data={this.props.data}
           renderItem={this.renderItem}
-          keyExtractor={this._keyExtractor}/>
+          keyExtractor={this.keyExtractor}/>
         <Overlay visible={this.state.modalVisible}
           closeOnTouchOutside
           animationType='zoomIn'
