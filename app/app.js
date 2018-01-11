@@ -93,10 +93,6 @@ class App extends Component {
     }
   }
 
-  onAboutButtonPress = () => {
-    this.props.navigation.navigate('About');
-  }
-
   loadData = async () => {
     try {
       const response = await ApiNotes.getNotes();
@@ -133,7 +129,7 @@ class App extends Component {
           }
         </View>
         
-        <AboutSection onAboutButtonPress={this.onAboutButtonPress}/>
+        <AboutSection onAboutButtonPress={this.props.navigateToAbout}/>
       </this.WrapperView>
     );
   }
@@ -162,7 +158,13 @@ const mapStateToProps = (storeState) => ({
 const mapDisplatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
-  populateNote: bindActionCreators(actions.populateNotes, dispatch)
+  populateNote: bindActionCreators(actions.populateNotes, dispatch),
+  navigateToAbout: () => {
+    dispatch({
+      type: 'Navigation/NAVIGATE',
+      routeName: 'About'
+    });
+  }
 });
 
 export default connect(mapStateToProps, mapDisplatchToProps)(App);
