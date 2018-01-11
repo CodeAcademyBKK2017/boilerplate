@@ -3,7 +3,7 @@ import {getItemToStorage, setItemToStorage} from '../storageutil';
 
 jest.mock('AsyncStorage', () => ({
   setItem: jest.fn(),
-  getItem: jest.fn(() => Promise.resolve('{}'))
+  getItem: jest.fn(() => Promise.resolve('{ "name":"John", "age":30, "car":null }'))
 }));
 
 describe('storageutil', () => {
@@ -19,7 +19,7 @@ describe('storageutil', () => {
   });
   it('getItemToStorage Success', async () => {
     storageName = 'y';
-    data = {};
+    data = {name: 'John', age: 30, car: null};
     result = await getItemToStorage(storageName);
     expect(AsyncStorage.getItem).toHaveBeenLastCalledWith(storageName);
     expect(result).toEqual(data);

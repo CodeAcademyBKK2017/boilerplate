@@ -1,4 +1,3 @@
-
 import ApiNotes from '../api';
 import ConnectedApp from '../app';
 import React from 'react';
