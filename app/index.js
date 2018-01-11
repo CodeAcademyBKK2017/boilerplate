@@ -1,3 +1,5 @@
+import noop from 'lodash/noop';
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import Router from './routes/index';
 import {addNavigationHelpers} from 'react-navigation';
@@ -16,6 +18,8 @@ class NoteTaker extends Component {
   }
 }
 
+// -----------
+
 class ReduxRouter extends Component {
   render () {
     const {dispatch, nav} = this.props;
@@ -24,8 +28,20 @@ class ReduxRouter extends Component {
   }
 }
 
+ReduxRouter.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  nav: PropTypes.func.isRequired
+};
+
+ReduxRouter.defaultProps = {
+  navigation: noop,
+  notes: noop
+};
+
 const mapStateToProps = (state) => ({nav: state.nav});
 
 const ConnectedRouter = connect(mapStateToProps)(ReduxRouter);
+
+// -----------
 
 export default NoteTaker;

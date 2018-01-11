@@ -137,11 +137,11 @@ class App extends Component {
 }
 
 App.propTypes = {
-  navigation: PropTypes.object,
   notes: PropTypes.array.isRequired,
   addNote: PropTypes.func.isRequired,
   deleteNote: PropTypes.func.isRequired,
-  populateNote: PropTypes.func.isRequired
+  populateNote: PropTypes.func.isRequired,
+  navigateToAbout: PropTypes.func.isRequired
 };
 
 App.defaultProps = {
@@ -149,7 +149,8 @@ App.defaultProps = {
   notes: [],
   addNote: noop,
   deleteNote: noop,
-  populateNote: noop
+  populateNote: noop,
+  navigateToAbout: noop
 };
 
 const mapStateToProps = (storeState) => ({
