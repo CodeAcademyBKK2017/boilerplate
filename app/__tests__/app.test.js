@@ -1,14 +1,15 @@
 import API from '../api';
-import ConnectedApp from '../app';
+import ConnectedApp, {mapDispatchToProps} from '../app';
 import NoteItem from '../components/NoteItem/NoteItem.component';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import SnackBar from 'react-native-snackbar';
 import StorageUtil from '../utils/storage.util';
+import {createStore} from 'redux';
 
 // Note: test renderer must be required after react-native.
 
-import {createStore} from 'redux';
+import {NavigationActions} from 'react-navigation';
 import {shallow} from 'enzyme';
 
 const store = createStore(() => ({notes: []}));
@@ -101,9 +102,11 @@ describe('App', () => {
     expect(noteItem).toEqual(expectedItem);
   });
 
-  it('Test navigation', () => {
-    instance._goToAbout('navigate');
-    expect(instance.props.navigation.navigate).toHaveBeenCalled();
+  it('Test navigate to about', () => {
+    const dispatch = jest.fn();
+
+    mapDispatchToProps(dispatch).navigateToAbout();
+    expect(dispatch).toHaveBeenCalledWith(NavigationActions.navigate({routeName: 'AboutApp'}));
   });
 
   it('On delete item', () => {

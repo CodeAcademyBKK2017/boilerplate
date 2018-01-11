@@ -1,7 +1,6 @@
 import API from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import NoteItem from './components/NoteItem/NoteItem.component';
 import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
@@ -16,6 +15,7 @@ import {connect} from 'react-redux';
 import {
   FlatList, Text, View
 } from 'react-native';
+import {NavigationActions} from 'react-navigation';
 
 import {removeNote} from './utils/transformer.util';
 import * as actions from './redux/actions/index.actions';
@@ -27,14 +27,6 @@ const warningBar = () => ({
 });
 
 class App extends Component {
-  static navigationOptions = ({navigation}) => {
-    const toggleDrawer = (navigation) => () => navigation.navigate('DrawerToggle');
-    return {
-      title: 'Start taking notes',
-      headerLeft: <Touchable onPress={toggleDrawer(navigation)}><Icon name='bars' size={24} /></Touchable>
-    };
-  }
-
   state = {
     currentTitle: '',
     currentContent: '',
@@ -114,10 +106,6 @@ class App extends Component {
     this.setState({modalVisible: false});
   }
 
-  _goToAbout = () => {
-    this.props.navigation.navigate('AboutTab');
-  }
-
   _renderItem = ({item}) => (<NoteItem data={item} onPressItem={this._onPressItem} onDeleteItem={this._onDeleteItem} />)
 
   _keyExtractor = (item) => item.id
@@ -141,26 +129,31 @@ class App extends Component {
           <Text>{this.state.selectedNote.content}</Text>
         </Overlay>
         
-        <Touchable onPress={this._goToAbout}><Text>Go to About</Text></Touchable>
+        <Touchable onPress={this.props.navigateToAbout}><Text>Go to About</Text></Touchable>
       </View>
     );
   }
 }
 
 App.propTypes = {
-  navigation: PropTypes.any,
   notes: PropTypes.array,
   addNote: PropTypes.func,
   deleteNote: PropTypes.func,
-  populateNotes: PropTypes.func
+  populateNotes: PropTypes.func,
+  navigateToAbout: PropTypes.func
 };
 
 const mapStateToProps = (storeState) => ({notes: storeState.notes});
 
-const mapDispatchToProps = (dispatch) => ({
+const bindNavigationActionCreators = (routeName, dispatch) => () => {
+  dispatch(NavigationActions.navigate({routeName}));
+};
+
+export const mapDispatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
-  populateNotes: bindActionCreators(actions.populateNotes, dispatch)
+  populateNotes: bindActionCreators(actions.populateNotes, dispatch),
+  navigateToAbout: bindNavigationActionCreators('AboutApp', dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

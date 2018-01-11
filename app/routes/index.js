@@ -1,15 +1,32 @@
-import AboutRouter from './about';
-import MainScreen from '../app';
+import PropTypes from 'prop-types';
 
-import {DrawerNavigator, StackNavigator} from 'react-navigation';
+import React, {Component} from 'react';
+import Router from './main';
+import {addNavigationHelpers} from 'react-navigation';
 
-const MainStack = StackNavigator({
-  Home: {screen: MainScreen}
-}); 
+import {connect} from 'react-redux';
 
-const Router = DrawerNavigator({
-  Main: {screen: MainStack},
-  AboutTab: {screen: AboutRouter}
+class ReduxRouter extends Component {
+  render () {
+    const {dispatch, nav} = this.props;
+
+    return (
+      <Router navigation={addNavigationHelpers({dispatch, state: nav})} />
+    );
+  }
+}
+
+const mapStateToProps = ({nav}) => ({
+  nav
 });
 
-export default Router;
+const mapDispatchToProps = (dispatch) => ({
+  dispatch
+});
+
+ReduxRouter.propTypes = {
+  dispatch: PropTypes.func,
+  nav: PropTypes.any
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReduxRouter);

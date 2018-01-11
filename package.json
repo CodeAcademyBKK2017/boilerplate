@@ -56,6 +56,9 @@
     "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
     "setupFiles": [
       "enzyme-react-16-adapter-setup"
-    ]
+    ],
+    "transformIgnorePatterns": [
+     "/node_modules/(?!react-native|react-navigation)"
+   ]
   }
 }
