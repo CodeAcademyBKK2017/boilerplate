@@ -16,6 +16,7 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {filterNote} from './utils/transformerutil';
 import {getItemToStorage, setItemToStorage} from './utils/storageutil';
+import {NavigationActions} from 'react-navigation';
 import * as actions from './redux/actions/index.actions';
 
 class App extends Component {
@@ -92,10 +93,6 @@ class App extends Component {
       );
     }
   }
-
-  goToAbout = () => {
-    this.props.navigation.navigate('About');
-  }
   
   render () {
     return (
@@ -104,7 +101,7 @@ class App extends Component {
         <Content  onContentChange={this.changeContent} />
         <Footer characterCount={this.state.content.length} onPressSave={this.onSave} />
         {this.props.noteList.length > 0 ? <Note noteList={this.props.noteList} onDelete={this.onDelete}/> : null}
-        <View><Text onPress={this.goToAbout}>about us</Text></View>
+        <View><Text onPress={this.props.goToAbout}>about us</Text></View>
       </this.WrapperView>
     );
   }
@@ -112,23 +109,21 @@ class App extends Component {
 
 App.propTypes = {
   noteList: PropTypes.array,
-  navigation: PropTypes.object,
   addNote: PropTypes.func,
   deleteNote: PropTypes.func,
-  populateNote: PropTypes.func
+  populateNote: PropTypes.func,
+  goToAbout: PropTypes.func
 };
 App.defaultProps = {
   noteList: []
 };
 const mapStateToProps = (storeState) => ({noteList: storeState.notes});
-const mapDispatchToProps = (dispatch) => ({
+export const mapDispatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
-  populateNote: bindActionCreators(actions.populateNotes, dispatch)
-  // deleteNote: (id) => {
-  //   const action = actions.deleteNote(id);
-  //   dispatch(action);
-  // },
+  populateNote: bindActionCreators(actions.populateNotes, dispatch),
+  goToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'}))
+  
   // populateNote: (note) => {
   //   const action = actions.populateNotes(note);
   //   dispatch(action);

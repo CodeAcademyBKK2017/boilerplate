@@ -1,5 +1,5 @@
 import ApiNotes from '../api';
-import ConnectedApp from '../app';
+import ConnectedApp, {mapDispatchToProps}  from '../app';
 import React from 'react';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
@@ -41,23 +41,12 @@ describe('App', () => {
     expect(instance.state.content).toEqual('123');
   });
   it('goToAbout', () => {
-    const navigation = {navigate: jest.fn()};
-    wrapper.setProps({navigation: navigation});
-    instance.goToAbout();
-    expect(instance.props.navigation.navigate).toHaveBeenCalled();
-    expect(instance.props.navigation.navigate).toHaveBeenCalledWith('About');
+    const dispatch = jest.fn();
+    const props = mapDispatchToProps(dispatch);
+    props.goToAbout();
+    expect(dispatch).toHaveBeenCalled();
+    expect(dispatch).toHaveBeenLastCalledWith({'routeName': 'About', 'type': 'Navigation/NAVIGATE'});
   });
-  it('goToAbout with spyOn Function', () => {
-    const props = {
-      navigation: {navigate: jest.fn()}
-    };
-    wrapper.setProps(props);
-    const spyFn = jest.spyOn(props.navigation, 'navigate');
-    instance.goToAbout();
-    expect(spyFn).toHaveBeenCalled();
-    expect(spyFn).toHaveBeenCalledWith('About');
-  });
-
   it('onSave success ', async () => {
     const note = {
       title: 'this is title',
