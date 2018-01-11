@@ -156,7 +156,7 @@ const mapStateToProps = (storeState) => ({
   notes: storeState.notes
 });
 
-const mapDisplatchToProps = (dispatch) => ({
+export const mapDisplatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
   populateNote: bindActionCreators(actions.populateNotes, dispatch),

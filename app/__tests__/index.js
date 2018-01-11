@@ -1,5 +1,5 @@
 import ApiNotes from '../api';
-import ConnectedApp from '../app';
+import ConnectedApp, {mapDisplatchToProps} from '../app';
 import React from 'react';
 import renderer from 'react-test-renderer';
 
@@ -7,6 +7,7 @@ import renderer from 'react-test-renderer';
 import StorageUtil from '../utils/StorageUtil';
 import {Alert} from 'react-native';
 import {createStore} from 'redux';
+import {NavigationActions} from 'react-navigation';
 import {shallow} from 'enzyme';
 
 // mock function with default result
@@ -221,29 +222,11 @@ describe('App', () => {
   });
 
   it('onAboutButtonPress with mock', () => {
-    const props = {
-      navigation: {
-        navigate: jest.fn()
-      }
-    };
-    appWrapper.setProps(props);
-
-    appInstance.onAboutButtonPress();
-
-    expect(appInstance.props.navigation.navigate).toHaveBeenCalledWith('About');
-  });
-
-  it('onAboutButtonPress with spy', () => {
-    const props = {
-      navigation: {
-        navigate: () => {}
-      }
-    };
-    appWrapper.setProps(props);
-    const spyFunc = jest.spyOn(props.navigation, 'navigate');
-
-    appInstance.onAboutButtonPress();
+    const dispatch = jest.fn();
+    const props = mapDisplatchToProps(dispatch);
     
-    expect(spyFunc).toHaveBeenCalledWith('About');
+    props.navigateToAbout();
+
+    expect(dispatch).toHaveBeenCalledWith(NavigationActions.navigate({routeName: 'About'}));
   });
 });
