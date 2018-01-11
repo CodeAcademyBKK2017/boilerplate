@@ -15,7 +15,8 @@ export default class AboutSection extends Component {
         <Touchable
           style={styles.aboutButtonTouch}
           background={Touchable.Ripple('orange')}
-          onPress={this.props.onAboutButtonPress}>
+          onPress={this.props.onAboutButtonPress}
+        >
           <Text style={styles.aboutButtonContent}>About</Text>
         </Touchable>
       </View>

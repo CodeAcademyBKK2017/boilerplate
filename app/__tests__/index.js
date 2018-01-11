@@ -1,9 +1,10 @@
 import ApiNotes from '../api';
-import ConnectedApp from '../app';
+import ConnectedApp, {mapDispatchToProps} from '../app';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {Alert, AsyncStorage} from 'react-native';
 import {createStore} from 'redux';
+import {NavigationActions} from 'react-navigation';
 // Note: test renderer must be required after react-native.
 import {shallow} from 'enzyme';
 
@@ -14,7 +15,7 @@ jest.mock('AsyncStorage', () => ({
   setItem: jest.fn(() => Promise.resolve())
 }));
 
-jest.mock('uuid', () => () => 'some uuid');
+jest.mock('uuid', () => () => 'some uuid'); 
 
 jest.mock('../api');
 
@@ -213,20 +214,9 @@ describe('App', () => {
   });
 
   it('onAboutButtonPress with mock', () => {
-    const props = {
-      navigation: {
-        navigate: jest.fn()
-      }
-    };
-    const appComp =  <ConnectedApp store={store} {...props}/>;
-		
-    const wrapper = shallow(appComp);
-
-    appInstance = wrapper.find('App').shallow().instance();
-
-    appInstance.onAboutButtonPress();
-
-    expect(appInstance.props.navigation.navigate).toHaveBeenCalledWith('About');
+    const dispatch = jest.fn();
+    mapDispatchToProps(dispatch).navigationAbout();
+    expect(dispatch).toHaveBeenCalledWith(NavigationActions.navigate({routeName: 'About'}));
   });
 
   xit('onAboutButtonPress with spy', () => {

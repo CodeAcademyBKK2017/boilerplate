@@ -19,6 +19,7 @@ import {
   Alert, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 import {connect} from 'react-redux';
+import {NavigationActions} from 'react-navigation';
 
 const notesKey = 'notes';
 
@@ -69,7 +70,8 @@ class App extends Component {
   }
 
   onAboutButtonPress = () => {
-    this.props.navigation.navigate('About');
+    // this.props.navigation.navigate('About');
+    // this.props.navigation('About');
   }
 
   loadData = async () => {
@@ -109,14 +111,15 @@ class App extends Component {
           }
         </View>
         
-        <AboutSection onAboutButtonPress={this.onAboutButtonPress}/>
+        <AboutSection onAboutButtonPress={this.props.navigationAbout}/>
       </this.WrapperView>
     );
   }
 }
 
 App.propTypes = {
-  navigation: PropTypes.object,
+  // navigation: PropTypes.func,
+  navigationAbout: PropTypes.func,
   addNote: PropTypes.func,
   deleteNote: PropTypes.func,
   populateNotes: PropTypes.func,
@@ -130,8 +133,8 @@ App.defaultProps = {
 const mapStateToProps = (storeState) => ({
   notes: storeState.notes
 });
-// const 
-const mapDispatchToProps = (dispatch) => ({
+
+export const mapDispatchToProps = (dispatch) => ({
   addNote: (note) => {
     dispatch({
       type: 'ADD_NOTE',
@@ -151,6 +154,9 @@ const mapDispatchToProps = (dispatch) => ({
       type: 'POPULATE_NOTES',
       payload: response
     });
+  },
+  navigationAbout: () => {
+    dispatch(NavigationActions.navigate({routeName: 'About'}));
   }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
