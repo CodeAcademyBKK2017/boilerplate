@@ -9,7 +9,8 @@ const devToolsExtension = window && window.__REDUX_DEVTOOLS_EXTENSION__;
 if (typeof devToolsExtension === 'function') {
   enhancerList.push(devToolsExtension());
 }
-const logger = ({dispatch, getState}) => (next) => (action) => {
+// input of logger {dispatch, getState}
+const logger = () => (next) => (action) => {
   // console.log('This is come from ACTION', action);
   // if (action.type !== 'Navigation/NAVIGATE') {
   next(action);
