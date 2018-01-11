@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import * as actions from './redux/actions/index.actions';
+import * as actions from './redux/reducers/actions/index.actions';
 
 // const notesKey = 'notes';
 //
@@ -44,26 +44,6 @@ class App extends Component {
     this.setState({textContent});
   }
 
-  // onSaveButtonPress = () => {
-  //   const newNotes = [...this.state.notes];
-  //   const note = {
-  //     key: uuid(),
-  //     title: this.state.textTitle,
-  //     content: this.state.textContent
-  //   };
-  //   newNotes.push(note);
-
-  //   const newState = {
-  //     textTitle: '',
-  //     textContent: '',
-  //     notes: newNotes
-  //   };
-  //   this.setState(newState);
-
-  //   AsyncStorage.setItem(notesKey, JSON.stringify(newNotes));
-    
-  // }
-
   onSaveButtonPress = async () => {
     const newNotes = [...this.props.notes];
     const note = {
@@ -72,11 +52,11 @@ class App extends Component {
     };
     
     try {
-      const api =  await Api.onAddNote(note);
+      const addedNote =  await Api.onAddNote(note);
       const newData = {
         title: this.state.textTitle,
         content: this.state.textContent,
-        id: (JSON.parse(api._bodyText)).id
+        id: addedNote.id
       };
       newNotes.push(newData);
       this.props.addNote(newData);
@@ -85,7 +65,6 @@ class App extends Component {
         textContent: '',
         notes: newNotes
       };
-      console.log(newNotes);
       await storageutil.setItem(newNotes);
       this.setState(newState);
 
@@ -115,9 +94,11 @@ class App extends Component {
 
   onDeleteButtonPress = (item) => async () => {
     try {
-      await new Api.onDelete(item.id, Tranformerutil.removeNote(this.props.notes, item.id));
+      await new Api.onDelete(item.id);
       this.props.deleNote(item);
+      await storageutil.setItem(Tranformerutil.removeNote(this.props.notes, item.id));
     } catch (e) {
+      console.log('Am in in error?');
       Alert.alert(
         'Error',
         'Internet error',

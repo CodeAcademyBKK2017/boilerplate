@@ -1,7 +1,3 @@
-import {
-  AsyncStorage
-} from 'react-native';
-
 // AsyncStorage.clear();
 class Api {
     onGetNote = async () => await fetch('http://localhost:3000/posts').then((res) => res.json())     
@@ -16,14 +12,11 @@ class Api {
         },
         body: JSON.stringify(note)
       });
-      return apiresponse;
+      return await apiresponse.json();
     }
 
-    onDelete = async (id, filteredNotes) => {
-      await fetch('http://localhost:3000/posts/' + `${id}`, {
-        method: 'DELETE'
-      });
-      return await AsyncStorage.setItem('notes', JSON.stringify(filteredNotes));
-    } 
+    onDelete = async (id) => await fetch('http://localhost:3000/posts/' + `${id}`, {
+      method: 'DELETE'
+    }) 
 }
 export default new Api();

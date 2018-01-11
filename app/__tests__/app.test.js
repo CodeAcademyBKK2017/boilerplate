@@ -1,23 +1,29 @@
 import Api from '../api';
-import App from '../app';
+import ConnectedApp from '../app';
 import React from 'react';
 import renderer from 'react-test-renderer';
+import storageutil from '../utils/storageutil';
 
 // Note: test renderer must be required after react-native.
-import {AsyncStorage} from 'react-native';
+import {Alert} from 'react-native';
+import {createStore} from 'redux';
 import {shallow} from 'enzyme';
 
-// mock function with default result
-jest.mock('AsyncStorage', () => ({
+const store = createStore(() => ({notes: []}));
+jest.mock('uuid', () => () => 'some uuid');
+
+jest.mock('Alert', () => ({
+  alert: jest.fn()
+}));
+
+jest.mock('../utils/storageutil', () => ({
   getItem: jest.fn(() => Promise.resolve('')),
   setItem: jest.fn(() => Promise.resolve())
 }));
 
-jest.mock('uuid', () => () => 'some uuid');
-
 jest.mock('../api', () => ({
   onGetNote: jest.fn(() => Promise.resolve([])),
-  onAddNote: jest.fn(() => Promise.resolve()),
+  onAddNote: jest.fn(() => Promise.resolve({title: 'mock', content: 'mock', id: 1})),
   onDelete: jest.fn(() => Promise.resolve())
 }));
 
@@ -28,14 +34,16 @@ const notesKey = 'notes';
 describe('App', () => {
   let appComp;
   let appInstance;
+  let appWrapper;
 	
   beforeEach(() => {
-    appComp = <App/>;
+    appComp = <ConnectedApp  store={store}/>;
 		
     const wrapper = shallow(appComp);
-    appInstance = wrapper.instance();
+    appWrapper = wrapper.find('App').shallow();
+    appInstance = appWrapper.instance();
     
-    AsyncStorage.setItem.mockReset();
+    storageutil.setItem.mockClear();
   });
   
   // ----------
@@ -61,58 +69,16 @@ describe('App', () => {
     expect(appInstance.state.textContent).toBe(text);
   });
 
-  it('onSaveButtonPress', async () => {
-    const title = '';
-    const content = '';
-
-    appInstance.onChangeTextTitle(title);
-    appInstance.onChangeTextContent(content);
-    await appInstance.onSaveButtonPress();
-
-    const expected = {
-      textTitle: '',
-      textContent: '',
-      notes: [
-        {
-          key: 'some uuid',
-          title,
-          content
-        }
-      ]
-    };
-    expect(appInstance.state).toEqual(expected);
-    // expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected.notes));
-  });
-
-  xit('onDeleteButtonPress', () => {
-    const note00 = {
-      key: 'some uuid',
-      title: 'title 00',
-      content: 'content 00'
-    };
-    const initialState = {
-      textTitle: '',
-      textContent: '',
-      notes: [note00]
-    };
-    appInstance.setState(initialState);
-    
-    const curryFunc = appInstance.onDeleteButtonPress(note00);
-    curryFunc();
-
-    const expected = {
-      textTitle: '',
-      textContent: '',
-      notes: []
-    };
-    expect(appInstance.state).toEqual(expected);
-    expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected.notes));
-  });
-
   it('onSaveButtonPress success', async () => {
     const title = 'my test title';
     const content = 'my test message';
-    appInstance.setState({textTitle: title, textContent: content, notes: []});
+    appInstance.setState({textTitle: title, textContent: content});
+
+    const props = {
+      addNote: jest.fn()
+    };
+
+    appWrapper.setProps(props);
 
     await appInstance.onSaveButtonPress();
     
@@ -120,41 +86,72 @@ describe('App', () => {
       textTitle: '',
       textContent: '',
       notes: [{
-        key: 'some uuid',
         title,
-        content
+        content,
+        id: 1
       }]
     };
 
     const expectedNote = {
       'content': 'my test message',
-      'key': 'some uuid',
       'title': 'my test title'
     };
     expect(Api.onAddNote).toHaveBeenLastCalledWith(expectedNote);
-    expect(AsyncStorage.setItem).toHaveBeenLastCalledWith('notes', JSON.stringify(expected.notes));
-    expect(appInstance.state).toEqual(expected);
+    expect(storageutil.setItem).toHaveBeenLastCalledWith(expected.notes);
+    // expect(appInstance.props.addNote).toHaveBeenCalledWith(expected.notes);
     
   });
 
   it('onSaveButtonPress failure', async () => {
     Api.onAddNote.mockClear();
-    AsyncStorage.setItem.mockClear();
+    storageutil.setItem.mockClear();
+
     Api.onAddNote.mockImplementation(() => Promise.reject('API failed'));
     await appInstance.onSaveButtonPress();
-    expect(AsyncStorage.setItem).not.toBeCalled();
+    expect(Alert.alert).toHaveBeenCalledWith(
+      'Error',
+      'Internet error',
+      {cancelable: true}
+    );
+    expect(storageutil.setItem).not.toBeCalled();
   });
 
-  it('onDeleteButtonPress success', () => {
+  it('onDeleteButtonPress success', async () => {
+    const note00 = {
+      id: 1,
+      title: 'title 00',
+      content: 'content 00'
+    };
     
+    const props = {
+      notes: [note00],
+      deleNote: jest.fn()
+    };
+
+    appWrapper.setProps(props);
+    
+    const delFunc = appInstance.onDeleteButtonPress(note00);
+    await delFunc();
+
+    expect(Api.onDelete).toHaveBeenLastCalledWith(note00.id);
+    expect(storageutil.setItem).toHaveBeenLastCalledWith([]);
+    // expect(appInstance.props.deleNote).toHaveBeenCalledWith(expected.notes);
   });
 
   it('onDeleteButtonPress failure', async () => {
     Api.onDelete.mockClear();
-    AsyncStorage.setItem.mockClear();
-    Api.onGetNote.mockImplementation(() => Promise.reject('API failed'));
-    await appInstance.onDeleteButtonPress();
-    expect(AsyncStorage.setItem).not.toBeCalled();
+    storageutil.setItem.mockClear();
+    Alert.alert.mockClear();
+
+    Api.onDelete.mockImplementation(jest.fn(() => Promise.reject('API fail')));
+
+    await appInstance.onDeleteButtonPress()();
+    expect(Alert.alert).toHaveBeenLastCalledWith(
+      'Error',
+      'Internet error',
+      {cancelable: true}
+    );
+    expect(storageutil.setItem).not.toBeCalled();
   });
 
   it('onShowAboutUs', () => {
@@ -163,10 +160,7 @@ describe('App', () => {
         navigate: jest.fn()
       }
     };
-    const appComp = <App {...props}/>;
-    const wrapper = shallow(appComp);
-    const appInstance = wrapper.instance();
-
+    appWrapper.setProps(props);
     appInstance.onShowAboutUs();
 
     expect(appInstance.props.navigation.navigate).toHaveBeenCalledWith('About');
@@ -185,22 +179,22 @@ describe('App', () => {
     Api.onGetNote.mockImplementation(() => Promise.reject('API Fail'));
 
     // set custom mock result
-    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(JSON.stringify(notes)));
+    storageutil.getItem.mockImplementation(() => Promise.resolve(JSON.stringify(notes)));
 
     await appInstance.componentDidMount();
 
-    expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
+    expect(storageutil.getItem).toHaveBeenCalledWith();
   });
 
   it('componentDidMount with null', async () => {
     // set custom mock result
-    AsyncStorage.getItem.mockImplementation(() => Promise.resolve(null));
+    storageutil.getItem.mockImplementation(() => Promise.resolve(null));
     
     Api.onGetNote.mockClear();
     Api.onGetNote.mockImplementation(async () => await Promise.reject('API Error'));
 
     await appInstance.componentDidMount();
 
-    expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
+    expect(storageutil.getItem).toHaveBeenCalledWith();
   });
 });
