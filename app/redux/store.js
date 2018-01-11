@@ -10,11 +10,12 @@ if (typeof devToolsExtension === 'function') {
   enhancerList.push(devToolsExtension());
 }
 
-const logger = ({dispatch, getState}) => (next) => ((action) => {
-  console.log('action is :: ', action);
-  if (action.type !== 'Navigation/NAVIGATE') {
-    next(action);
-  }
+const logger = () => (next) => ((action) => {
+  // console.log('action is :: ', action);
+  // if (action.type !== 'Navigation/NAVIGATE') {
+  //   next(action);
+  // }
+  next(action);
 });
 
 const composedEnhancer = compose(applyMiddleware(logger), ...enhancerList);
