@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect, Provider} from 'react-redux';
+import {NavigationActions} from 'react-navigation';
 import * as actions from './redux/actions/index.actions';
 
 const notesKey = 'notes';
@@ -92,10 +93,6 @@ class App extends Component {
     }
   }
 
-  onAboutButtonPress = () => {
-    this.props.navigation.navigate('About');
-  }
-
   loadData = async () => {
     try {
       const response = await ApiNotes.getNotes();
@@ -138,14 +135,14 @@ class App extends Component {
           }
         </View>
         
-        <AboutSection onAboutButtonPress={this.onAboutButtonPress}/>
+        <AboutSection onAboutButtonPress={this.props.goToAbout}/>
       </this.WrapperView>
     );
   }
 }
 
 App.propTypes = {
-  navigation: PropTypes.object,
+  goToAbout: PropTypes.func,
   notes: PropTypes.array
 };
 
@@ -166,10 +163,13 @@ const mapStateToProps = (state) => ({notes: state.notes});
 //     dispatch(actions.getNotes(items));
 //   }
 // });
-const mapDispatchToProps = (dispatch) => ({
+export const mapDispatchToProps = (dispatch) => ({ // named export
   addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
-  getNotes: bindActionCreators(actions.getNotes, dispatch)
+  getNotes: bindActionCreators(actions.getNotes, dispatch),
+  goToAbout: () => {
+    dispatch(NavigationActions.navigate({routeName: 'About'}));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

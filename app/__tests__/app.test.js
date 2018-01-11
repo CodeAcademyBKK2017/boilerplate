@@ -1,11 +1,11 @@
 import ApiNotes from '../api';
-import ConnectedApp from '../app';
+import ConnectedApp, {mapDispatchToProps} from '../app';
 import React from 'react';
 import renderer from 'react-test-renderer';
-
 import {Alert, AsyncStorage} from 'react-native';
-
 import {createStore} from 'redux';
+
+import {NavigationActions} from 'react-navigation';
 import {shallow} from 'enzyme';
 
 const store = createStore(() => ({notes: []}));
@@ -149,7 +149,13 @@ describe('App', () => {
     // expect(appInstance.loadData).toHaveBeenCalled();
   });
 
-  it('onAboutButtonPress with mock', () => {
+  it('goToAbout called', () => {
+    const dispatch = jest.fn();
+    mapDispatchToProps(dispatch).goToAbout();
+    expect(dispatch).toHaveBeenCalledWith(NavigationActions.navigate({routeName: 'About'}));
+  });
+
+  xit('onAboutButtonPress with mock', () => {
     const props = {
       navigation: {
         navigate: jest.fn()
@@ -165,7 +171,7 @@ describe('App', () => {
     expect(appInstance.props.navigation.navigate).toHaveBeenCalledWith('About');
   });
 
-  it('onAboutButtonPress with spy', () => {
+  xit('onAboutButtonPress with spy', () => {
     const props = {
       navigation: {
         navigate: () => {}

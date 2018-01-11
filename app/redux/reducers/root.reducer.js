@@ -1,7 +1,12 @@
 import notes from './notes.reducer';
-// import transformerutil from '../../utility/transformerutil';
+import Router from '../../routes/index';
 import {combineReducers} from 'redux';
 
+const nav = (state, action) => (
+  Router.router.getStateForAction(action, state) || state
+);
+
 export default combineReducers({
-  notes
+  notes,
+  nav
 });
