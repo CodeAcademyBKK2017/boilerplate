@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {NavigationActions} from 'react-navigation';
 import * as indexAction from './redux/actions/index.actions';
 
 class App extends Component {
@@ -100,8 +101,6 @@ class App extends Component {
     this.setState({title: titleInput});
   }
 
-  navigateTo = (key) => () => this.props.navigation.navigate(key)
-
   render () {
     return (
       <View style={styles.container}>
@@ -113,7 +112,7 @@ class App extends Component {
        
         <NoteList notes={this.props.notes} onDeletePress={this.onDeletePress}/>
         <View style={styles.about}>
-          <Button onPress={this.navigateTo('About')} title='Go to About' color='#841584'/>
+          <Button onPress={this.props.goToAbout} title='About' color='#841584'/>
         </View>
       </View>
     );
@@ -121,14 +120,14 @@ class App extends Component {
 }
 
 App.propTypes = {
-  navigation: PropTypes.object,
+  goToAbout: PropTypes.func,
   addNote: PropTypes.func,
   deleteNote: PropTypes.func,
   showNote: PropTypes.func,
   notes: PropTypes.array
 };
 App.defaultProps = {
-  navigation: {},
+  goToAbout: noop,
   addNote: noop,
   deleteNote: noop,
   showNote: PropTypes.func,
@@ -136,10 +135,13 @@ App.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({notes: state.notes});
-const mapDispatchToProps = (dispatch) => ({
+export const mapDispatchToProps = (dispatch) => ({
   addNote: bindActionCreators(indexAction.addNote, dispatch),
   deleteNote: bindActionCreators(indexAction.deleteNote, dispatch),
-  showNote: bindActionCreators(indexAction.showNote, dispatch)
+  showNote: bindActionCreators(indexAction.showNote, dispatch),
+  goToAbout: () => { 
+    dispatch(NavigationActions.navigate({routeName: 'About'})); 
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

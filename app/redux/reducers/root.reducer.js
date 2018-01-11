@@ -1,4 +1,12 @@
 import notes from './notes.reducer';
+import Router from '../../routes';
 import {combineReducers} from 'redux';
 
-export default combineReducers({notes});
+const nav = (state, action) => (
+  Router.router.getStateForAction(action, state) || state
+);
+
+export default combineReducers({
+  nav,
+  notes
+}); 

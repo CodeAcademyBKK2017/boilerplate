@@ -15,9 +15,7 @@ describe('App', () => {
     const snapshot = appInstance.renderItem(item);
     expect(snapshot).toMatchSnapshot();
   });
-  xit('onShowModal', () => {
-    const wrapper = shallow(<NoteList/>);
-    appInstance = wrapper.appInstance();
+  it('onShowModal', () => {
     const item = {title: 'title', content: 'content'};
     const expectState = {
       showModal: true, title: 'title', content: 'content'
@@ -25,10 +23,12 @@ describe('App', () => {
     appInstance.onShowModal(item)();
     expect(appInstance.state).toMatchObject(expectState);
   });
-  xit('onCloseModal', () => {
-    const wrapper = shallow(<NoteList/>);
-    appInstance = wrapper.appInstance();
+  it('onCloseModal', () => {
     appInstance.onCloseModal();
     expect(appInstance.state.showModal).toBe(false);
+  });
+  it('keyExtractor', () => {
+    const item = {id: 1};
+    expect(appInstance.keyExtractor(item)).toEqual(1);
   });
 });

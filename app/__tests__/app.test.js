@@ -1,5 +1,5 @@
 import Api from '../api';
-import ConnectedApp from '../app';
+import ConnectedApp, {mapDispatchToProps} from '../app';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {Alert} from 'react-native';
@@ -63,7 +63,6 @@ describe('App', () => {
     await appInstance.onSavePress();
     expect(Alert.alert).toBeCalled();
   });
-
   it('onDeletePress success', async () => {
     const item = {
       title: 'title',
@@ -103,15 +102,11 @@ describe('App', () => {
     await appInstance.onLoadData();
     expect(appInstance.props.showNote).toHaveBeenCalledWith([]);
   });
-  it('navigateTo Mock', () => {
-    appInstance.props.navigation.navigate = jest.fn();
-    appInstance.navigateTo('About')();
-    expect(appInstance.props.navigation.navigate).toHaveBeenCalledWith('About');
-  });
-  it('navigateTo Spy', () => {
-    const spyFunc = jest.spyOn(appInstance.props.navigation, 'navigate');
-    appInstance.navigateTo('About')();
-    expect(spyFunc).toHaveBeenCalledWith('About');
+  it('goToAbout', () => {
+    const dispatch = jest.fn();
+    const dispatcher = mapDispatchToProps(dispatch);
+    dispatcher.goToAbout();
+    expect(dispatch).toHaveBeenCalledWith({routeName: 'About', type: 'Navigation/NAVIGATE'});
   });
 });
 
