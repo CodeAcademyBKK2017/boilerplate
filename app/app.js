@@ -15,7 +15,7 @@ import {
   Alert, AsyncStorage, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import {connect, Provider} from 'react-redux';
 import * as actions from './redux/actions/index.actions';
 
 const notesKey = 'notes';
@@ -76,7 +76,6 @@ class App extends Component {
   onDeleteButtonPress = (item) => async () => {
     try {
       await ApiNotes.deleteNote(item.id);
-
       const filteredNotes = transformerutil.deleteNote(this.props.notes, item.id);
       await storageUtil.setItemsFromAsyncStorage(notesKey, JSON.stringify(filteredNotes));
 
@@ -146,11 +145,13 @@ class App extends Component {
 }
 
 App.propTypes = {
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
+  notes: PropTypes.array
 };
 
 App.defaultProps = {
-  navigation: null
+  navigation: null,
+  notes: []
 };
 
 const mapStateToProps = (state) => ({notes: state.notes});

@@ -1,7 +1,6 @@
 import NoteList from '../NoteList.component';
 import React from 'react';
 
-// Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 import 'react-native';
@@ -16,8 +15,6 @@ describe('NoteList', () => {
     const wrapper = shallow(noteListComp);
     noteListInstance = wrapper.instance();
   });
-  
-  // ----------
 
   it('renders correctly', () => {
     const snapshot = renderer.create(noteListComp).toJSON();
@@ -58,5 +55,10 @@ describe('NoteList', () => {
       selectedNoteItem: {}
     };
     expect(noteListInstance.state).toEqual(expected);
+  });
+
+  it('_keyExtractor', () => {
+    const result = noteListInstance._keyExtractor({id: '123'});
+    expect(result).toEqual('123');
   });
 });

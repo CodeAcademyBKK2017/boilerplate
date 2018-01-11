@@ -1,0 +1,204 @@
+import ApiNotes from '../api';
+import ConnectedApp from '../app';
+import React from 'react';
+import renderer from 'react-test-renderer';
+
+import {Alert, AsyncStorage} from 'react-native';
+
+import {createStore} from 'redux';
+import {shallow} from 'enzyme';
+
+const store = createStore(() => ({notes: []}));
+
+jest.mock('AsyncStorage', () => ({
+  getItem: jest.fn(() => Promise.resolve('')),
+  setItem: jest.fn(() => Promise.resolve())
+}));
+
+jest.mock('Alert', () => ({
+  alert: jest.fn()
+}));
+
+jest.mock('../api', () => ({
+  addNote: jest.fn(() => Promise.resolve()),
+  deleteNote: jest.fn(() => Promise.resolve()),
+  getNotes: jest.fn(() => Promise.resolve())
+}));
+
+jest.mock('uuid', () => () => 'some uuid');
+
+const notesKey = 'notes';
+
+describe('App', () => {
+  let appComp;
+  let appInstance;
+  let wrapper;
+	
+  beforeEach(() => {
+    const addNoteFn = jest.fn(() => {});
+    const deleteNoteFN = jest.fn(() => {});
+    const getNotesFN = jest.fn(() => {});
+    appComp = <ConnectedApp store={store}/>;
+		
+    wrapper = shallow(appComp).find('App').shallow();
+    wrapper.setProps({
+      addNote: addNoteFn,
+      deleteNote: deleteNoteFN,
+      getNotes: getNotesFN
+    });
+    appInstance = wrapper.instance();
+    
+    AsyncStorage.setItem.mockClear();
+    AsyncStorage.getItem.mockClear();
+
+    ApiNotes.getNotes.mockClear();
+    ApiNotes.addNote.mockClear();
+    ApiNotes.deleteNote.mockClear();
+
+    Alert.alert.mockClear();
+  });
+
+  it('renders correctly', () => {
+    const snapshot = renderer.create(appComp).toJSON();
+    expect(snapshot).toMatchSnapshot();
+  });
+
+  it('onChangeTextTitle', () => {
+    const text = 'my test title';
+
+    appInstance.onChangeTextTitle(text);
+
+    expect(appInstance.state.textTitle).toBe(text);
+  });
+
+  it('onChangeTextContent', () => {
+    const text = 'my test content';
+
+    appInstance.onChangeTextContent(text);
+
+    expect(appInstance.state.textContent).toBe(text);
+  });
+
+  it('onSaveButtonPress', async () => {
+    const title = 'my test title';
+    const content = 'my test message';
+
+    appInstance.onChangeTextTitle(title);
+    appInstance.onChangeTextContent(content);
+    await appInstance.onSaveButtonPress();
+
+    const expected = {
+      textTitle: '',
+      textContent: '',
+      notes: [
+        {
+          id: 'some uuid',
+          title,
+          content
+        }
+      ]
+    };
+
+    expect(ApiNotes.addNote).toHaveBeenCalled();
+    expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected.notes));
+    expect(appInstance.props.addNote).toHaveBeenCalled();
+  });
+
+  it('onDeleteButtonPress', async () => {
+    const note00 = {
+      id: 'some uuid',
+      title: 'title 00',
+      content: 'content 00'
+    };
+    const initialState = {
+      textTitle: '',
+      textContent: '',
+      notes: [note00]
+    };
+    appInstance.setState(initialState);
+    
+    const deleleHandler = appInstance.onDeleteButtonPress(note00);
+    await deleleHandler(); //
+
+    const expected = {
+      textTitle: '',
+      textContent: '',
+      notes: []
+    };
+    expect(ApiNotes.deleteNote).toHaveBeenCalled();
+    expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expected.notes));
+    expect(appInstance.props.deleteNote).toHaveBeenCalled();
+  });
+
+  it('loadData with existed notes', async () => {
+    // set custom mock result
+    ApiNotes.getNotes.mockImplementation(jest.fn(() => Promise.reject()));
+
+    await appInstance.loadData();
+    expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
+  });
+
+  it('componentDidMount with null', async () => {
+    ApiNotes.getNotes.mockImplementation(jest.fn(() => Promise.reject()));
+
+    AsyncStorage.getItem.mockImplementation(() => Promise.resolve('{}'));
+    await appInstance.loadData();
+    // await appInstance.componentDidMount();
+
+    expect(AsyncStorage.getItem).toHaveBeenCalledWith(notesKey);
+    // expect(appInstance.loadData).toHaveBeenCalled();
+  });
+
+  it('onAboutButtonPress with mock', () => {
+    const props = {
+      navigation: {
+        navigate: jest.fn()
+      }
+    };
+    // const appComp = <ConnectedApp store={store} {...props}/>;
+    // const wrapper = shallow(appComp);
+    // const appInstance = wrapper.find('App').shallow().instance();
+    wrapper.setProps(props);
+
+    appInstance.onAboutButtonPress();
+
+    expect(appInstance.props.navigation.navigate).toHaveBeenCalledWith('About');
+  });
+
+  it('onAboutButtonPress with spy', () => {
+    const props = {
+      navigation: {
+        navigate: () => {}
+      }
+    };
+    // const appComp = <App {...props}/>;
+    // const wrapper = shallow(appComp);
+    // const appInstance = wrapper.instance();
+    wrapper.setProps(props);
+    const spyFunc = jest.spyOn(props.navigation, 'navigate');
+
+    appInstance.onAboutButtonPress();
+    
+    expect(spyFunc).toHaveBeenCalledWith('About');
+  });
+
+  it('loadData test case', async () => {
+    await appInstance.loadData();
+    expect(ApiNotes.getNotes).toHaveBeenCalled();
+    expect(appInstance.props.getNotes).toHaveBeenCalled();
+  });
+  
+  it('onSaveButtonPress fail catch', async () => {
+    ApiNotes.addNote.mockImplementation(jest.fn(() => Promise.reject()));
+
+    await appInstance.onSaveButtonPress(); 
+    expect(Alert.alert).toHaveBeenCalled();
+  });
+
+  it('onDeleteButtonPress fail catch', async () => {
+    ApiNotes.deleteNote.mockImplementation(jest.fn(() => Promise.reject()));
+    await appInstance.onDeleteButtonPress({id: 123})(); 
+    expect(Alert.alert).toHaveBeenCalled();
+  });
+
+});
