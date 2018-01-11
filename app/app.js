@@ -21,6 +21,7 @@ import {
 } from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {NavigationActions} from 'react-navigation';
 import * as actions from './redux/actions/index.actions';
 
 const notesKey = 'notes';
@@ -159,12 +160,7 @@ const mapDisplatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
   populateNote: bindActionCreators(actions.populateNotes, dispatch),
-  navigateToAbout: () => {
-    dispatch({
-      type: 'Navigation/NAVIGATE',
-      routeName: 'About'
-    });
-  }
+  navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'}))
 });
 
 export default connect(mapStateToProps, mapDisplatchToProps)(App);
