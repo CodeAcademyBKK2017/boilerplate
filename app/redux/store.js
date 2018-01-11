@@ -8,10 +8,10 @@ if (typeof devToolsExtension === 'function') {
   enhancerList.push(devToolsExtension());
 }
 
-const navigationBlocker = ({dispatch, getState}) => (next) => (action) => {
-  if (!action.type.includes('Navigation')) {
-    next(action);
-  }
+const navigationBlocker = ({}) => (next) => (action) => {
+  // if (!action.type.includes('Navigation')) {
+  next(action);
+  // }
 };
 
 const composedEnhancer = compose(applyMiddleware(navigationBlocker), ...enhancerList);
