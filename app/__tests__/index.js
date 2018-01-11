@@ -80,15 +80,15 @@ describe('App', () => {
 
     await appInstance.onSaveButtonPress();
 
-    const expectedState = {
-      textTitle: '',
-      textContent: '',
-      notes: [{
-        id: 1,
-        title,
-        content
-      }]
-    };
+    // const expectedState = {
+    //   textTitle: '',
+    //   textContent: '',
+    //   notes: [{
+    //     id: 1,
+    //     title,
+    //     content
+    //   }]
+    // };
     const expectedNote = {
       title,
       content
@@ -143,11 +143,11 @@ describe('App', () => {
     const curryFunc = appInstance.onDeleteButtonPress(note00);
     await curryFunc();
 
-    const expected = {
-      textTitle: '',
-      textContent: '',
-      notes: []
-    };
+    // const expected = {
+    //   textTitle: '',
+    //   textContent: '',
+    //   notes: []
+    // };
     expect(ApiNotes.deleteNote).toHaveBeenCalledWith(note00.id);
     // expect(appInstance.state).toEqual(expected);
   });
@@ -182,21 +182,21 @@ describe('App', () => {
       content: 'my test message'
     }]));
 
-    const title = 'my test title';
-    const content = 'my test message';
-    const expected = {
-      textTitle: '',
-      textContent: '',
-      notes: [{
-        id: 1,
-        title,
-        content
-      }, {
-        id: 2,
-        title,
-        content
-      }]
-    };
+    // const title = 'my test title';
+    // const content = 'my test message';
+    // const expected = {
+    //   textTitle: '',
+    //   textContent: '',
+    //   notes: [{
+    //     id: 1,
+    //     title,
+    //     content
+    //   }, {
+    //     id: 2,
+    //     title,
+    //     content
+    //   }]
+    // };
 
     await appInstance.loadData();
 
