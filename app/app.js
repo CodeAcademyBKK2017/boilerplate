@@ -100,7 +100,9 @@ class App extends Component {
   }
 
   componentDidMount () {
-    this.loadData();
+    // this.loadData();
+    this.props.fetchNotes;
+
   }
 
   render () {
@@ -182,7 +184,11 @@ export const mapDispatchToProps = (dispatch) => ({
     dispatch({
       type: 'HIDE_LOADER'
     });
+  },
+  fetchNotes: () => {
+    dispatch({
+      type: 'FETCH_NOTES'
+    });
   }
-  
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
