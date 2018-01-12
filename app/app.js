@@ -35,7 +35,7 @@ class App extends Component {
        this.props.populateNote(response);
      } catch (error) {
        const note = await getItemToStorage('storageNote');
-       this.props.populateNote(note);
+       this.props.populateNote(note ? note : []);
      }
    
    }
