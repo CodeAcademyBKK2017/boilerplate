@@ -8,29 +8,19 @@ import {
 } from 'react-native';
 
 class Loader extends Component {
-    state = {
-      modalVisible: true
-    };
-    openModal () {
-      this.setState({modalVisible: true});
-    }
-    closeModal () {
-      return this.setState({modalVisible: false});
-    }
-    render () {
-      return (
-        <Modal
-          visible={this.props.visible}
-          transparent={this.props.transparent}
-          animationType={'fade'}
-          onRequestClose={this.closeModal}
-        >
-          <View style={[styles.container, styles.horizontal]}>
-            <ActivityIndicator size='large' color='#cc0000' />
-          </View>
-        </Modal>
-      );
-    }
+  render () {
+    return (
+      <Modal
+        visible={this.props.visible}
+        transparent={this.props.transparent}
+        animationType={'fade'}
+      >
+        <View style={[styles.container, styles.horizontal]}>
+          <ActivityIndicator size='large' color='#cc0000' />
+        </View>
+      </Modal>
+    );
+  }
 }
 
 Loader.propTypes = {

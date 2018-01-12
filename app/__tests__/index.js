@@ -1,9 +1,9 @@
 import ApiNotes from '../api';
 import ConnectedApp, {mapDisplatchToProps} from '../app';
 import React from 'react';
-import renderer from 'react-test-renderer';
 
 // Note: test renderer must be required after react-native.
+import renderer from 'react-test-renderer';
 import StorageUtil from '../utils/StorageUtil';
 import {Alert} from 'react-native';
 import {createStore} from 'redux';
@@ -135,7 +135,7 @@ describe('App', () => {
 
     expect(ApiNotes.deleteNote).toHaveBeenCalledWith(note00.id);
     expect(StorageUtil.setItem).toHaveBeenCalledWith(notesKey, []);
-    expect(appInstance.props.deleteNote).toHaveBeenCalledWith(note00.id);
+    expect(appInstance.props.deleteNote).toHaveBeenCalledWith(note00);
   });
 
   it('onDeleteButtonPress failure', async () => {

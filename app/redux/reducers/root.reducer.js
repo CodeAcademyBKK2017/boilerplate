@@ -1,4 +1,4 @@
-import Loader from './loader.reducer';
+import loader from './loader.reducer';
 import notes from './notes.reducer';
 import Router from '../../routes';
 import {combineReducers} from 'redux';
@@ -11,5 +11,5 @@ export default combineReducers({
   init: () => ({}), // reducer
   notes,
   nav,
-  loader: Loader
+  loader
 });
