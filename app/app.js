@@ -17,8 +17,8 @@ import {Alert, KeyboardAvoidingView, Platform, Text, View} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {filterNote} from './utils/transformerutil';
-import {getItemToStorage, setItemToStorage} from './utils/storageutil';
 import {NavigationActions} from 'react-navigation';
+import {setItemToStorage} from './utils/storageutil';
 import * as actions from './redux/actions/index.actions';
 
 class App extends Component {
