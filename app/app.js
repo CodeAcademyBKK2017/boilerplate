@@ -8,6 +8,7 @@ import AboutSection from './components/AboutSection/AboutSection.component';
 import ApiNotes from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import Loader from './components/Loader/Loader.component';
 import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
@@ -81,7 +82,7 @@ class App extends Component {
       const filteredNotes = TransformerUtil.removeNote(this.props.notes, item.id);
       await StorageUtil.setItem(notesKey, filteredNotes);
 
-      this.props.deleteNote(item.id);
+      this.props.deleteNote(item);
     } catch (error) {
       Alert.alert(
         'Delete Failed',
@@ -114,6 +115,7 @@ class App extends Component {
       <this.WrapperView
         style={[styles.container]}
         behavior='padding'>
+        <Loader visible={this.props.loader} transparent={true} />
         <View style={styles.spacingContainer}>
           <Title
             text={this.state.textTitle}
@@ -141,7 +143,8 @@ App.propTypes = {
   addNote: PropTypes.func.isRequired,
   deleteNote: PropTypes.func.isRequired,
   populateNote: PropTypes.func.isRequired,
-  navigateToAbout: PropTypes.func.isRequired
+  navigateToAbout: PropTypes.func.isRequired,
+  loader: PropTypes.bool.isRequired
 };
 
 App.defaultProps = {
@@ -150,18 +153,22 @@ App.defaultProps = {
   addNote: noop,
   deleteNote: noop,
   populateNote: noop,
-  navigateToAbout: noop
+  navigateToAbout: noop,
+  loader: true
 };
 
 const mapStateToProps = (storeState) => ({
-  notes: storeState.notes
+  notes: storeState.notes,
+  loader: storeState.loader
 });
 
 export const mapDisplatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
   populateNote: bindActionCreators(actions.populateNotes, dispatch),
-  navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'}))
+  navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
+  showLoader: bindActionCreators(actions.showLoader, dispatch),
+  hideLoader: bindActionCreators(actions.hideLoader, dispatch)
 });
 
 export default connect(mapStateToProps, mapDisplatchToProps)(App);
