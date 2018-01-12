@@ -10,17 +10,18 @@ if (typeof devToolsExtension === 'function') {
   enhancerList.push(devToolsExtension());
 }
 
-const NotEmpty = ({dispatch, getState}) => (next) => (action) => {
-  console.log('action:::', action);
-  if (action.type === 'ADD_NOTE') {
-    if ((action.payload.title) && (action.payload.content)) {
-      next(action);
-    } 
-  } else {
-    next(action);
-  }
-};
-const composedEnhancer = compose(applyMiddleware(NotEmpty), ...enhancerList);
+// const NotEmpty = ({dispatch, getState}) => (next) => (action) => {
+//   if (action.type === 'ADD_NOTE') {
+//     if ((action.payload.title) && (action.payload.content)) {
+//       next(action);
+//     } else{
+
+//     }
+//   } else {
+//     next(action);
+//   }
+// };
+const composedEnhancer = compose(applyMiddleware(), ...enhancerList);
 
 export const initStore = () => createStore(rootReducer, {}, composedEnhancer);
 
