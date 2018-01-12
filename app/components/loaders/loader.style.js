@@ -5,9 +5,12 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
-  horizontal: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
+  },
+  innerContainer: {
+    alignItems: 'center'
   }
 });
