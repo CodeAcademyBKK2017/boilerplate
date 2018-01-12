@@ -135,5 +135,10 @@ describe('App', () => {
     await instance.init();
     expect(getItemToStorage).toHaveBeenLastCalledWith('storageNote');
     expect(instance.props.populateNote).toHaveBeenLastCalledWith(note);
+
+    getItemToStorage.mockClear();
+    getItemToStorage.mockImplementation(() => undefined);
+    await instance.init();
+    expect(instance.props.populateNote).toHaveBeenLastCalledWith([]);
   });
 });
