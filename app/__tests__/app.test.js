@@ -117,28 +117,28 @@ describe('App', () => {
       null,
       {cancelable: false});
   });
-  it('init Success Case', async () => {
-    const noteList = [{id: 1, title: 'get title', content: 'get content'}];
-    ApiNotes.getNotes.mockImplementation(() => Promise.resolve(noteList));
-    const populateNote = jest.fn();
-    wrapper.setProps({populateNote: populateNote});
-    await instance.init();
-    expect(ApiNotes.getNotes).toHaveBeenCalled();
-    expect(instance.props.populateNote).toHaveBeenLastCalledWith(noteList);
-  });
-  it('init Fail Case', async () => {
-    const note = [{id: 1, title: 'get title', content: 'get content'}];
-    ApiNotes.getNotes.mockImplementation(() => Promise.reject('API failed'));
-    getItemToStorage.mockImplementation(() => note);
-    const populateNote = jest.fn();
-    wrapper.setProps({populateNote: populateNote});
-    await instance.init();
-    expect(getItemToStorage).toHaveBeenLastCalledWith('storageNote');
-    expect(instance.props.populateNote).toHaveBeenLastCalledWith(note);
+  // it('init Success Case', async () => {
+  //   const noteList = [{id: 1, title: 'get title', content: 'get content'}];
+  //   ApiNotes.getNotes.mockImplementation(() => Promise.resolve(noteList));
+  //   const populateNote = jest.fn();
+  //   wrapper.setProps({populateNote: populateNote});
+  //   await instance.init();
+  //   expect(ApiNotes.getNotes).toHaveBeenCalled();
+  //   expect(instance.props.populateNote).toHaveBeenLastCalledWith(noteList);
+  // });
+  // it('init Fail Case', async () => {
+  //   const note = [{id: 1, title: 'get title', content: 'get content'}];
+  //   ApiNotes.getNotes.mockImplementation(() => Promise.reject('API failed'));
+  //   getItemToStorage.mockImplementation(() => note);
+  //   const populateNote = jest.fn();
+  //   wrapper.setProps({populateNote: populateNote});
+  //   await instance.init();
+  //   expect(getItemToStorage).toHaveBeenLastCalledWith('storageNote');
+  //   expect(instance.props.populateNote).toHaveBeenLastCalledWith(note);
 
-    getItemToStorage.mockClear();
-    getItemToStorage.mockImplementation(() => undefined);
-    await instance.init();
-    expect(instance.props.populateNote).toHaveBeenLastCalledWith([]);
-  });
+  //   getItemToStorage.mockClear();
+  //   getItemToStorage.mockImplementation(() => undefined);
+  //   await instance.init();
+  //   expect(instance.props.populateNote).toHaveBeenLastCalledWith([]);
+  // });
 });
