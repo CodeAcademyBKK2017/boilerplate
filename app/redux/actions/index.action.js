@@ -10,4 +10,4 @@ export const addnote = createAction(ADD_NOTE);
 export const deletenote = createAction(DELETE_NOTE);
 export const populatenote = createAction(POPULATE_NOTE);
 export const showloader = createAction(SHOW_LOADER);
-export const hideloader = createAction(SHOW_LOADER);
+export const hideloader = createAction(HIDE_LOADER);
