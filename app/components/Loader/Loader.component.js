@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {
   ActivityIndicator,
@@ -23,6 +24,14 @@ export default class Loader extends Component {
     );
   }
 }
+
+Loader.propTypes = {
+  showLoader: PropTypes.bool
+};
+  
+Loader.defaultProps = {
+  showLoader: false
+};
 
 const styles = StyleSheet.create({
   container: {

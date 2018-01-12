@@ -14,9 +14,3 @@ const loader = (previousState = {visible: false}, action) => {
 };
 
 export default loader;
-
-// loader({}, {type: 'SHOW_LOADER'}) // {visible: true}
-
-// loader({}, {type: 'HIDE_LOADER'}) // {visible: false}
-
-// loader() // previousState
