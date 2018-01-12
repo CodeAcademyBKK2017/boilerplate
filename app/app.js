@@ -13,8 +13,9 @@ import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import result from 'lodash/result';
 import StorageUtil from './utils/StorageUtil';
-import styles from './index.style';
+import styles from './app.style';
 import Title from './components/Title/Title.component';
 import TransformerUtil from './utils/TransformerUtil';
 import {
@@ -171,7 +172,7 @@ App.defaultProps = {
 
 const mapStateToProps = (storeState) => ({
   notes: storeState.notes,
-  modalVisible: storeState.loader.isVisible
+  modalVisible: result(storeState, 'loader.isVisible', false)
 });
 
 export const mapDisplatchToProps = (dispatch) => ({
