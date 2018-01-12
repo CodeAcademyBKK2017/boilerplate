@@ -1,5 +1,6 @@
 import notesReducer from '../notes.reducer';
-
+import {filterNote} from '../../../utils/transformerutil';
+ 
 describe('notesReducer', () => {
   let previousState, action, result, expected;
   it('Case ADD_NOTE', () => {
@@ -18,6 +19,13 @@ describe('notesReducer', () => {
     previousState = [{id: 2}];
     action = {type: 'DELETE_NOTE', payload: 2};
     expected = [];
+    result =  notesReducer(previousState, action);
+    expect(result).toEqual(expected);
+  });
+  it('Case DELETE_NOTE with using Transformer', () => {
+    previousState = [{id: 2}];
+    action = {type: 'DELETE_NOTE', payload: 2};
+    expected = filterNote(previousState, action.payload);
     result =  notesReducer(previousState, action);
     expect(result).toEqual(expected);
   });
