@@ -3,6 +3,7 @@ import AboutSection from './components/AboutSection/AboutSection.component';
 import ApiNotes from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import Loader from './components/Loader/Loader.component';
 import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
@@ -120,6 +121,7 @@ class App extends Component {
       <this.WrapperView
         style={[styles.container]}
         behavior='padding'>
+        <Loader showLoader={this.props.loader.visible}/>
         <View style={styles.spacingContainer}>
           <Title
             text={this.state.textTitle}
@@ -158,7 +160,7 @@ App.defaultProps = {
   addNote: noop
 };
 
-const mapStateToProps = (state) => ({notes: state.notes});
+const mapStateToProps = (state) => ({notes: state.notes, loader: state.loader});
 // const mapDispatchToProps = (dispatch) => ({
 //   addNote: (dataNote) => {
 //     dispatch(actions.addNote(dataNote));
