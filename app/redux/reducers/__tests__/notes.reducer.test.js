@@ -18,7 +18,8 @@ describe('Notes Reducer Testing', () => {
       content: 'cc'
     }]);
   });
-  xit('renders correctly DELETE_NOTE', () => {
+
+  it('renders correctly DELETE_NOTE', () => {
     const dataInput = {
       type: DELETE_NOTE,
       payload: {
@@ -27,8 +28,26 @@ describe('Notes Reducer Testing', () => {
         content: 'cc'
       }
     };
-    
+    const previousState = [
+      {
+        id: '123',
+        title: 'tt',
+        content: 'cc'
+      },
+      {
+        id: '1234',
+        title: 'tt22',
+        content: 'cc22'
+      }
+    ];
+    const result = Notes(previousState, dataInput);
+    expect(result).toEqual([{
+      id: '1234',
+      title: 'tt22',
+      content: 'cc22'
+    }]);
   });
+
   it('renders correctly GET_NOTE', () => {
     const dataInput = {
       type: GET_NOTE,
@@ -44,5 +63,13 @@ describe('Notes Reducer Testing', () => {
       title: 'tt',
       content: 'cc'
     });
+  });
+
+  it('renders correctly other', () => {
+    const dataInput = {
+      type: 'other'
+    };
+    const result = Notes([], dataInput);
+    expect(result).toEqual([]);
   });
 });
