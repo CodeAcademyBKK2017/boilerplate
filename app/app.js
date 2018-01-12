@@ -98,18 +98,16 @@ class App extends Component {
   render () {
     return (
       <View style={styles.container}>
-      
         <View style={styles.boxContainer}>
           <Title onTypeTitle={this.onTypeTitle} text={this.state.title}/>
           <Content onTypeContent={this.onTypeContent} text={this.state.content}/>
           <Footer countContent={this.state.content.length} onSavePress={this.onSavePress} />
         </View>
-       
+        <Loader modalShow={this.props.modalShow}/>
         <NoteList notes={this.props.notes} onDeletePress={this.onDeletePress}/>
         <View style={styles.about}>
           <Button onPress={this.props.goToAbout} title='About' color='#841584'/>
         </View>
-        <Loader isLoaderVisible={this.props.isLoaderVisible}/>
       </View>
     );
   }
@@ -121,17 +119,18 @@ App.propTypes = {
   deleteNote: PropTypes.func,
   showNote: PropTypes.func,
   notes: PropTypes.array,
-  isLoaderVisible: PropTypes.bool
+  modalShow: PropTypes.object
 };
 App.defaultProps = {
   goToAbout: noop,
   addNote: noop,
   deleteNote: noop,
   showNote: PropTypes.func,
-  notes: []
+  notes: [],
+  modalShow: {}
 };
 
-const mapStateToProps = (state) => ({notes: state.notes, isLoaderVisible: state.loader.isLoaderVisible});
+const mapStateToProps = (state) => ({notes: state.notes, modalShow: state.loader});
 export const mapDispatchToProps = (dispatch) => ({
   addNote: bindActionCreators(indexAction.addNote, dispatch),
   deleteNote: bindActionCreators(indexAction.deleteNote, dispatch),
