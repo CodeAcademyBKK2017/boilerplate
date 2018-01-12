@@ -8,6 +8,7 @@ import AboutSection from './components/AboutSection/AboutSection.component';
 import ApiNotes from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import Loader from './components/loaders/loader.component';
 import NoteList from './components/NoteList/NoteList.component';
 import notesUtil from './utils/transfromer.util';
 import PropTypes from 'prop-types';
@@ -109,8 +110,8 @@ class App extends Component {
           {
             this.props.notes.length > 0 ? <NoteList data={this.props.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
           }
+          <Loader isVisible={this.props.loader}/>
         </View>
-        
         <AboutSection onAboutButtonPress={this.props.navigationAbout}/>
       </this.WrapperView>
     );
@@ -131,7 +132,8 @@ App.defaultProps = {
   notes: []
 };
 const mapStateToProps = (storeState) => ({
-  notes: storeState.notes
+  notes: storeState.notes,
+  loader: storeState.loader
 });
 
 export const mapDispatchToProps = (dispatch) => ({

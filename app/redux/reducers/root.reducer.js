@@ -21,5 +21,15 @@ export default combineReducers({
       return previousstate;
     }
   },
-  nav
+  nav,
+  loader: (isVisible = false, action) => {
+    switch (action.type) {
+    case 'SHOW_LOADER':
+      return true;
+    case 'HIDE_LOADER':
+      return false;
+    default:
+      return isVisible;
+    }
+  }
 });
