@@ -273,5 +273,36 @@ exports[`App renders correctly 1`] = `
       </Text>
     </View>
   </View>
+  <Modal
+    animationType="slide"
+    hardwareAccelerated={false}
+    transparent={true}
+    visible={true}
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "transparent",
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+          }
+        }
+      >
+        <ActivityIndicator
+          animating={true}
+          color="#0000ff"
+          hidesWhenStopped={true}
+          size="large"
+        />
+      </View>
+    </View>
+  </Modal>
 </View>
 `;
