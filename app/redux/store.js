@@ -22,7 +22,7 @@ function* everyFetchNote () {
   });
   yield put({
     type: 'POPULATE_NOTES',
-    payload: []
+    payload: [{id: 0, title: '0', content: '0'}]
   });
   yield put({
     type: 'HIDE_LOADER'
