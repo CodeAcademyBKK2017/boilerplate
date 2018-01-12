@@ -6,9 +6,11 @@
 import ApiNotes from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import Loader from './components/Loader/Loader.component';
 import Note from './components/Note/Note.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import result from 'lodash/result';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
 import {Alert, KeyboardAvoidingView, Platform, Text, View} from 'react-native';
@@ -102,6 +104,7 @@ class App extends Component {
         <Footer characterCount={this.state.content.length} onPressSave={this.onSave} />
         {this.props.noteList.length > 0 ? <Note noteList={this.props.noteList} onDelete={this.onDelete}/> : null}
         <View><Text onPress={this.props.goToAbout}>about us</Text></View>
+        <Loader visibility={this.props.isVisible}/>
       </this.WrapperView>
     );
   }
@@ -112,12 +115,17 @@ App.propTypes = {
   addNote: PropTypes.func,
   deleteNote: PropTypes.func,
   populateNote: PropTypes.func,
-  goToAbout: PropTypes.func
+  goToAbout: PropTypes.func,
+  isVisible: PropTypes.object
 };
+
 App.defaultProps = {
   noteList: []
 };
-const mapStateToProps = (storeState) => ({noteList: storeState.notes});
+const mapStateToProps = (storeState) => (
+  {noteList: storeState.notes, 
+    isVisible: result(storeState, 'loader', {})}
+);
 export const mapDispatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
