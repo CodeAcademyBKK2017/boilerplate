@@ -8,6 +8,7 @@ import AboutSection from './components/AboutSection/AboutSection.component';
 import ApiNotes from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import Loader from './components/loaders/loader.components';
 import NoteList from './components/NoteList/NoteList.component';
 import notesUtil from './utils/transfromer.util';
 import PropTypes from 'prop-types';
@@ -16,7 +17,7 @@ import storage from './utils/storage.util';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
 import {
-  Alert, KeyboardAvoidingView, Platform, View
+  ActivityIndicator, Alert, KeyboardAvoidingView, Platform, View
 } from 'react-native';
 import {connect} from 'react-redux';
 import {NavigationActions} from 'react-navigation';
@@ -122,16 +123,17 @@ class App extends Component {
           {
             this.props.notes.length > 0 ? <NoteList data={this.props.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
           }
+          
         </View>
+        <AboutSection onAboutButtonPress={this.props.navigationAbout}/>
+        <Loader isVisible={this.props.loader}/>
         
-        <AboutSection onAboutButtonPress={this.props.gotoAbout}/>
       </this.WrapperView>
     );
   }
 }
 
 App.propTypes = {
-  navigation: PropTypes.object,
   addNote: PropTypes.func,
   deleteNote: PropTypes.func,
   populateNotes: PropTypes.func,
@@ -143,7 +145,8 @@ App.defaultProps = {
   notes: []
 };
 const mapStateToProps = (storeState) => ({
-  notes: storeState.notes
+  notes: storeState.notes,
+  loader: storeState.loader
 });
 // const 
 export const mapDispatchToProps = (dispatch) => ({
@@ -169,6 +172,16 @@ export const mapDispatchToProps = (dispatch) => ({
   },
   gotoAbout: () => {
     dispatch(NavigationActions.navigate({routeName: 'About'}));
+  },
+  showloader: () => {
+    dispatch({
+      type: 'SHOW_LOADER'
+    });
+  },
+  hideloader: () => {
+    dispatch({
+      type: 'HIDE_LOADER'
+    });
   }
   
 });
