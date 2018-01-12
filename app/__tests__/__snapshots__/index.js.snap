@@ -221,78 +221,26 @@ exports[`App renders correctly 1`] = `
       </View>
     </View>
     <Modal
-      animationOutType="fadeOut"
-      animationType="none"
+      animationType="fade"
       hardwareAccelerated={false}
-      onClose={[Function]}
-      onRequestClose={[Function]}
-      style={
-        Array [
-          Object {
-            "flex": 1,
-            "justifyContent": "center",
-          },
-          Object {
-            "flexDirection": "row",
-            "justifyContent": "space-around",
-            "padding": 10,
-          },
-        ]
-      }
       transparent={true}
-      visible={false}
+      visible={true}
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
-        accessible={true}
-        collapsable={undefined}
-        hitSlop={undefined}
-        nativeID={undefined}
-        onLayout={undefined}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "backgroundColor": "rgba(37, 8, 10, 0.78)",
+            "backgroundColor": "transparent",
             "flex": 1,
             "justifyContent": "center",
-            "opacity": 0,
-            "padding": 20,
           }
         }
-        testID={undefined}
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
-          accessible={true}
-          hitSlop={undefined}
-          nativeID={undefined}
-          onLayout={undefined}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "white",
-                "padding": 20,
-              },
-              undefined,
-            ]
+            Object {
+              "alignItems": "center",
+            }
           }
-          testID={undefined}
         >
           <ActivityIndicator
             animating={true}

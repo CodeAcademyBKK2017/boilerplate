@@ -1,4 +1,5 @@
-import notesUtil from '../../utils/transfromer.util';
+import loader from './loader.reducer';
+import notes from './notes.reducer';
 import Router from '../../routes/index';
 import {combineReducers} from 'redux';
 
@@ -7,29 +8,7 @@ const nav = (state, action) => (
 );
 export default combineReducers({
   init: () => ({}), // reducer
-  notes: (previousstate = [], action) => {
-    switch (action.type) {
-    case 'ADD_NOTE':
-      return [...previousstate, action.payload];
-    case 'DELETE_NOTE': {
-      return notesUtil.deleteNote(previousstate, action.payload.id);
-    }
-    case 'POPULATE_NOTES': { 
-      return action.payload;
-    }
-    default:
-      return previousstate;
-    }
-  },
+  notes,
   nav,
-  loader: (isVisible = false, action) => {
-    switch (action.type) {
-    case 'SHOW_LOADER':
-      return true;
-    case 'HIDE_LOADER':
-      return false;
-    default:
-      return isVisible;
-    }
-  }
+  loader
 });
