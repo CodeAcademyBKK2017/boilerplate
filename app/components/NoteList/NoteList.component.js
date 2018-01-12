@@ -74,6 +74,7 @@ export default class NoteList extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.noteTitle}>Notes:</Text>
+        
         <FlatList
           data={this.props.data}
           renderItem={this.renderItem}

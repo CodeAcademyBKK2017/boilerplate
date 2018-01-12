@@ -21,6 +21,41 @@ exports[`App renders correctly 1`] = `
     ]
   }
 >
+  <Modal
+    hardwareAccelerated={false}
+    style={
+      Array [
+        Object {
+          "flex": 1,
+          "justifyContent": "center",
+        },
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "space-around",
+          "padding": 10,
+        },
+      ]
+    }
+    transparent={true}
+    visible={true}
+  >
+    <View
+      style={
+        Object {
+          "backgroundColor": "#00000033",
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <ActivityIndicator
+        animating={true}
+        color="#0000ff"
+        hidesWhenStopped={true}
+        size="large"
+      />
+    </View>
+  </Modal>
   <View
     style={
       Object {

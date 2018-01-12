@@ -7,6 +7,7 @@
 import Api from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import Loader from './components/Loader/Loader.compoments';
 import Lower from './components/Lower/Lower.component';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
@@ -45,6 +46,7 @@ class App extends Component {
   }
 
   onSaveButtonPress = async () => {
+    this.props.showLoader();
     const newNotes = [...this.props.notes];
     const note = {
       title: this.state.textTitle,
@@ -67,8 +69,9 @@ class App extends Component {
       };
       await storageutil.setItem(newNotes);
       this.setState(newState);
-
+      this.props.hideLoader();
     } catch (e) {
+      this.props.hideLoader();
       Alert.alert(
         'Error',
         'Internet error',
@@ -83,11 +86,14 @@ class App extends Component {
   }
 
   onDeleteButtonPress = (item) => async () => {
+    this.props.showLoader();
     try {
       await new Api.onDelete(item.id);
       this.props.deleNote(item);
       await storageutil.setItem(Tranformerutil.removeNote(this.props.notes, item.id));
+      this.props.hideLoader();
     } catch (e) {
+      this.props.hideLoader();
       Alert.alert(
         'Error',
         'Internet error',
@@ -97,11 +103,14 @@ class App extends Component {
   }
 
   onLoad = async () => {
+    this.props.showLoader();
     try {
       const notes = await new Api.onGetNote();
       this.props.loadServer(notes);
+      this.props.hideLoader();
     } catch (e) {
       this.props.loadServer(await storageutil.getItem());
+      this.props.hideLoader();
     }
   }
 
@@ -114,6 +123,7 @@ class App extends Component {
       <this.WrapperView
         style={[styles.container]}
         behavior='padding'>
+        <Loader show={this.props.modalIsVisibel} />
         <Title
           text={this.state.textTitle}
           onChangeTextTitle={this.onChangeTextTitle}/>
@@ -139,16 +149,22 @@ App.propTypes = {
   // navigation: PropTypes.func,
   showAboutUs: PropTypes.func,
   notes: PropTypes.array,
+  modalIsVisibel: PropTypes.bool,
   loadServer: PropTypes.func,
   deleNote: PropTypes.func,
-  addNote: PropTypes.func
+  addNote: PropTypes.func,
+  showLoader: PropTypes.func,
+  hideLoader: PropTypes.func
 };
 
 App.defaultProps = {
   navigation: () => {}
 };
 
-const mapStateToProps = (state) => ({notes: state.notes});
+const mapStateToProps = (state) => ({
+  notes: state.notes,
+  modalIsVisibel: state.loader
+});
 
 export const mapDispatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
@@ -167,6 +183,12 @@ export const mapDispatchToProps = (dispatch) => ({
     //   routeName: 'About'
     // });
     dispatch(NavigationActions.navigate({routeName: 'About'}));
+  },
+  showLoader: () => {
+    dispatch(actions.showLoader());
+  },
+  hideLoader: () => {
+    dispatch(actions.hideLoader());
   }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
