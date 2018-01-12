@@ -1,28 +1,44 @@
-import rootReducer from './reducers/root.reducer';
+import createSagaMiddleware from 'redux-saga';
 // import someReduxMiddleware from 'some-redux-middleware';
 // import someOtherReduxMiddleware from 'some-other-redux-middleware';
+import rootReducer from './reducers/root.reducer';
 import {applyMiddleware, compose, createStore} from 'redux';
+import {call, fork, put, take, takeEvery} from 'redux-saga/effects';
 
-const enhancerList = [];
-const devToolsExtension = window && window.__REDUX_DEVTOOLS_EXTENSION__;
+const logger = () => (next) => (action) => {
+  // console.log('action is', action);
+  next(action);
+};
 
-if (typeof devToolsExtension === 'function') {
-  enhancerList.push(devToolsExtension());
+const composeEnhancers = global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
+
+const sagaMiddleware = createSagaMiddleware();
+
+const composedEnhancer = composeEnhancers(applyMiddleware(sagaMiddleware, logger));
+
+function* notes () {
+  yield takeEvery('FEACH_NOTE', newFun);
+}
+function* newFun () {
+  yield put({
+    type: 'SHOW_LOADER'
+  });
+  yield put({
+    type: 'POPULATE_NOTE',
+    payload: [{title: 'From reudx saga', content: 'HELLLOOOOOO', id: 1}]
+  });
+  yield put({
+    type: 'HIDE_LOADER'
+  });
+  console.log('SHOW_LOADER');
+}
+function* sagas () {
+  yield fork(notes);
+  console.log('index saga');
 }
 
-// const NotEmpty = ({dispatch, getState}) => (next) => (action) => {
-//   if (action.type === 'ADD_NOTE') {
-//     if ((action.payload.title) && (action.payload.content)) {
-//       next(action);
-//     } else{
-
-//     }
-//   } else {
-//     next(action);
-//   }
-// };
-const composedEnhancer = compose(applyMiddleware(), ...enhancerList);
-
-export const initStore = () => createStore(rootReducer, {}, composedEnhancer);
-
-// export default initStore;
+export const initStore = () => {
+  const store = createStore(rootReducer, {}, composedEnhancer);
+  sagaMiddleware.run(sagas);
+  return store;
+};

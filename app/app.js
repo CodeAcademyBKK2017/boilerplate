@@ -34,7 +34,7 @@ class App extends Component {
   }
 
   componentDidMount () {
-    this._setStroage();
+    this.props.FetchData();
   }
 
   _setStroage = async () => {
@@ -127,7 +127,8 @@ App.propTypes = {
   arrayContent: ProptTypes.array.isRequired,
   deleteNoteFromReducer: ProptTypes.func.isRequired,
   populateFromReducer: ProptTypes.func.isRequired,
-  isModalVisible: ProptTypes.bool.isRequired
+  isModalVisible: ProptTypes.bool.isRequired,
+  FetchData: ProptTypes.func.isRequired
 };
   
 App.defaultProps = {
@@ -136,7 +137,8 @@ App.defaultProps = {
   deleteNoteFromReducer: noop,
   arrayContent: [],
   populateFromReducer: noop,
-  isModalVisible: false
+  isModalVisible: false,
+  FetchData: noop
 };
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -145,7 +147,10 @@ export const mapDispatchToProps = (dispatch) => ({
   populateFromReducer: bindActionCreators(populatenote, dispatch),
   showLoaderFromReducer: bindActionCreators(showloader, dispatch),
   hideLoaderFromReducer: bindActionCreators(hideloader, dispatch),
-  gotoAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'}))
+  gotoAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
+  FetchData: () => {
+    dispatch({type: 'FEACH_NOTE'});
+  }
 });
 const mapStateToProps = (stateStore) => ({
   arrayContent: stateStore.notes,
