@@ -8,7 +8,7 @@ const notes = (prevState = [], action) => {
   }
     
   case DELETE_NOTE: {
-    return TransformerUtil.removeNote(prevState, action.payload.id);
+    return TransformerUtil.removeNote(prevState, action.payload);
   }
 
   case POPULATE_NOTES: {
