@@ -149,7 +149,8 @@ App.propTypes = {
   notes: PropTypes.array,
   getNotes: PropTypes.func,
   deleteNote: PropTypes.func,
-  addNote: PropTypes.func
+  addNote: PropTypes.func,
+  loader: PropTypes.object
 };
 
 App.defaultProps = {
@@ -157,7 +158,8 @@ App.defaultProps = {
   notes: [],
   getNotes: noop,
   deleteNote: noop,
-  addNote: noop
+  addNote: noop,
+  loader: {}
 };
 
 const mapStateToProps = (state) => ({notes: state.notes, loader: state.loader});
