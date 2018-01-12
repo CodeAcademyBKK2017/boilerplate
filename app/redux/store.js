@@ -1,33 +1,50 @@
-import rootReducer from './reducers/root.reducer';
+import createSagaMiddleware from 'redux-saga';
 // import someReduxMiddleware from 'some-redux-middleware';
 // import someOtherReduxMiddleware from 'some-other-redux-middleware';
+import rootReducer from './reducers/root.reducer';
 import {applyMiddleware, compose, createStore} from 'redux';
-import * as actions from './actions/index.actions';
-
-const enhancerList = [];
-const devToolsExtension = window && window.__REDUX_DEVTOOLS_EXTENSION__;
-
-if (typeof devToolsExtension === 'function') {
-  enhancerList.push(devToolsExtension());
-}
+import {call, fork, put, take, takeEvery} from 'redux-saga/effects';
 
 const logger = () => (next) => (action) => {
   // console.log('action is', action);
   next(action);
 };
 
-const notAllowToSaveEmptyNote = () => (next) => (action) => {
-  if (action.type === actions.ADD_NOTE) {
-    if (!action.payload.title || !action.payload.content) {
-      // console.log('please save valid note');
-    } else {
-      next(action);
-    }
-  } else {
-    next(action);
-  }
+const composeEnhancers = global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
+
+const sagaMiddleware = createSagaMiddleware();
+
+const composedEnhancer = composeEnhancers(applyMiddleware(sagaMiddleware, logger));
+
+function* fetchNoteHandler () {
+  yield put({
+    type: 'SHOW_LOADER'
+  });
+  
+  yield put({
+    type: 'POPULATE_NOTES',
+    payload: [{
+      id: 0,
+      title: 'title from sage',
+      content: 'content from sage'
+    }]
+  });
+
+  yield put({
+    type: 'HIDE_LOADER'
+  });
+}
+
+function* notes () {
+  yield takeEvery('FETCH_NOTES', fetchNoteHandler);
+}
+
+function* sagas () {
+  yield fork(notes);
+}
+
+export const initStore = () => {
+  const store = createStore(rootReducer, {}, composedEnhancer);
+  sagaMiddleware.run(sagas);
+  return store;
 };
-
-const composedEnhancer = compose(applyMiddleware(logger, notAllowToSaveEmptyNote), ...enhancerList);
-
-export const initStore = () => createStore(rootReducer, {}, composedEnhancer);
