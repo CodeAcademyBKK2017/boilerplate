@@ -137,7 +137,7 @@ App.propTypes = {
   addNote: PropTypes.func,
   deleteNote: PropTypes.func,
   populateNotes: PropTypes.func,
-  notes: PropTypes.array
+  notes: PropTypes.object
 };
 
 App.defaultProps = {
