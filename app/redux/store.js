@@ -3,7 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 // import someOtherReduxMiddleware from 'some-other-redux-middleware';
 import rootReducer from './reducers/root.reducer';
 import {applyMiddleware, compose, createStore} from 'redux';
-import {call, fork, put, take, takeEvery} from 'redux-saga/effects';
+import {fork, put, takeEvery} from 'redux-saga/effects';
 
 const logger = () => (next) => (action) => {
   // console.log('action is', action);
@@ -30,11 +30,9 @@ function* newFun () {
   yield put({
     type: 'HIDE_LOADER'
   });
-  console.log('SHOW_LOADER');
 }
 function* sagas () {
   yield fork(notes);
-  console.log('index saga');
 }
 
 export const initStore = () => {
