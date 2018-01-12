@@ -9,7 +9,6 @@ if (typeof devToolsExtension === 'function') {
 }
 
 const logger = ({dispatch, getState}) => (next) => (action) => {
-  console.log('action is: ', action);
   if (action.type !== 'Navigation/NAVIGATE') {
     next(action);
   }

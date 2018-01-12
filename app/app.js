@@ -1,6 +1,7 @@
 import Api from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import Loader from './components/Loader/Loader.component';
 import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
@@ -97,6 +98,7 @@ class App extends Component {
   render () {
     return (
       <View style={styles.container}>
+      
         <View style={styles.boxContainer}>
           <Title onTypeTitle={this.onTypeTitle} text={this.state.title}/>
           <Content onTypeContent={this.onTypeContent} text={this.state.content}/>
@@ -107,6 +109,7 @@ class App extends Component {
         <View style={styles.about}>
           <Button onPress={this.props.goToAbout} title='About' color='#841584'/>
         </View>
+        <Loader isLoaderVisible={this.props.isLoaderVisible}/>
       </View>
     );
   }
@@ -117,7 +120,8 @@ App.propTypes = {
   addNote: PropTypes.func,
   deleteNote: PropTypes.func,
   showNote: PropTypes.func,
-  notes: PropTypes.array
+  notes: PropTypes.array,
+  isLoaderVisible: PropTypes.bool
 };
 App.defaultProps = {
   goToAbout: noop,
@@ -127,11 +131,13 @@ App.defaultProps = {
   notes: []
 };
 
-const mapStateToProps = (state) => ({notes: state.notes});
+const mapStateToProps = (state) => ({notes: state.notes, isLoaderVisible: state.loader.isLoaderVisible});
 export const mapDispatchToProps = (dispatch) => ({
   addNote: bindActionCreators(indexAction.addNote, dispatch),
   deleteNote: bindActionCreators(indexAction.deleteNote, dispatch),
   showNote: bindActionCreators(indexAction.showNote, dispatch),
+  showLoader: bindActionCreators(indexAction.showLoader, dispatch),
+  hideLoader: bindActionCreators(indexAction.hideLoader, dispatch),
   goToAbout: () => { 
     dispatch(NavigationActions.navigate({routeName: 'About'})); 
   }

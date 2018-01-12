@@ -4,7 +4,6 @@ import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import Swipeout from 'react-native-swipeout';
-
 import {
   FlatList,
   Text,
@@ -58,7 +57,6 @@ class NoteList extends Component {
           animationDuration={500} onClose={this.onCloseModal}>
           <Text style={noteListStyles.noteListTitle}>{this.state.title}</Text>
           <Text style={noteListStyles.noteListContent}>{this.state.content}</Text>
-          
         </Overlay>
       </View>
     );

@@ -1,3 +1,4 @@
+import loader from './loader.reducer';
 import notes from './notes.reducer';
 import Router from '../../routes';
 import {combineReducers} from 'redux';
@@ -8,5 +9,6 @@ const nav = (state, action) => (
 
 export default combineReducers({
   nav,
-  notes
+  notes,
+  loader
 }); 
