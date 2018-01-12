@@ -8,6 +8,7 @@ import AboutSection from './components/AboutSection/AboutSection.component';
 import ApiNotes from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import Loader from './components/Loader/Loader.component';
 import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
@@ -95,6 +96,7 @@ class App extends Component {
   }
 
   loadData = async () => {
+    this.props.showLoader();
     try {
       const response = await ApiNotes.getNotes();
       this.props.populateNote(response);
@@ -103,6 +105,7 @@ class App extends Component {
       const notes = value ? value : [];
       this.props.populateNote(notes);
     }
+    this.props.hideLoader();
   }
 
   componentDidMount () {
@@ -131,6 +134,8 @@ class App extends Component {
         </View>
         
         <AboutSection onAboutButtonPress={this.props.navigateToAbout}/>
+
+        <Loader visible={this.props.modalVisible}/>
       </this.WrapperView>
     );
   }
@@ -141,27 +146,41 @@ App.propTypes = {
   addNote: PropTypes.func.isRequired,
   deleteNote: PropTypes.func.isRequired,
   populateNote: PropTypes.func.isRequired,
-  navigateToAbout: PropTypes.func.isRequired
+
+  navigateToAbout: PropTypes.func.isRequired,
+
+  modalVisible: PropTypes.bool.isRequired,
+  showLoader: PropTypes.func.isRequired,
+  hideLoader: PropTypes.func.isRequired
 };
 
 App.defaultProps = {
   navigation: null,
+
   notes: [],
   addNote: noop,
   deleteNote: noop,
   populateNote: noop,
-  navigateToAbout: noop
+
+  navigateToAbout: noop,
+
+  modalVisible: false,
+  showLoader: noop,
+  hideLoader: noop
 };
 
 const mapStateToProps = (storeState) => ({
-  notes: storeState.notes
+  notes: storeState.notes,
+  modalVisible: storeState.loader.isVisible
 });
 
 export const mapDisplatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
   populateNote: bindActionCreators(actions.populateNotes, dispatch),
-  navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'}))
+  navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
+  showLoader: bindActionCreators(actions.showLoader, dispatch),
+  hideLoader: bindActionCreators(actions.hideLoader, dispatch)
 });
 
 export default connect(mapStateToProps, mapDisplatchToProps)(App);
