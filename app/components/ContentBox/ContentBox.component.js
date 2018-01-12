@@ -1,7 +1,7 @@
 import Icon from 'react-native-vector-icons/Foundation';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import styles from './ContentBox.component.style';
+import styles from './ContentBox.style';
 import {
   Text,
   TextInput,

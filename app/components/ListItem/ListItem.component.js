@@ -1,7 +1,7 @@
 import noop from 'lodash/noop';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import style from './ListItem.component.style';
+import style from './ListItem.style';
 import Swipeout from 'react-native-swipeout';
 import {
   FlatList,

@@ -2,6 +2,7 @@ import apiNotes from './api';
 import ContentBox from './components/ContentBox/ContentBox.component';
 import Footer from './components/FooterBox/FooterBox.component';
 import ListItem from './components/ListItem/ListItem.component';
+import LoaderView from './components/Loader/Loader.component';
 import noop from 'lodash/noop';
 import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
@@ -112,6 +113,7 @@ class App extends Component {
         <ContentBox count={this.state.contentText.length} contentValueText={this.state.contentText} onContentChange={this.onContentChange} onSave={this.onSave} onDelete={this.onDelete}/>
         {this.showFlatList()}
         {this.viewOverlay()}
+        <LoaderView modalVisibility={this.props.isVisible}/>
         <Footer openAbout={this.props.navigateToAbout}/>
       </View>
     );
@@ -123,33 +125,29 @@ App.propTypes = {
   notes: PropTypes.array.isRequired,
   addNotes: PropTypes.func.isRequired,
   deleteNotes: PropTypes.func.isRequired,
-  populateNotes: PropTypes.func.isRequired
+  populateNotes: PropTypes.func.isRequired,
+  isVisible: PropTypes.bool.isRequired
 };
 
 App.defaultProps = {
   navigateToAbout: noop,
   notes: [],
+  isVisible: true,
   addNotes: noop,
   deleteNotes: noop,
   populateNotes: noop
 };
 
-const mapStateToProps = (state) => ({notes: state.notes});
+const mapStateToProps = (state) => ({notes: state.notes, isVisible: state.loader.isVisible});
 
 export const mapDispatchToProps = (dispatch) => ({
   addNotes: bindActionCreators(actions.addNotes, dispatch),
   deleteNotes: bindActionCreators(actions.deleteNotes, dispatch),
   populateNotes: bindActionCreators(actions.populateNotes, dispatch),
+  showLoader: bindActionCreators(actions.showLoader, dispatch),
+  hideLoader: bindActionCreators(actions.hideLoader, dispatch),
   navigateToAbout: () => {
     dispatch(NavigationActions.navigate({routeName: 'About'}));
-    // const resetAction = NavigationActions.reset({
-    //   index: 0,
-    //   actions: [
-    //     NavigationActions.navigate({routeName: 'Main'}),
-    //     NavigationActions.navigate({routeName: 'About'})
-    //   ]
-    // });
-    // dispatch(resetAction);
   }
 });
 

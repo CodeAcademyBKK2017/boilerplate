@@ -81,7 +81,7 @@ describe('App', () => {
     instance.componentDidMount();    
     expect(instance.onLoadDataState).toBeCalled();
   });
-
+  //
   it('Check Function onSave success', async () => {
     const title = 'React Native';
     const content = '- UI';
@@ -103,7 +103,7 @@ describe('App', () => {
     await instance.onSave();
     expect(instance.onShowAlert).toHaveBeenCalledWith('API failed');
   });
-
+  //
   it('Check Function onDelete', async () => {
     const title = 'React Native';
     const content = '- UI';
