@@ -88,7 +88,8 @@ class App extends Component {
   }
 
   componentDidMount () {
-    this.loadData();
+    this.props.fetchNotes();
+    // this.loadData();
   }
 
   render () {
@@ -155,6 +156,11 @@ export const mapDispatchToProps = (dispatch) => ({
     dispatch({
       type: 'POPULATE_NOTES',
       payload: response
+    });
+  },
+  fetchNotes: () => {
+    dispatch({
+      type: 'FETCH_NOTES'
     });
   },
   navigationAbout: () => {
