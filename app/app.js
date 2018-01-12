@@ -9,6 +9,7 @@ import Content from './components/contents/content.component';
 import Footer from './components/footers/footer.component';
 import globalStyle from './app.style';
 import List from './components/lists/list.component';
+import Loader from './components/loaders/loader.component';
 import noop from 'lodash/noop';
 import ProptTypes from 'prop-types';
 import React, {
@@ -16,10 +17,12 @@ import React, {
 } from 'react';
 import Title from './components/titles/title.component';
 import Utility from './util/utility';
-import {addnote, deletenote, populatenote} from '../app/redux/actions/index.action';
-import {Alert,
-  Text,
-  TouchableOpacity, View} from 'react-native';
+import {addnote, deletenote, hideloader, populatenote, showloader} from '../app/redux/actions/index.action';
+import {
+  Alert,
+  Text, 
+  TouchableOpacity,
+  View} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {NavigationActions} from 'react-navigation';
@@ -101,6 +104,7 @@ class App extends Component {
   render () {
     return (
       <View style={globalStyle.container}>
+        <Loader isModalVisible={this.props.isModalVisible}/>
         <Title text={this.state.currentTitle} FTitle={this._onTitleChange} />  
         <Content FText={this._onContentChange} textState={this.state.currentContent}/>
         <Footer textState={this.state.currentContent.length} addContent={this._addContent}/>
@@ -122,7 +126,8 @@ App.propTypes = {
   addNoteToReducer: ProptTypes.func.isRequired,
   arrayContent: ProptTypes.array.isRequired,
   deleteNoteFromReducer: ProptTypes.func.isRequired,
-  populateFromReducer: ProptTypes.func.isRequired
+  populateFromReducer: ProptTypes.func.isRequired,
+  isModalVisible: ProptTypes.bool.isRequired
 };
   
 App.defaultProps = {
@@ -130,16 +135,20 @@ App.defaultProps = {
   addNoteToReducer: noop,
   deleteNoteFromReducer: noop,
   arrayContent: [],
-  populateFromReducer: noop
+  populateFromReducer: noop,
+  isModalVisible: false
 };
 
 export const mapDispatchToProps = (dispatch) => ({
   addNoteToReducer: bindActionCreators(addnote, dispatch),
   deleteNoteFromReducer: bindActionCreators(deletenote, dispatch),
   populateFromReducer: bindActionCreators(populatenote, dispatch),
+  showLoaderFromReducer: bindActionCreators(showloader, dispatch),
+  hideLoaderFromReducer: bindActionCreators(hideloader, dispatch),
   gotoAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'}))
 });
 const mapStateToProps = (stateStore) => ({
-  arrayContent: stateStore.notes
+  arrayContent: stateStore.notes,
+  isModalVisible: stateStore.loader
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
