@@ -16,7 +16,7 @@ export default StyleSheet.create({
     width: '100%'
   },
   containerModal: {
-    backgroundColor: 'rgba(37, 8, 10, 0.78)'
+    backgroundColor: 'rgba(228, 225, 225, 0.75)'
   },
   childrenModal: {
     backgroundColor: 'transparent'

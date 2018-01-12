@@ -14,7 +14,7 @@ export default class Loader extends Component {
         animationDuration={1000} 
         containerStyle={styles.containerModal}
         childrenWrapperStyle={styles.childrenModal}>
-        <ActivityIndicator size='large' color='#32ff00' />
+        <ActivityIndicator size='large' color='#2eff00' />
       </Overlay>
     );
   }
