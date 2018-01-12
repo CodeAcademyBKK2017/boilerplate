@@ -93,11 +93,11 @@ class App extends Component {
   }
 
   showFlatList = () => (this.props.notes.length > 0) ? 
-    <ListItem 
+    (<ListItem 
       dataNotes={this.props.notes}
       onShowModal={this.onShowModal}
       onDelete={this.onDelete}
-    /> : null ;
+    />) : null ;
 
   viewOverlay = () => <Overlay 
     visible={!!(this.state.modalData.title)}
@@ -113,7 +113,7 @@ class App extends Component {
         <ContentBox count={this.state.contentText.length} contentValueText={this.state.contentText} onContentChange={this.onContentChange} onSave={this.onSave} onDelete={this.onDelete}/>
         {this.showFlatList()}
         {this.viewOverlay()}
-        <LoaderView modalVisibility={this.props.isVisible}/>
+        <LoaderView modalVisibility={this.props.modalShow.isVisible}/>
         <Footer openAbout={this.props.navigateToAbout}/>
       </View>
     );
@@ -123,22 +123,25 @@ class App extends Component {
 App.propTypes = {
   navigateToAbout: PropTypes.func.isRequired,
   notes: PropTypes.array.isRequired,
+  modalShow: PropTypes.object.isRequired,
   addNotes: PropTypes.func.isRequired,
   deleteNotes: PropTypes.func.isRequired,
-  populateNotes: PropTypes.func.isRequired,
-  isVisible: PropTypes.bool.isRequired
+  populateNotes: PropTypes.func.isRequired
 };
 
 App.defaultProps = {
   navigateToAbout: noop,
   notes: [],
-  isVisible: true,
+  modalShow: {},
   addNotes: noop,
   deleteNotes: noop,
   populateNotes: noop
 };
 
-const mapStateToProps = (state) => ({notes: state.notes, isVisible: state.loader.isVisible});
+const mapStateToProps = (state) => ({
+  notes: state.notes, 
+  modalShow: state.loader
+});
 
 export const mapDispatchToProps = (dispatch) => ({
   addNotes: bindActionCreators(actions.addNotes, dispatch),
