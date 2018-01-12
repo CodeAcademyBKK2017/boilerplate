@@ -19,4 +19,9 @@ describe('Loader', () => {
     const result = loader(previousState, action);
     expect(result).toEqual({isLoaderVisible: false});
   });
+  it('check PreviousState is undefined Reducer', () => {
+    const action = {};
+    const result = loader(undefined, action);
+    expect(result).toEqual({isLoaderVisible: false});
+  });
 });
