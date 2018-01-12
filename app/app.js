@@ -9,6 +9,7 @@ import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import Loader from './components/Loader/Loader.compoments';
 import Lower from './components/Lower/Lower.component';
+import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
@@ -80,10 +81,10 @@ class App extends Component {
     }
   }
 
-  onShowAboutUs = () => {
-    // this.props.navigation.navigate('About');
-    // this.props.showAboutUs();
-  }
+  // onShowAboutUs = () => {
+  //   // this.props.navigation.navigate('About');
+  //   // this.props.showAboutUs();
+  // }
 
   onDeleteButtonPress = (item) => async () => {
     this.props.showLoader();
@@ -158,7 +159,7 @@ App.propTypes = {
 };
 
 App.defaultProps = {
-  navigation: () => {}
+  navigation: noop
 };
 
 const mapStateToProps = (state) => ({
