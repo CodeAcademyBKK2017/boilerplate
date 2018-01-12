@@ -29,19 +29,20 @@ class App extends Component {
   }
   state = this.initialstate
   
-   init = async () => {
-     try {
-       const response = await ApiNotes.getNotes();
-       this.props.populateNote(response);
-     } catch (error) {
-       const note = await getItemToStorage('storageNote');
-       this.props.populateNote(note ? note : []);
-     }
+  //  init = async () => {
+  //    try {
+  //      const response = await ApiNotes.getNotes();
+  //      this.props.populateNote(response);
+  //    } catch (error) {
+  //      const note = await getItemToStorage('storageNote');
+  //      this.props.populateNote(note ? note : []);
+  //    }
    
-   }
-   componentDidMount () {
-     this.init();
-   }
+  //  }
+  componentDidMount () {
+    //  this.init();
+    this.props.fetchNotes();
+  }
 
   WrapperView = Platform.select(
     {ios: KeyboardAvoidingView,
@@ -114,7 +115,7 @@ App.propTypes = {
   noteList: PropTypes.array,
   addNote: PropTypes.func,
   deleteNote: PropTypes.func,
-  populateNote: PropTypes.func,
+  fetchNotes: PropTypes.func,
   goToAbout: PropTypes.func,
   isVisible: PropTypes.object
 };
@@ -129,9 +130,9 @@ const mapStateToProps = (storeState) => (
 export const mapDispatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
-  populateNote: bindActionCreators(actions.populateNotes, dispatch),
-  goToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'}))
-  
+  // populateNote: bindActionCreators(actions.populateNotes, dispatch),
+  goToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
+  fetchNotes: () => dispatch({type: 'FETCH_NOTES'})
   // populateNote: (note) => {
   //   const action = actions.populateNotes(note);
   //   dispatch(action);
