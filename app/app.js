@@ -47,33 +47,12 @@ class App extends Component {
     this.setState({textContent});
   }
 
-  onSaveButtonPress = async () => {
-    try {
-      const note = {
-        title: this.state.textTitle,
-        content: this.state.textContent
-      };
-
-      const response = await ApiNotes.addNote(note);
-
-      const newNotes = [...this.props.notes];
-      newNotes.push(response);
-
-      await StorageUtil.setItem(notesKey, newNotes);
-
-      this.props.addNote(response);
-    } catch (error) {
-      Alert.alert(
-        'Save Failed',
-        String(error),
-        [
-          {text: 'OK'}
-        ],
-        {
-          cancelable: false
-        }
-      );
-    }
+  onSaveButtonPress = () => {
+    const note = {
+      title: this.state.textTitle,
+      content: this.state.textContent
+    };
+    this.props.saveNote(note);
   }
 
   onDeleteButtonPress = (item) => async () => {
@@ -96,18 +75,7 @@ class App extends Component {
     }
   }
 
-  loadData = async () => {
-    // this.props.showLoader();
-    // try {
-    //   const response = await ApiNotes.getNotes();
-    //   this.props.populateNote(response);
-    // } catch (error) {
-    //   const value = await StorageUtil.getItem(notesKey);
-    //   const notes = value ? value : [];
-    //   this.props.populateNote(notes);
-    // }
-    // this.props.hideLoader();
-
+  loadData = () => {
     this.props.fetchNotes();
   }
 
@@ -184,6 +152,7 @@ export const mapDisplatchToProps = (dispatch) => ({
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
   populateNote: bindActionCreators(actions.populateNotes, dispatch),
   fetchNotes: bindActionCreators(actions.fetchNotes, dispatch),
+  saveNote: bindActionCreators(actions.saveNote, dispatch),
   navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
   showLoader: bindActionCreators(actions.showLoader, dispatch),
   hideLoader: bindActionCreators(actions.hideLoader, dispatch)
