@@ -64,32 +64,6 @@ describe('App', () => {
     expect(instance.state.currentContent).toBe('content');
   });
 
-  it('onSavePress: Should be count the current of string', () =>  {
-    
-    wrapper.setProps({
-      addNote: jest.fn()
-    });
-
-    return instance.onSaveButtonPress().then(() => {
-
-      instance.onTitleChangeText('Title');
-      expect(instance.state.currentTitle).toBe('Title');
-
-      instance.onContentChangeText('Content');
-      expect(instance.state.currentContent).toBe('Content');
-    
-      expect(instance.state).toEqual({
-        currentTitle: 'Title',
-        currentContent: 'Content',
-        modalVisible: false,
-        selectedNote: {id: '', title: '', content: ''}
-      });
-
-      expect(instance.props.addNote).toHaveBeenCalledWith({id: 2, title: 'title', content: 'content'});
-    });
-  
-  });
-
   it('onPressItem', () => {
     instance._onPressItem({title: 'title', content: 'content'})();
     expect(instance.state.modalVisible).toBeTruthy();
@@ -119,53 +93,34 @@ describe('App', () => {
     expect(dispatch).toHaveBeenCalledWith(NavigationActions.navigate({routeName: 'AboutApp'}));
   });
 
-  it('On delete item', () => {
+  it('onSavePress: Should be count the current of string', () =>  {
+    
     wrapper.setProps({
-      deleteNote: jest.fn()
+      addNoteRequest: jest.fn()
     });
 
+    instance.onTitleChangeText('title');
+    instance.onContentChangeText('content');
+    instance.onSaveButtonPress();
+
+    expect(instance.props.addNoteRequest).toHaveBeenCalledWith({title: 'title', content: 'content'});
+  
+  });
+
+  it('On delete item', () => {
     const deleteItem = {
       id: '1',
       title: 'title',
       content: 'content'
     };
     
-    instance._onDeleteItem(deleteItem)().then(() => {
-      expect(instance.state).toEqual({
-        currentTitle: '',
-        currentContent: '',
-        modalVisible: false,
-        selectedNote: {id: '', title: '', content: ''}
-      });
-
-      expect(instance.props.deleteNote).toHaveBeenCalledWith(deleteItem);
+    wrapper.setProps({
+      deleteNoteRequest: jest.fn()
     });
-  });
 
-  it('On Save item: fail', () => {
-    API.addNote.mockImplementation(() => Promise.reject('API failed'));
+    instance._onDeleteItem(deleteItem)();
 
-    return instance.onSaveButtonPress().catch(() => {
-      expect(SnackBar.show).toHaveBeenCalledWith({backgroundColor: '#d9bf56', duration: 3000, title: 'Network errors: Can\'t connect to server.'});
-    });
-  });
-
-  it('Load Data fail', async () => {
-    API.getNotes.mockImplementation(() => Promise.reject('API failed'));
-    StorageUtil.getItem.mockImplementation(() => Promise.resolve(undefined));
-
-    await instance.loadData(); 
-    
-    expect(StorageUtil.getItem).toBeCalled();
-  });
-
-  it('On delete item: fail', () => {
-    API.deleteNote.mockImplementation(() => Promise.reject('API failed'));
-
-    return instance._onDeleteItem({id: 1})().catch(() => {
-      expect(StorageUtil.setItem).not.toBeCalled();
-      expect(SnackBar.show).toHaveBeenCalledWith({backgroundColor: '#d9bf56', duration: 3000, title: 'Network errors: Can\'t connect to server.'});
-    });
+    expect(instance.props.deleteNoteRequest).toHaveBeenCalledWith(deleteItem);
   });
 
   it('key extractor', () => {
