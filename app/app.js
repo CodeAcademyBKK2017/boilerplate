@@ -85,11 +85,11 @@ class App extends Component {
       this.props.populateNotes(JSON.parse(value));
       
     }
+    this.props.fetchNotes();
   }
 
   componentDidMount () {
-    this.props.fetchNotes();
-    // this.loadData();
+    this.loadData();
   }
 
   render () {
