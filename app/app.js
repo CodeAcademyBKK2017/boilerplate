@@ -1,11 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import AboutSection from './components/AboutSection/AboutSection.component';
-import ApiNotes from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import Loader from './components/Loader/Loader.component';
@@ -13,19 +6,13 @@ import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import StorageUtil from './utils/StorageUtil';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
-import TransformerUtil from './utils/TransformerUtil';
-import {
-  Alert, KeyboardAvoidingView, Platform, View
-} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {KeyboardAvoidingView, Platform, View} from 'react-native';
 import {NavigationActions} from 'react-navigation';
 import * as actions from './redux/actions/index.actions';
-
-const notesKey = 'notes';
 
 class App extends Component {
   state = {
@@ -47,67 +34,18 @@ class App extends Component {
   }
 
   onSaveButtonPress = async () => {
-    try {
-      const note = {
-        title: this.state.textTitle,
-        content: this.state.textContent
-      };
-
-      const response = await ApiNotes.addNote(note);
-
-      const newNotes = [...this.props.notes];
-      newNotes.push(response);
-
-      await StorageUtil.setItem(notesKey, newNotes);
-
-      this.props.addNote(response);
-    } catch (error) {
-      Alert.alert(
-        'Save Failed',
-        String(error),
-        [
-          {text: 'OK'}
-        ],
-        {
-          cancelable: false
-        }
-      );
-    }
+    const note = {
+      title: this.state.textTitle,
+      content: this.state.textContent
+    };
+    this.props.addNoteRequest(note);
   }
 
   onDeleteButtonPress = (item) => async () => {
-    try {
-      await ApiNotes.deleteNote(item.id);
-
-      const filteredNotes = TransformerUtil.removeNote(this.props.notes, item.id);
-      await StorageUtil.setItem(notesKey, filteredNotes);
-
-      this.props.deleteNote(item);
-    } catch (error) {
-      Alert.alert(
-        'Delete Failed',
-        String(error),
-        null,
-        {
-          cancelable: false
-        }
-      );
-    }
-  }
-
-  loadData = async () => {
-    try {
-      const response = await ApiNotes.getNotes();
-      this.props.populateNote(response);
-    } catch (error) {
-      const value = await StorageUtil.getItem(notesKey);
-      const notes = value ? value : [];
-      this.props.populateNote(notes);
-    }
+    this.props.deleteNoteRequest(item.id);
   }
 
   componentDidMount () {
-    // this.loadData();
     this.props.fetchNotes();
   }
 
@@ -116,7 +54,7 @@ class App extends Component {
       <this.WrapperView
         style={[styles.container]}
         behavior='padding'>
-        <Loader visible={this.props.loader} transparent={true} />
+        <Loader visible={false} transparent={true} />
         <View style={styles.spacingContainer}>
           <Title
             text={this.state.textTitle}
@@ -132,7 +70,6 @@ class App extends Component {
             this.props.notes.length > 0 ? <NoteList data={this.props.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
           }
         </View>
-        
         <AboutSection onAboutButtonPress={this.props.navigateToAbout}/>
       </this.WrapperView>
     );
@@ -141,23 +78,19 @@ class App extends Component {
 
 App.propTypes = {
   notes: PropTypes.array.isRequired,
-  addNote: PropTypes.func.isRequired,
-  deleteNote: PropTypes.func.isRequired,
-  populateNote: PropTypes.func.isRequired,
+  addNoteRequest: PropTypes.func.isRequired,
+  deleteNoteRequest: PropTypes.func.isRequired,
   navigateToAbout: PropTypes.func.isRequired,
-  fetchNotes: PropTypes.func.isRequired,
-  loader: PropTypes.bool.isRequired
+  fetchNotes: PropTypes.func.isRequired
 };
 
 App.defaultProps = {
   navigation: null,
   notes: [],
-  addNote: noop,
-  deleteNote: noop,
-  populateNote: noop,
+  addNoteRequest: noop,
+  deleteNoteRequest: noop,
   navigateToAbout: noop,
-  fetchNotes: noop,
-  loader: true
+  fetchNotes: noop
 };
 
 const mapStateToProps = (storeState) => ({
@@ -166,13 +99,10 @@ const mapStateToProps = (storeState) => ({
 });
 
 export const mapDisplatchToProps = (dispatch) => ({
-  addNote: bindActionCreators(actions.addNote, dispatch),
-  deleteNote: bindActionCreators(actions.deleteNote, dispatch),
-  populateNote: bindActionCreators(actions.populateNotes, dispatch),
+  addNoteRequest: bindActionCreators(actions.addNoteRequest, dispatch),
+  deleteNoteRequest: bindActionCreators(actions.deleteNoteRequest, dispatch),
   fetchNotes: () => dispatch({type: 'FETCH_NOTES'}),
-  navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
-  showLoader: bindActionCreators(actions.showLoader, dispatch),
-  hideLoader: bindActionCreators(actions.hideLoader, dispatch)
+  navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'}))
 });
 
 export default connect(mapStateToProps, mapDisplatchToProps)(App);
