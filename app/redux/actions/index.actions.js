@@ -8,6 +8,7 @@ export const POPULATE_NOTES = 'POPULATE_NOTES';
 
 export const FETCH_NOTES = 'FETCH_NOTES';
 export const SAVE_NOTE = 'SAVE_NOTE';
+export const DELETE_REQUEST_NOTE = 'DELETE_REQUEST_NOTE';
 
 export const addNote = createAction(ADD_NOTE);
 export const deleteNote = createAction(DELETE_NOTE);
@@ -15,6 +16,7 @@ export const populateNotes = createAction(POPULATE_NOTES);
 
 export const fetchNotes = createAction(FETCH_NOTES);
 export const saveNote = createAction(SAVE_NOTE);
+export const deleteRequestNote = createAction(DELETE_REQUEST_NOTE);
 
 // loader
 

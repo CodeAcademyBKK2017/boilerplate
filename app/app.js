@@ -56,23 +56,7 @@ class App extends Component {
   }
 
   onDeleteButtonPress = (item) => async () => {
-    try {
-      await ApiNotes.deleteNote(item.id);
-
-      const filteredNotes = TransformerUtil.removeNote(this.props.notes, item.id);
-      await StorageUtil.setItem(notesKey, filteredNotes);
-
-      this.props.deleteNote(item.id);
-    } catch (error) {
-      Alert.alert(
-        'Delete Failed',
-        String(error),
-        null,
-        {
-          cancelable: false
-        }
-      );
-    }
+    this.props.deleteRequestNote(item.id);
   }
 
   loadData = () => {
@@ -153,6 +137,7 @@ export const mapDisplatchToProps = (dispatch) => ({
   populateNote: bindActionCreators(actions.populateNotes, dispatch),
   fetchNotes: bindActionCreators(actions.fetchNotes, dispatch),
   saveNote: bindActionCreators(actions.saveNote, dispatch),
+  deleteRequestNote: bindActionCreators(actions.deleteRequestNote, dispatch),
   navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
   showLoader: bindActionCreators(actions.showLoader, dispatch),
   hideLoader: bindActionCreators(actions.hideLoader, dispatch)

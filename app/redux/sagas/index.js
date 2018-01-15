@@ -1,5 +1,6 @@
 import ApiNotes from '../../api';
 import StorageUtil from './../../utils/StorageUtil';
+import TransformerUtil from './../../utils/TransformerUtil';
 import {Alert} from 'react-native';
 import {call, put, select, takeLatest} from 'redux-saga/effects';
 
@@ -73,9 +74,47 @@ function* saveNoteHandler (action) {
   });
 }
 
+function* deleteRequestNote (id) {
+  try {
+    yield call(ApiNotes.deleteNote, id);
+
+    const oldNotes = yield select((storeState) => storeState.notes);
+    const filteredNotes = TransformerUtil.removeNote(oldNotes, id);
+    yield call(StorageUtil.setItem, notesKey, filteredNotes);
+
+    yield put({
+      type: 'DELETE_NOTE',
+      payload: id
+    });
+  } catch (error) {
+    Alert.alert(
+      'Delete Failed',
+      String(error),
+      null,
+      {
+        cancelable: false
+      }
+    );
+  }
+}
+
+function* deleteRequestNoteHandler (action) {
+  yield put({
+    type: 'SHOW_LOADER'
+  });
+  
+  const id = action.payload;
+  yield call(deleteRequestNote, id);
+
+  yield put({
+    type: 'HIDE_LOADER'
+  });
+}
+
 function* notesSaga () {
   yield takeLatest('FETCH_NOTES', fetchNoteHandler);
   yield takeLatest('SAVE_NOTE', saveNoteHandler);
+  yield takeLatest('DELETE_REQUEST_NOTE', deleteRequestNoteHandler);
 }
 
 export default notesSaga;
