@@ -1,16 +1,22 @@
-import {delay} from 'redux-saga';
-import {fork, put, take} from 'redux-saga/effects';
+import ApiNotes from '../../api';
+import StorageUtil from '../../utils/StorageUtil';
+import {call, fork, put, take} from 'redux-saga/effects';
 
 function* fetchNotesHandler () {
   yield put({
     type: 'SHOW_LOADER'
   });
-
+  let notes = [];
+  try {
+    notes = yield call(ApiNotes.getNotes);
+  } catch (error) {
+    const value = yield call(StorageUtil.getItem, 'notes');
+    notes = value ? value : [];
+  }
   yield put({
     type: 'POPULATE_NOTES',
-    payload: [{id: 0, title: '0', content: '0'}]
+    payload: notes
   });
-  yield delay(2000);
   yield put({
     type: 'HIDE_LOADER'
   });
