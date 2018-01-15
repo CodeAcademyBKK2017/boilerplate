@@ -42,7 +42,7 @@ class App extends Component {
     this.props.saveNote(note);
   }
 
-  onDeleteButtonPress = (item) => async () => {
+  onDeleteButtonPress = (item) => () => {
     this.props.deleteRequestNote(item.id);
   }
 
