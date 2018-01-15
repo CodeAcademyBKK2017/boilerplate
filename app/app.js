@@ -1,10 +1,12 @@
 import API from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
+import Loader from './components/Loader/Loader.component';
 import NoteItem from './components/NoteItem/NoteItem.component';
 import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import result from 'lodash/result';
 import SnackBar from 'react-native-snackbar';
 import StorageUtil from './utils/storage.util';
 import styles from './app.styles';
@@ -35,7 +37,8 @@ class App extends Component {
   }
 
   componentDidMount () { 
-    this.loadData();
+    // this.loadData();
+    this.props.fetchNotes();
   }
 
   loadData = async () => {
@@ -47,7 +50,7 @@ class App extends Component {
       notes = await StorageUtil.getItem('notes') || [];
       SnackBar.show(warningBar());
     }
-
+    
     this.props.populateNotes(notes);
   }
 
@@ -130,6 +133,7 @@ class App extends Component {
         </Overlay>
         
         <Touchable onPress={this.props.navigateToAbout}><Text>Go to About</Text></Touchable>
+        <Loader visible={this.props.showLoader}/>
       </View>
     );
   }
@@ -140,10 +144,15 @@ App.propTypes = {
   addNote: PropTypes.func,
   deleteNote: PropTypes.func,
   populateNotes: PropTypes.func,
-  navigateToAbout: PropTypes.func
+  navigateToAbout: PropTypes.func,
+  fetchNotes: PropTypes.func,
+  showLoader: PropTypes.bool
 };
 
-const mapStateToProps = (storeState) => ({notes: storeState.notes});
+const mapStateToProps = (storeState) => ({
+  notes: storeState.notes,
+  showLoader: result(storeState, 'loader.isVisible', false)
+});
 
 const bindNavigationActionCreators = (routeName, dispatch) => () => {
   dispatch(NavigationActions.navigate({routeName}));
@@ -153,7 +162,8 @@ export const mapDispatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
   populateNotes: bindActionCreators(actions.populateNotes, dispatch),
-  navigateToAbout: bindNavigationActionCreators('AboutApp', dispatch)
+  navigateToAbout: bindNavigationActionCreators('AboutApp', dispatch),
+  fetchNotes: () => dispatch({type: 'FETCH_NOTES'})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

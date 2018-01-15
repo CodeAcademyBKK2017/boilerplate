@@ -28,6 +28,7 @@
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-actions": "^2.2.1",
+    "redux-saga": "^0.16.0",
     "replace-array-index": "^0.0.1",
     "shortid": "^2.2.8"
   },
@@ -58,7 +59,7 @@
       "enzyme-react-16-adapter-setup"
     ],
     "transformIgnorePatterns": [
-     "/node_modules/(?!react-native|react-navigation)"
-   ]
+      "/node_modules/(?!react-native|react-navigation)"
+    ]
   }
 }

@@ -1,19 +1,20 @@
+import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers/root.reducer';
+import sagas from './sagas';
 import {applyMiddleware, compose, createStore} from 'redux';
 
-const enhancerList = [];
-const devToolsExtension = window && window.__REDUX_DEVTOOLS_EXTENSION__;
-
-if (typeof devToolsExtension === 'function') {
-  enhancerList.push(devToolsExtension());
-}
-
-const navigationBlocker = ({}) => (next) => (action) => {
-  // if (!action.type.includes('Navigation')) {
+const logger = () => (next) => (action) => {
   next(action);
-  // }
 };
 
-const composedEnhancer = compose(applyMiddleware(navigationBlocker), ...enhancerList);
+const composeEnhancers = global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
 
-export const initStore = () => createStore(rootReducer, {}, composedEnhancer);
+const sagaMiddleware = createSagaMiddleware();
+
+const composedEnhancer = composeEnhancers(applyMiddleware(sagaMiddleware, logger));
+
+export const initStore = () => {
+  const store = createStore(rootReducer, {}, composedEnhancer);
+  sagaMiddleware.run(sagas);
+  return store;
+};
