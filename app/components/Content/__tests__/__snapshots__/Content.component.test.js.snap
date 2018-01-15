@@ -69,6 +69,7 @@ exports[`Content snapshot test 1`] = `
       }
     }
     underlineColorAndroid="transparent"
+    value={undefined}
   />
 </View>
 `;

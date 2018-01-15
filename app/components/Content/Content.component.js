@@ -15,11 +15,13 @@ export default class TextArea extends Component {
         <TextInput style={styles.textArea} 
           multiline={true} 
           underlineColorAndroid='transparent'
-          onChangeText={this.props.onContentChange}  />
+          onChangeText={this.props.onContentChange}  
+          value={this.props.value}/>
       </View>
     );
   }
 }
 TextArea.propTypes = {
-  onContentChange: PropTypes.func
+  onContentChange: PropTypes.func,
+  value: PropTypes.string
 };
