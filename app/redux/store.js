@@ -1,9 +1,9 @@
-import createSagaMiddleware from 'redux-saga';
+import createSagaMiddleware, {delay} from 'redux-saga';
 // import someReduxMiddleware from 'some-redux-middleware';
 // import someOtherReduxMiddleware from 'some-other-redux-middleware';
+import indexSaga from './sagas/index.saga';
 import rootReducer from './reducers/root.reducer';
 import {applyMiddleware, compose, createStore} from 'redux';
-import {fork, put, takeEvery} from 'redux-saga/effects';
 
 const logger = () => (next) => (action) => {
   // console.log('action is', action);
@@ -16,29 +16,8 @@ const sagaMiddleware = createSagaMiddleware();
 
 const composedEnhancer = composeEnhancers(applyMiddleware(sagaMiddleware, logger));
 
-function* everyFetchNote () {
-  yield put({
-    type: 'SHOW_LOADER'
-  });
-  yield put({
-    type: 'POPULATE_NOTES',
-    payload: [{id: 0, title: '0', content: '0'}]
-  });
-  yield put({
-    type: 'HIDE_LOADER'
-  });
-}
-
-function* notes () {
-  yield takeEvery('FETCH_NOTES', everyFetchNote);
-}
-
-function* sagas () {
-  yield fork(notes);
-}
-
 export const initStore = () => {
   const store = createStore(rootReducer, {}, composedEnhancer);
-  sagaMiddleware.run(sagas);
+  sagaMiddleware.run(indexSaga);
   return store;
 };

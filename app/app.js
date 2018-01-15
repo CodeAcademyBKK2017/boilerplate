@@ -107,7 +107,8 @@ class App extends Component {
   }
 
   componentDidMount () {
-    this.loadData();
+    // this.loadData();
+    this.props.fetchNotes();
   }
 
   render () {
@@ -144,6 +145,7 @@ App.propTypes = {
   deleteNote: PropTypes.func.isRequired,
   populateNote: PropTypes.func.isRequired,
   navigateToAbout: PropTypes.func.isRequired,
+  fetchNotes: PropTypes.func.isRequired,
   loader: PropTypes.bool.isRequired
 };
 
@@ -154,6 +156,7 @@ App.defaultProps = {
   deleteNote: noop,
   populateNote: noop,
   navigateToAbout: noop,
+  fetchNotes: noop,
   loader: true
 };
 
@@ -166,9 +169,7 @@ export const mapDisplatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
   populateNote: bindActionCreators(actions.populateNotes, dispatch),
-  fetchNotes: () => {
-    dispatch({type: 'FETCH_NOTES'});
-  },
+  fetchNotes: () => dispatch({type: 'FETCH_NOTES'}),
   navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
   showLoader: bindActionCreators(actions.showLoader, dispatch),
   hideLoader: bindActionCreators(actions.hideLoader, dispatch)
