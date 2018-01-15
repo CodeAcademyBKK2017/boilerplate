@@ -22,7 +22,7 @@ exports[`App renders correctly 1`] = `
     animationType="fade"
     hardwareAccelerated={false}
     transparent={true}
-    visible={true}
+    visible={false}
   >
     <View
       style={

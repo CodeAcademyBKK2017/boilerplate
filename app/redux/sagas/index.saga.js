@@ -1,14 +1,13 @@
 import ApiNotes from '../../api';
 import StorageUtil from '../../utils/StorageUtil';
 import TransformerUtil from '../../utils/TransformerUtil';
-import {
-  Alert
-} from 'react-native';
+import {Alert} from 'react-native';
 import {call, fork, put, select, take, takeLatest} from 'redux-saga/effects';
+import * as actions from '../actions/index.actions';
 
 function * fetchNotesHandler () {
   yield put({
-    type: 'SHOW_LOADER'
+    type: actions.SHOW_LOADER
   });
   let notes = [];
   try {
@@ -18,17 +17,17 @@ function * fetchNotesHandler () {
     notes = value ? value : [];
   }
   yield put({
-    type: 'POPULATE_NOTES',
+    type: actions.POPULATE_NOTES,
     payload: notes
   });
   yield put({
-    type: 'HIDE_LOADER'
+    type: actions.HIDE_LOADER
   });
 }
 
 function * addNoteRequestHandler (action) {
   yield put({
-    type: 'SHOW_LOADER'
+    type: actions.SHOW_LOADER
   });
   const note = action.payload;
   try {
@@ -38,7 +37,7 @@ function * addNoteRequestHandler (action) {
     notes.push(newNote);
     yield call(StorageUtil.setItem, 'notes', notes);
     yield put({
-      type: 'POPULATE_NOTES',
+      type: actions.POPULATE_NOTES,
       payload: notes
     });
   } catch (error) {
@@ -54,13 +53,13 @@ function * addNoteRequestHandler (action) {
     );
   }
   yield put({
-    type: 'HIDE_LOADER'
+    type: actions.HIDE_LOADER
   });
 }
 
 function * deleteNoteRequestHandler (action) {
   yield put({
-    type: 'SHOW_LOADER'
+    type: actions.SHOW_LOADER
   });
   const id = action.payload;
   try {
@@ -69,7 +68,7 @@ function * deleteNoteRequestHandler (action) {
     const filteredNotes = yield call(TransformerUtil.removeNote, currentNote, id);
     yield call(StorageUtil.setItem, 'notes', filteredNotes);
     yield put({
-      type: 'POPULATE_NOTES',
+      type: actions.POPULATE_NOTES,
       payload: filteredNotes
     });
   } catch (error) {
@@ -83,14 +82,14 @@ function * deleteNoteRequestHandler (action) {
     );
   }
   yield put({
-    type: 'HIDE_LOADER'
+    type: actions.HIDE_LOADER
   });
 }
 
 function * notes () {
-  yield takeLatest('DELETE_NOTE_REQUEST', deleteNoteRequestHandler);
-  yield takeLatest('ADD_NOTE_REQUEST', addNoteRequestHandler);
-  yield take('FETCH_NOTES');
+  yield takeLatest(actions.DELETE_NOTE_REQUEST, deleteNoteRequestHandler);
+  yield takeLatest(actions.ADD_NOTE_REQUEST, addNoteRequestHandler);
+  yield take(actions.FETCH_NOTES);
   yield fetchNotesHandler();
 }
 
