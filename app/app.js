@@ -1,10 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-import Api from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import Loader from './components/Loader/Loader.compoments';
@@ -13,19 +6,14 @@ import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import storageutil from './utils/storageutil';
 import styles from './index.style';
 import Title from './components/Title/Title.component';
-import Tranformerutil from './utils/tranformerutil';
-import {
-  Alert, KeyboardAvoidingView, Platform, View
-} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {KeyboardAvoidingView, Platform, View} from 'react-native';
 import {NavigationActions} from 'react-navigation';
 import * as actions from './redux/reducers/actions/index.actions';
 
-//
 class App extends Component {
   state = {
     textTitle: '',
@@ -46,77 +34,20 @@ class App extends Component {
     this.setState({textContent});
   }
 
-  onSaveButtonPress = async () => {
-    this.props.showLoader();
-    const newNotes = [...this.props.notes];
+  onSaveButtonPress = () => {
     const note = {
       title: this.state.textTitle,
       content: this.state.textContent
     };
-    
-    try {
-      const addedNote =  await Api.onAddNote(note);
-      const newData = {
-        title: this.state.textTitle,
-        content: this.state.textContent,
-        id: addedNote.id
-      };
-      newNotes.push(newData);
-      this.props.addNote(newData);
-      const newState = {
-        textTitle: '',
-        textContent: '',
-        notes: newNotes
-      };
-      await storageutil.setItem(newNotes);
-      this.setState(newState);
-      this.props.hideLoader();
-    } catch (e) {
-      this.props.hideLoader();
-      Alert.alert(
-        'Error',
-        'Internet error',
-        {cancelable: true}
-      );
-    }
+    this.props.saveHandler(note);
   }
-
-  // onShowAboutUs = () => {
-  //   // this.props.navigation.navigate('About');
-  //   // this.props.showAboutUs();
-  // }
 
   onDeleteButtonPress = (item) => async () => {
-    this.props.showLoader();
-    try {
-      await new Api.onDelete(item.id);
-      this.props.deleNote(item);
-      await storageutil.setItem(Tranformerutil.removeNote(this.props.notes, item.id));
-      this.props.hideLoader();
-    } catch (e) {
-      this.props.hideLoader();
-      Alert.alert(
-        'Error',
-        'Internet error',
-        {cancelable: true}
-      );
-    }
+    this.props.deleHandler(item);
   }
-
-  onLoad = async () => {
-    this.props.showLoader();
-    try {
-      const notes = await new Api.onGetNote();
-      this.props.loadServer(notes);
-      this.props.hideLoader();
-    } catch (e) {
-      this.props.loadServer(await storageutil.getItem());
-      this.props.hideLoader();
-    }
-  }
-
+  
   componentDidMount () {
-    this.onLoad();
+    this.props.fetchNote();
   }
 
   render () {
@@ -147,15 +78,12 @@ class App extends Component {
 }
 
 App.propTypes = {
-  // navigation: PropTypes.func,
   showAboutUs: PropTypes.func,
   notes: PropTypes.array,
   modalIsVisibel: PropTypes.bool,
-  loadServer: PropTypes.func,
-  deleNote: PropTypes.func,
-  addNote: PropTypes.func,
-  showLoader: PropTypes.func,
-  hideLoader: PropTypes.func
+  saveHandler: PropTypes.func,
+  fetchNote: PropTypes.func,
+  deleHandler: PropTypes.func
 };
 
 App.defaultProps = {
@@ -168,28 +96,12 @@ const mapStateToProps = (state) => ({
 });
 
 export const mapDispatchToProps = (dispatch) => ({
+  fetchNote: bindActionCreators(actions.fetchNote, dispatch),
+  saveHandler: bindActionCreators(actions.saveHandler, dispatch),
+  deleHandler: bindActionCreators(actions.deleHandler, dispatch),
   addNote: bindActionCreators(actions.addNote, dispatch),
-  // addNote: (note) => {
-  //   dispatch(actions.addNote(note));
-  // },
-  deleNote: (note) => {
-    dispatch(actions.deleNote(note));
-  },
-  loadServer: (note) => {
-    dispatch(actions.loadServer(note));
-  },
   showAboutUs: () => {
-    // dispatch({
-    //   type: 'Navigation/NAVIGATE',
-    //   routeName: 'About'
-    // });
     dispatch(NavigationActions.navigate({routeName: 'About'}));
-  },
-  showLoader: () => {
-    dispatch(actions.showLoader());
-  },
-  hideLoader: () => {
-    dispatch(actions.hideLoader());
   }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);

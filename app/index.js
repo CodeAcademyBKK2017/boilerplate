@@ -30,7 +30,7 @@ const mapStateToProps = (state) => ({nav: state.nav});
 const ConnectedRouter = connect(mapStateToProps)(ReduxRouter);
 
 ReduxRouter.propTypes = {
-  dispatch: PropTypes.object,
+  dispatch: PropTypes.func,
   nav: PropTypes.object
 };
 

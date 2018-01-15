@@ -25,8 +25,8 @@ describe('loader', () => {
       type: 'DELE_NOTE',
       payload: notes
     };
-    resule = note(perviousState, action);
-    const fromUtil = Tranformerutil.removeNote(perviousState, action.payload.id);
+    resule = note([notes], action);
+    const fromUtil = Tranformerutil.removeNote([notes], action.payload.id);
     expect(resule).toEqual(fromUtil);
   });
 
