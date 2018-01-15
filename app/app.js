@@ -4,7 +4,6 @@
  * @flow
  */
 
-import ApiNotes from './api';
 import Content from './components/contents/content.component';
 import Footer from './components/footers/footer.component';
 import globalStyle from './app.style';
@@ -16,8 +15,7 @@ import React, {
   Component
 } from 'react';
 import Title from './components/titles/title.component';
-import Utility from './util/utility';
-import {addnote, deletenote, hideloader, populatenote, showloader} from '../app/redux/actions/index.action';
+import {addnoterequest, deletenoterequest, FEACH_NOTE, hideloader, showloader} from '../app/redux/actions/index.action';
 import {
   Alert,
   Text, 
@@ -36,36 +34,23 @@ class App extends Component {
   componentDidMount () {
     this.props.FetchData();
   }
-
-  _setStroage = async () => {
-    try {
-      const response = await ApiNotes.getNotes();
-      (response.length !== 0) && this.props.populateFromReducer(response);
-      Utility.setItemToStroage('theState', this.props.arrayContent);
-      await Utility.getItemToStroage('theState');
-    } catch (e) {
-      const value = await Utility.getItemToStroage('theState');
-      const arrayContent = value; 
-      this.props.populateFromReducer(arrayContent);
-    }
-   
-  }
+  
   _onContentChange =  (currentContent) => {
     this.setState({currentContent});
   }
+
   _onTitleChange =  (currentTitle) => {
     this.setState({currentTitle});
   }
+
   _addContent = async () => {
     try {
       const newnote = {title: this.state.currentTitle, content: this.state.currentContent};
       if (newnote.title === '' || newnote.content === '') {
         throw 'must not empty';
       }
-      const noteWithID = await ApiNotes.addNote(newnote);
-      this.props.addNoteToReducer(noteWithID);
+      this.props.addNoteToSaga(newnote);
       this.setState({currentContent: '', currentTitle: ''});
-      Utility.setItemToStroage('theState', this.props.arrayContent);
     } catch (e) {
       Alert.alert(
         'Save Failed',
@@ -80,11 +65,10 @@ class App extends Component {
     }
   }
 
-  _removeContent = (content) => async () => { 
+  _removeContent = (content) => () => { 
+    
     try {
-      await ApiNotes.deleteNote(content.id);
-      this.props.deleteNoteFromReducer(content.id);
-      Utility.setItemToStroage('theState', this.props.arrayContent);
+      this.props.deleteNoteToSaga(content.id);
     } catch (e) {
       Alert.alert(
         'Delete Failed',
@@ -123,37 +107,35 @@ class App extends Component {
 
 App.propTypes = {
   gotoAbout: ProptTypes.func.isRequired,
-  addNoteToReducer: ProptTypes.func.isRequired,
+  addNoteToSaga: ProptTypes.func.isRequired,
   arrayContent: ProptTypes.array.isRequired,
-  deleteNoteFromReducer: ProptTypes.func.isRequired,
-  populateFromReducer: ProptTypes.func.isRequired,
+  deleteNoteToSaga: ProptTypes.func.isRequired,
   isModalVisible: ProptTypes.bool.isRequired,
   FetchData: ProptTypes.func.isRequired
 };
   
 App.defaultProps = {
   gotoAbout: noop,
-  addNoteToReducer: noop,
-  deleteNoteFromReducer: noop,
+  addNoteToSaga: noop,
+  deleteNoteToSaga: noop,
   arrayContent: [],
-  populateFromReducer: noop,
   isModalVisible: false,
   FetchData: noop
 };
-
-export const mapDispatchToProps = (dispatch) => ({
-  addNoteToReducer: bindActionCreators(addnote, dispatch),
-  deleteNoteFromReducer: bindActionCreators(deletenote, dispatch),
-  populateFromReducer: bindActionCreators(populatenote, dispatch),
-  showLoaderFromReducer: bindActionCreators(showloader, dispatch),
-  hideLoaderFromReducer: bindActionCreators(hideloader, dispatch),
-  gotoAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
-  FetchData: () => {
-    dispatch({type: 'FEACH_NOTE'});
-  }
-});
 const mapStateToProps = (stateStore) => ({
   arrayContent: stateStore.notes,
   isModalVisible: stateStore.loader
 });
+
+export const mapDispatchToProps = (dispatch) => ({
+  addNoteToSaga: bindActionCreators(addnoterequest, dispatch),
+  deleteNoteToSaga: bindActionCreators(deletenoterequest, dispatch),
+  showLoaderFromReducer: bindActionCreators(showloader, dispatch),
+  hideLoaderFromReducer: bindActionCreators(hideloader, dispatch),
+  gotoAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
+  FetchData: () => {
+    dispatch({type: FEACH_NOTE});
+  }
+});
+
 export default connect(mapStateToProps, mapDispatchToProps)(App);

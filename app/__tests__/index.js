@@ -47,25 +47,26 @@ describe('ConnectedApp', () => {
     expect(instance.state.currentTitle).toEqual('some');
   });
 
-  it('App: addContent Function is will work on success API', async () => {
-    const expectRes = [{
-      title: 'some',
-      content: 'some',
-      id: 1
-    }];
-    const expectedNote = {
+  it('App: _addContent Function is will work on success API', async () => {
+    const expectRes = {
       title: 'some',
       content: 'some'
     };
+
+    const expectedNote = {
+      currentContent: '', 
+      currentTitle: ''
+    };
+
     instance._onTitleChange('some');
     instance._onContentChange('some');
-    wrapper.setProps({addNoteToReducer: jest.fn()});
+    wrapper.setProps({addNoteToSaga: jest.fn()});
     await instance._addContent();
-    expect(ApiNotes.addNote).toHaveBeenLastCalledWith(expectedNote);
-    expect(instance.props.addNoteToReducer).toHaveBeenLastCalledWith(expectRes);
+    expect(instance.props.addNoteToSaga).toHaveBeenLastCalledWith(expectRes);
+    expect(instance.state).toEqual(expectedNote);
   }); 
 
-  it('App: addContent Function is will work on fail API', async () => {
+  it('App: _addContent Function is will work on fail API', async () => {
     ApiNotes.addNote.mockImplementation(() => Promise.reject('API failed'));
     await instance._addContent();
     expect(ApiNotes.addNote).not.toBeCalled();
@@ -79,11 +80,10 @@ describe('ConnectedApp', () => {
       id: 1
     };
     wrapper.setState({currentContent: 'some', currentTitle: 'some'});
-    wrapper.setProps({deleteNoteFromReducer: jest.fn()});
+    wrapper.setProps({deleteNoteToSaga: jest.fn()});
     await instance._addContent();
     await instance._removeContent(sendParm)();
-    expect(ApiNotes.deleteNote).toHaveBeenLastCalledWith(1);
-    expect(instance.props.deleteNoteFromReducer).toHaveBeenLastCalledWith(1);
+    expect(instance.props.deleteNoteToSaga).toHaveBeenLastCalledWith(1);
   });
 
   it('App: _removeContent Function is remove ArrayContent by index on fail API', async () => {
@@ -100,32 +100,12 @@ describe('ConnectedApp', () => {
     expect(dispatch).toHaveBeenCalledWith(result);
   });
 
-  it('App: _setStroage Function must get data from store state and success try', async () => {
-    const sendParm = [{
-      title: 'some',
-      content: 'some',
-      id: 1
-    }];
-    wrapper.setState({currentContent: 'some', currentTitle: 'some'});
-    wrapper.setProps({populateFromReducer: jest.fn()});
-    await instance._addContent();
-    await instance._removeContent(sendParm)();
-    await instance._setStroage();
-    expect(instance.props.populateFromReducer).toHaveBeenLastCalledWith(sendParm);
-  });
-
-  it('App: _setStroage Function must fail api but try to populate from stroage and not have a data', async () => {
-    const sendParm = [{
-      title: 'some',
-      content: 'some',
-      id: 1
-    }];
-    ApiNotes.getNotes.mockImplementation(() => Promise.reject('API failed'));
-    wrapper.setProps({populateFromReducer: jest.fn()});
-    await instance._addContent();
-    await instance._removeContent(sendParm)();
-    await instance._setStroage();
-    expect(instance.props.populateFromReducer).toHaveBeenLastCalledWith(null);
+  it('App: AddData Function must have to called', () => {
+    const result = {type: 'ADD_NOTE_REQUEST'};
+    const dispatch = jest.fn();
+    const dispatcher = mapDispatchToProps(dispatch);
+    dispatcher.addNoteToSaga();
+    expect(dispatch).toHaveBeenCalledWith(result);
   });
 
 });

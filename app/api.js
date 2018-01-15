@@ -26,6 +26,7 @@ class ApiNotes {
         },
         body: JSON.stringify(note)
       };
+      
       return fetch(this.API_NOTES, option)
         .then((response) => response.json());
     }

@@ -1,9 +1,10 @@
-import createSagaMiddleware from 'redux-saga';
+
 // import someReduxMiddleware from 'some-redux-middleware';
 // import someOtherReduxMiddleware from 'some-other-redux-middleware';
+import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers/root.reducer';
+import sagas from './saga/index.saga';
 import {applyMiddleware, compose, createStore} from 'redux';
-import {fork, put, takeEvery} from 'redux-saga/effects';
 
 const logger = () => (next) => (action) => {
   // console.log('action is', action);
@@ -16,27 +17,17 @@ const sagaMiddleware = createSagaMiddleware();
 
 const composedEnhancer = composeEnhancers(applyMiddleware(sagaMiddleware, logger));
 
-function* notes () {
-  yield takeEvery('FEACH_NOTE', newFun);
-}
-function* newFun () {
-  yield put({
-    type: 'SHOW_LOADER'
-  });
-  yield put({
-    type: 'POPULATE_NOTE',
-    payload: [{title: 'From reudx saga', content: 'HELLLOOOOOO', id: 1}]
-  });
-  yield put({
-    type: 'HIDE_LOADER'
-  });
-}
-function* sagas () {
-  yield fork(notes);
-}
-
 export const initStore = () => {
   const store = createStore(rootReducer, {}, composedEnhancer);
+
+  if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('./reducers/', () => {
+      const nextRootReducer = require('./reducers/root.reducer.js');
+      store.replaceReducer(nextRootReducer);
+    });
+  }
+  
   sagaMiddleware.run(sagas);
   return store;
 };
