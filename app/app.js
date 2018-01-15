@@ -42,12 +42,13 @@ class App extends Component {
 
   onSavePress = async () => {
     try {
-      const newNote  = await Api.addNote({
+      const newNote  = ({
         title: this.state.title,
         content: this.state.content
       });
-      const newNotes = [...this.props.notes, newNote];
-      this.props.addNote(newNote);
+      const noteWithID = await Api.addNote(newNote);
+      const newNotes = [...this.props.notes, noteWithID];
+      this.props.addNote(noteWithID);
       await storageUtil.setItem('notes', newNotes);
       this.setState({title: '', content: ''});
     } catch (err) {

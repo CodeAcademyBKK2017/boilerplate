@@ -33,15 +33,15 @@ describe('App', () => {
   
   it('onTypeContent: should change the value of content', () => {
     appInstance.onTypeContent('hello');
-    expect(appInstance.state.content).toBe('hello');
+    expect(appInstance.state.content).toEqual('hello');
     appInstance.onTypeContent('');  
-    expect(appInstance.state.content).toBe('');
+    expect(appInstance.state.content).toEqual('');
   });
   it('onTypeTitle: should change the value of title', () => {
     appInstance.onTypeTitle('test');
-    expect(appInstance.state.title).toBe('test');
+    expect(appInstance.state.title).toEqual('test');
     appInstance.onTypeTitle('');  
-    expect(appInstance.state.title).toBe('');
+    expect(appInstance.state.title).toEqual('');
   });
 
   it('onSavePress success', async () => {
