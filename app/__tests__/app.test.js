@@ -3,7 +3,6 @@ import ConnectedApp, {mapDispatchToProps}  from '../app';
 import React from 'react';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
-import {Alert} from 'react-native';
 import {createStore} from 'redux';
 import {getItemToStorage, setItemToStorage} from '../utils/storageutil';
 import {shallow} from 'enzyme';
@@ -28,7 +27,13 @@ describe('App', () => {
     setItemToStorage.mockClear();
     getItemToStorage.mockClear();
   });
-  it('renders correctly', () => {
+  it('renders correctly with empty store', () => {
+    const tree = renderer.create(appComp);
+    expect(tree).toMatchSnapshot();
+  });
+  it('renders correctly with data store', () => {
+    const notes = [{content: 1, title: 2}];
+    wrapper.setProps({noteList: notes});
     const tree = renderer.create(appComp);
     expect(tree).toMatchSnapshot();
   });
@@ -47,98 +52,27 @@ describe('App', () => {
     expect(dispatch).toHaveBeenCalled();
     expect(dispatch).toHaveBeenLastCalledWith({'routeName': 'About', 'type': 'Navigation/NAVIGATE'});
   });
-  xit('onSave success ', async () => {
-    const note = {
-      title: 'this is title',
-      content: 'this is content'
+  it('onSave ', () => {
+    const addNoteRequest = jest.fn();
+    wrapper.setProps({addNoteRequest});
+    const note =   {
+      title: '123',
+      content: '456'
     };
-    const expectedNote = {
-      title: 'this is title',
-      content: 'this is content'
-    };
-    const expectedNoteWithId = {
-      title: 'this is title',
-      content: 'this is content',
-      id: 1
-    };
-    const noteList = [expectedNoteWithId];
-
+    const initialstate = {'content': '', 'title': ''};
     instance.setState(note);
-    ApiNotes.addNote.mockImplementation(() => Promise.resolve({...note, id: 1}));
-    const addNote = jest.fn();
-    wrapper.setProps({addNote: addNote});
-    await instance.onSave();
-    expect(ApiNotes.addNote).toHaveBeenLastCalledWith(expectedNote);
-    expect(instance.props.addNote).toHaveBeenLastCalledWith(expectedNoteWithId);
-    expect(setItemToStorage).toHaveBeenLastCalledWith('storageNote', noteList);
+    instance.onSave();
+
+    expect(instance.props.addNoteRequest).toHaveBeenLastCalledWith(note);
+    expect(instance.state).toEqual(initialstate);
+  });
+  it('onDelete ',  () => {
+    const deleteNoteRequest = jest.fn();
+    wrapper.setProps({deleteNoteRequest});
+    const item = {id: 1};
+    const curryFn = instance.onDelete(item);
+    curryFn();
+    expect(instance.props.deleteNoteRequest).toHaveBeenLastCalledWith(1);
   });
 
-  xit('onSave failure', async () => {
-    ApiNotes.addNote.mockImplementation(() => Promise.reject('API failed'));
-    await instance.onSave();
-    expect(setItemToStorage).not.toBeCalled();
-    expect(Alert.alert).toHaveBeenLastCalledWith(
-      'Save Failed',
-      'API failed',
-      [{text: 'OK'}],
-      {cancelable: false});
-  });
-  xit('onDelete success', async () => {
-    const item = {
-      id: 'someid',
-      title: 'title x',
-      content: 'content x'
-    };
-    const initialNote = [
-      {id: 1, title: 'title y', content: 'content y'},
-      item
-    ];
-    const remainNote = [{id: 1, title: 'title y', content: 'content y'}];
-    wrapper.setProps({noteList: initialNote});
-    const deleteNote = jest.fn();
-    wrapper.setProps({deleteNote: deleteNote});
-    const curryFn = instance.onDelete(item);
-    await curryFn();
-    expect(ApiNotes.deleteNote).toHaveBeenLastCalledWith(item.id);
-    expect(setItemToStorage).toHaveBeenLastCalledWith('storageNote', remainNote);
-  });
-  xit('onDelete failure', async () => {
-    const item = {
-      id: 'failid',
-      title: 'fail title',
-      content: 'fail message'
-    };
-    ApiNotes.deleteNote.mockImplementation(() => Promise.reject('API failed'));
-    const curryFn = instance.onDelete(item);
-    await curryFn();
-    expect(Alert.alert).toHaveBeenLastCalledWith(
-      'Delete Failed',
-      'API failed',
-      null,
-      {cancelable: false});
-  });
-  // it('init Success Case', async () => {
-  //   const noteList = [{id: 1, title: 'get title', content: 'get content'}];
-  //   ApiNotes.getNotes.mockImplementation(() => Promise.resolve(noteList));
-  //   const populateNote = jest.fn();
-  //   wrapper.setProps({populateNote: populateNote});
-  //   await instance.init();
-  //   expect(ApiNotes.getNotes).toHaveBeenCalled();
-  //   expect(instance.props.populateNote).toHaveBeenLastCalledWith(noteList);
-  // });
-  // it('init Fail Case', async () => {
-  //   const note = [{id: 1, title: 'get title', content: 'get content'}];
-  //   ApiNotes.getNotes.mockImplementation(() => Promise.reject('API failed'));
-  //   getItemToStorage.mockImplementation(() => note);
-  //   const populateNote = jest.fn();
-  //   wrapper.setProps({populateNote: populateNote});
-  //   await instance.init();
-  //   expect(getItemToStorage).toHaveBeenLastCalledWith('storageNote');
-  //   expect(instance.props.populateNote).toHaveBeenLastCalledWith(note);
-
-  //   getItemToStorage.mockClear();
-  //   getItemToStorage.mockImplementation(() => undefined);
-  //   await instance.init();
-  //   expect(instance.props.populateNote).toHaveBeenLastCalledWith([]);
-  // });
 });

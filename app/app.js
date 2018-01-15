@@ -1,8 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+/* importantce git : reference fe473c85516dd4bc41a14d2f5711290a82ddbd17 */
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import Loader from './components/Loader/Loader.component';
@@ -21,26 +17,12 @@ import * as actions from './redux/actions/index.actions';
 class App extends Component {
   initialstate = {
     content: '',
-    title: '',
-    note: []
+    title: ''
   }
   state = this.initialstate
-  
-  //  init = async () => {
-  //    try {
-  //      const response = await ApiNotes.getNotes();
-  //      this.props.populateNote(response);
-  //    } catch (error) {
-  //      const note = await getItemToStorage('storageNote');
-  //      this.props.populateNote(note ? note : []);
-  //    }
-   
-  //  }
   componentDidMount () {
-    //  this.init();
     this.props.fetchNotes();
   }
-
   WrapperView = Platform.select(
     {ios: KeyboardAvoidingView,
       android: View
@@ -59,29 +41,7 @@ class App extends Component {
     };
     this.props.addNoteRequest(note);
     this.setState(this.initialstate);
-    // try {
-    //   const note =   {
-    //     title: this.state.title,
-    //     content: this.state.content
-    //   };
-    //   const noteWithId = await  ApiNotes.addNote(note);
-    //   const newNote = [...this.props.noteList, noteWithId];
-    //   this.props.addNote(noteWithId);      
-    //   await setItemToStorage('storageNote', newNote);
-    // } catch (error) {
-    //   Alert.alert(
-    //     'Save Failed',
-    //     String(error),
-    //     [
-    //       {text: 'OK'}
-    //     ],
-    //     {
-    //       cancelable: false
-    //     }
-    //   );
-    // }
   }
-
   onDelete = (item) =>  () => {
     this.props.deleteNoteRequest(item.id);
   }
@@ -103,8 +63,6 @@ class App extends Component {
 App.propTypes = {
   noteList: PropTypes.array,
   addNoteRequest: PropTypes.func,
-  // addNote: PropTypes.func,
-  // deleteNote: PropTypes.func,
   deleteNoteRequest: PropTypes.func,
   fetchNotes: PropTypes.func,
   goToAbout: PropTypes.func,
@@ -121,14 +79,8 @@ const mapStateToProps = (storeState) => (
 );
 export const mapDispatchToProps = (dispatch) => ({
   addNoteRequest: bindActionCreators(actions.addNoteRequest, dispatch),
-  addNote: bindActionCreators(actions.addNote, dispatch),
-  deleteNote: bindActionCreators(actions.deleteNote, dispatch),
   deleteNoteRequest: bindActionCreators(actions.deleteNoteRequest, dispatch),
   goToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
   fetchNotes: () => dispatch({type: 'FETCH_NOTES'})
-  // populateNote: (note) => {
-  //   const action = actions.populateNotes(note);
-  //   dispatch(action);
-  // }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);

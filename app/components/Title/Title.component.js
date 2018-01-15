@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Title.style';
+
 import {Text, TextInput, View} from 'react-native';
 
 export default class Title extends Component {
