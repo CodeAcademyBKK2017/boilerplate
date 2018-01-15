@@ -1,4 +1,4 @@
-import createSagaMiddleware, {delay} from 'redux-saga';
+import createSagaMiddleware from 'redux-saga';
 // import someReduxMiddleware from 'some-redux-middleware';
 // import someOtherReduxMiddleware from 'some-other-redux-middleware';
 import indexSaga from './sagas/index.saga';

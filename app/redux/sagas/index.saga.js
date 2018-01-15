@@ -1,5 +1,5 @@
 import {delay} from 'redux-saga';
-import {fork, put, take, takeEvery} from 'redux-saga/effects';
+import {fork, put, take} from 'redux-saga/effects';
 
 function* fetchNotesHandler () {
   yield put({
