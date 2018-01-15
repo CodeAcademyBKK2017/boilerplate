@@ -7,7 +7,6 @@ import {applyMiddleware, compose, createStore} from 'redux';
 import {fork} from 'redux-saga/effects';
 
 const logger = () => (next) => (action) => {
-  // console.log('action is', action);
   next(action);
 };
 

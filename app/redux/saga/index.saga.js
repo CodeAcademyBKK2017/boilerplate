@@ -1,19 +1,22 @@
-import {delay} from 'redux-saga';
-import {put, take} from 'redux-saga/effects';
+import Api from '../../api';
+import {call, put, take} from 'redux-saga/effects';
+import {getItem} from '../../utility/storage.util';
 
 function* fetchHandler () {
   yield put({
     type: 'SHOW_LOADER'
   });
-  yield delay(2000);
+
+  let response;
+  try {
+    response = yield call(Api.getNote);
+  } catch (err) {
+    response = yield call(getItem, 'notes');
+  }
+ 
   yield put({
     type: 'POPULATE_NOTE',
-    payload: [{
-      title: 'React Native',
-      content: '- UI',
-      key: 0,
-      id: 0
-    }]
+    payload: response
   });
   yield put({
     type: 'HIDE_LOADER'
@@ -22,5 +25,5 @@ function* fetchHandler () {
   
 export default function* notes () {
   yield take('FETCH_NOTES');
-  yield fetchHandler();
+  yield call(fetchHandler);
 }
