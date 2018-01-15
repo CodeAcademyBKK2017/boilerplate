@@ -48,16 +48,13 @@ class App extends Component {
       title: this.state.textTitle,
       content: this.state.textContent
     };
-    const response = await ApiNotes.addNote(note);
-    this.props.addNote(response);
-    storage.setItem('notes', this.props.notes);
+    this.props.saveNotes(note);
   }
 
   onDeleteButtonPress = (item) => async () => {
     this.props.deleteNote(item.id);
     try {
       await ApiNotes.deleteNote(item.id);
-      storage.setItem('notes', notesUtil.deleteNote(this.props.notes));
     } catch (error) {
       Alert.alert(
         'Delete Failed',
@@ -82,7 +79,7 @@ class App extends Component {
       storage.setItem('notes', response);
     } catch (error) {
       const value = await storage.getItem(notesKey);
-      this.props.populateNotes(JSON.parse(value));
+      this.props.populateNotes(value);
       
     }
     this.props.fetchNotes();
@@ -120,9 +117,9 @@ class App extends Component {
 }
 
 App.propTypes = {
-  // navigation: PropTypes.func,
+  fetchNotes: PropTypes.func,
   navigationAbout: PropTypes.func,
-  addNote: PropTypes.func,
+  saveNotes: PropTypes.func,
   deleteNote: PropTypes.func,
   populateNotes: PropTypes.func,
   notes: PropTypes.array
@@ -138,12 +135,12 @@ const mapStateToProps = (storeState) => ({
 });
 
 export const mapDispatchToProps = (dispatch) => ({
-  addNote: (note) => {
-    dispatch({
-      type: 'ADD_NOTE',
-      payload: note
-    });
-  },
+  // addNote: (note) => {
+  //   dispatch({
+  //     type: 'ADD_NOTE',
+  //     payload: note
+  //   });
+  // },
   deleteNote: (id) => {
     dispatch({
       type: 'DELETE_NOTE',
@@ -161,6 +158,12 @@ export const mapDispatchToProps = (dispatch) => ({
   fetchNotes: () => {
     dispatch({
       type: 'FETCH_NOTES'
+    });
+  },
+  saveNotes: (note) => {
+    dispatch({
+      type: 'ADD_NOTE_REQUEST',
+      payload: note
     });
   },
   navigationAbout: () => {
