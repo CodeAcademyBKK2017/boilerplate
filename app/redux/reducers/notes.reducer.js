@@ -1,5 +1,5 @@
 import transformerutil from '../../utility/transformerutil';
-import {ADD_NOTE, DELETE_NOTE, GET_NOTE} from '../actions/index.actions';
+import {ADD_NOTE, DELETE_NOTE, POPULATE_NOTES} from '../actions/index.actions';
 
 const notes = (previousState = [], action) => {
   switch (action.type) {
@@ -10,7 +10,7 @@ const notes = (previousState = [], action) => {
     const filteredNotes = transformerutil.deleteNote(previousState, action.payload.id);
     return filteredNotes;
   }
-  case GET_NOTE: {
+  case POPULATE_NOTES: {
     return action.payload;
   }
   default:

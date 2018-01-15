@@ -1,5 +1,5 @@
 import Notes from '../notes.reducer';
-import {ADD_NOTE, DELETE_NOTE, GET_NOTE} from '../../actions/index.actions';
+import {ADD_NOTE, DELETE_NOTE, POPULATE_NOTES} from '../../actions/index.actions';
 
 describe('Notes Reducer Testing', () => {
   it('renders correctly ADD_NOTE', () => {
@@ -48,9 +48,9 @@ describe('Notes Reducer Testing', () => {
     }]);
   });
 
-  it('renders correctly GET_NOTE', () => {
+  it('renders correctly POPULATE_NOTES', () => {
     const dataInput = {
-      type: GET_NOTE,
+      type: POPULATE_NOTES,
       payload: {
         id: '123',
         title: 'tt',

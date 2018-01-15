@@ -50,12 +50,8 @@ class App extends Component {
         title: this.state.textTitle,
         content: this.state.textContent
       };
-      await ApiNotes.addNote(note);
-      const newNotes = [...this.props.notes];
-      newNotes.push(note);
-      await storageUtil.setItemsFromAsyncStorage(notesKey, JSON.stringify(newNotes));
 
-      this.props.addNote(note);
+      this.props.saveNote(note);
 
       const newState = {
         textTitle: '',
@@ -78,11 +74,8 @@ class App extends Component {
 
   onDeleteButtonPress = (item) => async () => {
     try {
-      await ApiNotes.deleteNote(item.id);
-      const filteredNotes = transformerutil.deleteNote(this.props.notes, item.id);
-      await storageUtil.setItemsFromAsyncStorage(notesKey, JSON.stringify(filteredNotes));
 
-      this.props.deleteNote(item);
+      this.props.removeNote(item);
     } catch (error) {
       Alert.alert(
         'Delete Failed',
@@ -95,25 +88,9 @@ class App extends Component {
     }
   }
 
-  loadData = async () => {
-    try {
-      const response = await ApiNotes.getNotes();
-
-      this.props.getNotes(response);
-    } catch (error) {
-      const value = await storageUtil.getItemsFromAsyncStorage(notesKey);
-      let notes;
-      if (value) {
-        notes = JSON.parse(value);
-      } else {
-        notes = [];
-      }
-      this.props.getNotes(notes);
-    }
-  }
-
   componentDidMount () {
-    this.loadData();
+    // this.loadData();
+    this.props.fetchNote();
   }
 
   render () {
@@ -147,39 +124,24 @@ class App extends Component {
 App.propTypes = {
   goToAbout: PropTypes.func,
   notes: PropTypes.array,
-  getNotes: PropTypes.func,
-  deleteNote: PropTypes.func,
-  addNote: PropTypes.func,
   loader: PropTypes.object
 };
 
 App.defaultProps = {
   navigation: null,
   notes: [],
-  getNotes: noop,
-  deleteNote: noop,
-  addNote: noop,
   loader: {}
 };
 
 const mapStateToProps = (state) => ({notes: state.notes, loader: state.loader});
-// const mapDispatchToProps = (dispatch) => ({
-//   addNote: (dataNote) => {
-//     dispatch(actions.addNote(dataNote));
-//   },
-//   deleteNote: (item) => {
-//     dispatch(actions.deleteNote(item));
-//   },
-//   getNotes: (items) => {
-//     dispatch(actions.getNotes(items));
-//   }
-// });
 export const mapDispatchToProps = (dispatch) => ({ // named export
-  addNote: bindActionCreators(actions.addNote, dispatch),
-  deleteNote: bindActionCreators(actions.deleteNote, dispatch),
-  getNotes: bindActionCreators(actions.getNotes, dispatch),
+  saveNote: bindActionCreators(actions.addNoteRequest, dispatch),
+  removeNote: bindActionCreators(actions.removeNoteRequest, dispatch),
   goToAbout: () => {
     dispatch(NavigationActions.navigate({routeName: 'About'}));
+  },
+  fetchNote: () => {
+    dispatch({type: 'FETCH_NOTES'});
   }
 });
 
