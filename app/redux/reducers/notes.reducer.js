@@ -1,4 +1,3 @@
-import transformerutil from '../../utility/transformer.util';
 import {ADD_NOTE, DELETE_NOTE, POPULATE_NOTE} from '../actions/index.actions';
 
 const notes = (previousState = [], action) => {
@@ -7,7 +6,7 @@ const notes = (previousState = [], action) => {
     return [...previousState, action.payload];
   }
   case DELETE_NOTE: {
-    return transformerutil.deleteItem(previousState, action.payload);
+    return action.payload;
   }
   case POPULATE_NOTE: {
     return action.payload;
@@ -18,3 +17,4 @@ const notes = (previousState = [], action) => {
 };
 
 export default notes;
+ 

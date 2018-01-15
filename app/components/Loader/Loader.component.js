@@ -15,7 +15,7 @@ export default class Loader extends Component {
         closeOnTouchOutside animationType='zoomIn'
         animationDuration={500} onClose={this.onCloseModal}>
         <View style={styles.container}>
-          <ActivityIndicator size='large' color='#0000ff' />
+          <ActivityIndicator size='large'/>
         </View>
       </Overlay>
      
