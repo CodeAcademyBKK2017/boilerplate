@@ -97,16 +97,18 @@ class App extends Component {
   }
 
   loadData = async () => {
-    this.props.showLoader();
-    try {
-      const response = await ApiNotes.getNotes();
-      this.props.populateNote(response);
-    } catch (error) {
-      const value = await StorageUtil.getItem(notesKey);
-      const notes = value ? value : [];
-      this.props.populateNote(notes);
-    }
-    this.props.hideLoader();
+    // this.props.showLoader();
+    // try {
+    //   const response = await ApiNotes.getNotes();
+    //   this.props.populateNote(response);
+    // } catch (error) {
+    //   const value = await StorageUtil.getItem(notesKey);
+    //   const notes = value ? value : [];
+    //   this.props.populateNote(notes);
+    // }
+    // this.props.hideLoader();
+
+    this.props.fetchNotes();
   }
 
   componentDidMount () {
@@ -147,6 +149,7 @@ App.propTypes = {
   addNote: PropTypes.func.isRequired,
   deleteNote: PropTypes.func.isRequired,
   populateNote: PropTypes.func.isRequired,
+  fetchNote: PropTypes.func.isRequired,
 
   navigateToAbout: PropTypes.func.isRequired,
 
@@ -162,6 +165,7 @@ App.defaultProps = {
   addNote: noop,
   deleteNote: noop,
   populateNote: noop,
+  fetchNote: noop,
 
   navigateToAbout: noop,
 
@@ -179,6 +183,7 @@ export const mapDisplatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
   populateNote: bindActionCreators(actions.populateNotes, dispatch),
+  fetchNotes: bindActionCreators(actions.fetchNotes, dispatch),
   navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
   showLoader: bindActionCreators(actions.showLoader, dispatch),
   hideLoader: bindActionCreators(actions.hideLoader, dispatch)

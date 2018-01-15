@@ -1,5 +1,5 @@
 import {delay} from 'redux-saga';
-import {put, takeEvery} from 'redux-saga/effects';
+import {put, takeEvery, takeLatest} from 'redux-saga/effects';
 
 function* fetchNoteHandler () {
   yield put({
@@ -7,7 +7,7 @@ function* fetchNoteHandler () {
   });
   
   yield delay(3000);
-  
+
   yield put({
     type: 'POPULATE_NOTES',
     payload: [{
@@ -23,7 +23,7 @@ function* fetchNoteHandler () {
 }
 
 function* notesSaga () {
-  yield takeEvery('FETCH_NOTES', fetchNoteHandler);
+  yield takeLatest('FETCH_NOTES', fetchNoteHandler);
 }
 
 export default notesSaga;
