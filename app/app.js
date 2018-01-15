@@ -5,7 +5,6 @@
  */
 
 import AboutSection from './components/AboutSection/AboutSection.component';
-import ApiNotes from './api';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
 import Loader from './components/Loader/Loader.component';
@@ -14,19 +13,13 @@ import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import result from 'lodash/result';
-import StorageUtil from './utils/StorageUtil';
 import styles from './app.style';
 import Title from './components/Title/Title.component';
-import TransformerUtil from './utils/TransformerUtil';
-import {
-  Alert, KeyboardAvoidingView, Platform, View
-} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {KeyboardAvoidingView, Platform, View} from 'react-native';
 import {NavigationActions} from 'react-navigation';
 import * as actions from './redux/actions/index.actions';
-
-const notesKey = 'notes';
 
 class App extends Component {
   state = {
@@ -101,7 +94,10 @@ App.propTypes = {
   addNote: PropTypes.func.isRequired,
   deleteNote: PropTypes.func.isRequired,
   populateNote: PropTypes.func.isRequired,
-  fetchNote: PropTypes.func.isRequired,
+  
+  fetchNotes: PropTypes.func.isRequired,
+  saveNote: PropTypes.func.isRequired,
+  deleteRequestNote: PropTypes.func.isRequired,
 
   navigateToAbout: PropTypes.func.isRequired,
 
@@ -117,7 +113,10 @@ App.defaultProps = {
   addNote: noop,
   deleteNote: noop,
   populateNote: noop,
+
   fetchNote: noop,
+  saveNote: noop,
+  deleteRequestNote: noop,
 
   navigateToAbout: noop,
 
@@ -135,9 +134,11 @@ export const mapDisplatchToProps = (dispatch) => ({
   addNote: bindActionCreators(actions.addNote, dispatch),
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
   populateNote: bindActionCreators(actions.populateNotes, dispatch),
+
   fetchNotes: bindActionCreators(actions.fetchNotes, dispatch),
   saveNote: bindActionCreators(actions.saveNote, dispatch),
   deleteRequestNote: bindActionCreators(actions.deleteRequestNote, dispatch),
+  
   navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
   showLoader: bindActionCreators(actions.showLoader, dispatch),
   hideLoader: bindActionCreators(actions.hideLoader, dispatch)
