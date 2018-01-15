@@ -3,6 +3,7 @@ import StorageUtil from './../../utils/StorageUtil';
 import TransformerUtil from './../../utils/TransformerUtil';
 import {Alert} from 'react-native';
 import {call, put, select, takeLatest} from 'redux-saga/effects';
+import * as actions from './../../redux/actions/index.actions';
 
 const notesKey = 'notes';
 
@@ -18,19 +19,12 @@ function* loadNotes () {
 }
 
 function* fetchNoteHandler () {
-  yield put({
-    type: 'SHOW_LOADER'
-  });
+  yield put(actions.showLoader());
   const notes = yield call(loadNotes);
 
-  yield put({
-    type: 'POPULATE_NOTES',
-    payload: notes
-  });
+  yield put(actions.populateNotes(notes));
 
-  yield put({
-    type: 'HIDE_LOADER'
-  });
+  yield put(actions.hideLoader());
 }
 
 function* saveNote (note) {
@@ -43,10 +37,7 @@ function* saveNote (note) {
     
     yield call(StorageUtil.setItem, notesKey, newNotes);
 
-    yield put({
-      type: 'ADD_NOTE',
-      payload: response
-    });
+    yield put(actions.addNote(response));
   } catch (error) {
     Alert.alert(
       'Save Failed',
@@ -62,16 +53,12 @@ function* saveNote (note) {
 }
 
 function* saveNoteHandler (action) {
-  yield put({
-    type: 'SHOW_LOADER'
-  });
+  yield put(actions.showLoader());
   
   const note = action.payload;
   yield call(saveNote, note);
 
-  yield put({
-    type: 'HIDE_LOADER'
-  });
+  yield put(actions.hideLoader());
 }
 
 function* deleteRequestNote (id) {
@@ -82,10 +69,7 @@ function* deleteRequestNote (id) {
     const filteredNotes = TransformerUtil.removeNote(oldNotes, id);
     yield call(StorageUtil.setItem, notesKey, filteredNotes);
 
-    yield put({
-      type: 'DELETE_NOTE',
-      payload: id
-    });
+    yield put(actions.deleteNote(id));
   } catch (error) {
     Alert.alert(
       'Delete Failed',
@@ -99,22 +83,18 @@ function* deleteRequestNote (id) {
 }
 
 function* deleteRequestNoteHandler (action) {
-  yield put({
-    type: 'SHOW_LOADER'
-  });
+  yield put(actions.showLoader());
   
   const id = action.payload;
   yield call(deleteRequestNote, id);
 
-  yield put({
-    type: 'HIDE_LOADER'
-  });
+  yield put(actions.hideLoader());
 }
 
 function* notesSaga () {
-  yield takeLatest('FETCH_NOTES', fetchNoteHandler);
-  yield takeLatest('SAVE_NOTE', saveNoteHandler);
-  yield takeLatest('DELETE_REQUEST_NOTE', deleteRequestNoteHandler);
+  yield takeLatest(actions.FETCH_NOTES, fetchNoteHandler);
+  yield takeLatest(actions.SAVE_NOTE, saveNoteHandler);
+  yield takeLatest(actions.DELETE_REQUEST_NOTE, deleteRequestNoteHandler);
 }
 
 export default notesSaga;
