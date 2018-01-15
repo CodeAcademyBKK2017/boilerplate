@@ -54,6 +54,16 @@ describe('App', () => {
     expect(tree).toBeDefined();
   });
 
+  it('onTitleChangeText should be title', () => {
+    instance.onTitleChangeText('title');
+    expect(instance.state.currentTitle).toBe('title');
+  });
+
+  it('onContentChangeText should be title', () => {
+    instance.onContentChangeText('content');
+    expect(instance.state.currentContent).toBe('content');
+  });
+
   it('onSavePress: Should be count the current of string', () =>  {
     
     wrapper.setProps({

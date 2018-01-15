@@ -1,14 +1,11 @@
-import API from './api';
 import Content from './components/Content/Content.component';
+import Dialog from './components/Dialog/Dialog.component';
 import Footer from './components/Footer/Footer.component';
 import Loader from './components/Loader/Loader.component';
 import NoteItem from './components/NoteItem/NoteItem.component';
-import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import result from 'lodash/result';
-import SnackBar from 'react-native-snackbar';
-import StorageUtil from './utils/storage.util';
 import styles from './app.styles';
 import Title from './components/Title/Title.component';
 import Touchable from 'react-native-platform-touchable';
@@ -19,14 +16,7 @@ import {
 } from 'react-native';
 import {NavigationActions} from 'react-navigation';
 
-import {removeNote} from './utils/transformer.util';
 import * as actions from './redux/actions/index.actions';
-
-const warningBar = () => ({
-  title: 'Network errors: Can\'t connect to server.',
-  duration: 3000,
-  backgroundColor: '#d9bf56'
-});
 
 class App extends Component {
   state = {
@@ -35,79 +25,33 @@ class App extends Component {
     modalVisible: false,
     selectedNote: {id: '', title: '', content: ''}
   }
-
+  
   componentDidMount () { 
-    // this.loadData();
     this.props.fetchNotes();
   }
 
-  loadData = async () => {
-    let notes = [];
+  onTitleChangeText = (currentTitle) => this.setState({currentTitle});
 
-    try {
-      notes = await API.getNotes();
-    } catch (e) {
-      notes = await StorageUtil.getItem('notes') || [];
-      SnackBar.show(warningBar());
-    }
-    
-    this.props.populateNotes(notes);
-  }
-
-  onTitleChangeText = (currentTitle) => {
-    this.setState({currentTitle});
-  }
-
-  onContentChangeText = (currentContent) => {
-    this.setState({currentContent});
-  }
+  onContentChangeText = (currentContent) => this.setState({currentContent});
 
   onSaveButtonPress = () => {
     const {currentTitle, currentContent} = this.state;
-    
-    const saveNote = {
+
+    this.props.addNoteRequest({
       title: currentTitle,
       content: currentContent
-    };
-    
-    return API.addNote(saveNote)
-      .then((noteWithID) => {
-        const newNotes = [...this.props.notes, noteWithID];
-        this.props.addNote(noteWithID);
-        return newNotes;
-      })
-      .then((newNotes) => StorageUtil.setItem('notes', newNotes))
-      .then(() => this.setState({currentTitle: '', currentContent: ''}))
-      .catch(() => {
-        SnackBar.show(warningBar());
-        throw new Error('API Error');
-      });
-  }
-
-  _onPressItem = (item) => () => {
-    this.setState({
-      modalVisible: true,
-      selectedNote: item
     });
+
+    this.setState({currentTitle: '', currentContent: ''});
   }
 
-  _onDeleteItem = (note) => () => this._removeNoteItem(note)
-
-  _removeNoteItem = (deleteNote) => API.deleteNote(deleteNote.id)
-    .then(() => {
-      const newNotes = removeNote(this.props.notes, deleteNote.id);
-      this.props.deleteNote(deleteNote);
-      return newNotes;
-    })
-    .then((newNotes) => StorageUtil.setItem('notes', newNotes))
-    .catch(() => {
-      SnackBar.show(warningBar());
-      return new Error('API Error');
-    })
-
-  _hideOverlay = () => {
-    this.setState({modalVisible: false});
+  _onPressItem = (selectedNote) => () => {
+    this.setState({modalVisible: true, selectedNote});
   }
+
+  _onDeleteItem = (note) => () => this.props.deleteNoteRequest(note);
+
+  _hideOverlay = () => this.setState({modalVisible: false});
 
   _renderItem = ({item}) => (<NoteItem data={item} onPressItem={this._onPressItem} onDeleteItem={this._onDeleteItem} />)
 
@@ -119,20 +63,12 @@ class App extends Component {
         <Title onChangeText={this.onTitleChangeText} value={this.state.currentTitle} />
         <Content onChangeText={this.onContentChangeText} value={this.state.currentContent} />
         <Footer characterCount={this.state.currentContent.length} onSaveButtonPress={this.onSaveButtonPress} />
-
         <View style={styles.list}>
           <FlatList data={this.props.notes} renderItem={this._renderItem} keyExtractor={this._keyExtractor} />
         </View>
-
-        <Overlay visible={this.state.modalVisible}
-          onClose={this._hideOverlay}
-          closeOnTouchOutside animationType='zoomInUp'
-          animationDuration={500}>
-          <Text>{this.state.selectedNote.title}</Text>
-          <Text>{this.state.selectedNote.content}</Text>
-        </Overlay>
-        
         <Touchable onPress={this.props.navigateToAbout}><Text>Go to About</Text></Touchable>
+        
+        <Dialog visible={this.state.modalVisible} title={this.state.selectedNote.title} content={this.state.selectedNote.content} onClose={this._hideOverlay}/>
         <Loader visible={this.props.showLoader}/>
       </View>
     );
@@ -141,11 +77,10 @@ class App extends Component {
 
 App.propTypes = {
   notes: PropTypes.array,
-  addNote: PropTypes.func,
-  deleteNote: PropTypes.func,
-  populateNotes: PropTypes.func,
   navigateToAbout: PropTypes.func,
   fetchNotes: PropTypes.func,
+  addNoteRequest: PropTypes.func,
+  deleteNoteRequest: PropTypes.func,
   showLoader: PropTypes.bool
 };
 
@@ -163,7 +98,10 @@ export const mapDispatchToProps = (dispatch) => ({
   deleteNote: bindActionCreators(actions.deleteNote, dispatch),
   populateNotes: bindActionCreators(actions.populateNotes, dispatch),
   navigateToAbout: bindNavigationActionCreators('AboutApp', dispatch),
-  fetchNotes: () => dispatch({type: 'FETCH_NOTES'})
+
+  fetchNotes: bindActionCreators(actions.fetchNotes, dispatch),
+  addNoteRequest: bindActionCreators(actions.addNoteRequest, dispatch),
+  deleteNoteRequest: bindActionCreators(actions.deleteNoteRequest, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

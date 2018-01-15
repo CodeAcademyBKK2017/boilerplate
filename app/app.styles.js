@@ -35,11 +35,5 @@ export default StyleSheet.create({
     flex: 1,
     width: '100%',
     marginTop: 10
-  },
-  modalBackground: {
-
-  },
-  modalBox: {
-
   }
 });
