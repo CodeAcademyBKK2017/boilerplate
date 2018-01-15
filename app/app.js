@@ -17,16 +17,14 @@ import * as actions from './redux/actions/index.actions';
 class App extends Component {
   initialstate = {
     content: '',
-    title: ''
-  }
+    title: ''}
   state = this.initialstate
-  componentDidMount () {
-    this.props.fetchNotes();
+  componentDidMount () { 
+    this.props.fetchNotes(); 
   }
   WrapperView = Platform.select(
     {ios: KeyboardAvoidingView,
-      android: View
-    }
+      android: View}
   )
   changeTitle  = (text) => {
     this.setState({title: text});
@@ -45,7 +43,6 @@ class App extends Component {
   onDelete = (item) =>  () => {
     this.props.deleteNoteRequest(item.id);
   }
-  
   render () {
     return (
       <this.WrapperView style={styles.container} behavior={'padding'} >
