@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import AboutSection from './components/AboutSection/AboutSection.component';
 import Content from './components/Content/Content.component';
 import Footer from './components/Footer/Footer.component';
@@ -52,12 +46,8 @@ class App extends Component {
     this.props.deleteRequestNote(item.id);
   }
 
-  loadData = () => {
-    this.props.fetchNotes();
-  }
-
   componentDidMount () {
-    this.loadData();
+    this.props.fetchNotes();
   }
 
   render () {
@@ -91,38 +81,26 @@ class App extends Component {
 
 App.propTypes = {
   notes: PropTypes.array.isRequired,
-  addNote: PropTypes.func.isRequired,
-  deleteNote: PropTypes.func.isRequired,
-  populateNote: PropTypes.func.isRequired,
-  
+  modalVisible: PropTypes.bool.isRequired,
+
   fetchNotes: PropTypes.func.isRequired,
   saveNote: PropTypes.func.isRequired,
   deleteRequestNote: PropTypes.func.isRequired,
 
-  navigateToAbout: PropTypes.func.isRequired,
-
-  modalVisible: PropTypes.bool.isRequired,
-  showLoader: PropTypes.func.isRequired,
-  hideLoader: PropTypes.func.isRequired
+  navigateToAbout: PropTypes.func.isRequired
 };
 
 App.defaultProps = {
   navigation: null,
-
+  
   notes: [],
-  addNote: noop,
-  deleteNote: noop,
-  populateNote: noop,
+  modalVisible: false,
 
   fetchNote: noop,
   saveNote: noop,
   deleteRequestNote: noop,
 
-  navigateToAbout: noop,
-
-  modalVisible: false,
-  showLoader: noop,
-  hideLoader: noop
+  navigateToAbout: noop
 };
 
 const mapStateToProps = (storeState) => ({
@@ -131,17 +109,11 @@ const mapStateToProps = (storeState) => ({
 });
 
 export const mapDisplatchToProps = (dispatch) => ({
-  addNote: bindActionCreators(actions.addNote, dispatch),
-  deleteNote: bindActionCreators(actions.deleteNote, dispatch),
-  populateNote: bindActionCreators(actions.populateNotes, dispatch),
-
   fetchNotes: bindActionCreators(actions.fetchNotes, dispatch),
   saveNote: bindActionCreators(actions.saveNote, dispatch),
   deleteRequestNote: bindActionCreators(actions.deleteRequestNote, dispatch),
   
-  navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
-  showLoader: bindActionCreators(actions.showLoader, dispatch),
-  hideLoader: bindActionCreators(actions.hideLoader, dispatch)
+  navigateToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'}))
 });
 
 export default connect(mapStateToProps, mapDisplatchToProps)(App);
