@@ -93,7 +93,7 @@ describe('App', () => {
       title,
       content
     };
-    expect(ApiNotes.addNote).toHaveBeenCalledWith(expectedNote);
+    expect(ApiNotes.saveNotes).toHaveBeenCalledWith(expectedNote);
     // expect(AsyncStorage.setItem).toHaveBeenCalledWith(notesKey, JSON.stringify(expectedState.notes));
     // expect(appInstance.state).toEqual(expectedState);
   });
