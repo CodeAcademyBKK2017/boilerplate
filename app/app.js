@@ -1,4 +1,3 @@
-import apiNotes from './api';
 import ContentBox from './components/ContentBox/ContentBox.component';
 import Footer from './components/FooterBox/FooterBox.component';
 import ListItem from './components/ListItem/ListItem.component';
@@ -7,19 +6,14 @@ import noop from 'lodash/noop';
 import Overlay from 'react-native-modal-overlay';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
-import storageUtil from './utility/storage.util';
 import style from './app.style';
 import TitleBox from './components/TitleBox/TitleBox.component';
-import transformerUtil from './utility/transformer.util';
+import {connect} from 'react-redux';
+import {NavigationActions} from 'react-navigation';
 import {
-  Alert,
   Text,
   View
 } from 'react-native';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {NavigationActions} from 'react-navigation';
-import * as actions from './redux/actions/index.action';
 
 class App extends Component {
 
@@ -35,62 +29,27 @@ class App extends Component {
   }
 
   componentDidMount () {
-    this.onLoadDataState();
-  }
-
-  onLoadDataState = async () => {
-    try {
-      const notes = await apiNotes.getNotes();
-      this.props.populateNotes(notes);
-    } catch (err) {
-      this.props.populateNotes(await storageUtil.getItemFromAsyncStorage('state') || []);
-    }
+    this.props.fetchNotes();
   }
 
   onTitleChange = (title) => this.setState({titleText: title});
 
   onContentChange = (content) => this.setState({contentText: content});
   
-  onSave = async () => {
-    try {
-      const newNote = await apiNotes.addNotes({
-        title: this.state.titleText,
-        content: this.state.contentText
-      });
-      const newDataNOTES = [...this.props.notes, newNote];
-      this.props.addNotes(newNote);
-      await storageUtil.setItemFromAsyncStorage('state', newDataNOTES);
-      this.setState({titleText: '', contentText: ''});
-    } catch (err) {
-      this.onShowAlert(err);
-    }
+  onSave = () => {
+    const newNote = ({
+      title: this.state.titleText,
+      content: this.state.contentText
+    });
+    this.props.addNotesRequest(newNote);
+    this.setState({titleText: '', contentText: ''});
   }
 
-  onDelete = (item) => async () => {
-    try {
-      await apiNotes.deleteNotes(item);
-      const dataNOTES = transformerUtil.deleteItem(this.props.notes, item);
-      await storageUtil.setItemFromAsyncStorage('state', dataNOTES);
-      this.props.deleteNotes(item);
-    } catch (err) {
-      this.onShowAlert(err);
-    }
-  }
+  onDelete = (item) => () => this.props.deleteNotesRequest(item);
 
   onShowModal = (note) => () => this.setState({modalData: note});
 
   onCloseModal = () => this.setState({modalData: {}});
-
-  onShowAlert = (err) => {
-    Alert.alert(
-      'Error',
-      err.message,
-      [
-        {text: 'OK'}
-      ],
-      {cancelable: false}
-    );
-  }
 
   showFlatList = () => (this.props.notes.length > 0) ? 
     (<ListItem 
@@ -121,34 +80,32 @@ class App extends Component {
 }
 
 App.propTypes = {
+  fetchNotes: PropTypes.func.isRequired,
   navigateToAbout: PropTypes.func.isRequired,
   notes: PropTypes.array.isRequired,
   modalShow: PropTypes.object.isRequired,
-  addNotes: PropTypes.func.isRequired,
-  deleteNotes: PropTypes.func.isRequired,
-  populateNotes: PropTypes.func.isRequired
+  addNotesRequest: PropTypes.func.isRequired,
+  deleteNotesRequest: PropTypes.func.isRequired
 };
 
 App.defaultProps = {
+  fetchNotes: noop,
   navigateToAbout: noop,
   notes: [],
   modalShow: {},
-  addNotes: noop,
-  deleteNotes: noop,
-  populateNotes: noop
+  addNotesRequest: noop,
+  deleteNotesRequest: noop
 };
 
 const mapStateToProps = (state) => ({
-  notes: state.notes, 
+  notes: (state.notes !== null) ? state.notes : [], 
   modalShow: state.loader
 });
 
 export const mapDispatchToProps = (dispatch) => ({
-  addNotes: bindActionCreators(actions.addNotes, dispatch),
-  deleteNotes: bindActionCreators(actions.deleteNotes, dispatch),
-  populateNotes: bindActionCreators(actions.populateNotes, dispatch),
-  showLoader: bindActionCreators(actions.showLoader, dispatch),
-  hideLoader: bindActionCreators(actions.hideLoader, dispatch),
+  addNotesRequest: (payload) => dispatch({type: 'ADD_NOTE_REQUEST', payload}),
+  deleteNotesRequest: (payload) => dispatch({type: 'DELETE_NOTE_REQUEST', payload}),
+  fetchNotes: () => dispatch({type: 'FETCH_NOTE'}),
   navigateToAbout: () => {
     dispatch(NavigationActions.navigate({routeName: 'About'}));
   }
