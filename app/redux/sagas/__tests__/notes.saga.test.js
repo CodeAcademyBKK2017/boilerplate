@@ -84,7 +84,7 @@ describe('loadNotes success', () => {
     return response;
   });
 
-  it('and then nothing', (result) => {
+  it('should return notes', (result) => {
     expect(result).toEqual(response);
   });
 });
@@ -114,7 +114,7 @@ describe('loadNotes failure with data', () => {
     return response;
   });
 
-  it('and then nothing', (result) => {
+  it('should return notes', (result) => {
     expect(result).toEqual(response);
   });
 });
@@ -132,7 +132,7 @@ describe('loadNotes failure with empty', () => {
     return null;
   });
 
-  it('and then nothing', (result) => {
+  it('should return notes', (result) => {
     expect(result).toEqual([]);
   });
 });
