@@ -15,4 +15,5 @@ export const addNote = createAction(ADD_NOTE);
 export const deleteNoteRequest = createAction(DELETE_NOTE_REQUEST);
 export const deleteNote = createAction(DELETE_NOTE);
 export const populateNotes = createAction(POPULATE_NOTES);
+export const fetchNotes = createAction(FETCH_NOTES);
 

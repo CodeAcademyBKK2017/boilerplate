@@ -80,8 +80,6 @@ function* deleteNoteHandler (action) {
   });
 }
 function* notes () {
-//   yield takeEvery('FETCH_NOTES', fetchHandler);
-// console.log('This is call from FETCH_NOTES');
   yield take(actions.FETCH_NOTES);
   yield fetchHandler();
 

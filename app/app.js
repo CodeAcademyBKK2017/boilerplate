@@ -77,7 +77,9 @@ const mapStateToProps = (storeState) => (
 export const mapDispatchToProps = (dispatch) => ({
   addNoteRequest: bindActionCreators(actions.addNoteRequest, dispatch),
   deleteNoteRequest: bindActionCreators(actions.deleteNoteRequest, dispatch),
-  goToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
-  fetchNotes: () => dispatch({type: 'FETCH_NOTES'})
+  fetchNotes: bindActionCreators(actions.fetchNotes, dispatch),
+  goToAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'}))
+  // fetchNotes: () => dispatch({type: 'FETCH_NOTES'})
+  
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
