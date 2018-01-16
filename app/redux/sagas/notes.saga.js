@@ -6,9 +6,9 @@ import {filterNote} from '../../utils/transformerutil';
 import {getItemToStorage, setItemToStorage} from '../../utils/storageutil';
 import * as actions from '../actions/index.actions';
 
-function* fetchHandler () {
+export  function* fetchHandler () {
   yield put(actions.showLoader());
-  yield delay(2000);
+  yield call(delay, 2000);
   let response;
   try {
     response = yield call(ApiNotes.getNotes);
@@ -19,7 +19,7 @@ function* fetchHandler () {
   yield put(actions.populateNotes(response));
   yield put(actions.hideLoader());
 }
-function* addNoteHandler (action) {
+export function* addNoteHandler (action) {
   yield put(actions.showLoader());
   try {
     const note = action.payload;
@@ -42,7 +42,7 @@ function* addNoteHandler (action) {
   }
   yield put(actions.hideLoader());
 }
-function* deleteNoteHandler (action) {
+export function* deleteNoteHandler (action) {
   yield put(actions.showLoader());
   try {
     const itemId = action.payload;
@@ -65,7 +65,7 @@ function* deleteNoteHandler (action) {
 }
 export default function* notes () {
   yield take(actions.fetchNotes);
-  yield fetchHandler();
+  yield call(fetchHandler);
 
   yield takeLatest(actions.ADD_NOTE_REQUEST, addNoteHandler);
   yield takeLatest(actions.DELETE_NOTE_REQUEST, deleteNoteHandler);
