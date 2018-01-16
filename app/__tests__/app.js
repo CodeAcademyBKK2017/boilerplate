@@ -1,4 +1,3 @@
-import apiNotes from '../api';
 import ConnectApp, {mapDispatchToProps} from '../app';
 import React from 'react';
 import renderer from 'react-test-renderer';
