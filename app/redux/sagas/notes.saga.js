@@ -67,14 +67,14 @@ export function* deleteRequestNote (id) {
   try {
     yield call(ApiNotes.deleteNote, id);
 
-    const oldNotes = yield select((storeState) => storeState.notes);
+    const oldNotes = yield select(getNotesStoreState);
     const filteredNotes = TransformerUtil.removeNote(oldNotes, id);
     yield call(StorageUtil.setItem, notesKey, filteredNotes);
 
     yield put(actions.deleteNote(id));
   } catch (error) {
-    Alert.alert(
-      'Delete Failed',
+    yield call(
+      Alert.alert, 'Delete Failed',
       String(error),
       null,
       {

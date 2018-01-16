@@ -242,3 +242,102 @@ describe('saveNote failure', () => {
     expect(result).toBeUndefined();
   });
 });
+
+describe('deleteRequestNoteHandler', () => {
+  const noteId = 1;
+  const action = actions.deleteNote(noteId);
+  const it = sagaHelper(notesSagas.deleteRequestNoteHandler(action));
+
+  it('should put showLoader', (result) => {
+    expect(result).toEqual(put(actions.showLoader()));
+  });
+
+  it('should call deleteRequestNote', (result) => {
+    expect(result).toEqual(call(notesSagas.deleteRequestNote, action.payload));
+  });
+
+  it('should put hideLoader', (result) => {
+    expect(result).toEqual(put(actions.hideLoader()));
+  });
+
+  it('and then nothing', (result) => {
+    expect(result).toBeUndefined();
+  });
+});
+
+describe('deleteRequestNote success', () => {
+  const noteId = 1;
+  const oldNotes = [{
+    id: 1,
+    title: 'test title',
+    content: 'test content'
+  },
+  {
+    id: 2,
+    title: 'test title',
+    content: 'test content'
+  },
+  {
+    id: 3,
+    title: 'test title',
+    content: 'test content'
+  }];
+  const filteredNotes = [{
+    id: 2,
+    title: 'test title',
+    content: 'test content'
+  },
+  {
+    id: 3,
+    title: 'test title',
+    content: 'test content'
+  }];
+  const it = sagaHelper(notesSagas.deleteRequestNote(noteId));
+
+  it('should call ApiNotes.deleteNote', (result) => {
+    expect(result).toEqual(call(ApiNotes.deleteNote, noteId));
+  });
+
+  it('should select getNotesStoreState', (result) => {
+    expect(result).toEqual(select(notesSagas.getNotesStoreState));
+    return oldNotes;
+  });
+
+  it('should call StorageUtil.setItem', (result) => {
+    expect(result).toEqual(call(StorageUtil.setItem, notesSagas.notesKey, filteredNotes));
+  });
+
+  it('should put actions.deleteNote', (result) => {
+    expect(result).toEqual(put(actions.deleteNote(noteId)));
+  });
+
+  it('and then nothing', (result) => {
+    expect(result).toBeUndefined();
+  });
+});
+
+describe('deleteRequestNote failure', () => {
+  const noteId = 1;
+  const apiError = new Error('ApiNotes.deleteNote');
+  const it = sagaHelper(notesSagas.deleteRequestNote(noteId));
+
+  it('should call ApiNotes.deleteNote', (result) => {
+    expect(result).toEqual(call(ApiNotes.deleteNote, noteId));
+    return apiError;
+  });
+
+  it('should call Alert.alert', (result) => {
+    expect(result).toEqual(call(
+      Alert.alert, 'Delete Failed',
+      String(apiError),
+      null,
+      {
+        cancelable: false
+      }
+    ));
+  });
+  
+  it('and then nothing', (result) => {
+    expect(result).toBeUndefined();
+  });
+});
