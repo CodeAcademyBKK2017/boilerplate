@@ -6,9 +6,7 @@ import {call, fork, put, select, take, takeLatest} from 'redux-saga/effects';
 import * as actions from '../actions/index.actions';
 
 function * fetchNotesHandler () {
-  yield put({
-    type: actions.SHOW_LOADER
-  });
+  yield put(actions.showLoader());
   let notes = [];
   try {
     notes = yield call(ApiNotes.getNotes);
@@ -16,19 +14,12 @@ function * fetchNotesHandler () {
     const value = yield call(StorageUtil.getItem, 'notes');
     notes = value ? value : [];
   }
-  yield put({
-    type: actions.POPULATE_NOTES,
-    payload: notes
-  });
-  yield put({
-    type: actions.HIDE_LOADER
-  });
+  yield put(actions.populateNotes(notes));
+  yield put(actions.hideLoader());
 }
 
 function * addNoteRequestHandler (action) {
-  yield put({
-    type: actions.SHOW_LOADER
-  });
+  yield put(actions.showLoader());
   const note = action.payload;
   try {
     const newNote = yield call(ApiNotes.addNote, note);
@@ -36,10 +27,7 @@ function * addNoteRequestHandler (action) {
     const notes = [...currentNote];
     notes.push(newNote);
     yield call(StorageUtil.setItem, 'notes', notes);
-    yield put({
-      type: actions.POPULATE_NOTES,
-      payload: notes
-    });
+    yield put(actions.populateNotes(notes));
   } catch (error) {
     Alert.alert(
       'Save Failed',
@@ -52,25 +40,18 @@ function * addNoteRequestHandler (action) {
       }
     );
   }
-  yield put({
-    type: actions.HIDE_LOADER
-  });
+  yield put(actions.hideLoader());
 }
 
 function * deleteNoteRequestHandler (action) {
-  yield put({
-    type: actions.SHOW_LOADER
-  });
+  yield put(actions.showLoader());
   const id = action.payload;
   try {
     yield call(ApiNotes.deleteNote, id);
     const currentNote = yield select((store) => (store.notes));
     const filteredNotes = yield call(TransformerUtil.removeNote, currentNote, id);
     yield call(StorageUtil.setItem, 'notes', filteredNotes);
-    yield put({
-      type: actions.POPULATE_NOTES,
-      payload: filteredNotes
-    });
+    yield put(actions.populateNotes(filteredNotes));
   } catch (error) {
     Alert.alert(
       'Delete Failed',
@@ -81,9 +62,7 @@ function * deleteNoteRequestHandler (action) {
       }
     );
   }
-  yield put({
-    type: actions.HIDE_LOADER
-  });
+  yield put(actions.hideLoader());
 }
 
 function * notes () {

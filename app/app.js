@@ -33,7 +33,7 @@ class App extends Component {
     this.setState({textContent});
   }
 
-  onSaveButtonPress = async () => {
+  onSaveButtonPress = () => {
     const note = {
       title: this.state.textTitle,
       content: this.state.textContent
@@ -41,7 +41,7 @@ class App extends Component {
     this.props.addNoteRequest(note);
   }
 
-  onDeleteButtonPress = (item) => async () => {
+  onDeleteButtonPress = (item) => () => {
     this.props.deleteNoteRequest(item.id);
   }
 
