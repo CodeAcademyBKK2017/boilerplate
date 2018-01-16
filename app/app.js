@@ -19,20 +19,16 @@ class App extends Component {
     textTitle: '',
     textContent: ''
   };
-  
   WrapperView = Platform.select({
     ios: KeyboardAvoidingView,
     android: View
   });
-
   onChangeTextTitle = (textTitle) => {
     this.setState({textTitle});
   }
-
   onChangeTextContent = (textContent) => {
     this.setState({textContent});
   }
-
   onSaveButtonPress = () => {
     const note = {
       title: this.state.textTitle,
@@ -40,15 +36,12 @@ class App extends Component {
     };
     this.props.addNoteRequest(note);
   }
-
   onDeleteButtonPress = (item) => () => {
     this.props.deleteNoteRequest(item.id);
   }
-
   componentDidMount () {
     this.props.fetchNotes();
   }
-
   render () {
     return (
       <this.WrapperView
@@ -66,9 +59,7 @@ class App extends Component {
           <Footer
             textContentLength={this.state.textContent.length}
             onSaveButtonPress={this.onSaveButtonPress}/>
-          {
-            this.props.notes.length > 0 ? <NoteList data={this.props.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
-          }
+          { this.props.notes.length > 0 ? <NoteList data={this.props.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null }
         </View>
         <AboutSection onAboutButtonPress={this.props.navigateToAbout}/>
       </this.WrapperView>

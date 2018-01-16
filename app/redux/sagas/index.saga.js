@@ -5,13 +5,15 @@ import {Alert} from 'react-native';
 import {call, fork, put, select, take, takeLatest} from 'redux-saga/effects';
 import * as actions from '../actions/index.actions';
 
+const keyStoreNotes = 'notes';
+
 function * fetchNotesHandler () {
   yield put(actions.showLoader());
   let notes = [];
   try {
     notes = yield call(ApiNotes.getNotes);
   } catch (error) {
-    const value = yield call(StorageUtil.getItem, 'notes');
+    const value = yield call(StorageUtil.getItem, keyStoreNotes);
     notes = value ? value : [];
   }
   yield put(actions.populateNotes(notes));
@@ -26,7 +28,7 @@ function * addNoteRequestHandler (action) {
     const currentNote = yield select((store) => (store.notes));
     const notes = [...currentNote];
     notes.push(newNote);
-    yield call(StorageUtil.setItem, 'notes', notes);
+    yield call(StorageUtil.setItem, keyStoreNotes, notes);
     yield put(actions.populateNotes(notes));
   } catch (error) {
     Alert.alert(
@@ -50,7 +52,7 @@ function * deleteNoteRequestHandler (action) {
     yield call(ApiNotes.deleteNote, id);
     const currentNote = yield select((store) => (store.notes));
     const filteredNotes = yield call(TransformerUtil.removeNote, currentNote, id);
-    yield call(StorageUtil.setItem, 'notes', filteredNotes);
+    yield call(StorageUtil.setItem, keyStoreNotes, filteredNotes);
     yield put(actions.populateNotes(filteredNotes));
   } catch (error) {
     Alert.alert(
