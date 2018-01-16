@@ -15,7 +15,7 @@ import React, {
   Component
 } from 'react';
 import Title from './components/titles/title.component';
-import {addnoterequest, deletenoterequest, FEACH_NOTE, hideloader, showloader} from '../app/redux/actions/index.action';
+import {addnoterequest, deletenoterequest, FEACH_NOTE} from '../app/redux/actions/index.action';
 import {
   Alert,
   Text, 
@@ -130,8 +130,6 @@ const mapStateToProps = (stateStore) => ({
 export const mapDispatchToProps = (dispatch) => ({
   addNoteToSaga: bindActionCreators(addnoterequest, dispatch),
   deleteNoteToSaga: bindActionCreators(deletenoterequest, dispatch),
-  showLoaderFromReducer: bindActionCreators(showloader, dispatch),
-  hideLoaderFromReducer: bindActionCreators(hideloader, dispatch),
   gotoAbout: () => dispatch(NavigationActions.navigate({routeName: 'About'})),
   FetchData: () => {
     dispatch({type: FEACH_NOTE});
