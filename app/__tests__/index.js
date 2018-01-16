@@ -69,7 +69,7 @@ describe('App', () => {
     expect(appInstance.state.textContent).toBe(text);
   });
 
-  it('onSaveButtonPress success', async () => {
+  xit('onSaveButtonPress success', async () => {
     const title = 'my test title';
     const content = 'my test message';
     appInstance.setState({
