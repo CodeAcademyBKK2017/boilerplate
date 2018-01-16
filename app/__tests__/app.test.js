@@ -1,17 +1,12 @@
-import Api from '../api';
 import ConnectedApp, {mapDispatchToProps} from '../app';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {Alert} from 'react-native';
 import {createStore} from 'redux';
 import {shallow} from 'enzyme';
 
 const store = createStore(() => ({}));
 
 jest.mock('../api');
-jest.mock('Alert', () => ({
-  alert: jest.fn()
-}));
 
 describe('App', () => {
   let appComp;
@@ -44,66 +39,45 @@ describe('App', () => {
     expect(appInstance.state.title).toEqual('');
   });
 
-  it('onSavePress success', async () => {
+  it('onSavePress', async () => {
+    const props = {
+      addNoteRequest: jest.fn()
+    };
+    appWrapper.setProps(props);
     const title = 'my test title';
     const content = 'my test content';
     appInstance.setState({title: title, content: content});
-    await appInstance.onSavePress();
+    appInstance.onSavePress();
     const expectedNote = {
       'title': 'my test title',
       'content': 'my test content'
     };
-    expect(Api.addNoteRequest).toHaveBeenLastCalledWith(expectedNote);
+    expect(appInstance.props.addNoteRequest).toHaveBeenLastCalledWith(expectedNote);
     expect(appInstance.state.title).toEqual('');
     expect(appInstance.state.content).toEqual('');
   });
-
-  it('onSavePress failure', async () => {
-    Api.addNote.mockClear();
-    Api.addNote.mockImplementation(() => Promise.reject('API failed'));
-    await appInstance.onSavePress();
-    expect(Alert.alert).toBeCalled();
-  });
-  
-  it('onDeletePress success', async () => {
+ 
+  it('onDeletePress', async () => {
+    const props = {
+      removeNotes: jest.fn()
+    };
+    appWrapper.setProps(props);
     const item = {
       title: 'title',
       content: 'content'};
-    const initialData = {
-      title: '',
-      content: '',
-      notes: [item]
-    };
-    await appInstance.setState(initialData);
-    await appInstance.onDeletePress(item)();
-    expect(Api.deleteNote).toHaveBeenLastCalledWith(item);
+    appInstance.onDeletePress(item)();
+    expect(appInstance.props.removeNotes).toHaveBeenLastCalledWith(item);
   });
-
-  it('onDeletePress failure', async () => {
-    Api.deleteNote.mockClear();
-    Api.deleteNote.mockImplementation(() => Promise.reject('API failed'));
-    await appInstance.onDeletePress()();
-    expect(Alert.alert).toBeCalled();
-  });
- 
+  
   it('componentDidMount with existed notes', () => {
-    jest.spyOn(appInstance, 'onLoadData');
+    const props = {
+      fetchNotes: jest.fn()
+    };
+    appWrapper.setProps(props);
     appInstance.componentDidMount();
-    expect(appInstance.onLoadData).toBeCalled();
+    expect(appInstance.props.fetchNotes).toBeCalled();
   });
-  it('onLoadData success', async () => {
-    await appInstance.onLoadData();
-    expect(Api.getNote).toBeCalled();
-    expect(appInstance.props.showNote).toHaveBeenCalledWith([{
-      title: 'React Native',
-      content: '- UI'
-    }]);
-  });
-  it('onLoadData failure', async () => {
-    Api.getNote.mockImplementation(jest.fn(() => Promise.reject('API FAILED')));
-    await appInstance.onLoadData();
-    expect(appInstance.props.showNote).toHaveBeenCalledWith([]);
-  });
+  
   it('goToAbout', () => {
     const dispatch = jest.fn();
     const dispatcher = mapDispatchToProps(dispatch);
