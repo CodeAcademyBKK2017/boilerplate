@@ -53,7 +53,7 @@ describe('App', () => {
       'title': 'my test title',
       'content': 'my test content'
     };
-    expect(Api.addNote).toHaveBeenLastCalledWith(expectedNote);
+    expect(Api.addNoteRequest).toHaveBeenLastCalledWith(expectedNote);
     expect(appInstance.state.title).toEqual('');
     expect(appInstance.state.content).toEqual('');
   });

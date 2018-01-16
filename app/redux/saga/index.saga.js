@@ -3,41 +3,28 @@ import storageUtil from '../../utility/storage.util';
 import transformerutil from '../../utility/transformer.util';
 import {Alert} from 'react-native';
 import {call, put, select, takeEvery, takeLatest} from 'redux-saga/effects';
+import * as actions from '../actions/index.actions';
 
 function* fetchHandler () {
-  yield put({
-    type: 'SHOW_LOADER'
-  });
+  yield put(actions.showLoader());
   let response;
   try {
     response = yield call(Api.getNote);
   } catch (err) {
     response = yield call(storageUtil.getItem, 'notes');
   }
-  
-  yield put({
-    type: 'POPULATE_NOTE',
-    payload: response
-  });
-  yield put({
-    type: 'HIDE_LOADER'
-  });
+  yield put(actions.showNote(response));
+  yield put(actions.hideLoader());
 }
 
 function* saveHandler (action) {
-  yield put({
-    type: 'SHOW_LOADER'
-  });
+  yield put(actions.showLoader());
   try {
     const noteWithID = yield call(Api.addNote, action.payload);
     const currentNotes = yield select((store) => (store.notes));
     const newNotes = [...currentNotes, noteWithID];
     yield call(storageUtil.setItem, 'notes', newNotes);
-
-    yield put({
-      type: 'ADD_NOTE',
-      payload: noteWithID
-    });
+    yield put(actions.addNote(noteWithID));
   } catch (err) {
     Alert.alert(
       'Error',
@@ -50,28 +37,18 @@ function* saveHandler (action) {
       {cancelable: false}
     );
   }
-  
-  yield put({
-    type: 'HIDE_LOADER'
-  });
+  yield put(actions.hideLoader());
 }
 
 function* deleteHandler (action) {
-  yield put({
-    type: 'SHOW_LOADER'
-  });
-  
+  yield put(actions.showLoader());
   const item = action.payload;
   try {
     yield call(Api.deleteNote, item);
     const currentNotes = yield select((store) => (store.notes));
     const filterNotes = yield call(transformerutil.deleteItem, currentNotes, item.id);
     yield call(storageUtil.setItem, 'notes', filterNotes);
-    yield put({
-      type: 'DELETE_NOTE',
-      payload: filterNotes
-    });
-    
+    yield put(actions.deleteNote(filterNotes));
   } catch (err) {
     Alert.alert(
       'Error',
@@ -84,10 +61,7 @@ function* deleteHandler (action) {
       {cancelable: false}
     );
   }
-    
-  yield put({
-    type: 'HIDE_LOADER'
-  });
+  yield put(actions.hideLoader());
 }
   
 export default function* notes () {

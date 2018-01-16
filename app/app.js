@@ -65,19 +65,19 @@ class App extends Component {
 
 App.propTypes = {
   goToAbout: PropTypes.func,
-  removeNotes: PropTypes.func,
   notes: PropTypes.array,
   modalShow: PropTypes.object,
   fetchNotes: PropTypes.func,
-  addNoteRequest: PropTypes.func
+  addNoteRequest: PropTypes.func,
+  removeNotes: PropTypes.func
 };
 App.defaultProps = {
   goToAbout: noop,
-  deleteNote: noop,
-  fetchNotes: noop,
-  saveHandler: noop,
   notes: [],
-  modalShow: {}
+  modalShow: {},
+  fetchNotes: noop,
+  addNoteRequest: noop,
+  removeNotes: noop
 };
 
 const mapStateToProps = (state) => ({notes: state.notes, modalShow: state.loader});
