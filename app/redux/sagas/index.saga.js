@@ -5,45 +5,31 @@ import {
   Alert
 } from 'react-native';
 import {call, fork, put, select, takeEvery} from 'redux-saga/effects';
+import * as actions from '../actions/index.actions';
 
+const keysNote = 'notes';
 function* fetchHandler () {
-  yield put({
-    type: 'SHOW_LOADER'
-  });
+  yield put(actions.showLoader());
   let notes;
   try {
     notes = yield call(ApiNotes.getNotes);
   } catch (error) {
-    notes = yield call(Storage.getItemsFromAsyncStorage, 'notes');
+    notes = yield call(Storage.getItemsFromAsyncStorage, keysNote);
   }
-  
-  console.log('====>', notes);
-  yield put({
-    type: 'POPULATE_NOTES',
-    payload: notes
-  });
-  yield put({
-    type: 'HIDE_LOADER'
-  });
+  yield put(actions.populateNotes(notes));
+  yield put(actions.hideLoader());
 }
 
 function* saveHandler (action) {
-  yield put({
-    type: 'SHOW_LOADER'
-  });
-
+  yield put(actions.showLoader());
   const note = action.payload;
   try {
     yield call(ApiNotes.addNote, note);
     const preNote = yield select((store) => (store.notes));
     const newNotes = [...preNote];
     newNotes.push(note);
-    yield call(Storage.setItemsFromAsyncStorage, 'notes', JSON.stringify(newNotes));
-
-    yield put({
-      type: 'POPULATE_NOTES',
-      payload: newNotes
-    });
+    yield call(Storage.setItemsFromAsyncStorage, keysNote, JSON.stringify(newNotes));
+    yield put(actions.populateNotes(newNotes));
   } catch (error) {
     Alert.alert(
       'Delete Failed',
@@ -54,28 +40,17 @@ function* saveHandler (action) {
       }
     );
   }
-
-  yield put({
-    type: 'HIDE_LOADER'
-  });
+  yield put(actions.hideLoader());
 }
 
 function* removeHandler (action) {
-  yield put({
-    type: 'SHOW_LOADER'
-  });
-
+  yield put(actions.showLoader());
   try {
-    yield call(ApiNotes.deleteNote, action.payload.id); // API CALL
+    yield call(ApiNotes.deleteNote, action.payload.id);
     const preNotes = yield select((store) => (store.notes));
     const filteredNotes = yield call(transformerutil.deleteNote, preNotes, action.payload.id);
-    // const filteredNotes = transformerutil.deleteNote(this.props.notes, item.id);
-    yield call(Storage.setItemsFromAsyncStorage, 'notes', JSON.stringify(filteredNotes));
-
-    yield put({
-      type: 'POPULATE_NOTES',
-      payload: filteredNotes
-    });
+    yield call(Storage.setItemsFromAsyncStorage, keysNote, JSON.stringify(filteredNotes));
+    yield put(actions.populateNotes(filteredNotes));
   } catch (error) {
     Alert.alert(
       'Delete Failed',
@@ -86,10 +61,7 @@ function* removeHandler (action) {
       }
     );
   }
-
-  yield put({
-    type: 'HIDE_LOADER'
-  });
+  yield put(actions.hideLoader());
 }
   
 function* notes () {
