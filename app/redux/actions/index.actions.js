@@ -17,9 +17,11 @@ export const HIDE_LOADER = 'HIDE_LOADER';
 export const FETCH_NOTES = 'FETCH_NOTES';
 export const ADD_NOTE_REQUEST = 'ADD_NOTE_REQUEST';
 export const DELETE_NOTE_SAGA = 'DELETE_NOTE_SAGA';
+export const Delete_Failed = 'Delete Failed';
 
 export const showLoader = createAction(SHOW_LOADER);
 export const hideLoader = createAction(HIDE_LOADER);
 export const fetchNotes = createAction(FETCH_NOTES);
 export const addNotes = createAction(ADD_NOTE_REQUEST);
 export const deleteNotes = createAction(DELETE_NOTE_SAGA);
+export const deletefailed = createAction(Delete_Failed);

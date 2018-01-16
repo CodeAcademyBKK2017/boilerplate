@@ -4,13 +4,13 @@ import storage from '../../utils/storage.util';
 import {call, put, take, takeEvery} from 'redux-saga/effects';
 import * as actions from '../actions/index.actions';
 
-function* getData () {
+export function* getData () {
   try {
-    const data = yield call(ApiNotes.getNotes);
-    return data;
+    return yield call(ApiNotes.getNotes);
+     
   } catch (err) {
-    const data =  yield call(storage.getItem, 'notes');
-    return data;
+    return yield call(storage.getItem, 'notes');
+     
   }
 }
 export default function* notes () {
@@ -29,19 +29,17 @@ export function* addNote (action) {
   yield put(actions.showLoader());
   const response = yield call(ApiNotes.addNote, action.payload);
   yield put(actions.addNote(response));
-  storage.setItem('notes', response);
+  yield call(storage.setItem, 'notes', response);
+  
   yield put(actions.hideLoader());
 }
 export function* deleteNote (action) {
   yield put(actions.showLoader());
   const response = yield call(ApiNotes.deleteNote, action.payload.id);
   yield call(storage.setItem, 'notes', response);
-  yield put(action.populateNotes(response));
+  yield put(actions.populateNotes(response));
     
-  yield put({
-    type: 'Delete Failed',
-    payload: response
-  });
-  storage.setItem('notes', notesUtil.deleteNote, response);
+  yield put(actions.deletefailed);
+  yield call(storage.setItem, 'notes', notesUtil.deleteNote, response);
   yield put(actions.hideLoader());
 }
