@@ -3,7 +3,6 @@ import ConnectedApp, {mapDispatchToProps} from '../app';
 import NoteItem from '../components/NoteItem/NoteItem.component';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import SnackBar from 'react-native-snackbar';
 import StorageUtil from '../utils/storage.util';
 import {createStore} from 'redux';
 
@@ -56,12 +55,12 @@ describe('App', () => {
 
   it('onTitleChangeText should be title', () => {
     instance.onTitleChangeText('title');
-    expect(instance.state.currentTitle).toBe('title');
+    expect(instance.state.title).toBe('title');
   });
 
   it('onContentChangeText should be title', () => {
     instance.onContentChangeText('content');
-    expect(instance.state.currentContent).toBe('content');
+    expect(instance.state.content).toBe('content');
   });
 
   it('onPressItem', () => {

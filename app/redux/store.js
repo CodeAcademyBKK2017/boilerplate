@@ -1,6 +1,6 @@
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers/root.reducer';
-import sagas from './sagas';
+import sagas from './sagas/index.sagas';
 import {applyMiddleware, compose, createStore} from 'redux';
 
 const logger = () => (next) => (action) => {

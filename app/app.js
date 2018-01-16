@@ -11,17 +11,14 @@ import Title from './components/Title/Title.component';
 import Touchable from 'react-native-platform-touchable';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {
-  FlatList, Text, View
-} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import {NavigationActions} from 'react-navigation';
-
 import * as actions from './redux/actions/index.actions';
 
 class App extends Component {
   state = {
-    currentTitle: '',
-    currentContent: '',
+    title: '',
+    content: '',
     modalVisible: false,
     selectedNote: {id: '', title: '', content: ''}
   }
@@ -30,24 +27,17 @@ class App extends Component {
     this.props.fetchNotes();
   }
 
-  onTitleChangeText = (currentTitle) => this.setState({currentTitle});
+  onTitleChangeText = (title) => this.setState({title});
 
-  onContentChangeText = (currentContent) => this.setState({currentContent});
+  onContentChangeText = (content) => this.setState({content});
 
   onSaveButtonPress = () => {
-    const {currentTitle, currentContent} = this.state;
-
-    this.props.addNoteRequest({
-      title: currentTitle,
-      content: currentContent
-    });
-
-    this.setState({currentTitle: '', currentContent: ''});
+    const {title, content} = this.state;
+    this.props.addNoteRequest({title, content});
+    this.setState({title: '', content: ''});
   }
 
-  _onPressItem = (selectedNote) => () => {
-    this.setState({modalVisible: true, selectedNote});
-  }
+  _onPressItem = (selectedNote) => () => this.setState({modalVisible: true, selectedNote});
 
   _onDeleteItem = (note) => () => this.props.deleteNoteRequest(note);
 
@@ -55,17 +45,15 @@ class App extends Component {
 
   _renderItem = ({item}) => (<NoteItem data={item} onPressItem={this._onPressItem} onDeleteItem={this._onDeleteItem} />)
 
-  _keyExtractor = (item) => item.id
+  _keyExtractor = (item) => item.id;
 
   render () {
     return (
       <View style={styles.container}>
-        <Title onChangeText={this.onTitleChangeText} value={this.state.currentTitle} />
-        <Content onChangeText={this.onContentChangeText} value={this.state.currentContent} />
-        <Footer characterCount={this.state.currentContent.length} onSaveButtonPress={this.onSaveButtonPress} />
-        <View style={styles.list}>
-          <FlatList data={this.props.notes} renderItem={this._renderItem} keyExtractor={this._keyExtractor} />
-        </View>
+        <Title onChangeText={this.onTitleChangeText} value={this.state.title} />
+        <Content onChangeText={this.onContentChangeText} value={this.state.content} />
+        <Footer characterCount={this.state.content.length} onSaveButtonPress={this.onSaveButtonPress} />
+        <View style={styles.list}><FlatList data={this.props.notes} renderItem={this._renderItem} keyExtractor={this._keyExtractor} /></View>
         <Touchable onPress={this.props.navigateToAbout}><Text>Go to About</Text></Touchable>
         
         <Dialog visible={this.state.modalVisible} title={this.state.selectedNote.title} content={this.state.selectedNote.content} onClose={this._hideOverlay}/>
@@ -94,11 +82,7 @@ const bindNavigationActionCreators = (routeName, dispatch) => () => {
 };
 
 export const mapDispatchToProps = (dispatch) => ({
-  addNote: bindActionCreators(actions.addNote, dispatch),
-  deleteNote: bindActionCreators(actions.deleteNote, dispatch),
-  populateNotes: bindActionCreators(actions.populateNotes, dispatch),
-  navigateToAbout: bindNavigationActionCreators('AboutApp', dispatch),
-
+  navigateToAbout: bindNavigationActionCreators(actions.ABOUT_APP, dispatch),
   fetchNotes: bindActionCreators(actions.fetchNotes, dispatch),
   addNoteRequest: bindActionCreators(actions.addNoteRequest, dispatch),
   deleteNoteRequest: bindActionCreators(actions.deleteNoteRequest, dispatch)
