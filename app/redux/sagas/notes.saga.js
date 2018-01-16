@@ -27,11 +27,13 @@ export function* fetchNoteHandler () {
   yield put(actions.hideLoader());
 }
 
+export const getNotesStoreState = (storeState) => storeState.notes;
+
 export function* saveNote (note) {
   try {
     const response = yield call(ApiNotes.addNote, note);
 
-    const oldNotes = yield select((storeState) => storeState.notes);
+    const oldNotes = yield select(getNotesStoreState);
     const newNotes = [...oldNotes];
     newNotes.push(response);
     
@@ -39,8 +41,8 @@ export function* saveNote (note) {
 
     yield put(actions.addNote(response));
   } catch (error) {
-    Alert.alert(
-      'Save Failed',
+    yield call(
+      Alert.alert, 'Save Failed',
       String(error),
       [
         {text: 'OK'}
