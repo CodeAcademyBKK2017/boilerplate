@@ -206,3 +206,11 @@ describe('notes saga: removeHandler fail', () => {
     expect(result).toEqual(put(actions.hideLoader()));
   });
 });
+
+describe('notes saga: selectFN', () => {
+  const store = {
+    notes: []
+  };
+  const result = notesSaga.selectFN(store);
+  expect(result).toEqual([]);
+});
