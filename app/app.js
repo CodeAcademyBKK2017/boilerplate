@@ -8,12 +8,14 @@ import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import style from './app.style';
 import TitleBox from './components/TitleBox/TitleBox.component';
+import {bindActionCreators} from '../../../../Library/Caches/typescript/2.6/node_modules/redux';
 import {connect} from 'react-redux';
 import {NavigationActions} from 'react-navigation';
 import {
   Text,
   View
 } from 'react-native';
+import * as actions from './redux/actions/index.action';
 
 class App extends Component {
 
@@ -97,15 +99,15 @@ App.defaultProps = {
   deleteNotesRequest: noop
 };
 
-const mapStateToProps = (state) => ({
+export const mapStateToProps = (state) => ({
   notes: (state.notes !== null) ? state.notes : [], 
   modalShow: state.loader
 });
 
 export const mapDispatchToProps = (dispatch) => ({
-  addNotesRequest: (payload) => dispatch({type: 'ADD_NOTE_REQUEST', payload}),
-  deleteNotesRequest: (payload) => dispatch({type: 'DELETE_NOTE_REQUEST', payload}),
-  fetchNotes: () => dispatch({type: 'FETCH_NOTE'}),
+  addNotesRequest: bindActionCreators(actions.addNotesRequest, dispatch),
+  deleteNotesRequest: bindActionCreators(actions.deleteNotesRequest, dispatch),
+  fetchNotes: () => bindActionCreators(actions.fetchNote, dispatch),
   navigateToAbout: () => {
     dispatch(NavigationActions.navigate({routeName: 'About'}));
   }

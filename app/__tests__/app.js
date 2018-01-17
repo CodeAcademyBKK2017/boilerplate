@@ -1,4 +1,4 @@
-import ConnectApp, {mapDispatchToProps} from '../app';
+import ConnectApp, {mapDispatchToProps, mapStateToProps} from '../app';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {createStore} from 'redux';
@@ -51,7 +51,17 @@ describe('App', () => {
     appInstance.onTitleChange('React Native');
     appInstance.onContentChange('- UI');
     appInstance.onSave();
-    expect(appInstance.showFlatList).toMatchSnapshot();
+
+    const result = appInstance.showFlatList();
+    expect(result).toBeFalsy();
+
+    const props = {
+      notes: [{id: 1, title: 'content', content: 'content'}]
+    };
+
+    appWrapper.setProps(props);
+    const result2 = appInstance.showFlatList();
+    expect(result2).toBeDefined();
   }); 
 
   it('Check Function viewOverlay', () => {
@@ -84,7 +94,7 @@ describe('App', () => {
     expect(appInstance.props.fetchNotes).toBeCalled();
   });
   
-  it('Check Function onSave success', () => {
+  it('Check Function onSave', () => {
     const props = {
       addNotesRequest: jest.fn()
     };
@@ -111,6 +121,7 @@ describe('App', () => {
     };
     appWrapper.setProps(props);
     appInstance.onDelete(note)();
+    expect(appInstance.props.deleteNotesRequest).toBeCalled();
     expect(appInstance.props.deleteNotesRequest).toHaveBeenCalledWith(note);
   });
 
@@ -119,6 +130,35 @@ describe('App', () => {
     const dispatcher = mapDispatchToProps(dispatch);
     dispatcher.navigateToAbout();
     expect(dispatch).toHaveBeenCalledWith({routeName: 'About', type: 'Navigation/NAVIGATE'});
+  });
+
+  it('Function mapStateToProps success', () => {
+    const state = {
+      notes: [{
+        title: 'title',
+        content: 'content'
+      }],
+      loader: ''
+    };
+    const expectResult = {
+      notes: state.notes,
+      modalShow: state.loader
+    };
+    const result = mapStateToProps(state);
+    expect(result).toEqual(expectResult);
+  });
+
+  it('Function mapStateToProps failed', () => {
+    const state = {
+      notes: null,
+      loader: ''
+    };
+    const expectResult = {
+      notes: [],
+      modalShow: state.loader
+    };
+    const result = mapStateToProps(state);
+    expect(result).toEqual(expectResult);
   });
 });
 
