@@ -42,6 +42,9 @@ describe('fetchHandler success', () => {
   it('hideLoader', (result) => {
     expect(result).toEqual(put(actions.hideLoader()));
   });
+  it('should be end', (result) => {
+    expect(result).toBeUndefined();
+  });
 });
 
 describe('fetchHandler failure', () => {
@@ -74,17 +77,18 @@ describe('saveHandler success', () => {
       content: 'content'
     }
   };
+  const note = {id: 1, title: 'title', content: 'content'};
   const it = sagaHelper(notes.saveHandler(noteWithID));
   it('showLoader', (result) => {
     expect(result).toEqual(put(actions.showLoader()));
   });
   it('noteWithID', (result) => {
     expect(result).toEqual(call(Api.addNote, noteWithID.payload));
-    return {id: 1, title: 'title', content: 'content'};
+    return note;
   });
   it('currentNotes', (result) => {
     expect(result).toEqual(select(storageUtil.getStore));
-    return [{id: 1, title: 'title', content: 'content'}];
+    return [note];
   });
   it('call setItem', (result) => {
     expect(result).toEqual(call(storageUtil.setItem, 'notes', [noteWithID.payload, noteWithID.payload]));
@@ -94,6 +98,33 @@ describe('saveHandler success', () => {
   });
   it('hideLoader', (result) => {
     expect(result).toEqual(put(actions.hideLoader()));
+  });
+});
+
+describe('saveHandler failed', () => {
+  const noteNote = {
+    type: actions.ADD_NOTE_REQUEST,
+    payload: {
+      id: 1,
+      title: 'title',
+      content: 'content'
+    }
+  };
+  const it = sagaHelper(notes.saveHandler(noteNote));
+    
+  it('Should show loader', (result) => {
+    expect(result).toEqual(put(actions.showLoader()));
+  });
+    
+  it('Making api call add note', (result) => {
+    expect(result).toEqual(call(Api.addNote, noteNote.payload));
+    return new Error('Something went wrong');
+  });
+  it('hideLoader', (result) => {
+    expect(result).toEqual(put(actions.hideLoader()));
+  });
+  it('should be end', (result) => {
+    expect(result).toBeUndefined();
   });
 });
 
@@ -132,34 +163,29 @@ describe('deleteHandler success', () => {
   });
 });
 
-describe('Error', () => {
-  const item = ({
+describe('deleteHandler failed', () => {
+  const noteNote = {
+    type: actions.DELETE_NOTE_REQUEST,
     payload: {
-      title: 'Title',
-      content: 'Content',
-      id: 1
+      id: 1,
+      title: 'title',
+      content: 'content'
     }
-  });
-  const it = sagaHelper(notes.deleteHandler(item));
-  it('showLoader', (result) => {
+  };
+  const it = sagaHelper(notes.deleteHandler(noteNote));
+    
+  it('Should show loader', (result) => {
     expect(result).toEqual(put(actions.showLoader()));
   });
-  it('should Alert', (result) => {
-    expect(result).toEqual(call(Alert.deleteNote, item.payload));
-    return new Error('Error');
-  });
-  it('should Alert', (result) => {
-    expect(result).toEqual(call(Alert.alert, 'Save Failed',
-      String(Error),
-      [
-        {text: 'OK'}
-      ],
-      {
-        cancelable: false
-      }));
     
+  it('Making api call delete note', (result) => {
+    expect(result).toEqual(call(Api.deleteNote, noteNote.payload));
+    return new Error('Something went wrong');
   });
   it('hideLoader', (result) => {
     expect(result).toEqual(put(actions.hideLoader()));
+  });
+  it('should be end', (result) => {
+    expect(result).toBeUndefined();
   });
 });

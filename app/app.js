@@ -5,14 +5,17 @@ import noop from 'lodash/noop';
 import NoteList from './components/NoteList/NoteList.component';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
+import result from 'lodash/result';
 import styles from './app.style';
 import Title from './components/Title/Title.component';
+import {bindActionCreators} from 'redux';
 import {
   Button,
   View
 } from 'react-native';
 import {connect} from 'react-redux';
 import {NavigationActions} from 'react-navigation';
+import * as actions from './redux/actions/index.actions';
 
 class App extends Component {
   state = {
@@ -34,7 +37,7 @@ class App extends Component {
   }
 
   onDeletePress = (item) => () => {
-    this.props.removeNotes(item);
+    this.props.deleteNoteRequest(item);
   }
 
   onTypeContent = (textInput) => {
@@ -69,7 +72,7 @@ App.propTypes = {
   modalShow: PropTypes.object,
   fetchNotes: PropTypes.func,
   addNoteRequest: PropTypes.func,
-  removeNotes: PropTypes.func
+  deleteNoteRequest: PropTypes.func
 };
 App.defaultProps = {
   goToAbout: noop,
@@ -77,17 +80,23 @@ App.defaultProps = {
   modalShow: {},
   fetchNotes: noop,
   addNoteRequest: noop,
-  removeNotes: noop
+  deleteNoteRequest: noop
 };
 
-const mapStateToProps = (state) => ({notes: state.notes, modalShow: state.loader});
+const mapStateToProps = (storeState) => ({
+  notes: storeState.notes,
+  showLoader: result(storeState, 'loader.isVisible', false)
+});
+
+const bindNavigationActionCreators = (routeName, dispatch) => () => {
+  dispatch(NavigationActions.navigate({routeName}));
+};
+
 export const mapDispatchToProps = (dispatch) => ({
-  addNoteRequest: (payload) => dispatch({type: 'ADD_NOTE_REQUEST', payload}),
-  removeNotes: (payload) => dispatch({type: 'DELETE_NOTE_REQUEST', payload}),
-  fetchNotes: () => dispatch({type: 'FETCH_NOTE'}),
-  goToAbout: () => { 
-    dispatch(NavigationActions.navigate({routeName: 'About'})); 
-  }
+  fetchNotes: bindActionCreators(actions.fetchNote, dispatch),
+  addNoteRequest: bindActionCreators(actions.addNoteRequest, dispatch),
+  deleteNoteRequest: bindActionCreators(actions.deleteNoteRequest, dispatch),
+  goToAbout: bindNavigationActionCreators(actions.ABOUT_APP, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

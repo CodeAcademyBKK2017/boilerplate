@@ -8,6 +8,7 @@ export const DELETE_NOTE_REQUEST = 'DELETE_NOTE_REQUEST';
 export const POPULATE_NOTE = 'POPULATE_NOTE';
 export const SHOW_LOADER = 'SHOW_LOADER';
 export const HIDE_LOADER = 'HIDE_LOADER';
+export const ABOUT_APP = 'AboutApp';
 
 export const fetchNote = createAction(FETCH_NOTE);
 export const addNote = createAction(ADD_NOTE);

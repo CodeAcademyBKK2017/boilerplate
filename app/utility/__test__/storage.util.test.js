@@ -8,7 +8,7 @@ jest.mock('AsyncStorage', () => ({
 }));
 
 describe('AboutApp', () => {
-  it('Check Function setItem', () => { // example to test class methods
+  it('Check Function setItem', () => {
     StorageUtil.setItem('notes', {});
     expect(AsyncStorage.setItem).toHaveBeenCalledWith('notes', '{}');
   });
@@ -18,6 +18,14 @@ describe('AboutApp', () => {
 
     const result = await StorageUtil.getItem('notes');
     expect(result).toEqual(expectedData);
+  });
+
+  it('Check Function getStore', () => {
+    const store = {
+      notes: 'Notes'
+    };
+    const result = StorageUtil.getStore(store);
+    expect(result).toEqual('Notes');
   });
 
 });

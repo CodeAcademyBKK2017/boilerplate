@@ -2,6 +2,7 @@ import ConnectedApp, {mapDispatchToProps} from '../app';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {createStore} from 'redux';
+import {NavigationActions} from 'react-navigation';
 import {shallow} from 'enzyme';
 
 const store = createStore(() => ({}));
@@ -59,14 +60,14 @@ describe('App', () => {
  
   it('onDeletePress', async () => {
     const props = {
-      removeNotes: jest.fn()
+      deleteNoteRequest: jest.fn()
     };
     appWrapper.setProps(props);
     const item = {
       title: 'title',
       content: 'content'};
     appInstance.onDeletePress(item)();
-    expect(appInstance.props.removeNotes).toHaveBeenLastCalledWith(item);
+    expect(appInstance.props.deleteNoteRequest).toHaveBeenLastCalledWith(item);
   });
   
   it('componentDidMount with existed notes', () => {
@@ -78,11 +79,40 @@ describe('App', () => {
     expect(appInstance.props.fetchNotes).toBeCalled();
   });
   
+  it('onSavePress: Should be count the current of string', () =>  {
+    const props = {
+      addNoteRequest: jest.fn()
+    };
+    const expectedNote = {
+      title: 'title',
+      content: 'content'
+    };
+    appWrapper.setProps(props);
+    appInstance.setState({title: expectedNote.title, content: expectedNote.content});
+    appInstance.onSavePress();
+    expect(appInstance.props.addNoteRequest).toHaveBeenLastCalledWith(expectedNote);
+    expect(appInstance.state.title).toEqual('');
+    expect(appInstance.state.content).toEqual('');
+  });
+  
+  it('On delete item', () => {
+    const props = {
+      deleteNoteRequest: jest.fn()
+    };
+    const note = {
+      id: 1,
+      title: 'title',
+      content: 'content'
+    };
+    appWrapper.setProps(props);
+    appInstance.onDeletePress(note)();
+    expect(appInstance.props.deleteNoteRequest).toHaveBeenCalledWith(note);
+  });
+
   it('goToAbout', () => {
     const dispatch = jest.fn();
-    const dispatcher = mapDispatchToProps(dispatch);
-    dispatcher.goToAbout();
-    expect(dispatch).toHaveBeenCalledWith({routeName: 'About', type: 'Navigation/NAVIGATE'});
+    mapDispatchToProps(dispatch).goToAbout();
+    expect(dispatch).toHaveBeenCalledWith(NavigationActions.navigate({routeName: 'AboutApp'}));
   });
 });
 
