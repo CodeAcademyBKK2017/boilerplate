@@ -2,12 +2,14 @@ import ApiNotes from '../../api';
 import StorageUtil from '../../utils/StorageUtil';
 import TransformerUtil from '../../utils/TransformerUtil';
 import {Alert} from 'react-native';
-import {call, fork, put, select, take, takeLatest} from 'redux-saga/effects';
+import {call, put, select, take, takeLatest} from 'redux-saga/effects';
 import * as actions from '../actions/index.actions';
 
 const keyStoreNotes = 'notes';
 
-function * fetchNotesHandler () {
+export const selectFilters = (store) => (store.notes);
+
+export function * fetchNotesHandler () {
   yield put(actions.showLoader());
   let notes = [];
   try {
@@ -20,18 +22,18 @@ function * fetchNotesHandler () {
   yield put(actions.hideLoader());
 }
 
-function * addNoteRequestHandler (action) {
+export function * addNoteRequestHandler (action) {
   yield put(actions.showLoader());
   const note = action.payload;
   try {
     const newNote = yield call(ApiNotes.addNote, note);
-    const currentNote = yield select((store) => (store.notes));
+    const currentNote = yield select(selectFilters);
     const notes = [...currentNote];
     notes.push(newNote);
     yield call(StorageUtil.setItem, keyStoreNotes, notes);
     yield put(actions.populateNotes(notes));
   } catch (error) {
-    Alert.alert(
+    yield call(Alert.alert,
       'Save Failed',
       String(error),
       [
@@ -45,17 +47,17 @@ function * addNoteRequestHandler (action) {
   yield put(actions.hideLoader());
 }
 
-function * deleteNoteRequestHandler (action) {
+export function * deleteNoteRequestHandler (action) {
   yield put(actions.showLoader());
   const id = action.payload;
   try {
     yield call(ApiNotes.deleteNote, id);
-    const currentNote = yield select((store) => (store.notes));
+    const currentNote = yield select(selectFilters);
     const filteredNotes = yield call(TransformerUtil.removeNote, currentNote, id);
     yield call(StorageUtil.setItem, keyStoreNotes, filteredNotes);
     yield put(actions.populateNotes(filteredNotes));
   } catch (error) {
-    Alert.alert(
+    yield call(Alert.alert,
       'Delete Failed',
       String(error),
       null,
@@ -67,15 +69,9 @@ function * deleteNoteRequestHandler (action) {
   yield put(actions.hideLoader());
 }
 
-function * notes () {
+export default function * notes () {
   yield takeLatest(actions.DELETE_NOTE_REQUEST, deleteNoteRequestHandler);
   yield takeLatest(actions.ADD_NOTE_REQUEST, addNoteRequestHandler);
   yield take(actions.FETCH_NOTES);
   yield fetchNotesHandler();
 }
-
-function * index () {
-  yield fork(notes);
-}
-
-export default index;
