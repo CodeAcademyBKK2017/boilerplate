@@ -1,9 +1,11 @@
 
 import ApiNotes from '../../../api';
-import notes, {addNoteHandler, deleteNoteHandler, fetchHandler} from '../notes.saga';
+import notes, {addNoteHandler, deleteNoteHandler, fetchHandler, noteSelector} from '../notes.saga';
 import sagaHelper from 'redux-saga-testing';
+import {Alert} from 'react-native';
 import {call, put,  select, take, takeLatest} from 'redux-saga/effects';
 import {delay} from  'redux-saga';
+import {filterNote} from '../../../utils/transformerutil';
 import {getItemToStorage, setItemToStorage} from '../../../utils/storageutil';
 import * as actions from '../../actions/index.actions';
 
@@ -105,8 +107,123 @@ describe('fetchHandler Fail Case with Empty storageData Data:', () => {
 });
 
 describe('addNoteHandler Success Case :', () => {
-  const it = sagaHelper(addNoteHandler(actions.addNoteHandler));
+  const note = {title: 'xxx', content: 'content'};
+  const noteWithId = {title: 'xxx', content: 'content', id: 1};
+  const currentNote = [];
+  const newNote = [noteWithId];
+  const it = sagaHelper(addNoteHandler(actions.addNoteRequest(note)));
   it('should put showLoader', (result) => {
     expect(result).toEqual(put(actions.showLoader()));
+  });
+  it('should call ApiNote.addnote', (result) => {
+    expect(result).toEqual(call(ApiNotes.addNote, note));
+    return noteWithId;
+  });
+  it('should Select Store from noteSelector', (result) => {
+    expect(result).toEqual(select(noteSelector));
+    return currentNote;
+  });
+  it('should put action addNote', (result) => {
+    expect(result).toEqual(put(actions.addNote(noteWithId)));
+  });
+  it('should call  setItemToStorage', (result) => {
+    expect(result).toEqual(call(setItemToStorage, 'storageNote', newNote));
+  });
+  it('should put hideLoader', (result) => {
+    expect(result).toEqual(put(actions.hideLoader()));
+  });
+  it('and then nothing', (result) => {
+    expect(result).toBeUndefined();
+  });
+});
+describe('addNoteHandler Fail Case :', () => {
+  const note = {title: 'xxx', content: 'content'};
+  const apiError = new Error('some error');
+  const it = sagaHelper(addNoteHandler(actions.addNoteRequest(note)));
+  it('should put showLoader', (result) => {
+    expect(result).toEqual(put(actions.showLoader()));
+  });
+  it('should call ApiNote.addnote Fail', (result) => {
+    expect(result).toEqual(call(ApiNotes.addNote, note));
+    return apiError; 
+  });
+  it('should Alert', (result) => {
+    expect(result).toEqual(call(Alert.alert, 'Save Failed', 
+      String(apiError),
+      [
+        {text: 'OK'}
+      ],
+      {
+        cancelable: false
+      }));
+    
+  });
+  it('should put hideLoader', (result) => {
+    expect(result).toEqual(put(actions.hideLoader()));
+  });
+  it('and then nothing', (result) => {
+    expect(result).toBeUndefined();
+  });
+});
+describe('deleteNoteHandler Success Case :', () => {
+  const item = {id: 1};
+  const itemId = 1;
+  const currentNote = [{id: 1}, {id: 2}];
+  const remainNote = [{id: 2}];
+  const it = sagaHelper(deleteNoteHandler(actions.deleteNoteRequest(item.id)));
+  it('should put showLoader', (result) => {
+    expect(result).toEqual(put(actions.showLoader()));
+  });
+  it('should call ApiNotes,Delete', (result) => {
+    expect(result).toEqual(call(ApiNotes.deleteNote, itemId));
+  });
+  it('should put Action Delete', (result) => {
+    expect(result).toEqual(put(actions.deleteNote(itemId)));
+  });
+  it('should Select NoteSelector', (result) => {
+    expect(result).toEqual(select(noteSelector));
+    return currentNote;
+  });
+  it('should Call filterNote', (result) => {
+    expect(result).toEqual(call(filterNote, currentNote, itemId));
+    return remainNote;
+  });
+  it('should Call setItemToStorage', (result) => {
+    expect(result).toEqual(call(setItemToStorage, 'storageNote', remainNote));
+  });
+  it('should put hideLoader', (result) => {
+    expect(result).toEqual(put(actions.hideLoader()));
+  });
+  it('and then nothing', (result) => {
+    expect(result).toBeUndefined();
+  });
+});
+describe('deleteNoteHandler Fail Case :', () => {
+  const apiError = new Error('some error');
+  const item = {id: 1};
+  const itemId = 1;
+  const it = sagaHelper(deleteNoteHandler(actions.deleteNoteRequest(item.id)));
+  it('should put showLoader', (result) => {
+    expect(result).toEqual(put(actions.showLoader()));
+  });
+  it('should call ApiNotes Delete Fail', (result) => {
+    expect(result).toEqual(call(ApiNotes.deleteNote, itemId));
+    return apiError;
+  });
+  it('should put Action Delete', (result) => {
+    expect(result).toEqual(call(Alert.alert,
+      'Delete Failed',
+      String(apiError),
+      null,
+      {
+        cancelable: false
+      }
+    ));
+  });
+  it('should put hideLoader', (result) => {
+    expect(result).toEqual(put(actions.hideLoader()));
+  });
+  it('and then nothing', (result) => {
+    expect(result).toBeUndefined();
   });
 });

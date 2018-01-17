@@ -2,10 +2,11 @@ import ApiNotes from '../../api';
 import {Alert} from 'react-native';
 import {call, put,  select, take, takeLatest} from 'redux-saga/effects';
 import {delay} from 'redux-saga';
-import {filterNote} from '../../utils/transformerutil';
+import {filterNote, getSelector} from '../../utils/transformerutil';
 import {getItemToStorage, setItemToStorage} from '../../utils/storageutil';
 import * as actions from '../actions/index.actions';
 
+export const noteSelector = getSelector('notes');
 export  function* fetchHandler () {
   yield put(actions.showLoader());
   yield call(delay, 2000);
@@ -24,13 +25,12 @@ export function* addNoteHandler (action) {
   try {
     const note = action.payload;
     const noteWithId = yield call(ApiNotes.addNote, note);
-    const currentNote = yield select((store) => (store.notes));
+    const currentNote = yield select(noteSelector);
     const newNote = [...currentNote, noteWithId];
     yield put(actions.addNote(noteWithId)); 
     yield call(setItemToStorage, 'storageNote', newNote);
   } catch (error) {
-    Alert.alert(
-      'Save Failed', 
+    yield call(Alert.alert, 'Save Failed', 
       String(error),
       [
         {text: 'OK'}
@@ -48,11 +48,11 @@ export function* deleteNoteHandler (action) {
     const itemId = action.payload;
     yield call(ApiNotes.deleteNote, itemId);
     yield put(actions.deleteNote(itemId)); 
-    const currentNote = yield select((store) => (store.notes));
-    const remainNote = filterNote(currentNote, itemId);
+    const currentNote = yield select(noteSelector);
+    const remainNote = yield call(filterNote, currentNote, itemId);
     yield call(setItemToStorage, 'storageNote', remainNote);
   } catch (error) {
-    Alert.alert(
+    yield call(Alert.alert,
       'Delete Failed',
       String(error),
       null,
