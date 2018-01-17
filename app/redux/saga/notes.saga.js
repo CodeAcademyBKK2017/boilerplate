@@ -3,24 +3,22 @@ import Util from '../../util/utility';
 import {ADD_NOTE, ADD_NOTE_REQUEST, DELETE_DATA_REQUEST, DELETE_NOTE, FEACH_NOTE, HIDE_LOADER, POPULATE_NOTE, SHOW_LOADER} from '../actions/index.action';
 import {Alert} from 'react-native';
 import {call, put, select, takeEvery} from 'redux-saga/effects';
-import {delay} from 'redux-saga';
 
-function* getData () { 
+export function* getData () { 
   try {
     const data = yield call(ApiNotes.getNotes);
-    Util.setItemToStroage('theState', data);
+    yield call(Util.setItemToStroage, 'theState', data);
     return data;
   } catch (e) {
     return yield call(Util.getItemToStroage, 'theState');
   } 
 }
 
-function* deleteDataWithSaga (action) {
+export function* deleteDataWithSaga (action) {
   yield put({
     type: SHOW_LOADER
   });
-  
-  yield delay(1000);
+
   yield call(deleteNotes, action);
 
   yield put({
@@ -28,14 +26,14 @@ function* deleteDataWithSaga (action) {
   });
 }
 
-function* deleteNotes (action) {
+export function* deleteNotes (action) {
   try {
     yield call(ApiNotes.deleteNote, action.payload);
     yield put({
       type: DELETE_NOTE,
       payload: action.payload
     });
-    Util.setItemToStroage('theState', action.payload);
+    yield call(Util.setItemToStroage, 'theState', action.payload);
   } catch (e) {
     Alert.alert(
       'Delete Failed',
@@ -48,15 +46,15 @@ function* deleteNotes (action) {
   }
 }
 
-function* addNotes (action) {
+export function* addNotes (action) {
   try {
     const noteWithID = yield call(ApiNotes.addNote, action.payload);
     yield put({
       type: ADD_NOTE,
       payload: noteWithID
     });
-    const currentNote = yield select((store) => (store.notes));
-    Util.setItemToStroage('theState', currentNote);
+    const currentNote = yield select(Util.getStore);
+    yield call(Util.setItemToStroage, 'theState', currentNote);
   } catch (e) {
     Alert.alert(
       'Save Failed',
@@ -71,12 +69,11 @@ function* addNotes (action) {
   }
 }
 
-function * addDataWithSaga (action) {
+export function * addDataWithSaga (action) {
   yield put({
     type: SHOW_LOADER
   });
-  
-  yield delay(1000);
+
   yield call(addNotes, action);
 
   yield put({
@@ -84,13 +81,12 @@ function * addDataWithSaga (action) {
   });
 }
   
-function* newFun () {
+export function* newFun () {
     
   yield put({
     type: SHOW_LOADER
   });
-  
-  yield delay(2000);
+
   const response =  yield call(getData);
 
   yield put({

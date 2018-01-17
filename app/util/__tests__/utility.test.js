@@ -22,6 +22,7 @@ describe('Utility', () => {
     const result = Utility.filterNotes(data, 1);
     expect(result).toEqual(expectTobe);
   });
+
   it('setItemToStroage function is store the item to AsyncStroage and getItemToStroage will be get data from AsyncStroage', async () => {
     const data = null;
     AsyncStorage.setItem.mockClear();
@@ -42,5 +43,11 @@ describe('Utility', () => {
     expect(AsyncStorage.setItem).toHaveBeenLastCalledWith('state', JSON.stringify(data));
     await Utility.getItemToStroage('state');
     expect(AsyncStorage.getItem).toHaveBeenLastCalledWith('state');
+  });
+
+  it('getStore function is get Item from state store and return', () => {
+    const store = {notes: [{title: 'hi', content: 'hello', id: 1}]};
+    const result = Utility.getStore(store);
+    expect(result).toEqual([{title: 'hi', content: 'hello', id: 1}]);
   });
 });

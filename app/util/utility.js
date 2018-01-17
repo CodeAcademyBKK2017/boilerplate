@@ -11,6 +11,7 @@ class Utility {
         return e;
       }
     }
+    getStore = (store) => (store.notes);    
 }
 
 export default new Utility();
