@@ -8,7 +8,8 @@ import {call, fork, put, select, takeEvery} from 'redux-saga/effects';
 import * as actions from '../actions/index.actions';
 
 const keysNote = 'notes';
-function* fetchHandler () {
+export const selectFN = (store) => (store.notes);
+export function* fetchHandler () {
   yield put(actions.showLoader());
   let notes;
   try {
@@ -20,21 +21,23 @@ function* fetchHandler () {
   yield put(actions.hideLoader());
 }
 
-function* saveHandler (action) {
+export function* saveHandler (action) {
   yield put(actions.showLoader());
   const note = action.payload;
   try {
     yield call(ApiNotes.addNote, note);
-    const preNote = yield select((store) => (store.notes));
+    const preNote = yield select(selectFN);
     const newNotes = [...preNote];
     newNotes.push(note);
     yield call(Storage.setItemsFromAsyncStorage, keysNote, JSON.stringify(newNotes));
     yield put(actions.populateNotes(newNotes));
   } catch (error) {
-    Alert.alert(
-      'Delete Failed',
+    yield call(Alert.alert,
+      'Save Failed',
       String(error),
-      null,
+      [
+        {text: 'OK'}
+      ],
       {
         cancelable: false
       }
@@ -43,19 +46,21 @@ function* saveHandler (action) {
   yield put(actions.hideLoader());
 }
 
-function* removeHandler (action) {
+export function* removeHandler (action) { // named export
   yield put(actions.showLoader());
   try {
     yield call(ApiNotes.deleteNote, action.payload.id);
-    const preNotes = yield select((store) => (store.notes));
+    const preNotes = yield select(selectFN);
     const filteredNotes = yield call(transformerutil.deleteNote, preNotes, action.payload.id);
     yield call(Storage.setItemsFromAsyncStorage, keysNote, JSON.stringify(filteredNotes));
     yield put(actions.populateNotes(filteredNotes));
   } catch (error) {
-    Alert.alert(
+    yield call(Alert.alert,
       'Delete Failed',
       String(error),
-      null,
+      [
+        {text: 'OK'}
+      ],
       {
         cancelable: false
       }
@@ -65,10 +70,10 @@ function* removeHandler (action) {
 }
   
 function* notes () {
-  yield takeEvery('FETCH_NOTES', fetchHandler);
-  yield takeEvery('ADD_NOTE_REQUEST', saveHandler);
-  yield takeEvery('REMOVE_NOTE_REQUEST', removeHandler);
-  console.log('This is call from FETCH_NOTES');
+  yield takeEvery(actions.FETCH_NOTES, fetchHandler);
+  yield takeEvery(actions.ADD_NOTE_REQUEST, saveHandler);
+  yield takeEvery(actions.REMOVE_NOTE_REQUEST, removeHandler);
+  // console.log('This is call from FETCH_NOTES');
 }
 
-export default notes;
+export default notes; // default: unnamed export
