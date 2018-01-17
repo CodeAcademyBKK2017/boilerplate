@@ -1,4 +1,3 @@
-import React from 'react';
 import * as StoreState from '../StoreState';
 
 describe('StoreState', () => {
