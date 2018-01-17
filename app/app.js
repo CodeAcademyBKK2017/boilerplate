@@ -43,18 +43,21 @@ class App extends Component {
   onChangeTextContent = (textContent) => {
     this.setState({textContent});
   }
-  onSaveButtonPress = async () => {
-    const note = {
-      title: this.state.textTitle,
-      content: this.state.textContent
-    };
-    this.props.saveNotes(note);
+  onSaveButtonPress = () => {
+    try {
+      const note = {
+        title: this.state.textTitle,
+        content: this.state.textContent
+      };
+      this.props.saveNotes(note);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-  onDeleteButtonPress = (item) => async () => {
-    this.props.deleteNote(item.id);
+  onDeleteButtonPress = (item) => () => {
     try {
-      await ApiNotes.deleteNote(item.id);
+      this.props.deleteNote(item.id);
     } catch (error) {
       Alert.alert(
         'Delete Failed',

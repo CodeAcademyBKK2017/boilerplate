@@ -31,7 +31,7 @@ describe('getData', () => {
     expect(result).toEqual(call(storage.getItem, 'notes'));
     return (['1111111']);
   });
-});
+}); 
 describe('newFun', () => {
   const notes = {};
   const it = sagaHelper(newFun());
