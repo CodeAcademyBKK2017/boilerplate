@@ -52,9 +52,7 @@ class App extends Component {
 
   render () {
     return (
-      <this.WrapperView
-        style={[styles.container]}
-        behavior='padding'>
+      <this.WrapperView style={[styles.container]} behavior='padding'>
         <Loader show={this.props.modalIsVisibel} />
         <Title
           text={this.state.textTitle}
@@ -65,13 +63,9 @@ class App extends Component {
           onChangeTextContent={this.onChangeTextContent}/>
         <Footer
           textContentLength={this.state.textContent.length}
-          onSaveButtonPress={this.onSaveButtonPress}
-        />
-        {
-          this.props.notes.length > 0 ? <NoteList data={this.props.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null
-        }
-        <Lower
-          onShowAboutUs={this.props.showAboutUs} />
+          onSaveButtonPress={this.onSaveButtonPress} />
+        { this.props.notes.length > 0 ? <NoteList data={this.props.notes} onDeleteButtonPress={this.onDeleteButtonPress}/> : null }
+        <Lower onShowAboutUs={this.props.showAboutUs} />
       </this.WrapperView>
     );
   }
@@ -86,9 +80,7 @@ App.propTypes = {
   deleHandler: PropTypes.func
 };
 
-App.defaultProps = {
-  navigation: noop
-};
+App.defaultProps = {navigation: noop};
 
 const mapStateToProps = (state) => ({
   notes: state.notes,

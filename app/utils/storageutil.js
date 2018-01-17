@@ -1,7 +1,7 @@
 import {AsyncStorage} from 'react-native';
 
 class storageutil {
-  getItem = async () => JSON.parse(await AsyncStorage.getItem('notes')) || []
+  getItem = async () => JSON.parse(await AsyncStorage.getItem('notes'))
 
   setItem = async (newNotes) => {
     await AsyncStorage.setItem('notes', JSON.stringify(newNotes));
