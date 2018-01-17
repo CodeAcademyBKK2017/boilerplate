@@ -3,7 +3,6 @@ import React from 'react';
 import sagaHelper from 'redux-saga-testing';
 import storageUtil from '../../../utility/storage.util';
 import transformerutil from '../../../utility/transformer.util';
-import {Alert} from 'react-native';
 import {call, put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import * as actions from '../../actions/index.actions';
 import * as notes from '../notes.saga';
