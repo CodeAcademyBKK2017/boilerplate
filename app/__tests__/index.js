@@ -1,14 +1,12 @@
 import ApiNotes from '../api';
-import ConnectedApp, {mapDisplatchToProps} from '../app';
+import ConnectedApp from '../app';
 import React from 'react';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 import StorageUtil from '../utils/StorageUtil';
-import {Alert} from 'react-native';
 import {createStore} from 'redux';
-import {NavigationActions} from 'react-navigation';
-import {shallow} from 'enzyme';
+// import {shallow} from 'enzyme';
 
 // mock function with default result
 jest.mock('AsyncStorage', () => ({
@@ -25,20 +23,19 @@ jest.mock('Alert', () => ({
 jest.mock('../api');
 jest.mock('../utils/StorageUtil');
 
-const notesKey = 'notes';
 const store = createStore(() => ({}));
 
 describe('App', () => {
   let connectedAppComp;
-  let appWrapper;
-  let appInstance;
+  // let appWrapper;
+  // let appInstance;
 	
   beforeEach(() => {
     connectedAppComp = <ConnectedApp store={store}/>;
 		
-    const wrapper = shallow(connectedAppComp);
-    appWrapper = wrapper.find('App').shallow();
-    appInstance = appWrapper.instance();
+    // const wrapper = shallow(connectedAppComp);
+    // appWrapper = wrapper.find('App').shallow();
+    // appInstance = appWrapper.instance();
 
     // -----
     

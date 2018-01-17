@@ -1,10 +1,9 @@
 import ApiNotes from '../../../api';
 import sagaHelper from 'redux-saga-testing';
-import sagas from '../index';
 import StorageUtil from '../../../utils/StorageUtil';
 import TransformerUtil from '../../../utils/TransformerUtil';
 import {Alert} from 'react-native';
-import {call, fork, put, select, take} from 'redux-saga/effects';
+import {call, put, select} from 'redux-saga/effects';
 import * as actions from '../../actions/index.actions';
 import * as notesSaga from '../notes.saga';
 
