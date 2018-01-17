@@ -7,7 +7,7 @@ describe('AboutApp', () => {
     id: 4,
     title: '2'
   };
-  it('Check Function setItemFromAsyncStorage', () => { // example to test class methods
+  it('Check Function deleteItem', () => { // example to test class methods
     const newData = transformerUtil.deleteItem(data, 1);
     expect(newData).toEqual([]);
   });

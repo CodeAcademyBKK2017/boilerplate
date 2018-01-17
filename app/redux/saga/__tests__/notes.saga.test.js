@@ -38,6 +38,9 @@ describe('fetchHandler success !!!', () => {
   it('hideLoader', (result) => {
     expect(result).toEqual(put(actions.hideLoader()));
   });
+  it('Should be end', (result) => {
+    expect(result).toBeUndefined();
+  });
 });
 
 describe('fetchHandler error !!!', () => {
@@ -58,6 +61,9 @@ describe('fetchHandler error !!!', () => {
   });
   it('hideLoader', (result) => {
     expect(result).toEqual(put(actions.hideLoader()));
+  });
+  it('Should be end', (result) => {
+    expect(result).toBeUndefined();
   });
 });
 
@@ -93,6 +99,9 @@ describe('saveHandler success !!!', () => {
   it('hideLoader', (result) => {
     expect(result).toEqual(put(actions.hideLoader()));
   });
+  it('Should be end', (result) => {
+    expect(result).toBeUndefined();
+  });
 });
 
 describe('saveHandler error !!!', () => {
@@ -114,6 +123,9 @@ describe('saveHandler error !!!', () => {
   });
   it('hideLoader', (result) => {
     expect(result).toEqual(put(actions.hideLoader()));
+  });
+  it('Should be end', (result) => {
+    expect(result).toBeUndefined();
   });
 });
 
@@ -149,6 +161,9 @@ describe('deleteHandler success !!!', () => {
   it('hideLoader', (result) => {
     expect(result).toEqual(put(actions.hideLoader()));
   });
+  it('Should be end', (result) => {
+    expect(result).toBeUndefined();
+  });
 });
   
 describe('deleteHandler error !!!', () => {
@@ -169,5 +184,18 @@ describe('deleteHandler error !!!', () => {
   });
   it('hideLoader', (result) => {
     expect(result).toEqual(put(actions.hideLoader()));
+  });
+  it('Should be end', (result) => {
+    expect(result).toBeUndefined();
+  });
+
+  describe('deleteHandler Store !!!', () => {
+    it('Function getStore', () => {
+      const store = {
+        notes: 'dataNotes'
+      };
+      const result = notes.getStore(store);
+      expect(result).toEqual('dataNotes');
+    });
   });
 });
