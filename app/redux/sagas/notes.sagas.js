@@ -1,8 +1,10 @@
 import API from '../../api';
+import result from 'lodash/result';
 import SnackBar from 'react-native-snackbar';
 import StorageUtil from '../../utils/storage.util';
 import {call, put, select, takeEvery} from 'redux-saga/effects';
 import {removeNote} from '../../utils/transformer.util';
+import {selectNotes} from '../../utils/selector.util';
 import * as actions from '../../redux/actions/index.actions';
 
 const warningBar = () => ({
@@ -11,51 +13,53 @@ const warningBar = () => ({
   backgroundColor: '#d9bf56'
 });
 
-function* fetchNoteHandler () {
+export function* fetchNoteHandler () {
   yield put(actions.showLoader());
 
   let notes = [];
   try {
     notes = yield call(API.getNotes);
   } catch (e) {
-    notes = yield call(StorageUtil.getItem, 'notes') || [];
-    SnackBar.show(warningBar());
+    notes = (yield call(StorageUtil.getItem, 'notes')) || [];
+    yield call(SnackBar.show, warningBar());
   }
   
   yield put(actions.populateNotes(notes));
   yield put(actions.hideLoader());
 }
 
-function* addNoteHandler (action) {
+export function* addNoteHandler (action) {
   yield put(actions.showLoader());
 
   try {
     const newNoteWithID = yield call(API.addNote, action.payload);
-    
-    const newNotes = [...yield select((store) => (store.notes)), newNoteWithID];
+    const notesFromStore = yield select(selectNotes);
+    const newNotes = [...notesFromStore, newNoteWithID];
+
     yield call(StorageUtil.setItem, 'notes', newNotes);
 
     yield put(actions.addNote(newNoteWithID));
     
   } catch (e) {
-    SnackBar.show(warningBar());
+    yield call(SnackBar.show, warningBar());
   }
 
   yield put(actions.hideLoader());
 } 
 
-function* deleteNoteHandler (action) {
+export function* deleteNoteHandler (action) {
   yield put(actions.showLoader());
 
   try {
     yield call(API.deleteNote, action.payload.id);
 
-    const newNotes = removeNote(yield select((store) => (store.notes)), action.payload);
+    const notesFromStore = yield select(selectNotes);
+    const newNotes = removeNote(notesFromStore, action.payload);
     yield call(StorageUtil.setItem, 'notes', newNotes);
   
     yield put(actions.deleteNote(action.payload));
   } catch (e) {
-    SnackBar.show(warningBar());
+    yield call(SnackBar.show, warningBar());
   }
 
   yield put(actions.hideLoader());
