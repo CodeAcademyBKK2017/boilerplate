@@ -3,6 +3,7 @@ import sagaHelper from 'redux-saga-testing';
 import StorageUtil from '../../../utils/StorageUtil';
 import {Alert} from 'react-native';
 import {call, put, select, takeLatest} from 'redux-saga/effects';
+import {getNotesSelector} from '../../../utils/StoreState';
 import * as actions from './../../../redux/actions/index.actions';
 import * as notesSagas from '../notes.saga';
 
@@ -194,8 +195,8 @@ describe('saveNote success', () => {
     return newNote;
   });
 
-  it('should select getNotesStoreState', (result) => {
-    expect(result).toEqual(select(notesSagas.getNotesStoreState));
+  it('should select getNotesSelector', (result) => {
+    expect(result).toEqual(select(getNotesSelector));
     return oldNotes;
   });
 
@@ -298,8 +299,8 @@ describe('deleteRequestNote success', () => {
     expect(result).toEqual(call(ApiNotes.deleteNote, noteId));
   });
 
-  it('should select getNotesStoreState', (result) => {
-    expect(result).toEqual(select(notesSagas.getNotesStoreState));
+  it('should select getNotesSelector', (result) => {
+    expect(result).toEqual(select(getNotesSelector));
     return oldNotes;
   });
 

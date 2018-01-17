@@ -3,6 +3,7 @@ import StorageUtil from './../../utils/StorageUtil';
 import TransformerUtil from './../../utils/TransformerUtil';
 import {Alert} from 'react-native';
 import {call, put, select, takeLatest} from 'redux-saga/effects';
+import {getNotesSelector} from '../../utils/StoreState';
 import * as actions from './../../redux/actions/index.actions';
 
 export const notesKey = 'notes';
@@ -27,13 +28,11 @@ export function* fetchNoteHandler () {
   yield put(actions.hideLoader());
 }
 
-export const getNotesStoreState = (storeState) => storeState.notes;
-
 export function* saveNote (note) {
   try {
     const response = yield call(ApiNotes.addNote, note);
 
-    const oldNotes = yield select(getNotesStoreState);
+    const oldNotes = yield select(getNotesSelector);
     const newNotes = [...oldNotes];
     newNotes.push(response);
     
@@ -67,7 +66,7 @@ export function* deleteRequestNote (id) {
   try {
     yield call(ApiNotes.deleteNote, id);
 
-    const oldNotes = yield select(getNotesStoreState);
+    const oldNotes = yield select(getNotesSelector);
     const filteredNotes = TransformerUtil.removeNote(oldNotes, id);
     yield call(StorageUtil.setItem, notesKey, filteredNotes);
 
