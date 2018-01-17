@@ -15,8 +15,9 @@ export function * fetchNotesHandler () {
   try {
     notes = yield call(ApiNotes.getNotes);
   } catch (error) {
-    const value = yield call(StorageUtil.getItem, keyStoreNotes);
-    notes = value ? value : [];
+    // const value = yield call(StorageUtil.getItem, keyStoreNotes);
+    // notes = value ? value : [];
+    notes = yield call(StorageUtil.getItem, keyStoreNotes);
   }
   yield put(actions.populateNotes(notes));
   yield put(actions.hideLoader());

@@ -3,9 +3,37 @@ import sagaHelper from 'redux-saga-testing';
 import StorageUtil from '../../../utils/StorageUtil';
 import TransformerUtil from '../../../utils/TransformerUtil';
 import {Alert} from 'react-native';
-import {call, put, select} from 'redux-saga/effects';
+import {call, put, select, take, takeLatest} from 'redux-saga/effects';
 import * as actions from '../../actions/index.actions';
 import * as notesSaga from '../notes.saga';
+
+describe('notes saga : should take all action', () => {
+  const it = sagaHelper(notesSaga.default());
+  it('should be take latest delete note', (result) => {
+    expect(result).toEqual(takeLatest(actions.DELETE_NOTE_REQUEST, notesSaga.deleteNoteRequestHandler));
+  });
+
+  it('should be take latest add note', (result) => {
+    expect(result).toEqual(takeLatest(actions.ADD_NOTE_REQUEST, notesSaga.addNoteRequestHandler));
+  });
+
+  it('should be take fetch note', (result) => {
+    expect(result).toEqual(take(actions.FETCH_NOTES));
+  });
+
+  it('and then nothing', (result) => {
+    expect(result).toEqual(notesSaga.fetchNotesHandler());
+  });
+
+  it('and then nothing', (result) => {
+    expect(result).toBeUndefined();
+  });
+});
+
+describe('notes saga : selectFilters', () => {
+  const result = notesSaga.selectFilters({notes: []});
+  expect(result).toEqual([]);
+});
 
 describe('notes: fetchNotesHandler [success]', () => {
   const it = sagaHelper(notesSaga.fetchNotesHandler());

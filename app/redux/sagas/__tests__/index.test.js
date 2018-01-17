@@ -8,4 +8,7 @@ describe('index sags: should fork all the sagas', () => {
   it('notes', (result) => {
     expect(result).toEqual(fork(notes));
   });
+  it('should fork notes saga', (result) => {
+    expect(result).toBeUndefined();
+  });
 });

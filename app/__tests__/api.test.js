@@ -6,7 +6,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import StorageUtil from '../utils/StorageUtil';
 import {createStore} from 'redux';
-// import {shallow} from 'enzyme';
+import {shallow} from 'enzyme';
 
 // mock function with default result
 jest.mock('AsyncStorage', () => ({
@@ -20,35 +20,47 @@ jest.mock('Alert', () => ({
   alert: jest.fn()
 }));
 
-jest.mock('../api');
+// jest.mock('../api');
 jest.mock('../utils/StorageUtil');
 
 const store = createStore(() => ({}));
 
 describe('App', () => {
+  global.fetch = jest.fn(() => new Promise((resolve) => resolve()));
+
+  beforeEach(() => {
+    global.fetch.mockClear();
+  });
+
   let connectedAppComp;
-  // let appWrapper;
-  // let appInstance;
+  let appWrapper;
+  let appInstance;
 	
   beforeEach(() => {
     connectedAppComp = <ConnectedApp store={store}/>;
 		
-    // const wrapper = shallow(connectedAppComp);
-    // appWrapper = wrapper.find('App').shallow();
-    // appInstance = appWrapper.instance();
+    const wrapper = shallow(connectedAppComp);
+    appWrapper = wrapper.find('App').shallow();
+    appInstance = appWrapper.instance();
 
     // -----
     
-    ApiNotes.getNotes.mockClear();
-    ApiNotes.deleteNote.mockClear();
-    ApiNotes.addNote.mockClear();
+    // ApiNotes.getNotes.mockClear();
+    // ApiNotes.deleteNote.mockClear();
+    // ApiNotes.addNote.mockClear();
 
-    StorageUtil.getItem.mockClear();
-    StorageUtil.setItem.mockClear();
+    // StorageUtil.getItem.mockClear();
+    // StorageUtil.setItem.mockClear();
   });
 
   it('renders correctly', () => {
     const snapshot = renderer.create(connectedAppComp).toJSON();
     expect(snapshot).toMatchSnapshot();
   });
+
+  it('getNotes', () => {
+    ApiNotes.getNotes();
+    expect(fetch).toHaveBeenCalledWith(ApiNotes.API_NOTES);
+  });
+  
 });
