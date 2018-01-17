@@ -1,5 +1,4 @@
 import API from '../../api';
-import result from 'lodash/result';
 import SnackBar from 'react-native-snackbar';
 import StorageUtil from '../../utils/storage.util';
 import {call, put, select, takeEvery} from 'redux-saga/effects';
