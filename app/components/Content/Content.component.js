@@ -1,4 +1,4 @@
-// import Icon from 'react-native-vector-icons/Foundation';
+import Icon from 'react-native-vector-icons/Foundation';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import styles from './Content.style';
@@ -10,7 +10,7 @@ export default class TextArea extends Component {
       <View style={styles.container}>
         <View style={styles.headContent}>
           <Text style={styles.text}>Please type your note below</Text>
-          {/* <Icon name='clipboard-notes' size={20} /> */}
+          <Icon name='clipboard-notes' size={20} />
         </View>
         <TextInput style={styles.textArea} 
           multiline={true} 
