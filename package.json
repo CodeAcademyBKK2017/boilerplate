@@ -16,8 +16,10 @@
     "coverage": "jest --verbose --coverage && open ./coverage/lcov-report/index.html"
   },
   "dependencies": {
+    "firebase-tools": "^3.17.4",
     "react": "16.0.0",
     "react-native": "0.51.0",
+    "react-native-firebase": "^3.2.7",
     "react-native-modal-overlay": "^1.2.1",
     "react-native-platform-touchable": "^1.1.1",
     "react-native-swipeout": "^2.3.3",
