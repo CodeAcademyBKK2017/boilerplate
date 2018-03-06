@@ -13,7 +13,7 @@
 #import <React/RCTRootView.h>
 
 #import <Firebase.h>
-#import "RNFIRMessaging.h"
+#import "RNFirebaseMessaging.h"
 
 @implementation AppDelegate
 
@@ -43,18 +43,27 @@
   return YES;
 }
 
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+       willPresentNotification:(UNNotification *)notification
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
 {
-  [RNFIRMessaging willPresentNotification:notification withCompletionHandler:completionHandler];
+  [RNFirebaseMessaging willPresentNotification:notification withCompletionHandler:completionHandler];
 }
 
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+         withCompletionHandler:(void (^)())completionHandler
 {
-  [RNFIRMessaging didReceiveNotificationResponse:response withCompletionHandler:completionHandler];
+  [RNFirebaseMessaging didReceiveNotificationResponse:response withCompletionHandler:completionHandler];
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler{
-  [RNFIRMessaging didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+  [RNFirebaseMessaging didReceiveLocalNotification:notification];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(nonnull NSDictionary *)userInfo
+fetchCompletionHandler:(nonnull void (^)(UIBackgroundFetchResult))completionHandler{
+  [RNFirebaseMessaging didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
 }
 
 @end
