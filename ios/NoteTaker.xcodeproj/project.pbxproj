@@ -376,6 +376,7 @@
 		9ED3B1B3384D5061464A18D2 /* Pods-NoteTaker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoteTaker.release.xcconfig"; path = "Pods/Target Support Files/Pods-NoteTaker/Pods-NoteTaker.release.xcconfig"; sourceTree = "<group>"; };
 		A2ADBF3FB8174BA698691BC0 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		AB2F42B8213B416EA709BB75 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		ACE09CC2204E8E9C008A45F2 /* NoteTaker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = NoteTaker.entitlements; path = NoteTaker/NoteTaker.entitlements; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B3B418C4AC934969A20716E3 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		B6E4889FED5149FE8E46391B /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
@@ -526,6 +527,7 @@
 		13B07FAE1A68108700A75B9A /* NoteTaker */ = {
 			isa = PBXGroup;
 			children = (
+				ACE09CC2204E8E9C008A45F2 /* NoteTaker.entitlements */,
 				65756E3E204E5ACD005C2678 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -810,6 +812,11 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 3RNQT8AN5J;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1514,6 +1521,7 @@
 			baseConfigurationReference = 4C429BBB91AF10732F3FA332 /* Pods-NoteTaker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = NoteTaker/NoteTaker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Thanaphat Suwannikornkul (FZKUR2M523)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1546,6 +1554,7 @@
 			baseConfigurationReference = 9ED3B1B3384D5061464A18D2 /* Pods-NoteTaker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = NoteTaker/NoteTaker.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Thanaphat Suwannikornkul (FZKUR2M523)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
