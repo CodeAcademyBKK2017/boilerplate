@@ -1513,6 +1513,7 @@
 			baseConfigurationReference = 4C429BBB91AF10732F3FA332 /* Pods-NoteTaker.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thanaphat Suwannikornkul (FZKUR2M523)";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 3RNQT8AN5J;
@@ -1540,6 +1541,7 @@
 			baseConfigurationReference = 9ED3B1B3384D5061464A18D2 /* Pods-NoteTaker.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thanaphat Suwannikornkul (FZKUR2M523)";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3RNQT8AN5J;
 				HEADER_SEARCH_PATHS = (
