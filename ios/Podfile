@@ -6,6 +6,9 @@ target 'NoteTaker' do
   # use_frameworks!
 
   # Pods for NoteTaker
+  pod 'Firebase/Core'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Messaging'
 
   target 'NoteTaker-tvOSTests' do
     inherit! :search_paths

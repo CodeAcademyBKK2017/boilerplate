@@ -1,5 +1,6 @@
 /* importantce git : reference fe473c85516dd4bc41a14d2f5711290a82ddbd17 */
 import Content from './components/Content/Content.component';
+import firebase from 'react-native-firebase';
 import Footer from './components/Footer/Footer.component';
 import Loader from './components/Loader/Loader.component';
 import Note from './components/Note/Note.component';
@@ -20,6 +21,20 @@ class App extends Component {
     title: ''}
   state = this.initialstate
   componentDidMount () { 
+    const FCM = firebase.messaging(); 
+
+    firebase.auth().onAuthStateChanged((user) => {
+      // requests permissions from the user
+      FCM.requestPermissions();
+      // gets the device's push token
+      FCM.getToken().then((token) => {
+       
+        // stores the token in the user's document
+        this.ref.doc(user.uid).update({pushToken: token});
+      });
+      
+    });
+    
     this.props.fetchNotes(); 
   }
   WrapperView = Platform.select(
