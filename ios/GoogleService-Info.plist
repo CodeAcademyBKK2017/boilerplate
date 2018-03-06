@@ -11,7 +11,7 @@
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.411921946968-8vbhaptm7id22nbd21f3omd114j1bo1v</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBkjy2yLCA5UoFUiotWO39G3oQp2UsSNJw</string>
+	<string>AIzaSyD38dQwoCDOzAFvsLihPTncpVjck_59uTo</string>
 	<key>GCM_SENDER_ID</key>
 	<string>411921946968</string>
 	<key>PLIST_VERSION</key>
@@ -23,15 +23,15 @@
 	<key>STORAGE_BUCKET</key>
 	<string>notetaker-84f38.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:411921946968:ios:d5af562feb3b95c8</string>
 	<key>DATABASE_URL</key>
