@@ -45,6 +45,7 @@
 		57A51E3807032A8D364B623A /* libPods-NoteTaker-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72583F04AE765DD2FE10696D /* libPods-NoteTaker-tvOSTests.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		5F69CA5A4207490A9F1EEF4E /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB2F42B8213B416EA709BB75 /* Foundation.ttf */; };
+		65756E63204E5ACD005C2678 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 65756E3E204E5ACD005C2678 /* GoogleService-Info.plist */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8E121D9478F7ACDF562D859E /* libPods-NoteTakerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4627CE7FC19876E4BBED5CA1 /* libPods-NoteTakerTests.a */; };
 		A3A07D1549104EFF8E0E0D7A /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9CCE690E2F4E4E30980010F7 /* MaterialCommunityIcons.ttf */; };
@@ -352,6 +353,7 @@
 		4C429BBB91AF10732F3FA332 /* Pods-NoteTaker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoteTaker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NoteTaker/Pods-NoteTaker.debug.xcconfig"; sourceTree = "<group>"; };
 		509C0E9AAC264E5E8C8B3CC6 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		65756E3E204E5ACD005C2678 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/firebase/NoteTaker/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6F1A90DFBF2436FB4532B23C /* Pods-NoteTakerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoteTakerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NoteTakerTests/Pods-NoteTakerTests.release.xcconfig"; sourceTree = "<group>"; };
 		72583F04AE765DD2FE10696D /* libPods-NoteTaker-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NoteTaker-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -513,6 +515,7 @@
 		13B07FAE1A68108700A75B9A /* NoteTaker */ = {
 			isa = PBXGroup;
 			children = (
+				65756E3E204E5ACD005C2678 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -1152,6 +1155,7 @@
 				3097FA654FCF49938984AEB9 /* Octicons.ttf in Resources */,
 				24352D2305324EF6A626FB92 /* SimpleLineIcons.ttf in Resources */,
 				01526012E41D4B799B0D2A4D /* Zocial.ttf in Resources */,
+				65756E63204E5ACD005C2678 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
