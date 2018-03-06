@@ -21,19 +21,7 @@ class App extends Component {
     title: ''}
   state = this.initialstate
   componentDidMount () { 
-    const FCM = firebase.messaging(); 
-
-    firebase.auth().onAuthStateChanged((user) => {
-      // requests permissions from the user
-      FCM.requestPermissions();
-      // gets the device's push token
-      FCM.getToken().then((token) => {
-       
-        // stores the token in the user's document
-        this.ref.doc(user.uid).update({pushToken: token});
-      });
-      
-    });
+    firebase.messaging().requestPermissions();
     
     this.props.fetchNotes(); 
   }
