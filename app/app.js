@@ -14,7 +14,7 @@ import {connect} from 'react-redux';
 import {KeyboardAvoidingView, Platform, Text, View} from 'react-native';
 import {NavigationActions} from 'react-navigation';
 import * as actions from './redux/actions/index.actions';
-
+// Comment What the fuck
 class App extends Component {
   initialstate = {
     content: '',
