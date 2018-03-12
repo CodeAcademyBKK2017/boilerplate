@@ -1,4 +1,4 @@
-echo "do yarn for Load Dependencies"
+echo "Do yarn for Load Dependencies"
 
 yarn
 
