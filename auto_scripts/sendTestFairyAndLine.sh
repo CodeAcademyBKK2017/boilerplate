@@ -51,4 +51,6 @@ fi
 
 cd /var/lib/jenkins/workspace/
 
+rm -rf noteTakerAndroidLineNotify
+
 ls -ltr
