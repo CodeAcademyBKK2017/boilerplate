@@ -54,3 +54,5 @@ cd /var/lib/jenkins/workspace/TestJoe
 ls -ltr
 
 rm -rf  sendTolineNotification
+
+ls -ltr
