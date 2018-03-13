@@ -4,4 +4,4 @@ yarn
 
 pwd
 
-exit 0
+echo "End Load Dependencies"
