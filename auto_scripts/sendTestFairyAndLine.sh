@@ -49,8 +49,10 @@ Download: $APP_URL"
 	curl -X POST -H "Authorization: Bearer $LINE_KEY_HYBRID_DEV_PO" -F "message=$LINE_MESSAGE" "$LINE_POST_URL" -F "imageFile=@./$qrcodeName.png"
 fi
 
-cd /var/lib/jenkins/workspace/
+cd /var
 
-rm -rf noteTakerAndroidLineNotify
+ls -ltr
+
+rm -rf xxx
 
 ls -ltr
