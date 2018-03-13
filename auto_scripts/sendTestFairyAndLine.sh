@@ -6,10 +6,13 @@ TESTFAIRY_RESULT_PATH="$APP_PROJECT/testfairy.json"
 rm -rf $APP_PROJECT
 mkdir $APP_PROJECT
 
+APK_PATH="/var/lib/jenkins/workspace/NoteTakeAndroid/noteTakerAndroidStart/android/app/build/outputs/apk/"
+APK_NAME="app-release.apk"
+
 
 curl https://dmp-egg.testfairy.com/api/upload -o $TESTFAIRY_RESULT_PATH \
 -F api_key='69ee7182d0eb73ab60296edbbd86a63d40fba900' \
--F file=@"/var/lib/jenkins/workspace/noteTakerAndroidBuild/android/app/build/outputs/apk/app-release.apk" \
+-F file=@$APK_PATH$APK_NAME \
 -F metrics='cpu,network,logcat' \
 -F options='shake' \
 -F notify='off' \
@@ -20,18 +23,17 @@ APP_VERSION=$(cat $TESTFAIRY_RESULT_PATH | jq '.app_version' | tr -d '"')
 APP_URL=$(cat $TESTFAIRY_RESULT_PATH | jq '.instrumented_url' | tr -d '\"')
 
 
-LINE_KEY_HYBRID_DEV_PO="G60WyLntsVoy5b6OVCt4dPw4ITBrpi5gJPog78YxCzP"
+LINE_KEY_HYBRID_DEV_PO="FaZd0sDWl9ewGZw2bEM7q5COqpbU9uMxouQqrXRWHw1"
 
 LINE_POST_URL="https://notify-api.line.me/api/notify"
 
-cd /var/lib/jenkins/workspace/noteTakerAndroidBuild/android/app/build/outputs/apk/
-GIT_BRANCH="$(git name-rev --name-only HEAD)"
+cd $APK_PATH
 
+GIT_BRANCH="$(git name-rev --name-only HEAD)"
 
 echo $GIT_BRANCH
 
 NOW=$(TZ="GMT-7" date +"%r %a %d %h %y")
-
 
 LINE_MESSAGE=" -> Android
 App Name: $APP_PROJECT
