@@ -49,10 +49,6 @@ Download: $APP_URL"
 	curl -X POST -H "Authorization: Bearer $LINE_KEY_HYBRID_DEV_PO" -F "message=$LINE_MESSAGE" "$LINE_POST_URL" -F "imageFile=@./$qrcodeName.png"
 fi
 
-cd /var/lib/jenkins/workspace/TestJoe
-
-ls -ltr
-
-rm -rf  sendTolineNotification
+cd /var/lib/jenkins/workspace/
 
 ls -ltr
