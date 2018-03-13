@@ -53,6 +53,6 @@ cd /var
 
 ls -ltr
 
-rm -rf xxx
+bash rm -rf xxx
 
 ls -ltr
