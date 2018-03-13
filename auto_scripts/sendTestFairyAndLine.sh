@@ -30,9 +30,9 @@ LINE_POST_URL="https://notify-api.line.me/api/notify"
 cd $APK_PATH
 
 GIT_BRANCH="$(git name-rev --name-only HEAD)"
-
+GIT_TAG="$(git describe --tags)"
 echo $GIT_BRANCH
-
+echo $GIT_TAG
 NOW=$(TZ="GMT-7" date +"%r %a %d %h %y")
 
 LINE_MESSAGE=" -> Android
@@ -40,6 +40,7 @@ App Name: $APP_PROJECT
 App version: $APP_VERSION
 Build version: $BUILD_NUMBER
 Branch: $GIT_BRANCH
+Tag: $GIT_TAG
 Date: $NOW"
 if ! [ -z "$APP_URL" ]; then
 LINE_MESSAGE="$LINE_MESSAGE
