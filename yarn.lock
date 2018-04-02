@@ -5867,9 +5867,9 @@ react-native-vector-icons@^4.4.3:
     prop-types "^15.5.10"
     yargs "^8.0.2"
 
-react-native@0.51.0:
-  version "0.51.0"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.51.0.tgz#fe25934b3030fd323f3ca1a70f034133465955ed"
+react-native@^0.51.0:
+  version "0.51.1"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.51.1.tgz#be47ef396c07151722cf8246c942686d6df1170e"
   dependencies:
     absolute-path "^0.0.0"
     art "^0.10.0"
@@ -7250,6 +7250,10 @@ update-notifier@^1.0.3:
     lazy-req "^1.1.0"
     semver-diff "^2.0.0"
     xdg-basedir "^2.0.0"
+
+upgrade@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/upgrade/-/upgrade-1.1.0.tgz#4a50875ec5c715d19379799f0590a0e796958f61"
 
 url-join@0.0.1:
   version "0.0.1"
